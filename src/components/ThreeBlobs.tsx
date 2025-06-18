@@ -6,9 +6,9 @@ const ThreeBlobs = () => {
     const sceneRef = useRef<THREE.Scene | null>(null);
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
     const animationIdRef = useRef<number | null>(null);
-    const mouseRef = useRef<{x: number, y: number}>({x: 0, y: 0});
+    const mouseRef = useRef<{ x: number, y: number }>({x: 0, y: 0});
     // Store actual screen coordinates for direct blob manipulation
-    const screenMouseRef = useRef<{x: number, y: number}>({x: 0, y: 0});
+    const screenMouseRef = useRef<{ x: number, y: number }>({x: 0, y: 0});
 
     useEffect(() => {
         if (!mountRef.current) return;
@@ -65,19 +65,21 @@ const ThreeBlobs = () => {
         const noiseTexture = createNoiseTexture();
 
         // Enhanced shader material with stronger mouse interaction and center protection
-        const createBlobMaterial = (color: string) => {
+        const createBlobMaterial = (colorA: string, colorB: string) => {
             return new THREE.ShaderMaterial({
                 uniforms: {
                     uTime: {value: 0},
-                    uColor: {value: new THREE.Color(color)},
+                    uColorA: {value: new THREE.Color(colorA)},
+                    uColorB: {value: new THREE.Color(colorB)},
                     uNoiseTexture: {value: noiseTexture},
-                    uOpacity: {value: 0.8},
+                    uOpacity: {value: 1.0}, // Make blobs fully opaque
                     uMouse: {value: new THREE.Vector2(0, 0)},
                     uMouseIntensity: {value: 0.0}
                 },
                 vertexShader: `
           varying vec2 vUv;
           varying vec3 vPosition;
+          varying float vSphereT;
           uniform float uTime;
           uniform vec2 uMouse;
           uniform float uMouseIntensity;
@@ -91,6 +93,8 @@ const ThreeBlobs = () => {
           void main() {
             vUv = uv;
             vPosition = position;
+            // Spherical gradient t based on normal.z
+            vSphereT = (normal.z + 1.0) * 0.5;
             
             // Base deformation
             vec3 newPosition = position;
@@ -124,53 +128,55 @@ const ThreeBlobs = () => {
           }
         `,
                 fragmentShader: `
-          uniform vec3 uColor;
+          uniform vec3 uColorA;
+          uniform vec3 uColorB;
           uniform sampler2D uNoiseTexture;
           uniform float uOpacity;
           uniform vec2 uMouse;
           uniform float uMouseIntensity;
           varying vec2 vUv;
           varying vec3 vPosition;
-          
+          varying float vSphereT;
           void main() {
-            // Simplified grain effect
+            // Enhanced grain effect
             vec4 noise = texture2D(uNoiseTexture, vUv * 2.0);
-            float grain = (noise.r - 0.5) * 0.2;
+            float grain = (noise.r - 0.5) * 0.35;
             
-            // Distance from center for gradient effect
-            float distanceFromCenter = length(vPosition.xy) / 2.0;
+            // Spherical gradient using normal.z for full coverage
+            vec3 gradientColor = mix(uColorA, uColorB, vSphereT);
             
-            // Enhanced mouse glow effect - brighter and more visible
+            // Mouse glow effect
             float dist = distance(vPosition.xy, uMouse);
-            dist = max(dist, 0.5); // Prevent extreme values at center
-            float glow = max(0.0, 1.0 - dist / 2.0) * uMouseIntensity * 1.5;
+            dist = max(dist, 0.5);
+            float glow = max(0.0, 1.0 - dist / 2.0) * uMouseIntensity * 0.5;
             
-            float alpha = smoothstep(1.0, 0.0, distanceFromCenter) * uOpacity;
+            float alpha = uOpacity;
             
-            // Add more dramatic color change when mouse is nearby
-            vec3 finalColor = uColor + grain + glow + vec3(glow * 0.5, glow * 0.3, glow);
+            vec3 finalColor = gradientColor + grain + vec3(glow * 0.3, glow * 0.15, glow * 0.4);
             
             gl_FragColor = vec4(finalColor, alpha);
           }
         `,
-                transparent: true,
-                side: THREE.DoubleSide
+                transparent: false, // Not transparent, fully colored
+                side: THREE.FrontSide // Only front faces
             });
         };
 
-        // ACM Javeriana color palette
-        const colors = ['#3a75ff', '#004af5', '#022983'];
+        // ACM Javeriana color palette gradients
+        const gradients = [
+            ['#022983', '#3A75FF'],
+            ['#004AF5', '#3A75FF'],
+            ['#022983', '#004AF5']
+        ];
         const blobs: THREE.Mesh[] = [];
-
-        // Create lower-poly blob geometries for better performance
-        colors.forEach((color, index) => {
+        gradients.forEach((gradient, index) => {
             // Reduced segments from 64 to 32 for better performance
             const geometry = new THREE.SphereGeometry(2, 32, 32);
-            const material = createBlobMaterial(color);
+            const material = createBlobMaterial(gradient[0], gradient[1]);
             const blob = new THREE.Mesh(geometry, material);
 
             // Position blobs
-            const angle = (index / colors.length) * Math.PI * 2;
+            const angle = (index / gradients.length) * Math.PI * 2;
             blob.position.set(
                 Math.cos(angle) * 4,
                 Math.sin(angle) * 2,
@@ -194,19 +200,12 @@ const ThreeBlobs = () => {
                 x: (event.clientX / window.innerWidth) * 2 - 1,
                 y: -(event.clientY / window.innerHeight) * 2 + 1
             };
-            
+
             // Store actual screen coordinates for direct blob manipulation
             screenMouseRef.current = {
                 x: event.clientX,
                 y: event.clientY
             };
-            
-            // Update custom cursor position
-            const cursor = document.getElementById('custom-cursor');
-            if (cursor) {
-                cursor.style.left = `${event.clientX}px`;
-                cursor.style.top = `${event.clientY}px`;
-            }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
@@ -219,13 +218,13 @@ const ThreeBlobs = () => {
                 mouseRef.current.y,
                 0.5  // z=0.5 is at the center of the scene depth
             );
-            
+
             // Convert to world coordinates
             vector.unproject(camera);
             const dir = vector.sub(camera.position).normalize();
             const distance = -camera.position.z / dir.z;
             const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-            
+
             return pos;
         };
 
@@ -233,38 +232,38 @@ const ThreeBlobs = () => {
         let time = 0;
         const animate = () => {
             time += 0.01;
-            
+
             // Get mouse position in world space
             const mouseWorldPos = getMouseWorldPosition();
-            
+
             // Update all blobs with stronger mouse interaction
             blobs.forEach((blob, index) => {
                 // Update shader uniforms
                 if (blob.material instanceof THREE.ShaderMaterial) {
                     const material = blob.material;
                     material.uniforms.uTime.value = time;
-                    
+
                     // Pass mouse position to shader
                     material.uniforms.uMouse.value = new THREE.Vector2(mouseWorldPos.x, mouseWorldPos.y);
-                    
+
                     // Calculate distance between blob and mouse with safety minimum
                     const blobPos = blob.position;
                     const dx = blobPos.x - mouseWorldPos.x;
                     const dy = blobPos.y - mouseWorldPos.y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
                     dist = Math.max(dist, 1.0); // Minimum safe distance to prevent extreme behavior
-                    
+
                     // More controlled mouse interaction
-                    const intensity = Math.max(0, 1 - dist/6);
-                    material.uniforms.uMouseIntensity.value = Math.min(intensity * 3.0, 1.5); // Clamped to reasonable value
-                    
+                    const intensity = Math.max(0, 1 - dist / 6);
+                    material.uniforms.uMouseIntensity.value = Math.min(intensity * 1.0, 0.5); // reduced clamp from 1.5 to 0.5
+
                     // Direct blob movement in response to mouse - with safety limits
                     if (dist < 5.0) {
                         // Calculate normalized direction with safety check
                         let dirX = dx;
                         let dirY = dy;
                         const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
-                        
+
                         // Avoid division by zero
                         if (dirLength > 0.001) {
                             dirX /= dirLength;
@@ -275,10 +274,10 @@ const ThreeBlobs = () => {
                             dirX = Math.cos(angle);
                             dirY = Math.sin(angle);
                         }
-                        
+
                         // Limit the repulsion force
-                        const repulsionForce = Math.min(0.02 * (1 - dist/5.0), 0.01);
-                        
+                        const repulsionForce = Math.min(0.02 * (1 - dist / 5.0), 0.01);
+
                         // Apply controlled position change
                         blob.position.x += dirX * repulsionForce;
                         blob.position.y += dirY * repulsionForce;
@@ -293,13 +292,13 @@ const ThreeBlobs = () => {
                 const offset = index * Math.PI * 0.7;
                 blob.position.y += Math.sin(time + offset) * 0.01;
                 blob.position.x += Math.cos(time * 0.8 + offset) * 0.008;
-                
+
                 // Ensure blobs don't drift too far
                 const distanceFromCenter = Math.sqrt(
-                    blob.position.x * blob.position.x + 
+                    blob.position.x * blob.position.x +
                     blob.position.y * blob.position.y
                 );
-                
+
                 if (distanceFromCenter > 8) {
                     // Gently pull back toward center
                     blob.position.x *= 0.99;
@@ -326,7 +325,7 @@ const ThreeBlobs = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('mousemove', handleMouseMove);
-            
+
             if (animationIdRef.current) {
                 cancelAnimationFrame(animationIdRef.current);
             }
@@ -350,19 +349,7 @@ const ThreeBlobs = () => {
             ref={mountRef}
             className="absolute inset-0 w-full h-full"
             style={{filter: 'blur(0.3px)', cursor: 'none'}}
-        >
-            {/* Custom cursor */}
-            <div 
-                className="fixed rounded-full w-6 h-6 border-2 border-javeriana-medium/50 pointer-events-none"
-                style={{
-                    left: 0, 
-                    top: 0, 
-                    transform: 'translate(-50%, -50%)',
-                    transition: 'transform 0.05s ease'
-                }}
-                id="custom-cursor"
-            />
-        </div>
+        />
     );
 };
 
