@@ -7,7 +7,7 @@ export default function MainNavbar() {
   return (
     <Navbar isBordered>
       <NavbarBrand>
-        <Image src="/Logo_Oscuro.png" alt="ACM Logo" width={100} height={40} />
+        <Image src="/Logo_Oscuro.svg" alt="ACM Logo" width={100} height={40} />
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
