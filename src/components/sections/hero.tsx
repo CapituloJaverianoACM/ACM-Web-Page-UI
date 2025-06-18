@@ -10,7 +10,7 @@ export function Hero() {
 
             {/* Content Overlay with slightly increased z-index to ensure visibility over blurred blobs */}
             <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-4xl mx-auto pointer-events-none select-none">
                     {/* Logo */}
                     <img
                         src="/Logo_Oscuro.svg"
