@@ -1,298 +1,140 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useOutsideClick } from "@/hooks/use-outside-click";
+import {useState} from 'react';
+import MemberCard, {Member} from '../MemberCard';
+import MemberModal from '../MemberModal';
+
+const sampleMembers: Member[] = [
+    {
+        id: '1',
+        name: 'Adrián Ruiz',
+        title: 'Ing. Sistemas',
+        rol: 'Presidente',
+        email: 'correodeadrian@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Figma', 'UI/UX Design', 'Prototyping', 'Design Systems', 'User Research'],
+        image: '/Members/Active/Adrian Ruiz.png'
+    },
+    {
+        id: '2',
+        name: 'David Vargas',
+        title: 'Ing. Sistemas y Cientifico de Datos',
+        rol: 'Vicepresidente',
+        email: 'correodedavid@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Product Strategy', 'Agile', 'Analytics', 'Roadmapping', 'Stakeholder Management'],
+        image: '/Members/Active/David Vargas.png'
+    },
+    {
+        id: '3',
+        name: 'Sebastián Galindo',
+        title: 'Ing. Sistemas',
+        rol: 'Secretario',
+        email: 'correodesebastian@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Python', 'Machine Learning', 'SQL', 'Data Visualization', 'Statistics'],
+        image: '/Members/Active/Sebastian Galindo.png'
+    },
+    {
+        id: '4',
+        name: 'Juan Ramirez',
+        title: 'Ing. Sistemas y Cientifico de Datos',
+        rol: 'Infrastructure',
+        email: 'correodejuan@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Infrastructure as Code'],
+        image: '/Members/Active/Juan Ramirez.png'
+    },
+    {
+        id: '5',
+        name: 'Esteban Salazar',
+        title: 'Ing. Sistemas y Cientifico de Datos',
+        rol: 'Tesorero',
+        email: 'correodeesteban@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Digital Marketing', 'Brand Strategy', 'Content Marketing', 'SEO', 'Analytics'],
+        image: '/Members/Active/Esteban Salazar.png'
+    },
+    {
+        id: '6',
+        name: 'Simón Ortega',
+        title: 'Ing. Sistemas',
+        rol: 'Dev Ops',
+        email: 'correodesimon@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Docker', 'Kubernetes', 'CI/CD', 'AWS', 'Terraform'],
+        image: '/Members/Active/Simon Ortega.png'
+    },
+    {
+        id: '7',
+        name: 'Samuel Pico',
+        title: 'Ing. Sistemas',
+        rol: 'Coord. de Comunicación, Difusión y Diseño',
+        email: 'picos@acm.org',
+        bio: 'Ingeniero de Sistemas especializado en desarrollo de software y Coordinador de Comunicación y Difusión en ACM Javeriana, combinando experiencia técnica con narrativa creativa para planificar eventos, gestionar redes sociales y ofrecer contenido atractivo.',
+        skills: ['Figma', 'Diseño UI/UX', 'Prototipado', 'Sistemas de diseño', 'Investigación de usuarios', 'Estrategia de contenido', 'Gestión de redes sociales', 'Planificación de eventos', 'Liderazgo de equipos', 'Python', 'JavaScript', 'SQL', 'Redes'],
+        image: '/Members/Active/Samuel Pico.png'
+    },
+    {
+        id: '8',
+        name: 'Miguel Vargas',
+        title: 'Ing. Sistemas',
+        rol: 'Desarrollador Frontend',
+        email: 'correodemiguel@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['React', 'JavaScript', 'CSS', 'HTML', 'Responsive Design'],
+        image: '/Members/Active/Miguel Vargas.png'
+    },
+    {
+        id: '9',
+        name: 'Salomón Ávila',
+        title: 'Ing. Sistemas',
+        rol: 'Desarrollador Backend',
+        email: 'correodesalomon@acm.org',
+        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum risus vel nisl suscipit imperdiet. Nulla ut elementum tortor. Morbi semper massa et placerat maximus. Cras non sapien a risus imperdiet congue. Nullam a erat odio. Quisque congue, nulla sollicitudin auctor pulvinar, diam arcu mollis metus, nec fringilla lacus erat nec sapien.',
+        skills: ['Node.js', 'Express', 'Databases', 'API Development', 'Microservices'],
+        image: '/Members/Active/Salomon Avila.png'
+    },
+];
 
 export function Members() {
-  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
-    null
-  );
-  const id = useId();
-  const ref = useRef<HTMLDivElement>(null);
+    const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setActive(false);
-      }
-    }
+    const handleMemberClick = (member: Member) => {
+        setSelectedMember(member);
+        setIsModalOpen(true);
+    };
 
-    if (active && typeof active === "object") {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedMember(null);
+    };
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [active]);
-
-  useOutsideClick(ref, () => setActive(null));
-
-  return (
-    <div id="members" className="bg-white dark:bg-black py-10 lg:py-20">
-      <h2 className="text-center max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Members
-      </h2>
-      <AnimatePresence>
-        {active && typeof active === "object" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 h-full w-full z-10"
-          />
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {active && typeof active === "object" ? (
-          <div className="fixed inset-0  grid place-items-center z-[100]">
-            <motion.button
-              key={`button-${active.title}-${id}`}
-              layout
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                transition: {
-                  duration: 0.05,
-                },
-              }}
-              className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
-              onClick={() => setActive(null)}
-            >
-              <CloseIcon />
-            </motion.button>
-            <motion.div
-              layoutId={`card-${active.title}-${id}`}
-              ref={ref}
-              className="w-full max-w-[500px]  h-full md:h-fit md:max-h-[90%]  flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
-            >
-              <motion.div layoutId={`image-${active.title}-${id}`}>
-                <Image
-                  priority
-                  width={200}
-                  height={200}
-                  src={active.src}
-                  alt={active.title}
-                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
-                />
-              </motion.div>
-
-              <div>
-                <div className="flex justify-between items-start p-4">
-                  <div className="">
-                    <motion.h3
-                      layoutId={`title-${active.title}-${id}`}
-                      className="font-medium text-neutral-700 dark:text-neutral-200 text-base"
-                    >
-                      {active.title}
-                    </motion.h3>
-                    <motion.p
-                      layoutId={`description-${active.description}-${id}`}
-                      className="text-neutral-600 dark:text-neutral-400 text-base"
-                    >
-                      {active.description}
-                    </motion.p>
-                  </div>
-
-                  <motion.a
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    href={active.ctaLink}
-                    target="_blank"
-                    className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
-                  >
-                    {active.ctaText}
-                  </motion.a>
-                </div>
-                <div className="pt-4 relative px-4">
-                  <motion.div
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
-                  >
-                    {typeof active.content === "function"
-                      ? active.content()
-                      : active.content}
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        ) : null}
-      </AnimatePresence>
-      <ul className="py-10 lg:py-20 max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
-        {cards.map((card) => (
-          <motion.div
-            layoutId={`card-${card.title}-${id}`}
-            key={card.title}
-            onClick={() => setActive(card)}
-            className="p-4 flex flex-col  hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
-          >
-            <div className="flex gap-4 flex-col  w-full">
-              <motion.div layoutId={`image-${card.title}-${id}`}>
-                <Image
-                  width={100}
-                  height={100}
-                  src={card.src}
-                  alt={card.title}
-                  className="h-60 w-full  rounded-lg object-cover object-top"
-                />
-              </motion.div>
-              <div className="flex justify-center items-center flex-col">
-                <motion.h3
-                  layoutId={`title-${card.title}-${id}`}
-                  className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left text-base"
-                >
-                  {card.title}
-                </motion.h3>
-                <motion.p
-                  layoutId={`description-${card.description}-${id}`}
-                  className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-base"
-                >
-                  {card.description}
-                </motion.p>
-              </div>
+    return (
+        <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="text-center space-y-4 mb-10">
+                <h1>
+                    Nuestro Equipo
+                </h1>
+                <p className="text-xl">
+                    Conoce a los talentosos individuos que hacen que nuestro capítulo sea excepcional
+                </p>
             </div>
-          </motion.div>
-        ))}
-      </ul>
-    </div>
-  );
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+                {sampleMembers.map((member) => (
+                    <MemberCard
+                        key={member.id}
+                        member={member}
+                        onClick={handleMemberClick}
+                    />
+                ))}
+            </div>
+
+            <MemberModal
+                member={selectedMember}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+            />
+        </div>
+    );
 }
-
-export const CloseIcon = () => {
-  return (
-    <motion.svg
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.05,
-        },
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4 text-black"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M18 6l-12 12" />
-      <path d="M6 6l12 12" />
-    </motion.svg>
-  );
-};
-
-const cards = [
-  {
-    description: "Ingeniería de Sistemas",
-    title: "Adrian Ruiz",
-    src: "https://assets.aceternity.com/demos/lana-del-rey.jpeg",
-    ctaText: "Visit",
-    ctaLink: "https://ui.aceternity.com/templates",
-    content: () => {
-      return (
-        <p>
-          Lana Del Rey, an iconic American singer-songwriter, is celebrated for
-          her melancholic and cinematic music style. Born Elizabeth Woolridge
-          Grant in New York City, she has captivated audiences worldwide with
-          her haunting voice and introspective lyrics. <br /> <br /> Her songs
-          often explore themes of tragic romance, glamour, and melancholia,
-          drawing inspiration from both contemporary and vintage pop culture.
-          With a career that has seen numerous critically acclaimed albums, Lana
-          Del Rey has established herself as a unique and influential figure in
-          the music industry, earning a dedicated fan base and numerous
-          accolades.
-        </p>
-      );
-    },
-  },
-  {
-    description: "Ingeniería de Sistemas",
-    title: "David Vargas",
-    src: "https://assets.aceternity.com/demos/babbu-maan.jpeg",
-    ctaText: "Visit",
-    ctaLink: "https://ui.aceternity.com/templates",
-    content: () => {
-      return (
-        <p>
-          Babu Maan, a legendary Punjabi singer, is renowned for his soulful
-          voice and profound lyrics that resonate deeply with his audience. Born
-          in the village of Khant Maanpur in Punjab, India, he has become a
-          cultural icon in the Punjabi music industry. <br /> <br /> His songs
-          often reflect the struggles and triumphs of everyday life, capturing
-          the essence of Punjabi culture and traditions. With a career spanning
-          over two decades, Babu Maan has released numerous hit albums and
-          singles that have garnered him a massive fan following both in India
-          and abroad.
-        </p>
-      );
-    },
-  },
-
-  {
-    description: "Ingeniería de Sistemas",
-    title: "Samuel Pico",
-    src: "https://assets.aceternity.com/demos/metallica.jpeg",
-    ctaText: "Visit",
-    ctaLink: "https://ui.aceternity.com/templates",
-    content: () => {
-      return (
-        <p>
-          Metallica, an iconic American heavy metal band, is renowned for their
-          powerful sound and intense performances that resonate deeply with
-          their audience. Formed in Los Angeles, California, they have become a
-          cultural icon in the heavy metal music industry. <br /> <br /> Their
-          songs often reflect themes of aggression, social issues, and personal
-          struggles, capturing the essence of the heavy metal genre. With a
-          career spanning over four decades, Metallica has released numerous hit
-          albums and singles that have garnered them a massive fan following
-          both in the United States and abroad.
-        </p>
-      );
-    },
-  },
-  {
-    description: "Ingeniería de Sistemas",
-    title: "Sebastián Galindo",
-    src: "https://assets.aceternity.com/demos/aap-ka-suroor.jpeg",
-    ctaText: "Visit",
-    ctaLink: "https://ui.aceternity.com/templates",
-    content: () => {
-      return (
-        <p>
-          Himesh Reshammiya, a renowned Indian music composer, singer, and
-          actor, is celebrated for his distinctive voice and innovative
-          compositions. Born in Mumbai, India, he has become a prominent figure
-          in the Bollywood music industry. <br /> <br /> His songs often feature
-          a blend of contemporary and traditional Indian music, capturing the
-          essence of modern Bollywood soundtracks. With a career spanning over
-          two decades, Himesh Reshammiya has released numerous hit albums and
-          singles that have garnered him a massive fan following both in India
-          and abroad.
-        </p>
-      );
-    },
-  },
-];
