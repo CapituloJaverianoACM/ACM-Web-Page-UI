@@ -628,12 +628,6 @@ a:active {
    ACCESSIBILITY
    =================================== */
 
-/* Focus styles */
-*:focus {
-  outline: 2px solid var(--azul-electrico);
-  outline-offset: 2px;
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
