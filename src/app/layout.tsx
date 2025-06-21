@@ -9,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" style={{ scrollBehavior: 'smooth' }}>
       <head>
         <meta name="description" content="Mi App en Next.js" />
+        <title>Capitulo Javeriano ACM</title>
       </head>
       <body>
         <HeroUIProvider>

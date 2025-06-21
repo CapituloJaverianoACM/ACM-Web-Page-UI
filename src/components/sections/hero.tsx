@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import ThreeBlobs from "../ThreeBlobs";
 
 export function Hero() {
@@ -14,7 +14,7 @@ export function Hero() {
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        
+
         // Cleanup
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
@@ -22,19 +22,27 @@ export function Hero() {
     }, []);
 
     return (
-        <section className="relative min-h-screen w-full overflow-hidden cursor-none" style={{backgroundColor: '#dde5f8'}}>
+        <section 
+            className="relative min-h-screen w-full overflow-hidden cursor-none"
+                 style={{backgroundColor: '#dde5f8'}}
+                 id="home"
+                 >
             {/* Three.js Background */}
             <ThreeBlobs/>
 
             {/* Blurry overlay between blobs and content */}
-            <div className="absolute inset-0 z-15 pointer-events-none" style={{backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)', background: 'rgba(255,255,255,0.10)'}}>
+            <div className="absolute inset-0 z-15 pointer-events-none" style={{
+                backdropFilter: 'blur(50px)',
+                WebkitBackdropFilter: 'blur(50px)',
+                background: 'rgba(255,255,255,0.10)'
+            }}>
                 {/* Grain overlay */}
                 <div className="absolute inset-0 w-full h-full" style={{
                     backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><filter id=\'noise\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'1\' stitchTiles=\'stitch\'/></filter><rect width=\'100%\' height=\'100%\' filter=\'url(%23noise)\'/></svg>")',
                     opacity: 0.25,
                     pointerEvents: 'none',
                     zIndex: 1
-                }} />
+                }}/>
             </div>
 
             {/* Content Overlay with slightly increased z-index to ensure visibility over blurred blobs */}
@@ -48,25 +56,27 @@ export function Hero() {
                     />
 
                     {/* Subtitle */}
-                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl text-javeriana-dark/80 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
-                        ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la innovación.
+                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
+                        ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la
+                        innovación.
                     </p>
                 </div>
 
                 {/* Scroll Indicator */}
                 <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                    <div className="w-6 h-10 border-2 border-javeriana-medium/50 rounded-full flex justify-center">
-                        <div className="w-1 h-3 bg-javeriana-medium rounded-full mt-2 animate-bounce"></div>
+                    <div className="w-6 h-10 border-2 rounded-full flex justify-center">
+                        <div className="w-1 h-3 rounded-full mt-2 animate-bounce"></div>
                     </div>
                 </div>
             </div>
 
             {/* Enhanced gradient overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 pointer-events-none z-10"></div>
-            
+            <div
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 pointer-events-none z-10"></div>
+
             {/* Custom cursor with higher z-index to ensure it's always on top */}
             <div
-                className="fixed rounded-full w-6 h-6 border-2 border-javeriana-medium/50 pointer-events-none"
+                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche pointer-events-none"
                 style={{
                     left: 0,
                     top: 0,
