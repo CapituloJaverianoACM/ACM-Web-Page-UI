@@ -56,7 +56,7 @@ export function Hero() {
                     />
 
                     {/* Subtitle */}
-                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl text-javeriana-dark/80 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
+                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
                         ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la
                         innovación.
                     </p>
@@ -64,8 +64,8 @@ export function Hero() {
 
                 {/* Scroll Indicator */}
                 <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                    <div className="w-6 h-10 border-2 border-javeriana-medium/50 rounded-full flex justify-center">
-                        <div className="w-1 h-3 bg-javeriana-medium rounded-full mt-2 animate-bounce"></div>
+                    <div className="w-6 h-10 border-2 rounded-full flex justify-center">
+                        <div className="w-1 h-3 rounded-full mt-2 animate-bounce"></div>
                     </div>
                 </div>
             </div>

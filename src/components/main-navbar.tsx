@@ -17,7 +17,7 @@ export default function MainNavbar() {
     // Nav links
     const navLinks = [
         {key: "home", label: "Home", href: "#home"},
-        {key: "about Us", label: "About Us", href: "#about-us"},
+        {key: "about us", label: "About Us", href: "#about-us"},
         {key: "members", label: "Members", href: "#members"},
         {key: "activities", label: "Activities", href: "#activities"},
     ];
@@ -51,7 +51,7 @@ export default function MainNavbar() {
                                         color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
                                         transition: "color var(--transition-normal)"
                                     }}
-                                    onClick={e => {
+                                    onClick={() => {
                                         setActiveLink(item.key);
                                     }}
                                 >
@@ -97,7 +97,7 @@ export default function MainNavbar() {
                                 aria-label="Toggle mobile menu"
                             >
                                 <svg
-                                    className={`w-6 h-6 text-javeriana-dark transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`}
+                                    className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`}
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -133,8 +133,7 @@ export default function MainNavbar() {
                                         color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
                                         transition: "color var(--transition-normal)"
                                     }}
-                                    onClick={e => {
-                                        e.preventDefault();
+                                    onClick={() => {
                                         setActiveLink(item.key);
                                     }}
                                 >
