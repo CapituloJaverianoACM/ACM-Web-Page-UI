@@ -1,0 +1,20 @@
+name: Setup Bun
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: PR Checker Setup (Build)
+        uses: oven-sh/setup-bun@v2.0.2
+        
+      - name: Build command
+        run: bun run build
+        
