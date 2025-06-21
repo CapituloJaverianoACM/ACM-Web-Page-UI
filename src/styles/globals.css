@@ -6,6 +6,8 @@
 
 /* Import Adobe Fonts */
 @import url("https://use.typekit.net/sxb7wzn.css");
+/* Import Flaticon Icons */
+@import url('https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 
 @tailwind base;
 @tailwind components;
@@ -30,12 +32,12 @@
   --azul-noche-rgb: 0, 8, 27;
 
   /* Neutral Colors */
-  --white: #FFFFFF;
-  --black: #000000;
+  --white: #EEEEEE;
+  --black: #232323;
 
   /* Typography - BC Liguria & Montserrat */
-  --font-primary: 'BC Liguria', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-secondary: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-primary: 'bc-liguria', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-secondary: 'montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Font Weights */
@@ -542,35 +544,6 @@ a:active {
 /* ===================================
    BRAND-SPECIFIC COMPONENTS
    =================================== */
-
-/* Key Visual styles */
-.key-visual {
-  position: relative;
-  padding: var(--space-3xl);
-  background: var(--gradient-primary);
-  color: var(--white);
-  text-align: center;
-  overflow: hidden;
-}
-
-.key-visual::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image:
-          radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.key-visual__content {
-  position: relative;
-  z-index: 1;
-}
-
 /* Values section */
 .values-grid {
   display: grid;
@@ -655,12 +628,6 @@ a:active {
    ACCESSIBILITY
    =================================== */
 
-/* Focus styles */
-*:focus {
-  outline: 2px solid var(--azul-electrico);
-  outline-offset: 2px;
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -673,7 +640,7 @@ a:active {
 }
 
 /* High contrast support */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   :root {
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
