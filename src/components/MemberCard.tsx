@@ -31,10 +31,10 @@ const MemberCard = ({member, onClick}: MemberCardProps) => {
             }}
             onClick={() => onClick(member)}
         >
-            <CardContent className="p-0 h-full relative" >
+            <CardContent className="p-0 h-full relative">
                 {/* Background Image with Parallax Effect */}
                 <div className="absolute inset-0 overflow-hidden">
-                    {member.image && !imageError ? (
+                    {(member.image && !imageError) ? (
                         <div className="relative w-full h-full">
                             <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
                                 <img
@@ -42,6 +42,8 @@ const MemberCard = ({member, onClick}: MemberCardProps) => {
                                     alt={member.name}
                                     className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5/6 object-cover"
                                     onError={() => setImageError(true)}
+                                    style={{userSelect: "none"}}
+                                    draggable={false}
                                 />
 
                                 {/* Radial Gradient that uses image as mask */}
@@ -83,13 +85,14 @@ const MemberCard = ({member, onClick}: MemberCardProps) => {
                                 <Badge
                                     key={index}
                                     variant="secondary"
-                                    className="text-xs bg-[var(--azul-niebla)]/20 text-white bg-[var(--azul-niebla)]/30 transition-colors duration-200 glassmorphic py-1 px-2.5"
+                                    className="text-xs bg-[var(--azul-niebla)]/20 text-white bg-[var(--azul-niebla)]/30 transition-colors duration-200 glassmorphic py-1 px-2.5 select-none"
                                 >
                                     {skill}
                                 </Badge>
                             ))}
                             {member.skills.length > 2 && (
-                                <Badge variant="outline" className="text-xs text-white/80 border-white/30 py-1 px-2.5">
+                                <Badge variant="outline"
+                                       className="text-xs text-white/80 border-white/30 py-1 px-2.5 select-none">
                                     +{member.skills.length - 2}
                                 </Badge>
                             )}

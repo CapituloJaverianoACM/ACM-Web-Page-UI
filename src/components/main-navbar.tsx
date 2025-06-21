@@ -33,7 +33,8 @@ export default function MainNavbar() {
                                 src="/Logo_Oscuro.svg"
                                 alt="Logo ACM Javeriana"
                                 className="h-10 w-auto mr-4"
-                                style={{display: "block"}}
+                                style={{display: "block", userSelect: "none"}}
+                                draggable={false}
                             />
                         </div>
 

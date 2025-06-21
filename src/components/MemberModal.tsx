@@ -28,13 +28,15 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
           {/* Header Section */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
             <div className="flex-shrink-0">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 mx-auto md:mx-0">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 mx-auto md:mx-0 select-none">
                 {member.image && !imageError ? (
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover object-top"
                     onError={() => setImageError(true)}
+                    style={{ userSelect: "none" }}
+                    draggable={false}
                   />
                 ) : (
                   <User className="w-12 h-12 text-white/80" />
