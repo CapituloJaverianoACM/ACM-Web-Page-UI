@@ -22,8 +22,11 @@ export function Hero() {
     }, []);
 
     return (
-        <section className="relative min-h-screen w-full overflow-hidden cursor-none"
-                 style={{backgroundColor: '#dde5f8'}}>
+        <section 
+            className="relative min-h-screen w-full overflow-hidden cursor-none"
+                 style={{backgroundColor: '#dde5f8'}}
+                 id="home"
+                 >
             {/* Three.js Background */}
             <ThreeBlobs/>
 
@@ -73,7 +76,7 @@ export function Hero() {
 
             {/* Custom cursor with higher z-index to ensure it's always on top */}
             <div
-                className="fixed rounded-full w-6 h-6 border-2 border-javeriana-medium/50 pointer-events-none"
+                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche pointer-events-none"
                 style={{
                     left: 0,
                     top: 0,

@@ -52,7 +52,6 @@ export default function MainNavbar() {
                                         transition: "color var(--transition-normal)"
                                     }}
                                     onClick={e => {
-                                        e.preventDefault();
                                         setActiveLink(item.key);
                                     }}
                                 >

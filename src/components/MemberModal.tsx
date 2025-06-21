@@ -1,9 +1,15 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Mail, User, Building } from 'lucide-react';
-import { Member } from './MemberCard';
-import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Mail, User, Building } from "lucide-react";
+import { Member } from "./MemberCard";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface MemberModalProps {
   member: Member | null;
@@ -45,18 +51,23 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
             </div>
 
             <div className="flex-1 space-y-4 text-center md:text-left">
-              <h2 className="text-3xl font-bold text-[var(--azul-noche)]">{member.name}</h2>
+              <motion.h2
+                className="text-3xl font-bold text-[var(--azul-noche)]"
+                initial={{ transform: "translateX(-100px)" }}
+                animate={{ transform: "translateX(0px)" }}
+                transition={{ type: "spring", duration: 0.8, bounce: 0.5 }}
+              >
+                {member.name}
+              </motion.h2>
               <div className="flex items-center gap-2 text-[var(--azul-electrico)] justify-center md:justify-start">
                 <Building className="w-4 h-4" />
                 <span className="font-medium">{member.title}</span>
               </div>
-              <div className="text-[var(--azul-ultramar)]">
-                {member.rol}
-              </div>
+              <div className="text-[var(--azul-ultramar)]">{member.rol}</div>
               <Button
                 variant="outline"
                 className="mt-4 hover:bg-[var(--azul-niebla)] hover:text-[var(--azul-electrico)] hover:border-[var(--azul-crayon)] transition-colors duration-200"
-                onClick={() => window.open(`mailto:${member.email}`, '_blank')}
+                onClick={() => window.open(`mailto:${member.email}`, "_blank")}
               >
                 <Mail className="w-4 h-4 mr-2" />
                 Contactar
@@ -66,7 +77,9 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
           {/* Bio Section */}
           <div className="space-y-3 bg-[var(--azul-niebla)]/10 p-5 rounded-xl">
-            <h3 className="text-lg font-semibold text-[var(--azul-noche)]">Acerca de</h3>
+            <h3 className="text-lg font-semibold text-[var(--azul-noche)]">
+              Acerca de
+            </h3>
             <p className="text-[var(--azul-noche)]/80 leading-relaxed">
               {member.bio}
             </p>
@@ -74,7 +87,9 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
           {/* Skills Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--azul-noche)]">Habilidades & Experiencia</h3>
+            <h3 className="text-lg font-semibold text-[var(--azul-noche)]">
+              Habilidades & Experiencia
+            </h3>
             <div className="flex flex-wrap gap-2">
               {member.skills.map((skill, index) => (
                 <Badge
