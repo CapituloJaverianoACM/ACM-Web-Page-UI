@@ -20,6 +20,7 @@ interface MemberModalProps {
 
 const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     const [imageError, setImageError] = useState(false);
+    const vairbale : any = "as";
 
     if (!member) return null;
 
