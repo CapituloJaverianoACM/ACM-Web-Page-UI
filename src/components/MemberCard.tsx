@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { User } from "lucide-react";
-import Image, {ImageProps} from "next/image";
-import { cn } from "@/utils/cn";
+import Image from "next/image";
 
 export interface Member {
     id: string;
