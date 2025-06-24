@@ -15,11 +15,11 @@ export function Members() {
         fetch('members.json')
             .then((res) => res.json())
             .then((data) => {
-                const normalized = data.map((member: any) => ({
+                const normalized = data.map((member: Partial<Member>) => ({
                     ...member,
                     active: typeof member.active === "string" ? member.active === "true" : !!member.active
                 }));
-                setMembers(normalized);
+                setMembers(normalized as Member[]);
             });
     }, []);
 

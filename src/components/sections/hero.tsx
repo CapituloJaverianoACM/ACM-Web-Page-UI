@@ -1,5 +1,4 @@
 "use client";
-import React, {useEffect} from "react";
 import ThreeBlobs from "../ThreeBlobs";
 
 export function Hero() {
