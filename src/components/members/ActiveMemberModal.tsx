@@ -7,7 +7,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Mail, User, Building } from "lucide-react";
-import { Member } from "./MemberCard";
+import { Member } from "@/types/member";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -18,7 +18,7 @@ interface MemberModalProps {
     onClose: () => void;
 }
 
-const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
+const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     const [imageError, setImageError] = useState(false);
 
     if (!member) return null;
@@ -38,7 +38,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                             <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 mx-auto md:mx-0 select-none">
                                 {member.image && !imageError ? (
                                     <Image
-                                        src={member.image}
+                                       src={member.image}
                                         alt={member.name}
                                         width={1000}
                                         height={1000}
@@ -64,7 +64,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                             </motion.h2>
                             <div className="flex items-center gap-2 text-[var(--azul-electrico)] justify-center md:justify-start">
                                 <Building className="w-4 h-4" />
-                                <span className="font-medium">{member.title}</span>
+                                <span className="font-medium">{member.career}</span>
                             </div>
                             <div className="text-[var(--azul-ultramar)]">{member.rol}</div>
                             <Button
@@ -110,4 +110,4 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     );
 };
 
-export default MemberModal;
+export default ActiveMemberModal;

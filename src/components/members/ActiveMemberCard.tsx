@@ -2,25 +2,15 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { User } from "lucide-react";
+import { Member } from "@/types/member";
 import Image from "next/image";
-
-export interface Member {
-    id: string;
-    name: string;
-    title: string;
-    rol: string;
-    email: string;
-    bio: string;
-    skills: string[];
-    image?: string;
-}
 
 interface MemberCardProps {
     member: Member;
     onClick: (member: Member) => void;
 }
 
-const MemberCard = ({ member, onClick }: MemberCardProps) => {
+const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
     const [imageError, setImageError] = useState(false);
 
     return (
@@ -76,7 +66,7 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
                             {member.name}
                         </h3>
                         <p className="text-[var(--azul-niebla)] font-medium text-sm mb-1 font-['Montserrat'] line-clamp-1">
-                            {member.title}
+                            {member.career}
                         </p>
                         <p className="text-gray-200 text-sm mb-4 font-['Montserrat'] line-clamp-1">
                             {member.rol}
@@ -112,4 +102,4 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
     );
 };
 
-export default MemberCard;
+export default ActiveMemberCard;
