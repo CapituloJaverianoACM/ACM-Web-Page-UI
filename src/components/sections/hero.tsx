@@ -3,30 +3,13 @@ import React, {useEffect} from "react";
 import ThreeBlobs from "../ThreeBlobs";
 
 export function Hero() {
-    // Add mouse movement handler for the cursor
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            const cursor = document.getElementById('custom-cursor');
-            if (cursor) {
-                cursor.style.left = `${event.clientX}px`;
-                cursor.style.top = `${event.clientY}px`;
-            }
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, []);
 
     return (
-        <section 
+        <section
             className="relative min-h-screen w-full overflow-hidden cursor-none"
-                 style={{backgroundColor: '#dde5f8'}}
-                 id="home"
-                 >
+            style={{backgroundColor: '#dde5f8'}}
+            id="home"
+        >
             {/* Three.js Background */}
             <ThreeBlobs/>
 
@@ -73,19 +56,6 @@ export function Hero() {
             {/* Enhanced gradient overlay for depth */}
             <div
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 pointer-events-none z-10"></div>
-
-            {/* Custom cursor with higher z-index to ensure it's always on top */}
-            <div
-                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche pointer-events-none"
-                style={{
-                    left: 0,
-                    top: 0,
-                    transform: 'translate(-50%, -50%)',
-                    transition: 'transform 0.05s ease',
-                    zIndex: 999 // Very high z-index to stay above all other elements
-                }}
-                id="custom-cursor"
-            />
         </section>
     );
 }
