@@ -15,6 +15,7 @@ import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
+import { start } from "repl";
 
 interface CarouselProps {
   items: React.ReactNode[];
@@ -32,7 +33,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => {},
+  onCardClose: () => { },
   currentIndex: 0,
 });
 
@@ -86,11 +87,50 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     return window && window.innerWidth < 768;
   };
 
+  // Scrollear con el mouse
+
+  const scrolling = useRef(false);
+  const startX = useRef(0)
+  const scrollDistance = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    scrolling.current = true;
+    startX.current = e.clientX
+    lastScrollLeft.current = carouselRef.current?.scrollLeft ?? 0;
+  }
+
+  const lastScrollLeft = useRef(0);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!scrolling.current || !carouselRef.current) return;
+
+    const currentX = e.clientX;
+    scrollDistance.current = currentX - startX.current;
+
+    const newScrollLeft = lastScrollLeft.current - scrollDistance.current * 5;
+    carouselRef.current!.scrollTo({ left: newScrollLeft, behavior: "smooth" });
+  };
+
+  const handleMouseUp = () => {
+    scrolling.current = false;
+  };
+
+  useEffect(() => {
+    const onMouseUp = () => handleMouseUp();
+    window.addEventListener("mouseup", onMouseUp);
+    return () => window.removeEventListener("mouseup", onMouseUp);
+  }, []);
+
+
   return (
     <CarouselContext.Provider
       value={{ onCardClose: handleCardClose, currentIndex }}
     >
-      <div className="relative w-full">
+      <div className="relative w-full select-none"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
         <div
           className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none]"
           ref={carouselRef}
@@ -258,6 +298,7 @@ export const Card = ({
           </motion.p>
         </div>
         <BlurImage
+          draggable={false}
           src={card.src}
           alt={card.title}
           fill
