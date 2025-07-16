@@ -16,15 +16,26 @@ export default function MainNavbar() {
     };
 
     const changeTheme = () => {
-        const oldTheme = localStorage.getItem("theme") ?? "light";
-        if (oldTheme == "light") {
-            localStorage.setItem("theme", "dark")
-            document.documentElement.classList.add("dark")
+        const getCookie = (name: string) => {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
+        };
+
+        const setCookie = (name: string, value: string, days: number) => {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = `${name}=${value}; path=/; expires=${expires}`;
+        };
+
+        const currentTheme = getCookie('theme') ?? 'light';
+
+        if (currentTheme === 'light') {
+            document.documentElement.classList.add('dark');
+            setCookie('theme', 'dark', 365);
         } else {
-            localStorage.setItem("theme", "light")
-            document.documentElement.classList.remove("dark")
+            document.documentElement.classList.remove('dark');
+            setCookie('theme', 'light', 365);
         }
-    }
+    };
 
     // Nav links
     const navLinks = [

@@ -1,31 +1,20 @@
-'use client';
-
-import MainNavbar from '@/components/main-navbar';
 import '../styles/globals.css';
-import { HeroUIProvider } from "@heroui/react";
+import { cookies } from 'next/headers';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// https://nextjs.org/docs/app/api-reference/functions/cookies
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("theme")?.value ?? "light"
 
   return (
-    <html lang="es" style={{ scrollBehavior: 'smooth' }}>
+    <html className={`${theme}`} lang="es" style={{ scrollBehavior: 'smooth' }}>
       <head>
         <meta name="description" content="Mi App en Next.js" />
         <title>Capitulo Javeriano ACM</title>
-        {/* Esto es para el tema (oscuro / claro) */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-        const theme = localStorage.getItem('theme');
-        if (theme == 'dark') {
-          document.documentElement.classList.add('dark');
-        }
-        `
-        }}></script>
       </head>
       <body>
-        <HeroUIProvider>
-          <MainNavbar />
-          {children}
-        </HeroUIProvider>
+        {children}
       </body>
     </html>
   );
