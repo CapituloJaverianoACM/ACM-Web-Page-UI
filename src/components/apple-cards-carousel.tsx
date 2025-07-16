@@ -15,7 +15,6 @@ import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { start } from "repl";
 
 interface CarouselProps {
   items: React.ReactNode[];
