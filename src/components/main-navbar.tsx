@@ -16,7 +16,7 @@ export default function MainNavbar() {
     };
 
     const changeTheme = () => {
-        const oldTheme = localStorage.getItem("theme") ?? "";
+        const oldTheme = localStorage.getItem("theme") ?? "light";
         if (oldTheme == "light") {
             localStorage.setItem("theme", "dark")
             document.documentElement.classList.add("dark")
