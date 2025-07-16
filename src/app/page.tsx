@@ -11,12 +11,12 @@ export default function HomePage() {
   return (
     <HeroUIProvider>
       <MainNavbar />
-      <>
+      <div className="dark:bg-[#121212]">
         <Hero />
         <AboutUs />
         <Members />
         <Activities />
-      </>
+      </div>
     </HeroUIProvider>
   );
 }

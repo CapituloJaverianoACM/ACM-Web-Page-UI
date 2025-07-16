@@ -25,17 +25,17 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a]">
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-gray-900">
+                    <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         Sobre {member.name}
                     </DialogTitle>
                 </DialogHeader>
-                <div className="space-y-8 font-['Montserrat'] px-6 py-5 sm:p-8">
+                <div className="space-y-8 font-['Montserrat'] px-6 py-5 sm:p-8 dark:text-gray-100">
                     {/* Header Section */}
                     <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                         <div className="flex-shrink-0">
-                            <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 mx-auto md:mx-0 select-none">
+                            <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 dark:border-[#505050] mx-auto md:mx-0 select-none">
                                 {member.image && !imageError ? (
                                     <Image
                                         src={member.image}
@@ -55,7 +55,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
                         <div className="flex-1 space-y-4 text-center md:text-left">
                             <motion.h2
-                                className="text-3xl font-bold text-[var(--azul-noche)]"
+                                className="text-3xl font-bold text-[var(--azul-noche)] dark:text-gray-50"
                                 initial={{ transform: "translateX(-100px)" }}
                                 animate={{ transform: "translateX(0px)" }}
                                 transition={{ type: "spring", duration: 0.8, bounce: 0.5 }}
@@ -69,7 +69,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                             <div className="text-[var(--azul-ultramar)]">{member.rol}</div>
                             <Button
                                 variant="outline"
-                                className="mt-4 hover:bg-[var(--azul-niebla)] hover:text-[var(--azul-electrico)] hover:border-[var(--azul-crayon)] transition-colors duration-200"
+                                className="mt-4 dark:hover:bg-[#121212] hover:bg-[var(--azul-niebla)] hover:text-[var(--azul-electrico)] hover:border-[var(--azul-crayon)] transition-colors duration-200"
                                 onClick={() => window.open(`mailto:${member.email}`, "_blank")}
                             >
                                 <Mail className="w-4 h-4 mr-2" />
@@ -80,7 +80,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
                     {/* Bio Section */}
                     <div className="space-y-3 bg-[var(--azul-niebla)]/10 p-5 rounded-xl">
-                        <h3 className="text-lg font-semibold text-[var(--azul-noche)]">
+                        <h3 className="text-lg font-semibold text-[var(--azul-noche)] dark:text-gray-50">
                             Acerca de
                         </h3>
                         <p className="text-[var(--azul-noche)]/80 leading-relaxed">
@@ -90,14 +90,14 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
                     {/* Skills Section */}
                     <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-[var(--azul-noche)]">
+                        <h3 className="text-lg font-semibold text-[var(--azul-noche)] dark:text-gray-50">
                             Habilidades & Experiencia
                         </h3>
                         <div className="flex flex-wrap gap-2">
                             {member.skills.map((skill, index) => (
                                 <Badge
                                     key={index}
-                                    className="bg-[var(--azul-niebla)] text-[var(--azul-electrico)] hover:bg-[var(--azul-crayon)]/20 transition-colors duration-200 px-3 py-1"
+                                    className="bg-[var(--azul-niebla)] dark:bg-[#303030] text-[var(--azul-electrico)] hover:bg-[var(--azul-crayon)]/20 transition-colors duration-200 px-3 py-1"
                                 >
                                     {skill}
                                 </Badge>

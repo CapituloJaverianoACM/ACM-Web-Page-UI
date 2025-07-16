@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import ThreeBlobs from "../ThreeBlobs";
 
 export function Hero() {
@@ -22,27 +22,25 @@ export function Hero() {
     }, []);
 
     return (
-        <section 
-            className="relative min-h-screen w-full overflow-hidden cursor-none"
-                 style={{backgroundColor: '#dde5f8'}}
-                 id="home"
-                 >
+        <section
+            className="relative min-h-screen w-full overflow-hidden cursor-none bg-[#dde5f8]"
+            id="home"
+        >
             {/* Three.js Background */}
-            <ThreeBlobs/>
+            <ThreeBlobs />
 
             {/* Blurry overlay between blobs and content */}
-            <div className="absolute inset-0 z-15 pointer-events-none" style={{
+            <div className="absolute inset-0 z-15 pointer-events-none bg-[#ffffff10] dark:bg-[#121212]" style={{
                 backdropFilter: 'blur(50px)',
                 WebkitBackdropFilter: 'blur(50px)',
-                background: 'rgba(255,255,255,0.10)'
             }}>
                 {/* Grain overlay */}
-                <div className="absolute inset-0 w-full h-full" style={{
+                <div className="dark:hidden absolute inset-0 w-full h-full" style={{
                     backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><filter id=\'noise\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'1\' stitchTiles=\'stitch\'/></filter><rect width=\'100%\' height=\'100%\' filter=\'url(%23noise)\'/></svg>")',
                     opacity: 0.25,
                     pointerEvents: 'none',
                     zIndex: 1
-                }}/>
+                }} />
             </div>
 
             {/* Content Overlay with slightly increased z-index to ensure visibility over blurred blobs */}
@@ -52,11 +50,16 @@ export function Hero() {
                     <img
                         src="/Logo_Oscuro.svg"
                         alt="Logo"
-                        className="filter drop-shadow-md"
+                        className="dark:hidden flex filter drop-shadow-md"
+                    />
+                    <img
+                        src="/Logo_Claro.svg"
+                        alt="Logo"
+                        className="hidden dark:flex filter drop-shadow-md"
                     />
 
                     {/* Subtitle */}
-                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
+                    <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow dark:text-white">
                         ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la
                         innovación.
                     </p>
@@ -76,7 +79,7 @@ export function Hero() {
 
             {/* Custom cursor with higher z-index to ensure it's always on top */}
             <div
-                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche pointer-events-none"
+                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche dark:border-white pointer-events-none"
                 style={{
                     left: 0,
                     top: 0,
