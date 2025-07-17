@@ -48,15 +48,22 @@ export default function MainNavbar() {
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 ">
             <div className="max-w-7xl mx-auto">
-                <div className="glassmorphic px-6 py-3 shadow-lg">
+                <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <div className="flex items-center">
                             <img
                                 src="/Logo_Oscuro.svg"
                                 alt="Logo ACM Javeriana"
-                                className="h-10 w-auto mr-4"
-                                style={{ display: "block", userSelect: "none" }}
+                                className="h-10 w-auto mr-4 flex dark:hidden"
+                                style={{ userSelect: "none" }}
+                                draggable={false}
+                            />
+                            <img
+                                src="/Logo_Claro.svg"
+                                alt="Logo ACM Javeriana"
+                                className="h-10 w-auto mr-4 hidden dark:flex"
+                                style={{ userSelect: "none" }}
                                 draggable={false}
                             />
                         </div>
@@ -68,10 +75,10 @@ export default function MainNavbar() {
                                     key={item.key}
                                     href={item.href}
 
-                                    className="text-base text-semibold px-md py-md relative"
+                                    className={`text-base text-semibold px-md py-md relative ${activeLink === item.key ? "text-[--azul-electrico]" : "text-[--azul-noche] dark:text-white"}`}
                                     style={{
                                         textDecoration: "none",
-                                        color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
+                                        // color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
                                         transition: "color var(--transition-normal)"
                                     }}
                                     onClick={() => {
@@ -97,7 +104,7 @@ export default function MainNavbar() {
                         </div>
 
                         <div className="flex gap-4 justify-end items-center ml-auto">
-                            <div onClick={changeTheme} className="glassmorphic p-2">
+                            <div onClick={changeTheme} className="glassmorphic dark:glassmorphic-dark p-2">
                                 <IconMoon className="dark:hidden flex"></IconMoon>
                                 <IconSun className="hidden dark:flex"></IconSun>
                             </div>
@@ -106,7 +113,7 @@ export default function MainNavbar() {
                             <div className="hidden md:flex items-center gap-4">
                                 <a
                                     href="#login"
-                                    className="btn btn--outline btn--small"
+                                    className="btn btn--outline btn--small "
                                 >
                                     Log in
                                 </a>
