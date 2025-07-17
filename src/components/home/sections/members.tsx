@@ -1,6 +1,10 @@
+"use client";
+
 import { useEffect, useState } from 'react';
-import MemberCard, { Member } from '../MemberCard';
-import MemberModal from '../MemberModal';
+import MemberCard from '../member-card';
+import MemberModal from '../member-modal';
+import { Member } from '@/models/member.model';
+import { getMembersService } from '@/services/member.service';
 
 export function Members() {
     const [members, setMembers] = useState<Member[]>([]);
@@ -8,9 +12,8 @@ export function Members() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        fetch('members.json')
-            .then((res) => res.json())
-            .then((data) => setMembers(data));
+        getMembersService().then((data) => setMembers(data));
+        console.log("Members:", members);
     }, []);
 
     const handleMemberClick = (member: Member) => {
@@ -35,7 +38,7 @@ export function Members() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {members.map((member) => (
-                    <MemberCard key={member.id} member={member} onClick={() => handleMemberClick(member)} />
+                    <MemberCard key={member._id} member={member} onClick={() => handleMemberClick(member)} />
                 ))}
             </div>
             <MemberModal member={selectedMember} isOpen={isModalOpen} onClose={handleCloseModal} />
