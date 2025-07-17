@@ -1,6 +1,7 @@
 'use client';
 
-import React, {useState} from "react";
+import { IconMoon, IconSun } from "@tabler/icons-react";
+import React, { useState } from "react";
 
 export default function MainNavbar() {
     const [activeLink, setActiveLink] = useState("home");
@@ -14,12 +15,34 @@ export default function MainNavbar() {
         setIsMobileMenuOpen(false);
     };
 
+    const changeTheme = () => {
+        const getCookie = (name: string) => {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
+        };
+
+        const setCookie = (name: string, value: string, days: number) => {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = `${name}=${value}; path=/; expires=${expires}`;
+        };
+
+        const currentTheme = getCookie('theme') ?? 'light';
+
+        if (currentTheme === 'light') {
+            document.documentElement.classList.add('dark');
+            setCookie('theme', 'dark', 365);
+        } else {
+            document.documentElement.classList.remove('dark');
+            setCookie('theme', 'light', 365);
+        }
+    };
+
     // Nav links
     const navLinks = [
-        {key: "home", label: "Home", href: "#home"},
-        {key: "about us", label: "About Us", href: "#about-us"},
-        {key: "members", label: "Members", href: "#members"},
-        {key: "activities", label: "Activities", href: "#activities"},
+        { key: "home", label: "Home", href: "#home" },
+        { key: "about us", label: "About Us", href: "#about-us" },
+        { key: "members", label: "Members", href: "#members" },
+        { key: "activities", label: "Activities", href: "#activities" },
     ];
 
     return (
@@ -33,7 +56,7 @@ export default function MainNavbar() {
                                 src="/Logo_Oscuro.svg"
                                 alt="Logo ACM Javeriana"
                                 className="h-10 w-auto mr-4"
-                                style={{display: "block", userSelect: "none"}}
+                                style={{ display: "block", userSelect: "none" }}
                                 draggable={false}
                             />
                         </div>
@@ -73,52 +96,58 @@ export default function MainNavbar() {
                             ))}
                         </div>
 
-                        {/* User Links */}
-                        <div className="hidden md:flex items-center gap-4">
-                            <a
-                                href="#login"
-                                className="btn btn--outline btn--small"
-                            >
-                                Log in
-                            </a>
-                            <a
-                                href="#signup"
-                                className="btn btn--primary btn--small"
-                            >
-                                Sign up
-                            </a>
+                        <div className="flex gap-4 justify-end items-center ml-auto">
+                            <div onClick={changeTheme} className="glassmorphic p-2">
+                                <IconMoon className="dark:hidden flex"></IconMoon>
+                                <IconSun className="hidden dark:flex"></IconSun>
+                            </div>
+
+                            {/* User Links */}
+                            <div className="hidden md:flex items-center gap-4">
+                                <a
+                                    href="#login"
+                                    className="btn btn--outline btn--small"
+                                >
+                                    Log in
+                                </a>
+                                <a
+                                    href="#signup"
+                                    className="btn btn--primary btn--small"
+                                >
+                                    Sign up
+                                </a>
+                            </div>
+                            {/* Mobile Menu Button */}
+                            <div className="md:hidden">
+                                <button
+                                    onClick={toggleMobileMenu}
+                                    className="p-2 glassmorphic transition-all duration-300"
+                                    aria-label="Toggle mobile menu"
+                                >
+                                    <svg
+                                        className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        {isMobileMenuOpen ? (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        ) : (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                d="M4 6h16M4 12h16M4 18h16" />
+                                        )}
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
-                        {/* Mobile Menu Button */}
-                        <div className="md:hidden">
-                            <button
-                                onClick={toggleMobileMenu}
-                                className="p-2 glassmorphic transition-all duration-300"
-                                aria-label="Toggle mobile menu"
-                            >
-                                <svg
-                                    className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    {isMobileMenuOpen ? (
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                              d="M6 18L18 6M6 6l12 12"/>
-                                    ) : (
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                              d="M4 6h16M4 12h16M4 18h16"/>
-                                    )}
-                                </svg>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
                 {/* Mobile Menu */}
-                <div className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${
-                    isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-                }`}>
+                <div className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+                    }`}>
                     <div
                         className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
                         <div className="flex flex-col space-y-4">
