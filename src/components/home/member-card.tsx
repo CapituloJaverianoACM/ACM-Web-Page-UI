@@ -1,19 +1,10 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/home/ui/card";
+import { Badge } from "@/components/home/ui/badge";
 import { User } from "lucide-react";
 import Image from "next/image";
+import { Member } from "@/models/member.model";
 
-export interface Member {
-    id: string;
-    name: string;
-    title: string;
-    rol: string;
-    email: string;
-    bio: string;
-    skills: string[];
-    image?: string;
-}
 
 interface MemberCardProps {
     member: Member;
@@ -79,7 +70,7 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
                             {member.title}
                         </p>
                         <p className="text-gray-200 text-sm mb-4 font-['Montserrat'] line-clamp-1">
-                            {member.rol}
+                            {member.role}
                         </p>
 
                         {/* Skills Preview */}

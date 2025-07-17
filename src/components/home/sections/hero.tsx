@@ -1,6 +1,6 @@
 "use client";
-import React, {useEffect} from "react";
-import ThreeBlobs from "../ThreeBlobs";
+import React, { useEffect } from "react";
+import ThreeBlobs from "../three-blobs";
 
 export function Hero() {
     // Add mouse movement handler for the cursor
@@ -22,13 +22,13 @@ export function Hero() {
     }, []);
 
     return (
-        <section 
+        <section
             className="relative min-h-screen w-full overflow-hidden cursor-none"
-                 style={{backgroundColor: '#dde5f8'}}
-                 id="home"
-                 >
+            style={{ backgroundColor: '#dde5f8' }}
+            id="home"
+        >
             {/* Three.js Background */}
-            <ThreeBlobs/>
+            <ThreeBlobs />
 
             {/* Blurry overlay between blobs and content */}
             <div className="absolute inset-0 z-15 pointer-events-none" style={{
@@ -42,7 +42,7 @@ export function Hero() {
                     opacity: 0.25,
                     pointerEvents: 'none',
                     zIndex: 1
-                }}/>
+                }} />
             </div>
 
             {/* Content Overlay with slightly increased z-index to ensure visibility over blurred blobs */}
