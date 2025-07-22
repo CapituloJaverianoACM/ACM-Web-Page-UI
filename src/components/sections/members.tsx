@@ -26,10 +26,10 @@ export function Members() {
     return (
         <div id="members" className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center space-y-4 mb-10">
-                <h1>
+                <h1 className="dark:text-white">
                     Nuestro Equipo
                 </h1>
-                <p className="text-xl">
+                <p className="text-xl dark:text-white/80">
                     Conoce a los talentosos individuos que hacen que nuestro capítulo sea excepcional
                 </p>
             </div>
