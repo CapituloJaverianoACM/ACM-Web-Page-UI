@@ -51,7 +51,7 @@ export default function MainNavbar() {
                 <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
                     <div className="flex items-center justify-between">
                         {/* Logo */}
-                        <div className="flex items-center">
+                        <div className="flex items-center flex-1">
                             <img
                                 src="/Logo_Oscuro.svg"
                                 alt="Logo ACM Javeriana"
@@ -69,7 +69,7 @@ export default function MainNavbar() {
                         </div>
 
                         {/* Desktop Navigation Links */}
-                        <div className="hidden md:flex items-center space-x-8">
+                        <div className="hidden md:flex items-center justify-center space-x-8 flex-1">
                             {navLinks.map((item) => (
                                 <a
                                     key={item.key}
@@ -103,7 +103,7 @@ export default function MainNavbar() {
                             ))}
                         </div>
 
-                        <div className="flex gap-4 justify-end items-center ml-auto">
+                        <div className="flex gap-4 justify-end items-center ml-auto flex-1">
                             <div onClick={changeTheme} className="glassmorphic dark:glassmorphic-dark p-2">
                                 <IconMoon className="dark:hidden flex"></IconMoon>
                                 <IconSun className="hidden dark:flex"></IconSun>
