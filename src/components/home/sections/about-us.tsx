@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Carousel, Card } from "@/components/apple-cards-carousel";
+import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { FocusCards } from "../focus-cards";
 
 export function AboutUs() {

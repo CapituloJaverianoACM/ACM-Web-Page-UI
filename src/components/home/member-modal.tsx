@@ -3,14 +3,14 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "@/components/home/ui/dialog";
+import { Badge } from "@/components/home/ui/badge";
+import { Button } from "@/components/home/ui/button";
 import { Mail, User, Building } from "lucide-react";
-import { Member } from "./MemberCard";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Member } from "@/models/member.model";
 
 interface MemberModalProps {
     member: Member | null;
@@ -66,7 +66,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                                 <Building className="w-4 h-4" />
                                 <span className="font-medium">{member.title}</span>
                             </div>
-                            <div className="text-[var(--azul-ultramar)]">{member.rol}</div>
+                            <div className="text-[var(--azul-ultramar)]">{member.role}</div>
                             <Button
                                 variant="outline"
                                 className="mt-4 hover:bg-[var(--azul-niebla)] hover:text-[var(--azul-electrico)] hover:border-[var(--azul-crayon)] transition-colors duration-200"
