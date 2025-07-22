@@ -25,7 +25,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[--azul-noche]">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a]">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         Sobre {member.name}
