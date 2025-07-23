@@ -11,12 +11,12 @@ export default function HomePage() {
   return (
     <HeroUIProvider>
       <MainNavbar />
-      <>
+      <div>
         <Hero />
         <AboutUs />
         <Members />
         <Activities />
-      </>
+      </div>
     </HeroUIProvider>
   );
 }

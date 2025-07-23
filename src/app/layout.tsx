@@ -14,7 +14,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <title>Capitulo Javeriano ACM</title>
       </head>
       <body>
-        {children}
+        <main className='dark:bg-[#121212]'>
+          {children}
+        </main>
       </body>
     </html>
   );

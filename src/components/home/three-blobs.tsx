@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const ThreeBlobs = () => {
@@ -6,9 +6,9 @@ const ThreeBlobs = () => {
     const sceneRef = useRef<THREE.Scene | null>(null);
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
     const animationIdRef = useRef<number | null>(null);
-    const mouseRef = useRef<{ x: number, y: number }>({x: 0, y: 0});
+    const mouseRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
     // Store actual screen coordinates for direct blob manipulation
-    const screenMouseRef = useRef<{ x: number, y: number }>({x: 0, y: 0});
+    const screenMouseRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
 
     useEffect(() => {
         if (!mountRef.current) return;
@@ -68,13 +68,13 @@ const ThreeBlobs = () => {
         const createBlobMaterial = (colorA: string, colorB: string) => {
             return new THREE.ShaderMaterial({
                 uniforms: {
-                    uTime: {value: 0},
-                    uColorA: {value: new THREE.Color(colorA)},
-                    uColorB: {value: new THREE.Color(colorB)},
-                    uNoiseTexture: {value: noiseTexture},
-                    uOpacity: {value: 1.0}, // Make blobs fully opaque
-                    uMouse: {value: new THREE.Vector2(0, 0)},
-                    uMouseIntensity: {value: 0.0}
+                    uTime: { value: 0 },
+                    uColorA: { value: new THREE.Color(colorA) },
+                    uColorB: { value: new THREE.Color(colorB) },
+                    uNoiseTexture: { value: noiseTexture },
+                    uOpacity: { value: 1.0 }, // Make blobs fully opaque
+                    uMouse: { value: new THREE.Vector2(0, 0) },
+                    uMouseIntensity: { value: 0.0 }
                 },
                 vertexShader: `
           varying vec2 vUv;
@@ -347,8 +347,8 @@ const ThreeBlobs = () => {
     return (
         <div
             ref={mountRef}
-            className="absolute inset-0 w-full h-full"
-            style={{filter: 'blur(0.3px)', cursor: 'none'}}
+            className="absolute inset-0 w-full h-full opacity-100 dark:opacity-40"
+            style={{ filter: 'blur(0.3px)', cursor: 'none' }}
         />
     );
 };

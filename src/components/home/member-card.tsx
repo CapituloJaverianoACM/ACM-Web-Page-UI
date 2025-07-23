@@ -16,12 +16,7 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
 
     return (
         <Card
-            className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-0 bg-[var(--azul-electrico)] shadow-lg aspect-[3/4] relative mx-auto max-w-sm w-full"
-            style={{
-                background:
-                    "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>\"), var(--azul-electrico)",
-                backgroundBlendMode: "soft-light",
-            }}
+            className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-0 shadow-lg aspect-[3/4] relative mx-auto max-w-sm w-full glass-noise dark:glass-noise-dark"
             onClick={() => onClick(member)}
         >
             <CardContent className="p-0 h-full relative">
@@ -45,11 +40,7 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
 
                                 {/* Radial Gradient that uses image as mask */}
                                 <div
-                                    className="absolute inset-0"
-                                    style={{
-                                        background: `radial-gradient(circle at center bottom, var(--azul-crayon) 30%, transparent 60%)`,
-                                        mixBlendMode: "multiply",
-                                    }}
+                                    className="absolute inset-0 bg-crayon-glow dark:bg-crayon-glow-dark"
                                 />
                             </div>
                         </div>
