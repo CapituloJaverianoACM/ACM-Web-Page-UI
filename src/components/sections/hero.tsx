@@ -23,21 +23,20 @@ export function Hero() {
 
     return (
         <section
-            className="relative min-h-screen w-full overflow-hidden cursor-none bg-[#dde5f8]"
+            className="relative min-h-screen w-full overflow-hidden cursor-none bg-[#dde5f8] dark:bg-transparent"
             id="home"
         >
             {/* Three.js Background */}
             <ThreeBlobs />
 
             {/* Blurry overlay between blobs and content */}
-            <div className="absolute inset-0 z-15 pointer-events-none bg-[#ffffff10] dark:bg-[#121212]" style={{
+            <div className="absolute inset-0 z-15 pointer-events-none bg-[#ffffff10]" style={{
                 backdropFilter: 'blur(50px)',
                 WebkitBackdropFilter: 'blur(50px)',
             }}>
                 {/* Grain overlay */}
-                <div className="dark:hidden absolute inset-0 w-full h-full" style={{
+                <div className="opacity-25 dark:opacity-10 absolute inset-0 w-full h-full" style={{
                     backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><filter id=\'noise\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.5\' numOctaves=\'1\' stitchTiles=\'stitch\'/></filter><rect width=\'100%\' height=\'100%\' filter=\'url(%23noise)\'/></svg>")',
-                    opacity: 0.25,
                     pointerEvents: 'none',
                     zIndex: 1
                 }} />
@@ -75,7 +74,7 @@ export function Hero() {
 
             {/* Enhanced gradient overlay for depth */}
             <div
-                className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 pointer-events-none z-10"></div>
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
 
             {/* Custom cursor with higher z-index to ensure it's always on top */}
             <div
