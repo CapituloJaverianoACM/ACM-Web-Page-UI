@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import ThreeBlobs from "../ThreeBlobs";
+import ThreeBlobs from "../three-blobs";
 
 export function Hero() {
     // Add mouse movement handler for the cursor
