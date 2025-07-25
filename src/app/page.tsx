@@ -10,8 +10,8 @@ import MainNavbar from '@/components/home/main-navbar';
 export default function HomePage() {
   return (
     <HeroUIProvider>
-      <MainNavbar />
-      <div>
+      <div className="cursor-none">
+        <MainNavbar />
         <Hero />
         <AboutUs />
         <Members />
