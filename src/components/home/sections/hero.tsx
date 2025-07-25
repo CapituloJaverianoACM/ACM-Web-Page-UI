@@ -78,7 +78,7 @@ export function Hero() {
 
             {/* Custom cursor with higher z-index to ensure it's always on top */}
             <div
-                className="fixed rounded-full w-6 h-6 border-2 border-azul-noche dark:border-white pointer-events-none"
+                className="hidden xl:flex fixed rounded-full w-6 h-6 border-2 border-azul-noche dark:border-white pointer-events-none"
                 style={{
                     left: 0,
                     top: 0,
