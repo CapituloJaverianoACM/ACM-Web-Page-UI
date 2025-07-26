@@ -25,6 +25,7 @@ export default function LoginPage() {
       } else {
         // Simulación de éxito
         alert("¡Bienvenido/a a ACM Javeriana!");
+        window.location.href = "/"
       }
     }, 1200);
   };

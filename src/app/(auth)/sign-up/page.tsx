@@ -27,6 +27,7 @@ export default function SignUpPage() {
       } else {
         // Simulación de éxito
         alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+        window.location.href = "/"
       }
     }, 1200);
   };
