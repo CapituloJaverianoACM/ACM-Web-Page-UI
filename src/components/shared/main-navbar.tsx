@@ -72,7 +72,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                         </div>
 
                         {/* Desktop Navigation Links */}
-                        <div className="hidden md:flex items-center justify-center space-x-8 flex-1">
+                        <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
                             {navLinks.map((item) => (
                                 <a
                                     key={item.key}
@@ -113,7 +113,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                             </div>
 
                             {/* User Links */}
-                            <div className="hidden md:flex items-center gap-4">
+                            <div className="hidden lg:flex items-center gap-4">
                                 <Link
                                     href="/log-in"
                                     className="btn btn--outline btn--small "
@@ -128,7 +128,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                                 </Link>
                             </div>
                             {/* Mobile Menu Button */}
-                            <div className="md:hidden">
+                            <div className="lg:hidden">
                                 <button
                                     onClick={toggleMobileMenu}
                                     className="p-2 glassmorphic transition-all duration-300"
@@ -156,7 +156,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 </div>
 
                 {/* Mobile Menu */}
-                <div className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+                <div className={`lg:hidden mt-4 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
                     }`}>
                     <div
                         className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
