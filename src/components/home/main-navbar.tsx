@@ -1,6 +1,7 @@
 'use client';
 
 import { IconMoon, IconSun } from "@tabler/icons-react";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function MainNavbar() {
@@ -111,18 +112,18 @@ export default function MainNavbar() {
 
                             {/* User Links */}
                             <div className="hidden md:flex items-center gap-4">
-                                <a
-                                    href="#login"
+                                <Link
+                                    href="/log-in"
                                     className="btn btn--outline btn--small "
                                 >
                                     Log in
-                                </a>
-                                <a
-                                    href="#signup"
+                                </Link>
+                                <Link
+                                    href="/sign-up"
                                     className="btn btn--primary btn--small"
                                 >
                                     Sign up
-                                </a>
+                                </Link>
                             </div>
                             {/* Mobile Menu Button */}
                             <div className="md:hidden">
@@ -177,20 +178,20 @@ export default function MainNavbar() {
                                 </a>
                             ))}
                             <div className="flex flex-col items-center gap-2 mt-2">
-                                <a
-                                    href="#login"
+                                <Link
+                                    href="/log-in"
                                     className="btn btn--outline btn--small w-full"
                                     onClick={closeMobileMenu}
                                 >
                                     Log in
-                                </a>
-                                <a
-                                    href="#signup"
+                                </Link>
+                                <Link
+                                    href="/sign-up"
                                     className="btn btn--primary btn--small w-full"
                                     onClick={closeMobileMenu}
                                 >
                                     Sign up
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
