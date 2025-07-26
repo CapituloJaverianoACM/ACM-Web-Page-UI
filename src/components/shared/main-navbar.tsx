@@ -4,7 +4,17 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
-export default function MainNavbar() {
+type NavLink = {
+    key: string;
+    label: string;
+    href: string;
+};
+
+interface MainNavbarProps {
+    navLinks: NavLink[];
+}
+
+export default function MainNavbar({ navLinks }: MainNavbarProps) {
     const [activeLink, setActiveLink] = useState("home");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -37,14 +47,6 @@ export default function MainNavbar() {
             setCookie('theme', 'light', 365);
         }
     };
-
-    // Nav links
-    const navLinks = [
-        { key: "home", label: "Home", href: "#home" },
-        { key: "about us", label: "About Us", href: "#about-us" },
-        { key: "members", label: "Members", href: "#members" },
-        { key: "activities", label: "Activities", href: "#activities" },
-    ];
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 ">
