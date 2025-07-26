@@ -1,25 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import ThreeBlobs from "../three-blobs";
 
 export function Hero() {
-    // Add mouse movement handler for the cursor
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            const cursor = document.getElementById('custom-cursor');
-            if (cursor) {
-                cursor.style.left = `${event.clientX}px`;
-                cursor.style.top = `${event.clientY}px`;
-            }
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, []);
 
     return (
         <section
@@ -75,19 +58,6 @@ export function Hero() {
             {/* Enhanced gradient overlay for depth */}
             <div
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
-
-            {/* Custom cursor with higher z-index to ensure it's always on top */}
-            <div
-                className="hidden xl:flex fixed rounded-full w-6 h-6 border-2 border-azul-noche dark:border-white pointer-events-none"
-                style={{
-                    left: 0,
-                    top: 0,
-                    transform: 'translate(-50%, -50%)',
-                    transition: 'transform 0.05s ease',
-                    zIndex: 999 // Very high z-index to stay above all other elements
-                }}
-                id="custom-cursor"
-            />
         </section>
     );
 }

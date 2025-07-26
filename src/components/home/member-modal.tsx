@@ -25,7 +25,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a]">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a] cursor-none">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         Sobre {member.name}
@@ -66,7 +66,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                                 <Building className="w-4 h-4" />
                                 <span className="font-medium">{member.title}</span>
                             </div>
-                            <div className="text-[var(--azul-niebla)]">{member.role}</div>
+                            <div className="dark:text-[var(--azul-niebla)]">{member.role}</div>
                             <Button
                                 variant="outline"
                                 className="mt-4 dark:hover:bg-[#121212] hover:bg-[var(--azul-niebla)] hover:text-[var(--azul-electrico)] hover:border-[var(--azul-crayon)] transition-colors duration-200"
