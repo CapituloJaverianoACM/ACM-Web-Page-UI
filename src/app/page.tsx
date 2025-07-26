@@ -6,17 +6,18 @@ import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
 import MainNavbar from '@/components/home/main-navbar';
+import { CursorWrapper } from "@/components/home/ui/CursorWrapper";
 
 export default function HomePage() {
   return (
     <HeroUIProvider>
-      <div className="cursor-none">
+      <CursorWrapper>
         <MainNavbar />
         <Hero />
         <AboutUs />
         <Members />
         <Activities />
-      </div>
+      </CursorWrapper>
     </HeroUIProvider>
   );
 }
