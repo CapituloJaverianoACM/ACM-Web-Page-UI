@@ -54,7 +54,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
                     <div className="flex items-center justify-between">
                         {/* Logo */}
-                        <div className="flex items-center flex-1">
+                        <Link href="/" className="flex items-center flex-1">
                             <img
                                 src="/Logo_Oscuro.svg"
                                 alt="Logo ACM Javeriana"
@@ -69,7 +69,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                                 style={{ userSelect: "none" }}
                                 draggable={false}
                             />
-                        </div>
+                        </Link>
 
                         {/* Desktop Navigation Links */}
                         <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
