@@ -70,6 +70,12 @@ const CPMembersContent = () => {
   );
 };
 
+// const CPNationalContests = () => {
+
+
+  
+// }
+
 const carrousel_items = [
   {
     category: "Programación Competitiva",
@@ -78,8 +84,8 @@ const carrousel_items = [
     content: <CPMembersContent />,
   },
   {
-    category: "Productivity",
-    title: "Enhance your productivity.",
+    category: "Programación Competitiva",
+    title: "Maratones Nacionales en los que hemos participado.",
     src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: <></>,
   },
