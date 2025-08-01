@@ -1,3 +1,5 @@
+import { LinkPreview } from "../ui/link-preview";
+
 export function Rules() {
   return (
     <div id="rules" className="max-w-7xl mx-auto my-12 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
@@ -35,7 +37,13 @@ export function Rules() {
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
           <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">🎯 Evaluación</h3>
           <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>La evaluación se basará en el resultado dado por el sistema de evaluación de Codeforces.</li>
+            <li>
+              {'La evaluación se basará en el resultado dado por el sistema de evaluación de '}
+              <LinkPreview url="https://codeforces.com" className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
+                Codeforces
+              </LinkPreview>
+              .
+            </li>
           </ul>
         </div>
 
@@ -44,7 +52,16 @@ export function Rules() {
           <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">🎯 Reglas Específicas</h3>
           <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
             <li>No se puede hacer uso de ninguna Inteligencia Artificial (IA).</li>
-            <li>Solo se puede utilizar la documentación oficial de C++: <a href="https://cplusplus.com" className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">cplusplus.com</a> y <a href="https://en.cppreference.com" className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">cppreference.com</a>.</li>
+            <li>
+              {'Solo se puede utilizar la documentación oficial de C++: '}
+              <LinkPreview url="https://cplusplus.com" className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
+                cplusplus.com
+              </LinkPreview>
+              {' y '}
+              <LinkPreview url="https://en.cppreference.com" className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
+                cppreference.com
+              </LinkPreview>
+              .</li>
             <li>Si después de 15 minutos ninguno ha mandado el ejercicio, se desempatara con una prueba de velocidad.</li>
             <li>La dinámica de las competencias es un 1vs1: el que primero mande el ejercicio resuelto gana.</li>
             <li>El ranking se determina por la cantidad de victorias. En caso de empate en victorias, el ganador será el que menos partidas haya jugado.</li>
