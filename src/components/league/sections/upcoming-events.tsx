@@ -1,11 +1,11 @@
 // Code de Acha 😎
 
 import { Carousel } from "@/components/home/apple-cards-carousel";
-import EventCard from "@/components/league/ui/Events/EventCard"
+import EventCard from "@/components/league/ui/Events/event-card"
 import { Contest } from '@/models/contest.model'
 import { LevelEnum } from "@/models/level.enum";
 import { ReactNode, useEffect, useState } from "react";
-import { LevelFilter } from "../ui/Events/LevelFilter";
+import { LevelFilter } from "../ui/Events/level-filter";
 
 const formatDateEvent = ({
   date, start_hour, final_hour

@@ -6,7 +6,7 @@ import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
 import MainNavbar from '@/components/shared/main-navbar';
-import { CursorWrapper } from "@/components/home/ui/CursorWrapper";
+import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
 
 const navLinks = [
   { key: "home", label: "Home", href: "#home" },
