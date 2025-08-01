@@ -127,9 +127,9 @@ export function UpcomingEvents({
 
 
   return (
-    <div className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center">
-      <div className="flex flex-col xl:flex-row items-center justify-between">
-        <div className="flex flex-col gap-2">
+    <div id="upcoming-events" className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center">
+      <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">
+        <div className="flex flex-col gap-2 w-full">
           <h2 className="dark:text-white">Upcoming Events</h2>
           <p className="dark:text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, sunt.</p>
         </div>
