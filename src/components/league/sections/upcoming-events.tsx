@@ -74,7 +74,7 @@ export function UpcomingEvents({
       const { date, start_hour, final_hour } = event;
 
       return {
-        comp: <EventCard.Container key={event._id} className="h-full justify-end w-[30rem]">
+        comp: <EventCard.Container key={event._id} className="h-full justify-end !max-w-[30rem] w-full">
           {event.picture ? <EventCard.Image src={event.picture.link} /> : <div className="flex w-full aspect-video">
             <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
           </div>}
