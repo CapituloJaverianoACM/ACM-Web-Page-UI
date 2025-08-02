@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { FocusCards } from "../focus-cards";
+import { PreExamsContent } from "../pre-exams-content";
 
 export function AboutUs() {
   const cards = carrousel_items.map((card, index) => (
@@ -78,10 +79,10 @@ const carrousel_items = [
     content: <CPMembersContent />,
   },
   {
-    category: "Productivity",
-    title: "Enhance your productivity.",
+    category: "Talleres Pre-Parciales",
+    title: "Refuerza tus conocimientos antes de los parciales con nuestros talleres",
     src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <></>,
+    content: <PreExamsContent />,
   },
   {
     category: "Product",
