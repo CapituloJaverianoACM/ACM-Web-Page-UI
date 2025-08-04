@@ -33,7 +33,7 @@ export default function Footer() {
             <a href="https://www.linkedin.com/company/capitulo-javeriano-acm/" target="_blank" rel="noopener noreferrer">
               <IconBrandLinkedin className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
-            <a href="https://www.instagram.com/acmjaveriana?igsh=N3VjZGw0OHE3eG1x" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/acmjaveriana" target="_blank" rel="noopener noreferrer">
               <IconBrandInstagram className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
           </div>
