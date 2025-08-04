@@ -66,9 +66,9 @@ const Step = (props: {
       </div>
     }
 
-    {showCrown && student.order == 0 && <div className="absolute z-10 -top-[3.5rem] lg:-top-[5.5rem] left-[40%] transform -translate-x-1/2 -rotate-12 lg:-rotate-[24deg]">
-      <IconCrown className="hidden lg:flex text-yellow-500" size={65} />
-      <IconCrown className="flex lg:hidden text-yellow-500" size={45} />
+    {showCrown && <div className={`absolute z-10 -top-[3.5rem] lg:-top-[5.5rem] left-[40%] transform -translate-x-1/2 -rotate-12 lg:-rotate-[24deg] ${student.order == 0 ? 'text-yellow-500' : student.order == 1 ? 'text-neutral-300' : "text-amber-600"}`}>
+      <IconCrown className="hidden lg:flex" size={65} />
+      <IconCrown className="flex lg:hidden" size={45} />
     </div>}
 
     {
