@@ -7,6 +7,7 @@ import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
 import MainNavbar from '@/components/shared/main-navbar';
 import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
+import Footer from "../components/shared/footer";
 
 const navLinks = [
   { key: "home", label: "Home", href: "#home" },
@@ -24,6 +25,7 @@ export default function HomePage() {
         <AboutUs />
         <Members />
         <Activities />
+        <Footer />
       </CursorWrapper>
     </HeroUIProvider>
   );

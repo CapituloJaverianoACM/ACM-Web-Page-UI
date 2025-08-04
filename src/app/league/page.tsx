@@ -9,6 +9,7 @@ import { Podium } from "@/components/league/sections/podium";
 import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
+import Footer from "@/components/shared/footer";
 
 const navLinks = [
   { key: "home", label: "Home", href: "/" },
@@ -163,6 +164,7 @@ export default function LeagueHomePage() {
       <Rules />
       <UpcomingEvents events={hard_coded_events} />
       <Podium students={hard_coded_league_podium} />
+      <Footer />
     </HeroUIProvider>
   );
 }
