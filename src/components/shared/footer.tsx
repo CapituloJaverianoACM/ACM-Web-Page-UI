@@ -1,7 +1,6 @@
 'use client';
 
-import Link from "next/link";
-import { IconBrandFacebook, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
+import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
 
 export default function Footer() {
   return (
@@ -12,7 +11,7 @@ export default function Footer() {
           <div className="flex flex-col justify-self-start">
             <h3 className="text-sm text-center text-[--azul-noche] dark:text-white">Capítulo Javeriano ACM</h3>
           </div>
-          
+
           {/* Logo en el centro */}
           <div className="flex justify-center">
             <img
@@ -28,7 +27,7 @@ export default function Footer() {
               draggable={false}
             />
           </div>
-          
+
           {/* Redes sociales a la derecha - apiladas verticalmente */}
           <div className="flex flex-col items-end gap-2 justify-self-end">
             <a href="https://www.linkedin.com/company/capitulo-javeriano-acm/" target="_blank" rel="noopener noreferrer">
