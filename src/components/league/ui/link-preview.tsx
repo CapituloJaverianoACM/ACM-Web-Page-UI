@@ -31,7 +31,9 @@ export const LinkPreview = ({
   className,
   width = 200,
   height = 125,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   quality = 50,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   layout = "fixed",
   isStatic = false,
   imageSrc = "",
@@ -67,7 +69,7 @@ export const LinkPreview = ({
 
   const translateX = useSpring(x, springConfig);
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event) => {
     const targetRect = event.target.getBoundingClientRect();
     const eventOffsetX = event.clientX - targetRect.left;
     const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2; // Reduce the effect to make it subtle
