@@ -1,7 +1,5 @@
 'use client';
-
 import { AboutUs } from "@/components/home/sections/about-us";
-import { Activities } from "@/components/home/sections/activities";
 import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
@@ -24,7 +22,6 @@ export default function HomePage() {
         <Hero />
         <AboutUs />
         <Members />
-        <Activities />
         <Footer />
       </CursorWrapper>
     </HeroUIProvider>

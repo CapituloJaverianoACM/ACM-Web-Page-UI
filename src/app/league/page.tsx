@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { HeroUIProvider } from "@heroui/react";
-import MainNavbar from '@/components/shared/main-navbar';
+import MainNavbar from "@/components/shared/main-navbar";
 import { Hero } from "@/components/league/sections/hero";
 import { Rules } from "@/components/league/sections/rules";
 import { UpcomingEvents } from "@/components/league/sections/upcoming-events";
@@ -15,56 +15,63 @@ import { getContests } from "@/services/contest.service";
 const navLinks = [
   { key: "home", label: "Home", href: "/" },
   { key: "rules", label: "Rules", href: "#rules" },
-  { key: "upcoming-events", label: "Upcoming Events", href: "#upcoming-events" },
+  {
+    key: "upcoming-events",
+    label: "Upcoming Events",
+    href: "#upcoming-events",
+  },
   { key: "podium", label: "Podium", href: "#podium" },
 ];
 
 let contests: Contest[] = [];
 
 try {
-  contests = await getContests()
+  contests = await getContests();
 } catch {
   contests = [];
 }
 
-const hard_coded_league_podium: { student: Student, order: number }[] = [
+const hard_coded_league_podium: { student: Student; order: number }[] = [
   {
     student: {
       _id: "1",
-      avatar: "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
+      avatar:
+        "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
       level: LevelEnum.Advanced,
       matches_count: 100,
       name: "Acha1",
       surname: "Dev",
-      victory_count: 90
+      victory_count: 90,
     },
-    order: 0
+    order: 0,
   },
   {
     student: {
       _id: "1",
-      avatar: "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
+      avatar:
+        "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
       level: LevelEnum.Advanced,
       matches_count: 100,
       name: "Acha2",
       surname: "Dev",
-      victory_count: 90
+      victory_count: 90,
     },
-    order: 1
+    order: 1,
   },
   {
     student: {
       _id: "1",
-      avatar: "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
+      avatar:
+        "https://userpic.codeforces.org/3372984/avatar/13e0bcb6d6425cfe.jpg",
       level: LevelEnum.Advanced,
       matches_count: 100,
       name: "Acha3",
       surname: "Dev",
-      victory_count: 90
+      victory_count: 90,
     },
-    order: 2
-  }
-]
+    order: 2,
+  },
+];
 
 export default function LeagueHomePage() {
   return (

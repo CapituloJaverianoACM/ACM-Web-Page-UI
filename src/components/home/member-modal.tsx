@@ -18,7 +18,7 @@ interface MemberModalProps {
     onClose: () => void;
 }
 
-const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
+const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     const [imageError, setImageError] = useState(false);
 
     if (!member) return null;
@@ -38,7 +38,7 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                             <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 dark:border-[#505050] mx-auto md:mx-0 select-none">
                                 {member.image && !imageError ? (
                                     <Image
-                                        src={member.image}
+                                       src={member.image}
                                         alt={member.name}
                                         width={1000}
                                         height={1000}
@@ -110,4 +110,4 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     );
 };
 
-export default MemberModal;
+export default ActiveMemberModal;
