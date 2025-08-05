@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Carousel, Card } from "@/components/apple-cards-carousel";
+import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { FocusCards } from "../focus-cards";
 
 export function AboutUs() {
@@ -61,10 +61,10 @@ const CPMembersContent = () => {
 
   return (
     <>
-      <p>Somos un grupo apasionado por competir y desctacarnos cada día más</p>
+      <p className="dark:text-[--azul-niebla]">Somos un grupo apasionado por competir y desctacarnos cada día más</p>
       <br />
       <FocusCards cards={cp_members} />
-      <p className="text-3xl text-center my-10 font-semibold">Nuestro Coach</p>
+      <p className="text-3xl text-center my-10 font-semibold dark:text-[--azul-niebla]">Nuestro Coach</p>
       <FocusCards cards={cp_coaches} />
     </>
   );
