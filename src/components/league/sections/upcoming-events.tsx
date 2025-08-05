@@ -22,13 +22,13 @@ const formatDateEvent = ({
 
   const optionsHour: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
-    minute: '2-digit',
+    minute: '2-digit',  
     hour12: true
   }
 
-  const formattedDate = date.toLocaleDateString('es-ES', optionsDate)
-  const formattedInitialHour = start_hour.toLocaleTimeString('es-ES', optionsHour)
-  const formattedFinalHour = final_hour.toLocaleTimeString('es-ES', optionsHour)
+  const formattedDate = new Date(date).toLocaleDateString('es-ES', optionsDate)
+  const formattedInitialHour = new Date(start_hour).toLocaleTimeString('es-ES', optionsHour)
+  const formattedFinalHour = new Date(final_hour).toLocaleTimeString('es-ES', optionsHour)
 
   return `${formattedDate}, de ${formattedInitialHour} a ${formattedFinalHour}`
 }
