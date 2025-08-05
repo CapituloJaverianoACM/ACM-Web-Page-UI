@@ -1,24 +1,26 @@
 // Code de Acha 😎
 
 import { Carousel } from "@/components/home/apple-cards-carousel";
-import EventCard from "@/components/league/ui/Events/event-card"
-import { Contest } from '@/models/contest.model'
+import EventCard from "@/components/league/ui/Events/event-card";
+import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import React, { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 
 const formatDateEvent = ({
-  date, start_hour, final_hour
+  date,
+  start_hour,
+  final_hour,
 }: {
-  date: Date,
-  start_hour: Date,
-  final_hour: Date
+  date: Date;
+  start_hour: Date;
+  final_hour: Date;
 }) => {
   const optionsDate: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
   const optionsHour: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
@@ -41,6 +43,8 @@ export function UpcomingEvents({
   loadingInitialState?: boolean
 }) {
 
+
+export function UpcomingEvents({ events = [] }: { events: Contest[] }) {
   // Diseño de una tarjeta para decir que no hay eventos
 
   const NoEventsCard: ReactNode = <EventCard.Container key="unique" className="justify-end !w-[20rem] xl:!w-[30rem]">
@@ -48,25 +52,27 @@ export function UpcomingEvents({
       <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
     </div>
 
-    <EventCard.Padding>
-      <EventCard.Title>
-        No hay eventos con tus parámetros de busqueda
-      </EventCard.Title>
       <EventCard.Padding>
-        <EventCard.Description>
-          ¡Mantene alerta a nuestras redes sociales! Así sabrás cuando tengamos un evento de tu interés.
-        </EventCard.Description>
+        <EventCard.Title>
+          No hay eventos con tus parámetros de busqueda
+        </EventCard.Title>
+        <EventCard.Padding>
+          <EventCard.Description>
+            ¡Mantene alerta a nuestras redes sociales! Así sabrás cuando
+            tengamos un evento de tu interés.
+          </EventCard.Description>
+        </EventCard.Padding>
+
+        <EventCard.RegisterButton
+          onClick={() => {
+            alert("click");
+          }}
+        >
+          Redes Sociales
+        </EventCard.RegisterButton>
       </EventCard.Padding>
-
-      <EventCard.RegisterButton onClick={() => {
-        alert('click')
-      }}>
-        Redes Sociales
-      </EventCard.RegisterButton>
-
-    </EventCard.Padding>
-
-  </EventCard.Container>
+    </EventCard.Container>
+  );
 
   // Diseño de un tarjeta skeleton
 
@@ -142,7 +148,6 @@ export function UpcomingEvents({
     )
   }, [events])
 
-
   const [cards, setCards] = useState<ReactNode[]>([])
   const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
 
@@ -151,11 +156,12 @@ export function UpcomingEvents({
     if (AllCards.length > 0) setLoading(false)
   }, [AllCards])
 
+
   // Acá se filtran los eventos
 
   useEffect(() => {
     setCards(
-      AllCards.filter(x => {
+      AllCards.filter((x) => {
         if (filter == "all") return true;
         else if (filter == "Advanced" && x.level == LevelEnum.Advanced) return true;
         else if (filter == "Initial" && x.level == LevelEnum.Initial) return true;
@@ -163,16 +169,22 @@ export function UpcomingEvents({
       }).map(x => x.comp)
     )
     if (cards.length > 0) setLoading(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter])
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter]);
 
   return (
-    <div id="upcoming-events" className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center">
+    <div
+      id="upcoming-events"
+      className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center"
+    >
       <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">
         <div className="flex flex-col gap-2 w-full">
           <h2 className="dark:text-white">Upcoming Events</h2>
-          <p className="dark:text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, sunt.</p>
+          <p className="dark:text-white">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
+            sunt.
+          </p>
         </div>
         <div className="flex flex-col">
           <LevelFilter filter={filter} setFilter={setFilter} />
