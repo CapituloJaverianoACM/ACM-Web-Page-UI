@@ -44,6 +44,7 @@ export const InactiveMembersTimeline: React.FC<TimelineProps> = ({
                         <div className="flex flex-wrap ml-[17vw] mr-[3vw] md:m-[5vw] gap-11">
                             {grouped[period].map((member) => (
                                 <InactiveMemberCard 
+                                    key={member._id}
                                     member={member}
                                     onClick={() => {
                                         handleClickMember(member)
