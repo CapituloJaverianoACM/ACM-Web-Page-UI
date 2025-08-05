@@ -47,7 +47,7 @@ export function UpcomingEvents({
 
   const NoEventsCard: ReactNode = <EventCard.Container key="unique" className="justify-end !w-[20rem] xl:!w-[30rem]">
     <div className="flex w-full aspect-video">
-      <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
+      <EventCard.Image src={"/Logo_Oscuro.svg"} className="!object-contain opacity-15 w-1/2 m-auto" />
     </div>
 
     <EventCard.Padding>
@@ -75,7 +75,7 @@ export function UpcomingEvents({
 
   const SkeletonCard: ReactNode = <EventCard.Container key="unique" className="justify-end !w-[20rem] xl:!w-[30rem]">
     <div className="flex w-full aspect-video">
-      <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 !w-2/3 m-auto" />
+      <EventCard.Image src={"/Logo_Oscuro.svg"} className="!object-contain opacity-15 !w-2/3 m-auto" />
     </div>
 
     <EventCard.Padding>
@@ -111,7 +111,7 @@ export function UpcomingEvents({
         return {
           comp: <EventCard.Container key={event._id} className="h-full justify-end !w-[20rem] xl:!w-[30rem]">
             {event.picture ? <EventCard.Image src={event.picture.link} /> : <div className="flex w-full aspect-video">
-              <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 !w-2/3 m-auto" />
+              <EventCard.Image src={"/Logo_Oscuro.svg"} className="!object-contain opacity-15 !w-2/3 m-auto" />
             </div>}
 
             <EventCard.Padding>
