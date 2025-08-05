@@ -7,7 +7,7 @@ export interface Contest {
   date: Date,
   start_hour: Date,
   final_hour: Date,
-  level: LevelEnum,
+  level: string | LevelEnum,
   classroom: string,
   picture?: Picture
 }
