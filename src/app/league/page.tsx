@@ -10,7 +10,8 @@ import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import Footer from "@/components/shared/footer";
-import { getContests } from "@/services/contest.service";
+import { getContestsWithPictures } from "@/services/contest.service";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { key: "home", label: "Home", href: "/" },
@@ -19,13 +20,6 @@ const navLinks = [
   { key: "podium", label: "Podium", href: "#podium" },
 ];
 
-let contests: Contest[] = [];
-
-try {
-  contests = await getContests()
-} catch {
-  contests = [];
-}
 
 const hard_coded_league_podium: { student: Student, order: number }[] = [
   {
@@ -67,12 +61,26 @@ const hard_coded_league_podium: { student: Student, order: number }[] = [
 ]
 
 export default function LeagueHomePage() {
+
+  const [contests, setContests] = useState < (Contest & {
+    picture: {
+      link: string;
+    };
+  })[]>([]);
+
+  useEffect(() => {
+    getContestsWithPictures()
+      .then(setContests)
+      .catch(() => setContests([]));
+  }, []);
+
+
   return (
     <HeroUIProvider>
       <MainNavbar navLinks={navLinks} />
       <Hero />
       <Rules />
-      <UpcomingEvents events={contests} />
+      <UpcomingEvents events={contests} loadingInitialState />
       <Podium students={hard_coded_league_podium} />
       <Footer />
     </HeroUIProvider>
