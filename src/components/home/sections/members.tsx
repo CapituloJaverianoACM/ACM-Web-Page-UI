@@ -42,7 +42,7 @@ export function Members() {
                 </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {members.map((member) => (
+                {members.filter(member => member.active).map((member) => (
                     <MemberCard
                         key={member._id}
                         member={member}
@@ -72,7 +72,6 @@ export function Members() {
                     </Card>
                 </Link>
             </div>
-            {/*<ActiveMemberModal member={selectedMember} isOpen={isModalOpen} onClose={handleCloseModal}/>*/}
             <MemberModal
                 member={selectedMember}
                 isOpen={isModalOpen}

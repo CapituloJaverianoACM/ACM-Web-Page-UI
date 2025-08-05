@@ -4,7 +4,7 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
-type NavLink = {
+export type NavLink = {
     key: string;
     label: string;
     href: string;

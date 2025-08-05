@@ -23,7 +23,6 @@ export default function HomePage() {
         <Hero />
         <AboutUs />
         <Members />
-        <Activities />
         <Footer />
       </CursorWrapper>
     </HeroUIProvider>
