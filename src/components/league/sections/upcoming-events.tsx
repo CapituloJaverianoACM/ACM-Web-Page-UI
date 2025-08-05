@@ -43,8 +43,6 @@ export function UpcomingEvents({
   loadingInitialState?: boolean
 }) {
 
-
-export function UpcomingEvents({ events = [] }: { events: Contest[] }) {
   // Diseño de una tarjeta para decir que no hay eventos
 
   const NoEventsCard: ReactNode = <EventCard.Container key="unique" className="justify-end !w-[20rem] xl:!w-[30rem]">
@@ -52,27 +50,26 @@ export function UpcomingEvents({ events = [] }: { events: Contest[] }) {
       <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
     </div>
 
+    <EventCard.Padding>
+      <EventCard.Title>
+        No hay eventos con tus parámetros de busqueda
+      </EventCard.Title>
       <EventCard.Padding>
-        <EventCard.Title>
-          No hay eventos con tus parámetros de busqueda
-        </EventCard.Title>
-        <EventCard.Padding>
-          <EventCard.Description>
-            ¡Mantene alerta a nuestras redes sociales! Así sabrás cuando
-            tengamos un evento de tu interés.
-          </EventCard.Description>
-        </EventCard.Padding>
-
-        <EventCard.RegisterButton
-          onClick={() => {
-            alert("click");
-          }}
-        >
-          Redes Sociales
-        </EventCard.RegisterButton>
+        <EventCard.Description>
+          ¡Mantene alerta a nuestras redes sociales! Así sabrás cuando
+          tengamos un evento de tu interés.
+        </EventCard.Description>
       </EventCard.Padding>
-    </EventCard.Container>
-  );
+
+      <EventCard.RegisterButton
+        onClick={() => {
+          alert("click");
+        }}
+      >
+        Redes Sociales
+      </EventCard.RegisterButton>
+    </EventCard.Padding>
+  </EventCard.Container>
 
   // Diseño de un tarjeta skeleton
 
