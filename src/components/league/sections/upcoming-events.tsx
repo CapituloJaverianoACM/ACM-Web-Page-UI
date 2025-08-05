@@ -4,7 +4,7 @@ import { Carousel } from "@/components/home/apple-cards-carousel";
 import EventCard from "@/components/league/ui/Events/event-card";
 import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 
 const formatDateEvent = ({
