@@ -22,7 +22,7 @@ const formatDateEvent = ({
 
   const optionsHour: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
-    minute: '2-digit',
+    minute: '2-digit',  
     hour12: true
   }
 
