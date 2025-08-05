@@ -26,9 +26,9 @@ const formatDateEvent = ({
     hour12: true
   }
 
-  const formattedDate = date.toLocaleDateString('es-ES', optionsDate)
-  const formattedInitialHour = start_hour.toLocaleTimeString('es-ES', optionsHour)
-  const formattedFinalHour = final_hour.toLocaleTimeString('es-ES', optionsHour)
+  const formattedDate = new Date(date).toLocaleDateString('es-ES', optionsDate)
+  const formattedInitialHour = new Date(start_hour).toLocaleTimeString('es-ES', optionsHour)
+  const formattedFinalHour = new Date(final_hour).toLocaleTimeString('es-ES', optionsHour)
 
   return `${formattedDate}, de ${formattedInitialHour} a ${formattedFinalHour}`
 }
@@ -43,7 +43,7 @@ export function UpcomingEvents({
 
   const NoEventsCard: ReactNode = <EventCard.Container key="unique" className="h-full justify-end w-[30rem]">
     <div className="flex w-full aspect-video">
-      <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
+      <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 !w-2/3 m-auto" />
     </div>
 
     <EventCard.Padding>
@@ -76,7 +76,7 @@ export function UpcomingEvents({
       return {
         comp: <EventCard.Container key={event._id} className="h-full justify-end !w-[20rem] xl:!w-[30rem]">
           {event.picture ? <EventCard.Image src={event.picture.link} /> : <div className="flex w-full aspect-video">
-            <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 w-1/2 m-auto" />
+            <EventCard.Image src={"/Logo_Oscuro.png"} className="!object-contain opacity-15 !w-2/3 m-auto" />
           </div>}
 
           <EventCard.Padding>
