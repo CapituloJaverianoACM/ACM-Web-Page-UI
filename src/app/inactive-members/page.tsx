@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import InactiveMembers from "@/components/members/InactiveMembers";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import InactiveMembers from "@/components/members/inactive-members";
 
-export default function HomePage() {
-    return (
-        <>
-            <InactiveMembers />
-        </>
-    );
+const queryClient = new QueryClient();
+
+export default function InactiveMembersPage() {
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>
+        <InactiveMembers />
+      </QueryClientProvider>
+    </>
+  );
 }
