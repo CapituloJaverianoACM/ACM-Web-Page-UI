@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/home/ui/card";
+import { Card, CardContent } from "@/components/shared/ui/card";
 import { Badge } from "@/components/home/ui/badge";
 import { User } from "lucide-react";
 import Image from "next/image";
