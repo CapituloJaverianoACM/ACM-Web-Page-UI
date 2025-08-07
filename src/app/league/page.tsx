@@ -10,7 +10,7 @@ import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import Footer from "@/components/shared/footer";
-import { getContestsWithPictures } from "@/services/contest.service";
+import { getContestsWithPictures } from "@/controllers/contest.controller";
 import { useEffect, useState } from "react";
 
 const navLinks = [
