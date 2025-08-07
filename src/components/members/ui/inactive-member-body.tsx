@@ -1,6 +1,6 @@
 import React from "react";
 import { InactiveMemberCardProps } from "./inactive-member-card";
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/shared/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 export const InactiveMemberBody: React.FC<

@@ -6,7 +6,7 @@ import MemberModal from "../member-modal";
 import { Member } from "@/models/member.model";
 import { getMembersService } from "@/services/member.service";
 import Link from "next/link";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../shared/ui/card";
 import { Users } from "lucide-react";
 
 export function Members() {

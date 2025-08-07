@@ -35,6 +35,7 @@ const hard_coded_league_podium: { student: Student; order: number }[] = [
       name: "Acha1",
       surname: "Dev",
       victory_count: 90,
+      supabase_user_id: "1",
     },
     order: 0,
   },
@@ -48,6 +49,7 @@ const hard_coded_league_podium: { student: Student; order: number }[] = [
       name: "Acha2",
       surname: "Dev",
       victory_count: 90,
+      supabase_user_id: "1",
     },
     order: 1,
   },
@@ -61,6 +63,7 @@ const hard_coded_league_podium: { student: Student; order: number }[] = [
       name: "Acha3",
       surname: "Dev",
       victory_count: 90,
+      supabase_user_id: "1",
     },
     order: 2,
   },
@@ -68,7 +71,7 @@ const hard_coded_league_podium: { student: Student; order: number }[] = [
 
 export default function LeagueHomePage() {
 
-  const [contests, setContests] = useState < (Contest & {
+  const [contests, setContests] = useState<(Contest & {
     picture: {
       link: string;
     };
