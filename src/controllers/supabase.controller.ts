@@ -1,4 +1,4 @@
-export async function signUp(name: string, surname: string, email: string, password: string, avatar_url: string): Promise<{ data?: any; error?: string }> {
+export async function signUp(name: string, surname: string, email: string, password: string, avatar_url: string): Promise<{ data?: JSON; error?: string }> {
   try {
     if (!name || !surname || !email || !password) {
       throw new Error("Por favor, completa todos los campos.");
@@ -32,7 +32,7 @@ export async function signUp(name: string, surname: string, email: string, passw
       throw new Error(data.error);
     }
 
-    return { data, error: null };
+    return { data: data.data, error: null };
 
   } catch (error) {
     return { data: null, error: (error as Error).message };

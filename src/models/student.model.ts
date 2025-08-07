@@ -1,7 +1,7 @@
 import { LevelEnum } from "./level.enum";
 
 export interface Student {
-  id: number;
+  _id: string;
   name: string;
   surname: string;
   level: LevelEnum;

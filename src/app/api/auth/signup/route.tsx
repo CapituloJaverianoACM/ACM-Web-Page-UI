@@ -29,6 +29,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ data, error: null }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ data: null, error: 'Error inesperado' }, { status: 500 });
+    return NextResponse.json({ data: null, error: `Error inesperado: ${error}` }, { status: 500 });
   }
 }
