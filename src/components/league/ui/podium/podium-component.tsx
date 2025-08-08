@@ -62,7 +62,7 @@ const Step = (props: {
       showAvatar &&
       <div className="absolute -top-[2rem] lg:-top-[3.5rem] left-1/2 transform -translate-x-1/2 mx-auto rounded-full border-2 border-[--azul-niebla] bg-[--azul-niebla] h-[4rem] lg:h-[7rem] aspect-square overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={student.student.avatar} alt={`Avatar de ${student.student.name}`} className="w-full h-full object-cover" />
+        <img src={student.student.avatar.length == 0 ? null : student.student.avatar} alt={`Avatar de ${student.student.name}`} className="w-full h-full object-cover" />
       </div>
     }
 

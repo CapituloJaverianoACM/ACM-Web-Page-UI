@@ -87,7 +87,7 @@ export default function LeagueHomePage() {
       <Hero />
       <Rules />
       <UpcomingEvents events={contests} loadingInitialState />
-      <Podium students={hard_coded_league_podium} />
+      <Podium  />
       <Footer />
     </HeroUIProvider>
   );
