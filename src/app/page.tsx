@@ -1,12 +1,12 @@
 'use client';
-
 import { AboutUs } from "@/components/home/sections/about-us";
-import { Activities } from "@/components/home/sections/activities";
 import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
 import MainNavbar from '@/components/shared/main-navbar';
 import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
+import Footer from "../components/shared/footer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const navLinks = [
   { key: "home", label: "Home", href: "#home" },
@@ -15,16 +15,20 @@ const navLinks = [
   { key: "league", label: "League", href: "/league" },
 ];
 
+const queryClient = new QueryClient();
+
 export default function HomePage() {
   return (
     <HeroUIProvider>
-      <CursorWrapper>
-        <MainNavbar navLinks={navLinks} />
-        <Hero />
-        <AboutUs />
-        <Members />
-        <Activities />
-      </CursorWrapper>
+      <QueryClientProvider client={queryClient}>
+        <CursorWrapper>
+          <MainNavbar navLinks={navLinks} />
+          <Hero />
+          <AboutUs />
+          <Members />
+          <Footer />
+        </CursorWrapper>
+      </QueryClientProvider>
     </HeroUIProvider>
   );
 }

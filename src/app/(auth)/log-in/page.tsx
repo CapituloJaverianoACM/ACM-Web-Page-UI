@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/home/ui/card";
-import { Button } from "@/components/home/ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/shared/ui/card";
+import { Button } from "@/components/shared/ui/button";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-azul-niebla dark:bg-[#121212] p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center dark:bg-[#121212] p-4">
       {/* Logo ACM */}
       <Link href="/" className="mb-6 flex flex-col items-center group select-none">
         <img

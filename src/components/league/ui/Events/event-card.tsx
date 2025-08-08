@@ -13,11 +13,12 @@ const Image = (props: {
 }
 
 const Title = (props: {
-  children?: ReactNode | string
+  children?: ReactNode | string,
+  className?: string
 }) => {
-  const { children } = props;
+  const { children, className = "" } = props;
 
-  return <p className="font-semibold text-md m-0 dark:text-[var(--azul-niebla)]">
+  return <p className={`font-semibold text-lg m-0 dark:text-[var(--azul-niebla)] min-h-7 ${className}`}>
     {children}
   </p>
 }
@@ -53,7 +54,7 @@ const Description = (
 ) => {
   const { className = "", children = null } = props;
 
-  return <p className={`text-xs text-neutral-800 dark:text-[var(--azul-niebla)] m-0 ${className}`}>
+  return <p className={`text-xs h-[3rem] max-h-[3rem] text-neutral-800 dark:text-[var(--azul-niebla)] m-0 ${className}`}>
     {children}
   </p>
 }
@@ -68,9 +69,11 @@ const RegisterButton = (
   const { onClick = () => { }, className = "", children = null } = props;
 
   return <button className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)_/_0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full ${className}`} onClick={onClick}>
-    {
-      children ?? "Registrarse"
-    }
+    <div className="h-6 text-base">
+      {
+        children ?? "Registrarse"
+      }
+    </div>
   </button>
 
 }

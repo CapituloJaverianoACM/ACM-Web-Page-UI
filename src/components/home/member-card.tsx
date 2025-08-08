@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/home/ui/card";
+import { Card, CardContent } from "@/components/shared/ui/card";
 import { Badge } from "@/components/home/ui/badge";
 import { User } from "lucide-react";
 import Image from "next/image";
 import { Member } from "@/models/member.model";
-
 
 interface MemberCardProps {
     member: Member;
     onClick: (member: Member) => void;
 }
 
-const MemberCard = ({ member, onClick }: MemberCardProps) => {
+const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
     const [imageError, setImageError] = useState(false);
 
     return (
@@ -94,4 +93,4 @@ const MemberCard = ({ member, onClick }: MemberCardProps) => {
     );
 };
 
-export default MemberCard;
+export default ActiveMemberCard;

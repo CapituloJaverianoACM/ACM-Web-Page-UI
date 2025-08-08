@@ -5,7 +5,7 @@ import {
     DialogTitle,
 } from "@/components/home/ui/dialog";
 import { Badge } from "@/components/home/ui/badge";
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/shared/ui/button";
 import { Mail, User, Building } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -18,7 +18,7 @@ interface MemberModalProps {
     onClose: () => void;
 }
 
-const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
+const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     const [imageError, setImageError] = useState(false);
 
     if (!member) return null;
@@ -110,4 +110,4 @@ const MemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
     );
 };
 
-export default MemberModal;
+export default ActiveMemberModal;
