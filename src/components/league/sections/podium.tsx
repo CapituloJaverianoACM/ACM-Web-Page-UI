@@ -71,7 +71,7 @@ export function Podium() {
                   name: "",
                   surname: "",
                   // ignorar
-                  victory_count: "" 
+                  victory_count: 0 
                 }
               }} >
 
