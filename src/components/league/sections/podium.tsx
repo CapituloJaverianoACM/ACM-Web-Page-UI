@@ -71,7 +71,8 @@ export function Podium() {
                   name: "",
                   surname: "",
                   // ignorar
-                  victory_count: 0 
+                  victory_count: 0,
+                  supabase_user_id: ""
                 }
               }} >
 
