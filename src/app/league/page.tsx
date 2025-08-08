@@ -8,7 +8,7 @@ import { UpcomingEvents } from "@/components/league/sections/upcoming-events";
 import { Podium } from "@/components/league/sections/podium";
 import { Contest } from "@/models/contest.model";
 import Footer from "@/components/shared/footer";
-import { getContestsWithPictures } from "@/services/contest.service";
+import { getContestsWithPictures } from "@/controllers/contest.controller";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -24,7 +24,7 @@ const navLinks = [
 
 export default function LeagueHomePage() {
 
-  const [contests, setContests] = useState < (Contest & {
+  const [contests, setContests] = useState<(Contest & {
     picture: {
       link: string;
     };

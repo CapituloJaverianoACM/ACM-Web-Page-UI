@@ -8,4 +8,5 @@ export interface Student {
   victory_count: number;
   matches_count: number;
   avatar: string;
+  supabase_user_id: string;
 }

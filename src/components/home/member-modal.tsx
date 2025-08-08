@@ -5,7 +5,7 @@ import {
     DialogTitle,
 } from "@/components/home/ui/dialog";
 import { Badge } from "@/components/home/ui/badge";
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/shared/ui/button";
 import { Mail, User, Building } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -38,7 +38,7 @@ const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
                             <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 dark:border-[#505050] mx-auto md:mx-0 select-none">
                                 {member.image && !imageError ? (
                                     <Image
-                                       src={member.image}
+                                        src={member.image}
                                         alt={member.name}
                                         width={1000}
                                         height={1000}

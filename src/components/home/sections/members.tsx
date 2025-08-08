@@ -1,23 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MemberCard from "../member-card";
 import MemberModal from "../member-modal";
 import { Member } from "@/models/member.model";
-import { getMembersService } from "@/services/member.service";
 import Link from "next/link";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../shared/ui/card";
 import { Users } from "lucide-react";
+import { getMembers } from "@/controllers/member.controller";
+import { useQuery } from "@tanstack/react-query";
 
 export function Members() {
-    const [members, setMembers] = useState<Member[]>([]);
     const [selectedMember, setSelectedMember] = useState<Member | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => {
-        getMembersService().then((data) => setMembers(data));
-        console.log("Members:", members);
-    }, []);
+    const { data: members, isLoading } = useQuery({
+        queryKey: ['members'],
+        queryFn: async () => {
+            return await getMembers()
+        }
+    });
 
     const handleMemberClick = (member: Member) => {
         setSelectedMember(member);
@@ -42,7 +44,12 @@ export function Members() {
                 </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {members.filter(member => member.active).map((member) => (
+                {isLoading && (
+                    <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 text-center">
+                        <p className="text-gray-500">Cargando miembros...</p>
+                    </div>
+                )}
+                {!isLoading && members.filter(member => member.active).map((member) => (
                     <MemberCard
                         key={member._id}
                         member={member}
