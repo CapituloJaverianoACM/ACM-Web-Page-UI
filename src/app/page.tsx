@@ -7,6 +7,7 @@ import MainNavbar from '@/components/shared/main-navbar';
 import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
 import Footer from "../components/shared/footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Contributors from "@/components/home/sections/contributors";
 
 const navLinks = [
   { key: "home", label: "Home", href: "#home" },
@@ -26,6 +27,7 @@ export default function HomePage() {
           <Hero />
           <AboutUs />
           <Members />
+          <Contributors />
           <Footer />
         </CursorWrapper>
       </QueryClientProvider>
