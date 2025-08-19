@@ -2,21 +2,32 @@
 import { useEffect, useState } from "react";
 import AnimatedTooltip from "./ui/tooltip";
 import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
-import { getGitHubContributors, GitHubContributor } from "@/services/github.service";
+import { getGitHubContributorsFromRepos, GitHubContributor } from "@/controllers/github.controller";
 
 export default function Footer() {
   const [contributors, setContributors] = useState<GitHubContributor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
-  
+  // Prevenir hidratación mismatch
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     const fetchContributors = async () => {
       try {
         setIsLoading(true);
         
-        // Obtener contribuidores del repositorio
-        console.log('🚀 Cargando contribuidores del proyecto...');
-        const contributorsData = await getGitHubContributors();
+        // Obtener contribuidores 
+        console.log('Cargando contribuidores del proyecto...');
+        const contributorsData = await getGitHubContributorsFromRepos(
+          undefined, 
+          6, 
+          10
+        );
         setContributors(contributorsData);
       } catch (error) {
         console.error('Error loading contributors:', error);
@@ -26,7 +37,7 @@ export default function Footer() {
     };
 
     fetchContributors();
-  }, []);
+  }, [isMounted]);
 
   // Convertir contribuidores al formato del tooltip
   const contributorItems = contributors.map((contributor) => ({
@@ -37,7 +48,7 @@ export default function Footer() {
     className: "border-gray-200 hover:border-blue-400",
   }));
 
-  // Fallback al logo ACM si no hay contribuidores o está cargando
+  // Fallback al logo ACM si no hay contribuidores
   const acmLogo = [
     {
       id: 1,
@@ -48,6 +59,11 @@ export default function Footer() {
       className: "border-transparent",
     },
   ];
+
+  // Prevenir hidratación mismatch
+  const displayItems = !isMounted || isLoading || contributorItems.length === 0 
+    ? acmLogo 
+    : contributorItems;
 
   return (
     <footer className="w-full px-6 py-8 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg border-t border-gray-200/20 dark:border-gray-700/20 mt-auto">
@@ -63,7 +79,7 @@ export default function Footer() {
           {/* Contribuidores del proyecto en el centro */}
           <div className="flex justify-center">
             <AnimatedTooltip 
-              items={contributorItems.length > 0 ? contributorItems : acmLogo} 
+              items={displayItems} 
             />
           </div>
 
