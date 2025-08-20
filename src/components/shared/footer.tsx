@@ -9,18 +9,18 @@ export default function Footer() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Prevenir hidratación mismatch
+  
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
     if (!isMounted) return;
-    
+        
     const fetchContributors = async () => {
       try {
         setIsLoading(true);
-        
+                
         // Obtener contribuidores 
         console.log('Cargando contribuidores del proyecto...');
         const contributorsData = await getGitHubContributorsFromRepos(
@@ -60,7 +60,7 @@ export default function Footer() {
     },
   ];
 
-  // Prevenir hidratación mismatch
+  
   const displayItems = !isMounted || isLoading || contributorItems.length === 0 
     ? acmLogo 
     : contributorItems;
@@ -69,21 +69,23 @@ export default function Footer() {
     <footer className="w-full px-6 py-8 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg border-t border-gray-200/20 dark:border-gray-700/20 mt-auto">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 items-center">
-          {}
+          {/* Información izquierda */}
           <div className="flex flex-col justify-self-start">
             <h3 className="text-sm text-center text-[--azul-noche] dark:text-white">
               Capítulo Javeriano ACM
             </h3>
           </div>
 
-          {/* Contribuidores del proyecto en el centro */}
-          <div className="flex justify-center">
-            <AnimatedTooltip 
-              items={displayItems} 
+          {/* Contribuidores del proyecto en el centro*/}
+          <div className="flex justify-center relative z-0">
+            <AnimatedTooltip
+              items={displayItems}
+              className="relative z-0"
+              tooltipOffset="-translate-x-3/4"
             />
           </div>
 
-          {}
+          {/* Redes sociales derecha */}
           <div className="flex flex-col items-end gap-2 justify-self-end">
             <a
               href="https://www.linkedin.com/company/capitulo-javeriano-acm/"
