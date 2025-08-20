@@ -45,6 +45,7 @@ export default function Footer() {
     name: contributor.login,
     designation: "ACM Member",
     image: contributor.avatar_url,
+    html_url: contributor.html_url, 
     className: "border-gray-200 hover:border-blue-400",
   }));
 

@@ -18,6 +18,7 @@ type TooltipItem = {
   image: string;  
   imageDark?: string;  
   className?: string;
+  html_url?: string; 
 };
 
 type AnimatedTooltipProps = {
@@ -133,10 +134,15 @@ function AnimatedTooltipComponent({
 
           <div
             className={cn(
-              "relative h-14 w-14 rounded-full border-2 border-white overflow-hidden",
+              "relative h-14 w-14 rounded-full border-2 border-white overflow-hidden cursor-pointer",
               "!m-0 !p-0 transition duration-500 group-hover:z-[100] group-hover:scale-105",
               item.className
             )}
+            onClick={() => {
+              if (item.html_url) { 
+                window.open(item.html_url, '_blank');
+              }
+            }}
           >
             {/* Imagen clara */}
             <img
