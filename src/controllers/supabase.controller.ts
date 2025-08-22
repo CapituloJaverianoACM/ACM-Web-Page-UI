@@ -38,3 +38,27 @@ export async function signUp(name: string, surname: string, email: string, passw
     return { data: null, error: (error as Error).message };
   }
 }
+
+export async function signIn(email: string, password: string){
+
+  try{
+    const response = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+    const data = await response.json();
+
+    if(data.error){
+      throw new Error(data.error);
+    }
+
+    return {data: data.data, error: null };
+  }catch(error){
+    return {data: null, error: (error as Error).message };
+  }
+}
+
