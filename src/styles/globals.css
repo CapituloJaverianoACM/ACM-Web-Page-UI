@@ -410,25 +410,25 @@ a:active {
 }
 
 /* Primary button */
-.btn--primary {
+.btn--primary, .dark .btn--secondary {
   background-color: var(--azul-electrico);
   color: var(--white);
 }
 
-.btn--primary:hover {
+.btn--primary:hover, .dark .btn--secondary:hover {
   background-color: var(--azul-crayon);
   color: var(--white);
   text-decoration: none;
 }
 
 /* Secondary button */
-.btn--secondary {
+.btn--secondary, .dark .btn--primary {
   background-color: transparent;
   color: var(--azul-electrico);
   border-color: var(--azul-electrico);
 }
 
-.btn--secondary:hover {
+.btn--secondary:hover, .dark .btn--primary:hover {
   background-color: var(--azul-electrico);
   color: var(--white);
   text-decoration: none;
