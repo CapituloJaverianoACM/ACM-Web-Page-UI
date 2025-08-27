@@ -410,8 +410,8 @@ a:active {
 }
 
 /* Primary button */
-.btn--primary, .dark .btn--secondary {
-  background-color: var(--azul-crayon);
+.btn--primary {
+  background-color: var(--azul-electrico);
   color: var(--white);
 }
 
@@ -427,6 +427,11 @@ a:active {
   background-color: transparent;
   color: var(--azul-electrico);
   border-color: var(--azul-electrico);
+}
+
+.dark .btn--secondary {
+  background-color: var(--azul-crayon);
+  color: var(--white);
 }
 
 .btn--secondary:hover, .dark .btn--primary:hover {
