@@ -411,12 +411,13 @@ a:active {
 
 /* Primary button */
 .btn--primary, .dark .btn--secondary {
-  background-color: var(--azul-electrico);
+  background-color: var(--azul-crayon);
   color: var(--white);
 }
 
 .btn--primary:hover, .dark .btn--secondary:hover {
-  background-color: var(--azul-crayon);
+  background-color: var(--azul-electrico);
+  border-color: var(--white);
   color: var(--white);
   text-decoration: none;
 }
@@ -465,7 +466,6 @@ a:active {
    =================================== */
 
 .card {
-  background-color: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--space-xl);
