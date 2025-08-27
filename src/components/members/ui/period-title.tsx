@@ -6,7 +6,7 @@ interface PeriodTitleProps {
     groupLength: number
 };
 
-export const PeriodTitle : React.FC<PeriodTitleProps> = ({ period, groupLength }) => {
+export const PeriodTitle: React.FC<PeriodTitleProps> = ({ period, groupLength }) => {
     const formatPeriodTitle = (memberSince: string) => {
         const [year, semester] = memberSince.split("-");
         return `${year} - Semestre ${semester}`;
@@ -25,7 +25,7 @@ export const PeriodTitle : React.FC<PeriodTitleProps> = ({ period, groupLength }
                         ? "Sin Periodo Definido"
                         : formatPeriodTitle(period)}
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 dark:text-[var(--azul-niebla)] mt-1">
                     {groupLength} miembro
                     {groupLength !== 1 ? "s" : ""}
                     {period !== "Sin periodo"

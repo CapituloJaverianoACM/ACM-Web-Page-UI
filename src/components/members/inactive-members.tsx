@@ -9,9 +9,9 @@ const InactiveMembers = () => {
     const { data: members, isLoading } = useQuery({
         queryKey: ['members'],
         queryFn: async () => {
-            const members : Member[] = await getMembers();
-            return members.filter( member => !member.active ).map( member => {
-                member.role = "Ex-"+member.role;
+            const members: Member[] = await getMembers();
+            return members.filter(member => !member.active).map(member => {
+                member.role = "Ex-" + member.role;
                 return member;
             });
         }
@@ -37,11 +37,11 @@ const InactiveMembers = () => {
     });
 
     return (
-        <div className="pt-[10vh] min-h-screen bg-gradient-to-br from-gray-50 to-white">
+        <div className="pt-[10vh] min-h-screen bg-gradient-to-br ">
             <div className="container mx-auto px-4 ">
                 <div className="space-y-8">
                     {/* Header */}
-                    <InactiveMembersHeader /> 
+                    <InactiveMembersHeader />
 
                     {/* Timeline */}
                     <InactiveMembersTimeline sortedPeriods={sortedPeriods} grouped={grouped} />

@@ -69,7 +69,7 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
                                 <Badge
                                     key={index}
                                     variant="secondary"
-                                    className="text-xs bg-[var(--azul-niebla)]/20 text-white bg-[var(--azul-niebla)]/30 transition-colors duration-200 glassmorphic py-1 px-2.5 select-none"
+                                    className="text-xs text-white bg-[var(--azul-niebla)]/30 transition-colors duration-200 glassmorphic py-1 px-2.5 select-none"
                                 >
                                     {skill}
                                 </Badge>

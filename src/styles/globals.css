@@ -415,20 +415,26 @@ a:active {
   color: var(--white);
 }
 
-.btn--primary:hover {
-  background-color: var(--azul-crayon);
+.btn--primary:hover, .dark .btn--secondary:hover {
+  background-color: var(--azul-electrico);
+  border-color: var(--white);
   color: var(--white);
   text-decoration: none;
 }
 
 /* Secondary button */
-.btn--secondary {
+.btn--secondary, .dark .btn--primary {
   background-color: transparent;
   color: var(--azul-electrico);
   border-color: var(--azul-electrico);
 }
 
-.btn--secondary:hover {
+.dark .btn--secondary {
+  background-color: var(--azul-crayon);
+  color: var(--white);
+}
+
+.btn--secondary:hover, .dark .btn--primary:hover {
   background-color: var(--azul-electrico);
   color: var(--white);
   text-decoration: none;
@@ -465,7 +471,6 @@ a:active {
    =================================== */
 
 .card {
-  background-color: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--space-xl);

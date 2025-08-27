@@ -122,7 +122,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                                 </Link>
                                 <Link
                                     href="/sign-up"
-                                    className="btn btn--primary btn--small"
+                                    className="btn btn--primary btn--small dark:text-white"
                                 >
                                     Sign up
                                 </Link>
