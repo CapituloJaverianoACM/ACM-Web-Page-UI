@@ -9,10 +9,13 @@ export function AboutUs() {
   ));
 
   return (
-    <div id="about-us" className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        About Us
-      </h2>
+    <div id="about-us" className="space-y-8 py-12">
+      <div className="text-center px-4 sm:px-6 lg:px-40">
+        <h1 className="dark:text-white">Sobre Nosotros</h1>
+        <p className="text-xl dark:text-white/80">
+          Somos una comunidad apasionada por la tecnología y la innovación, dedicada a impulsar el crecimiento profesional y personal de nuestros miembros a través de la colaboración, el aprendizaje y el liderazgo.
+        </p>
+      </div>
       <Carousel items={cards} />
     </div>
   );
