@@ -177,7 +177,7 @@ export function UpcomingEvents({
     >
       <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">
         <div className="flex flex-col gap-2 w-full">
-          <h2 className="dark:text-white">Upcoming Events</h2>
+          <h2 className="dark:text-white">Próximos Eventos</h2>
           <p className="dark:text-white">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
             sunt.

@@ -10,10 +10,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Contributors from "@/components/home/sections/contributors";
 
 const navLinks = [
-  { key: "home", label: "Home", href: "#home" },
-  { key: "about us", label: "About Us", href: "#about-us" },
-  { key: "members", label: "Members", href: "#members" },
-  { key: "league", label: "League", href: "/league" },
+  { key: "home", label: "Inicio", href: "#home" },
+  { key: "about us", label: "Sobre Nosotros", href: "#about-us" },
+  { key: "members", label: "Miembros", href: "#members" },
+  { key: "league", label: "La Liga", href: "/league" },
 ];
 
 const queryClient = new QueryClient();
