@@ -118,13 +118,13 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                                     href="/log-in"
                                     className="btn btn--outline btn--small "
                                 >
-                                    Log in
+                                    Iniciar sesión
                                 </Link>
                                 <Link
                                     href="/sign-up"
                                     className="btn btn--primary btn--small dark:text-white"
                                 >
-                                    Sign up
+                                    Registrarse
                                 </Link>
                             </div>
                             {/* Mobile Menu Button */}
@@ -185,14 +185,14 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                                     className="btn btn--outline btn--small w-full"
                                     onClick={closeMobileMenu}
                                 >
-                                    Log in
+                                    Iniciar sesión
                                 </Link>
                                 <Link
                                     href="/sign-up"
                                     className="btn btn--primary btn--small w-full"
                                     onClick={closeMobileMenu}
                                 >
-                                    Sign up
+                                    Registrarse
                                 </Link>
                             </div>
                         </div>
