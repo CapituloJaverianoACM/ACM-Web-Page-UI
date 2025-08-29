@@ -9,6 +9,7 @@ import { Card, CardContent } from "../../shared/ui/card";
 import { Users } from "lucide-react";
 import { getMembers } from "@/controllers/member.controller";
 import { useQuery } from "@tanstack/react-query";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 
 export function Members() {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
