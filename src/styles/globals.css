@@ -415,7 +415,8 @@ a:active {
   color: var(--white);
 }
 
-.btn--primary:hover, .dark .btn--secondary:hover {
+.btn--primary:hover,
+.dark .btn--secondary:hover {
   background-color: var(--azul-electrico);
   border-color: var(--white);
   color: var(--white);
@@ -423,7 +424,8 @@ a:active {
 }
 
 /* Secondary button */
-.btn--secondary, .dark .btn--primary {
+.btn--secondary,
+.dark .btn--primary {
   background-color: transparent;
   color: var(--azul-electrico);
   border-color: var(--azul-electrico);
@@ -434,7 +436,8 @@ a:active {
   color: var(--white);
 }
 
-.btn--secondary:hover, .dark .btn--primary:hover {
+.btn--secondary:hover,
+.dark .btn--primary:hover {
   background-color: var(--azul-electrico);
   color: var(--white);
   text-decoration: none;
@@ -474,7 +477,8 @@ a:active {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--space-xl);
-  transition: transform var(--transition-normal),
+  transition:
+    transform var(--transition-normal),
     box-shadow var(--transition-normal);
 }
 
@@ -679,29 +683,39 @@ a:active {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
   }
 
   .glass-noise {
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>"), var(--azul-electrico);
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>"),
+      var(--azul-electrico);
     background-blend-mode: soft-light;
   }
 
   .glass-noise-dark {
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>"), var(--azul-ultramar);
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>"),
+      var(--azul-ultramar);
     background-blend-mode: soft-light;
   }
 
   .bg-crayon-glow {
-    background: radial-gradient(circle at center bottom, var(--azul-crayon) 30%, transparent 60%);
+    background: radial-gradient(
+      circle at center bottom,
+      var(--azul-crayon) 30%,
+      transparent 60%
+    );
     mix-blend-mode: multiply;
   }
 
   .bg-crayon-glow-dark {
-    background: radial-gradient(circle at center bottom, var(--azul-crayon) 20%, transparent 60%);
+    background: radial-gradient(
+      circle at center bottom,
+      var(--azul-crayon) 20%,
+      transparent 60%
+    );
     mix-blend-mode: multiply;
   }
 }

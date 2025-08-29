@@ -1,9 +1,9 @@
-'use client';
+"use client";
 import { AboutUs } from "@/components/home/sections/about-us";
 import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
-import MainNavbar from '@/components/shared/main-navbar';
+import MainNavbar from "@/components/shared/main-navbar";
 import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
 import Footer from "../components/shared/footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

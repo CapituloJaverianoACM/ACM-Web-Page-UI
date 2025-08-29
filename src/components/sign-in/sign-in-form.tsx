@@ -14,8 +14,8 @@ export function SignInForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const response = await signIn(email,password);
-    if(response.error){
+    const response = await signIn(email, password);
+    if (response.error) {
       setError(response.error);
       setLoading(false);
       return;
@@ -27,26 +27,36 @@ export function SignInForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-sm font-medium text-azul-ultramar dark:text-white">Correo electrónico</label>
+        <label
+          htmlFor="email"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
+        >
+          Correo electrónico
+        </label>
         <Input
           id="email"
           type="email"
           autoComplete="email"
           className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-sm font-medium text-azul-ultramar dark:text-white">Contraseña</label>
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
+        >
+          Contraseña
+        </label>
         <Input
           id="password"
           type="password"
           autoComplete="current-password"
           className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
@@ -55,6 +65,5 @@ export function SignInForm() {
         {loading ? "Ingresando..." : "Iniciar sesión"}
       </Button>
     </form>
-  )
-
+  );
 }

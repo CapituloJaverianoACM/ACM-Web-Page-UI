@@ -23,19 +23,19 @@ const navLinks = [
 ];
 
 export default function LeagueHomePage() {
-
-  const [contests, setContests] = useState<(Contest & {
-    picture: {
-      link: string;
-    };
-  })[]>([]);
+  const [contests, setContests] = useState<
+    (Contest & {
+      picture: {
+        link: string;
+      };
+    })[]
+  >([]);
 
   useEffect(() => {
     getContestsWithPictures()
       .then(setContests)
       .catch(() => setContests([]));
   }, []);
-
 
   return (
     <HeroUIProvider>
