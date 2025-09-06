@@ -77,9 +77,8 @@ const RankingList = ({
 
   const [loading, setLoading] = useState<boolean>(true);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [students, setStudents] = useState<Student[]>(
-    Array.from({ length: SKELETON_RANKING_USERS_COUNT }).map((_) => ({
+    Array.from({ length: SKELETON_RANKING_USERS_COUNT }).map(() => ({
       _id: "",
       avatar: "",
       level: LevelEnum.Initial,
