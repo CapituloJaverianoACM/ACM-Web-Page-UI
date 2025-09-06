@@ -9,8 +9,8 @@ export function AboutUs() {
   ));
 
   return (
-    <div id="about-us" className="space-y-8 py-12">
-      <div className="text-center px-4 sm:px-6 lg:px-40">
+    <div id="about-us" className="space-y-8 pl-4 sm:pl-6 lg:pl-8 py-12">
+      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-40">
         <h1 className="dark:text-white">Sobre Nosotros</h1>
         <p className="text-xl dark:text-white/80">
           Somos una comunidad apasionada por la tecnología y la innovación,
