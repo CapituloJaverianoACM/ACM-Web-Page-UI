@@ -32,7 +32,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => { },
+  onCardClose: () => {},
   currentIndex: 0,
 });
 
@@ -89,14 +89,14 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   // Scrollear con el mouse
 
   const scrolling = useRef(false);
-  const startX = useRef(0)
+  const startX = useRef(0);
   const scrollDistance = useRef(0);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     scrolling.current = true;
-    startX.current = e.clientX
+    startX.current = e.clientX;
     lastScrollLeft.current = carouselRef.current?.scrollLeft ?? 0;
-  }
+  };
 
   const lastScrollLeft = useRef(0);
 
@@ -120,12 +120,12 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     return () => window.removeEventListener("mouseup", onMouseUp);
   }, []);
 
-
   return (
     <CarouselContext.Provider
       value={{ onCardClose: handleCardClose, currentIndex }}
     >
-      <div className="relative w-full select-none"
+      <div
+        className="relative w-full select-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -137,14 +137,14 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
         >
           <div
             className={cn(
-              "absolute right-0  z-[1000] h-auto  w-[5%] overflow-hidden bg-gradient-to-l"
+              "absolute right-0  z-[1000] h-auto  w-[5%] overflow-hidden bg-gradient-to-l",
             )}
           ></div>
 
           <div
             className={cn(
               "flex flex-row justify-start gap-4 lg:l-4",
-              "max-w-7xl mx-auto" // remove max-w-4xl if you want the carousel to span the full width of its container
+              "max-w-7xl mx-auto", // remove max-w-4xl if you want the carousel to span the full width of its container
             )}
           >
             {items.map((item, index) => (
@@ -322,7 +322,7 @@ export const BlurImage = ({
       className={cn(
         "transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
-        className
+        className,
       )}
       onLoad={() => setLoading(false)}
       src={src}

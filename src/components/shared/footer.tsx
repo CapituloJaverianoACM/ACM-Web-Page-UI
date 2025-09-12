@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
 
@@ -9,7 +9,9 @@ export default function Footer() {
         <div className="grid grid-cols-3 items-center">
           {/* Título a la izquierda */}
           <div className="flex flex-col justify-self-start">
-            <h3 className="text-sm text-center text-[--azul-noche] dark:text-white">Capítulo Javeriano ACM</h3>
+            <h3 className="text-sm text-center text-[--azul-noche] dark:text-white">
+              Capítulo Javeriano ACM
+            </h3>
           </div>
 
           {/* Logo en el centro */}
@@ -30,10 +32,18 @@ export default function Footer() {
 
           {/* Redes sociales a la derecha - apiladas verticalmente */}
           <div className="flex flex-col items-end gap-2 justify-self-end">
-            <a href="https://www.linkedin.com/company/capitulo-javeriano-acm/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.linkedin.com/company/capitulo-javeriano-acm/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <IconBrandLinkedin className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
-            <a href="https://www.instagram.com/acmjaveriana" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.instagram.com/acmjaveriana"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <IconBrandInstagram className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
           </div>

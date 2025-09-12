@@ -9,7 +9,7 @@ export const InactiveMemberImage: React.FC<
   const [imageError, setImageError] = useState(false);
   return (
     <div
-      className="flex-shrink-0 bg-azul-electrico radius border-azul-electrico border-3 overflow-hidden flex items-center justify-center"
+      className="flex-shrink-0 bg-azul-electrico dark:bg-blue-600 radius border-azul-electrico border-3 overflow-hidden flex items-center justify-center"
       style={{
         width: "120px",
         height: "120px",
@@ -29,8 +29,8 @@ export const InactiveMemberImage: React.FC<
           onError={() => setImageError(true)}
         />
       ) : (
-        <div className="flex items-center justify-center w-full h-full bg-blue-100">
-          <User className="w-8 h-8 text-blue-600" />
+        <div className="flex items-center justify-center w-full h-full dark:bg-blue-600">
+          <User className="w-8 h-8 text-white" />
         </div>
       )}
     </div>

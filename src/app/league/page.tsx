@@ -12,23 +12,24 @@ import { getContestsWithPictures } from "@/controllers/contest.controller";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { key: "home", label: "Home", href: "/" },
-  { key: "rules", label: "Rules", href: "#rules" },
+  { key: "home", label: "Inicio", href: "/" },
+  { key: "rules", label: "Reglas", href: "#rules" },
   {
     key: "upcoming-events",
-    label: "Upcoming Events",
+    label: "Próximos Eventos",
     href: "#upcoming-events",
   },
-  { key: "podium", label: "Podium", href: "#podium" },
+  { key: "podium", label: "Podio", href: "#podium" },
 ];
 
 export default function LeagueHomePage() {
-
-  const [contests, setContests] = useState<(Contest & {
-    picture: {
-      link: string;
-    };
-  })[]>([]);
+  const [contests, setContests] = useState<
+    (Contest & {
+      picture: {
+        link: string;
+      };
+    })[]
+  >([]);
 
   useEffect(() => {
     getContestsWithPictures()
@@ -36,14 +37,13 @@ export default function LeagueHomePage() {
       .catch(() => setContests([]));
   }, []);
 
-
   return (
     <HeroUIProvider>
       <MainNavbar navLinks={navLinks} />
       <Hero />
       <Rules />
       <UpcomingEvents events={contests} loadingInitialState />
-      <Podium  />
+      <Podium />
       <Footer />
     </HeroUIProvider>
   );

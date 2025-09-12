@@ -10,10 +10,15 @@ export function AboutUs() {
   ));
 
   return (
-    <div id="about-us" className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        About Us
-      </h2>
+    <div id="about-us" className="space-y-8 pl-4 sm:pl-6 lg:pl-8 py-12">
+      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-40">
+        <h1 className="dark:text-white">Sobre Nosotros</h1>
+        <p className="text-xl dark:text-white/80">
+          Somos una comunidad apasionada por la tecnología y la innovación,
+          dedicada a impulsar el crecimiento profesional y personal de nuestros
+          miembros a través de la colaboración, el aprendizaje y el liderazgo.
+        </p>
+      </div>
       <Carousel items={cards} />
     </div>
   );
@@ -25,26 +30,29 @@ const CPMembersContent = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://codeforces.com/api/user.info?checkHistoricHandles=false&handles=aruiz08;firulo;TalkySafe143;achalogy;Cojuan;Avila_Sa;sandoval95', {
-      cache: "no-store"
-    })
+    fetch(
+      "https://codeforces.com/api/user.info?checkHistoricHandles=false&handles=aruiz08;firulo;TalkySafe143;achalogy;Cojuan;Avila_Sa;sandoval95",
+      {
+        cache: "no-store",
+      },
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "OK" && Array.isArray(data.result)) {
           // Separar los coaches de los miembros
           const membersData = data.result
-            .filter(user => user.handle !== "sandoval95")
+            .filter((user) => user.handle !== "sandoval95")
             .sort((a, b) => b.rating - a.rating)
-            .map(user => ({
+            .map((user) => ({
               title: `${user.handle} - (Rating: ${user.rating})`,
-              src: user.titlePhoto
+              src: user.titlePhoto,
             }));
 
           const coachData = data.result
-            .filter(user => user.handle === "sandoval95")
-            .map(user => ({
+            .filter((user) => user.handle === "sandoval95")
+            .map((user) => ({
               title: `${user.handle} - Coach`,
-              src: user.titlePhoto
+              src: user.titlePhoto,
             }));
 
           setCPMembers(membersData);
@@ -52,7 +60,7 @@ const CPMembersContent = () => {
         }
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
@@ -62,10 +70,14 @@ const CPMembersContent = () => {
 
   return (
     <>
-      <p className="dark:text-[--azul-niebla]">Somos un grupo apasionado por competir y desctacarnos cada día más</p>
+      <p className="dark:text-[--azul-niebla]">
+        Somos un grupo apasionado por competir y desctacarnos cada día más
+      </p>
       <br />
       <FocusCards cards={cp_members} />
-      <p className="text-3xl text-center my-10 font-semibold dark:text-[--azul-niebla]">Nuestro Coach</p>
+      <p className="text-3xl text-center my-10 font-semibold dark:text-[--azul-niebla]">
+        Nuestro Coach
+      </p>
       <FocusCards cards={cp_coaches} />
     </>
   );

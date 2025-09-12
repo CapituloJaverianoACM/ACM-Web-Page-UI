@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/shared/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/shared/ui/card";
 import { SignUpForm } from "@/components/sign-up/sign-up-form";
 import Link from "next/link";
 
@@ -8,7 +14,10 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center dark:bg-[#121212] p-4">
       {/* Logo ACM */}
-      <Link href="/" className="mb-6 flex flex-col items-center group select-none">
+      <Link
+        href="/"
+        className="mb-6 flex flex-col items-center group select-none"
+      >
         <img
           src="/Logo_Oscuro.svg"
           alt="Logo ACM Javeriana"
@@ -30,7 +39,12 @@ export default function SignUpPage() {
           <SignUpForm />
         </CardContent>
         <CardFooter className="flex flex-col items-center gap-2">
-          <Link href="/log-in" className="text-xs text-azul-crayon dark:text-white hover:underline mt-2">¿Ya tienes cuenta? Inicia sesión</Link>
+          <Link
+            href="/log-in"
+            className="text-xs text-azul-crayon dark:text-white hover:underline mt-2"
+          >
+            ¿Ya tienes cuenta? Inicia sesión
+          </Link>
         </CardFooter>
       </Card>
     </div>

@@ -19,16 +19,16 @@ export function Activities() {
         Activities
       </h2>
       <BentoGrid className="py-10 lg:py-20 max-w-4xl mx-auto md:auto-rows-[20rem]">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={cn("[&>p:text-lg]", item.className)}
-          icon={item.icon}
-        />
-      ))}
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={cn("[&>p:text-lg]", item.className)}
+            icon={item.icon}
+          />
+        ))}
       </BentoGrid>
     </div>
   );
@@ -300,7 +300,6 @@ const SkeletonFive = () => {
   );
 };
 const items = [
-
   {
     title: "AI Content Generation",
     description: (
