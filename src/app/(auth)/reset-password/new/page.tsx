@@ -1,5 +1,5 @@
 "use client";
-import ResetEmailForm from "@/components/reset-password/email-form";
+import { NewPasswordForm } from "@/components/reset-password/new-password-form";
 import {
   Card,
   CardContent,
@@ -9,8 +9,6 @@ import {
 import { AuthLayout } from "@/layouts/info/auth_layout";
 import React from "react";
 
-// TODO: Se puede reestablecer la contraseña sin que supabase lo sepa??
-// HACK: Al parecer si, cuando el cliente se crea, coge las cookies tambien
 const NewPasswordReset: React.FC = () => {
   return (
     <AuthLayout>
@@ -21,7 +19,7 @@ const NewPasswordReset: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ResetEmailForm />
+          <NewPasswordForm />
         </CardContent>
       </Card>
     </AuthLayout>

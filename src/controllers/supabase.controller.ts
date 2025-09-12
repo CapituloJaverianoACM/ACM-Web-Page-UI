@@ -29,6 +29,8 @@ export async function signUp(
         throw new Error("El URL del avatar no apunta a una imagen válida.");
       }
     }
+
+
     const response = await fetch("http://localhost:3000/api/auth/signup", {
       method: "POST",
       headers: {
@@ -51,7 +53,7 @@ export async function signUp(
 
 export async function signIn(email: string, password: string) {
   try {
-    const response = await fetch("/api/auth/signin", {
+    const response = await fetch("http:/localhost:3000/api/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +74,15 @@ export async function signIn(email: string, password: string) {
 }
 
 export const sendResetEmail = async (email: string): Promise<void> => {
-  await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://localhost:3000/reset-password/new",
-  });
+  await supabase.auth.resetPasswordForEmail(email);
+};
+
+export const updatePasswordUser = async (password: string) : Promise<boolean> => {
+    const userResponse = await supabase.auth.updateUser({ password });
+    if (userResponse.error) {
+        console.log(userResponse.error);
+        return false;
+    }
+
+    return true;
 };
