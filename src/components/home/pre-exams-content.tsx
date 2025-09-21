@@ -3,7 +3,6 @@ interface PreExam {
   title: string;
   description: string;
   dates: string[];
-  images: string[];
   materials: {
     name: string;
     url: string;
@@ -16,98 +15,90 @@ const preExams: PreExam[] = [
   {
     id: "1",
     title: "Taller: Introducción a la Programación",
-    description: "Taller básico para principiantes. Conceptos fundamentales de programación y lógica computacional.",
-    dates: ["15 de Marzo, 2024", "22 de Marzo, 2024", "5 de Abril, 2024"],
-    images: [
-      "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=500"
-    ],
+    description: "Conceptos fundamentales de programación y lógica computacional.",
+    dates: ["23 de Agosto, 2023", "8 de Noviembre, 2023", "4 de Marzo, 2025", "7 de Abril, 2025", "19 de Mayo, 2025"],
     materials: [
       {
-        name: "Presentación del Taller",
-        url: "#",
+        name: "Slides - Parcial No. 1",
+        url: "https://drive.google.com/file/d/1gWnlsfQTYN-qMi2M9cEa5l2Qz2W6dsdv/view?usp=drive_link",
         type: "ppt"
       },
       {
-        name: "Ejercicios Prácticos",
-        url: "#",
+        name: "Simulacro - Parcial No. 2",
+        url: "https://drive.google.com/file/d/150yucdufPKI1WpLxzlGUFbTf4tMgzDcX/view?usp=drive_link",
+        type: "pdf"
+      },
+      {
+        name: "Simulacro - Parcial No. 3",
+        url: "https://drive.google.com/file/d/1euu3OwXiu4OtuOYg4N4A9fZDv-IAkui2/view?usp=drive_link",
         type: "pdf"
       }
     ],
-    topics: ["Variables", "Estructuras de control", "Funciones", "Arrays"]
+    topics: ["Variables", "Estructuras de control", "Funciones", "Arrays", "C++"]
   },
   {
     id: "2",
     title: "Taller: Programación Avanzada",
-    description: "Técnicas avanzadas de programación y mejores prácticas para desarrollo eficiente.",
-    dates: ["22 de Marzo, 2024", "29 de Marzo, 2024", "12 de Abril, 2024"],
-    images: [
-      "https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=500"
-    ],
+    description: "Técnicas avanzadas de programación e introducción al paradigma orientado a objetos.",
+    dates: ["8 de Noviembre, 2023", "20 de Marzo, 2025", "19 de Mayo, 2025"],
     materials: [
       {
-        name: "Guía de Programación Avanzada",
-        url: "#",
+        name: "Simulacro - Parcial No. 1",
+        url: "https://drive.google.com/file/d/1sHX0NrQoqPfqF0VriHFbTZArsQ84DGYz/view?usp=drive_link",
         type: "pdf"
       },
       {
-        name: "Código de Ejemplos",
-        url: "#",
-        type: "link"
+        name: "Slides - Parcial No. 2",
+        url: "https://drive.google.com/file/d/1tkwQnNmzPcSGHb58dqekBJBxaq_7sLm3/view?usp=drive_link",
+        type: "ppt"
+      },
+      {
+        name: "Simulacro - Parcial No. 2",
+        url: "https://drive.google.com/file/d/1oywoalikehnSqVLAYtni-kxqndmZFktM/view?usp=drive_link",
+        type: "pdf"
+      },
+      {
+        name: "Slides - Parcial No. 3",
+        url: "https://drive.google.com/file/d/1fdLJsQBw3hNAATq3Z65aj6MM_R7vg0QY/view?usp=drive_link",
+        type: "ppt"
       }
     ],
-    topics: ["POO", "Recursión", "Manejo de errores", "Optimización"]
+    topics: ["POO", "Apuntadores", "Manejo de errores", "Java", "C++"]
   },
   {
     id: "3",
     title: "Taller: Estructuras de Datos",
     description: "Implementación y uso de estructuras de datos fundamentales para resolver problemas complejos.",
-    dates: ["29 de Marzo, 2024", "5 de Abril, 2024", "19 de Abril, 2024"],
-    images: [
-      "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=500"
-    ],
+    dates: ["29 de Febrero, 2025", "9 de Abril, 2025", "29 de Mayo, 2025"],
     materials: [
       {
-        name: "Estructuras de Datos - Teoría",
-        url: "#",
+        name: "Simulacro - Parcial No. 2",
+        url: "https://drive.google.com/file/d/1p9_xnDmhrYLXkz-1jybUHx_rgb-dnOMo/view?usp=drive_link",
         type: "pdf"
       },
       {
-        name: "Implementaciones",
-        url: "#",
-        type: "link"
-      }
-    ],
-    topics: ["Listas", "Pilas y colas", "Árboles", "Grafos"]
-  },
-  {
-    id: "4",
-    title: "Taller: Análisis de Algoritmos",
-    description: "Análisis de complejidad temporal y espacial. Técnicas para optimizar algoritmos.",
-    dates: ["5 de Abril, 2024", "12 de Abril, 2024", "26 de Abril, 2024"],
-    images: [
-      "https://images.pexels.com/photos/1181678/pexels-photo-1181678.jpeg?auto=compress&cs=tinysrgb&w=500"
-    ],
-    materials: [
-      {
-        name: "Análisis de Algoritmos",
-        url: "#",
+        name: "Solución Simulacro - Parcial No. 2",
+        url: "https://drive.google.com/file/d/1Bs1gWolsEWe0zTA4Ecpf3bnHYhfiyUB2/view?usp=drive_link",
         type: "pdf"
       },
       {
-        name: "Problemas de Práctica",
-        url: "#",
+        name: "Simulacro (presencial) - Parcial No. 3",
+        url: "https://drive.google.com/file/d/1gqrUUhCenLDZxbGtxcQ7iheBy5I4BaIg/view?usp=drive_linkk",
         type: "pdf"
-      }
+      },
+      {
+        name: "Simulacro (virtual) - Parcial No. 3",
+        url: "https://drive.google.com/file/d/1H3fIQTNZgWYw0DVlFCs-2gOzXJ5yDYdn/view?usp=drive_link",
+        type: "pdf"
+      },
     ],
-    topics: ["Complejidad", "Ordenamiento", "Búsqueda", "Optimización"]
+    topics: ["STL", "Árboles", "Grafos", "C++"]
   }
 ];
 
 export function PreExamsContent() {
   return (
-    <div className="max-w-7xl mx-auto my-12 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
-
-
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
       <div className="space-y-8">
         {preExams.map((preExam) => (
           <div key={preExam.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -152,31 +143,6 @@ export function PreExamsContent() {
                 </div>
               </div>
 
-              {/* Images */}
-              {preExam.images.length > 0 && (
-                <div className="mb-6">
-                  <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-                    📸 Galería
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {preExam.images.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={image}
-                          alt={`Imagen ${index + 1} del preparcial`}
-                          className="w-full h-32 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-200"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center">
-                          <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                          </svg>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Materials */}
               <div>
                 <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
@@ -187,7 +153,8 @@ export function PreExamsContent() {
                     <a
                       key={index}
                       href={material.url}
-                      className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 group"
+                      target="_blank"
+                      className="flex items-center p-3 no-underline bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 group min-w-0"
                     >
                       <div className="flex-shrink-0 mr-3">
                         {material.type === 'pdf' && (
@@ -211,11 +178,11 @@ export function PreExamsContent() {
                           </svg>
                         )}
                       </div>
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 overflow-hidden">
                         <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
                           {material.name}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 capitalize truncate">
                           {material.type}
                         </p>
                       </div>
@@ -236,9 +203,12 @@ export function PreExamsContent() {
         <p className="text-gray-600 dark:text-gray-400 mb-4">
           ¿Te interesa participar en nuestros próximos preparciales?
         </p>
-        <button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+        <a
+          href="https://www.instagram.com/acmjaveriana"
+          target="_blank"
+          className="no-underline bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
           📝 Inscribirse en Próximos Talleres
-        </button>
+        </a>
       </div>
     </div>
   );
