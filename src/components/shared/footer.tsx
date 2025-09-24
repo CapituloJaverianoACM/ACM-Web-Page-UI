@@ -77,7 +77,7 @@ export default function Footer() {
             <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
               Capítulo Javeriano
             </span>
-            <span className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white">
+            <span className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white" style={{"fontFamily": "'bc-liguria', sanserif"}}>
               ACM
             </span>
           </div>
