@@ -7,8 +7,10 @@ import { Member } from "@/models/member.model";
 import Link from "next/link";
 import { Card, CardContent } from "../../shared/ui/card";
 import { Users } from "lucide-react";
+
 import { getMembers } from "@/controllers/member.controller";
 import { useQuery } from "@tanstack/react-query";
+import LoaderPacman from "../loader";
 
 export function Members() {
     const [selectedMember, setSelectedMember] = useState<Member | null>(null);
@@ -44,18 +46,19 @@ export function Members() {
                 </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {isLoading && (
-                    <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 text-center">
-                        <p className="text-gray-500">Cargando miembros...</p>
-                    </div>
-                )}
-                {!isLoading && members.filter(member => member.active).map((member) => (
-                    <MemberCard
-                        key={member._id}
-                        member={member}
-                        onClick={() => handleMemberClick(member)}
-                    />
-                ))}
+                    {((isLoading || !(members ?? []).filter(m => m.active).length)) && (
+                        <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 flex flex-col items-center justify-center py-8">
+                            <LoaderPacman/>
+                            <p className="text-gray-500 mt-4">Cargando miembros...</p>
+                        </div>
+                    )}
+                    {(members ?? []).filter(member => member.active).map((member) => (
+                        <MemberCard
+                            key={member._id}
+                            member={member}
+                            onClick={() => handleMemberClick(member)}
+                        />
+                    ))}
                 {/* Inactive Members Card */}
                 <Link href="/inactive-members" className="group">
                     <Card className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 shadow-lg aspect-[3/4] relative mx-auto max-w-sm w-full">
