@@ -6,6 +6,10 @@ import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
