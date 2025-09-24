@@ -2,35 +2,37 @@
 import { useEffect, useState } from "react";
 import AnimatedTooltip from "./ui/tooltip";
 import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
-import { getGitHubContributorsFromRepos, GitHubContributor } from "@/controllers/github.controller";
+import {
+  getGitHubContributorsFromRepos,
+  GitHubContributor,
+} from "@/controllers/github.controller";
 
 export default function Footer() {
   const [contributors, setContributors] = useState<GitHubContributor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
-  
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
     if (!isMounted) return;
-        
+
     const fetchContributors = async () => {
       try {
         setIsLoading(true);
-                
-        // Obtener contribuidores 
-        console.log('Cargando contribuidores del proyecto...');
+
+        // Obtener contribuidores
+        console.log("Cargando contribuidores del proyecto...");
         const contributorsData = await getGitHubContributorsFromRepos(
-          undefined, 
-          6, 
+          undefined,
+          6,
           10
         );
         setContributors(contributorsData);
       } catch (error) {
-        console.error('Error loading contributors:', error);
+        console.error("Error loading contributors:", error);
       } finally {
         setIsLoading(false);
       }
@@ -45,7 +47,7 @@ export default function Footer() {
     name: contributor.login,
     designation: "ACM Member",
     image: contributor.avatar_url,
-    html_url: contributor.html_url, 
+    html_url: contributor.html_url,
     className: "border-gray-200 hover:border-blue-400",
   }));
 
@@ -61,22 +63,24 @@ export default function Footer() {
     },
   ];
 
-  
-  const displayItems = !isMounted || isLoading || contributorItems.length === 0 
-    ? acmLogo 
-    : contributorItems;
+  const displayItems =
+    !isMounted || isLoading || contributorItems.length === 0
+      ? acmLogo
+      : contributorItems;
 
   return (
     <footer className="w-full px-6 py-8 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg border-t border-gray-200/20 dark:border-gray-700/20 mt-auto">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 items-center">
           {/* Información izquierda */}
-          <div className="flex flex-col justify-self-start">
-            <h3 className="text-sm text-center text-[--azul-noche] dark:text-white">
-              Capítulo Javeriano ACM
-            </h3>
+          <div className="flex items-center justify-self-start whitespace-nowrap">
+            <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
+              Capítulo Javeriano
+            </span>
+            <span className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white">
+              ACM
+            </span>
           </div>
-
           {/* Contribuidores del proyecto en el centro*/}
           <div className="flex justify-center relative z-0">
             <AnimatedTooltip
@@ -86,21 +90,26 @@ export default function Footer() {
             />
           </div>
 
-          {/* Redes sociales derecha */}
-          <div className="flex flex-col items-end gap-2 justify-self-end">
+          {/* Redes sociales a la derecha */}
+          <div className="flex items-center justify-self-end gap-3 md:gap-4">
             <a
               href="https://www.linkedin.com/company/capitulo-javeriano-acm/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="inline-flex"
             >
-              <IconBrandLinkedin className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandLinkedin className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
+
             <a
-              href="https://www.instagram.com/acmjaveriana"
+              href="https://www.instagram.com/acmjaveriana?igsh=N3VjZGw0OHE3eG1x"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="inline-flex"
             >
-              <IconBrandInstagram className="w-5 h-5 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandInstagram className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
             </a>
           </div>
         </div>
