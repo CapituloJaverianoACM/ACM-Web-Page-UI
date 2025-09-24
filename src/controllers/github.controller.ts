@@ -1,10 +1,32 @@
-
 export interface GitHubContributor {
   id: number;
   login: string;
   avatar_url: string;
   html_url: string;
   type: string; 
+}
+
+// Define the minimal shape we rely on from the GitHub API
+interface RawGitHubContributor {
+  id: number;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  type: unknown;
+}
+
+// Type guard to validate an unknown value matches RawGitHubContributor
+function isRawGitHubContributor(value: unknown): value is RawGitHubContributor {
+  if (typeof value !== "object" || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.id === "number" &&
+    typeof v.login === "string" &&
+    typeof v.avatar_url === "string" &&
+    typeof v.html_url === "string" &&
+    // type can be string but some APIs might return other values; we validate later
+    (typeof v.type === "string" || typeof v.type === "undefined")
+  );
 }
 
 type RepoRef = { owner: string; repo: string };
@@ -36,7 +58,7 @@ async function fetchContributorsFromRepo(
     return [];
   }
 
-  const data = await response.json();
+  const data: unknown = await response.json();
   if (!Array.isArray(data)) {
     console.error(`Respuesta inesperada en ${owner}/${repo} (no es un arreglo).`);
     return [];
@@ -44,19 +66,19 @@ async function fetchContributorsFromRepo(
 
   // Filtra usuarios reales
   const contributors: GitHubContributor[] = data
+    .filter(isRawGitHubContributor)
     .filter(
-      (c: any) =>
-        c &&
+      (c) =>
+        typeof c.type === "string" &&
         c.type === "User" &&
-        typeof c.login === "string" &&
-        !String(c.login).endsWith("[bot]")
+        !c.login.endsWith("[bot]")
     )
-    .map((c: any) => ({
+    .map((c) => ({
       id: c.id,
       login: c.login,
       avatar_url: c.avatar_url,
       html_url: c.html_url,
-      type: c.type,
+      type: String(c.type),
     }));
 
   console.log(`Contribuidores obtenidos en ${owner}/${repo}: ${contributors.length}`);
@@ -103,4 +125,3 @@ export async function getGitHubContributorsFromRepos(
   console.log(`Total contribuidores únicos: ${deduped.length}`);
   return deduped.slice(0, totalLimit);
 }
-

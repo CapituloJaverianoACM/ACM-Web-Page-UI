@@ -32,10 +32,8 @@ const springConfig = { stiffness: 100, damping: 15 };
 
 function AnimatedTooltipComponent({
   items,
-  className,
   position = 'top',
-  tooltipOffset,
-}: AnimatedTooltipProps) {
+  }: AnimatedTooltipProps) {
   const [hoveredIndex, setHoveredIndex] = useState<string | number | null>(null);
   const [isClient, setIsClient] = useState(false);
   const x = useMotionValue(0);
@@ -59,7 +57,7 @@ function AnimatedTooltipComponent({
     };
   }, []);
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (!isClient) return;
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
@@ -88,7 +86,7 @@ function AnimatedTooltipComponent({
 
   return (
     <>
-      {items.map((item, idx) => (
+      {items.map((item) => (
         <div
           key={item.id}
           className="group relative -mr-4"
