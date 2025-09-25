@@ -1,14 +1,11 @@
 "use client";
 
-import { signIn } from "@/controllers/supabase.controller";
 import { useState } from "react";
 import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { login } from "@/app/(auth)/log-in/actions";
+import { redirect } from "next/navigation";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
@@ -20,15 +17,14 @@ export function SignInForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const response = await signIn(email, password);
-    if (response.error) {
-      setError(response.error);
+    const { error } = await login(email, password);
+    if (error) {
+      setError(error.message);
       setLoading(false);
       return;
     }
-    setLoading(false);
-    setError("");
-    window.location.href = "/";
+
+    redirect("/");
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -60,7 +56,7 @@ export function SignInForm() {
           <div className="w-3/4">
             <Input
               id="password"
-              type={ passwordVisibility ? "text" : "password"}
+              type={passwordVisibility ? "text" : "password"}
               className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
