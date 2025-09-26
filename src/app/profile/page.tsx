@@ -12,7 +12,7 @@ type Competition = {
   date: string; // ISO
   location?: string;
   placement?: number; // 1 = ganador
-  status: "upcoming" | "past";
+  status: "upcoming" | "in-progress" | "past";
 };
 
 const navLinks = [
@@ -27,11 +27,13 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState("Adrián");
   const [lastName, setLastName] = useState("Ruiz");
   const [email, setEmail] = useState("adrian@example.com");
+  const [level, setLevel] = useState<"Initial" | "Advanced">("Advanced");
 
   const competitions: Competition[] = useMemo(
     () => [
-      { id: "c3", name: "ICPC Regional 2025", date: "2025-11-20", location: "Bogotá", status: "upcoming" },
-      { id: "c2", name: "Maratón Nacional 2025", date: "2025-07-15", location: "Medellín", placement: 2, status: "past" },
+      { id: "c4", name: "ICPC Regional 2025", date: "2025-03-16", location: "Bogotá", status: "upcoming" },
+      { id: "c3", name: "Competencia Nacional ACM", date: "2025-03-15", location: "Bogotá", status: "in-progress" },
+      { id: "c2", name: "Maratón Nacional 2025", date: "2025-02-15", location: "Medellín", placement: 2, status: "past" },
       { id: "c1", name: "Hackathon Universitaria 2024", date: "2024-10-02", location: "Cali", placement: 1, status: "past" }
     ],
     []
@@ -43,12 +45,6 @@ export default function ProfilePage() {
 
   const totalParticipations = competitions.length;
   const totalWins = competitions.filter(c => c.placement === 1).length;
-  const level = useMemo(() => {
-    if (totalWins >= 5) return "Elite";
-    if (totalWins >= 3) return "Avanzado";
-    if (totalWins >= 1) return "Intermedio";
-    return "Novato";
-  }, [totalWins]);
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -64,16 +60,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-gradient-to-b from-[--azul-niebla] to-[--white] dark:bg-transparent">
+    <div className="min-h-[100dvh] flex flex-col dark:from-black dark:to-black bg-gradient-to-b from-[--azul-niebla] to-[--white]">
       <MainNavbar navLinks={navLinks} />
       <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-[10rem]">
         <h1 className="text-3xl md:text-4xl font-bold text-[--azul-noche] dark:text-white mb-6">Perfil</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="space-y-6">
           {/* Información básica */}
-          <section className="lg:col-span-2 bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
+          <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
             <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700 flex items-center justify-start">
-              <h2 className="text-xl font-semibold text-[--azul-noche] dark:text-white">Información básica</h2>
+              <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">Información básica</p>
               <div className="flex items-center gap-2 ml-auto">
                 <button
                   onClick={() => setIsEditing(prev => !prev)}
@@ -83,7 +79,7 @@ export default function ProfilePage() {
                 </button>
                 <Link
                   href="/auth/change-password"
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-niebla] hover:bg-[--azul-crayon] dark:bg-gray-700 dark:hover:bg-gray-600 text-[--azul-noche] dark:text-gray-100 transition-colors"
+                  className="no-underline px-4 py-2 rounded-lg text-sm font-medium hover:text-white bg-[--azul-niebla] hover:bg-[--azul-crayon] dark:bg-gray-700 dark:hover:bg-gray-600 text-[--azul-noche] dark:text-gray-100 transition-colors"
                 >
                   Cambiar contraseña
                 </Link>
@@ -166,63 +162,79 @@ export default function ProfilePage() {
             {/* Estadísticas creativas */}
             <div className="px-6 pb-6">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="relative overflow-hidden rounded-xl border border-[--azul-niebla] dark:border-gray-700 bg-gradient-to-br from-[--azul-niebla] to-[--azul-crayon]/20 dark:from-blue-900/30 dark:to-indigo-900/20 p-4">
-                  <div className="text-xs font-semibold text-[--azul-electrico] dark:text-blue-300">Participaciones</div>
-                  <div className="mt-1 text-3xl font-extrabold text-[--azul-noche] dark:text-blue-100">{totalParticipations}</div>
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-[--azul-crayon]/20 dark:bg-blue-800/40" />
+                <div className="relative overflow-hidden rounded-xl border border-blue-200 dark:border-gray-700 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-indigo-900/20 p-4">
+                  <div className="text-xs font-semibold text-blue-600 dark:text-blue-300">Participaciones</div>
+                  <div className="mt-1 text-3xl font-extrabold text-blue-800 dark:text-blue-100">{totalParticipations}</div>
+                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-blue-200/60 dark:bg-blue-800/40" />
                 </div>
-                <div className="relative overflow-hidden rounded-xl border border-[--azul-niebla] dark:border-gray-700 bg-gradient-to-br from-[--azul-niebla] to-[--azul-electrico]/20 dark:from-amber-900/30 dark:to-rose-900/20 p-4">
-                  <div className="text-xs font-semibold text-[--azul-electrico] dark:text-amber-300">Competencias ganadas</div>
-                  <div className="mt-1 text-3xl font-extrabold text-[--azul-noche] dark:text-amber-100">{totalWins}</div>
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-[--azul-electrico]/20 dark:bg-amber-800/40" />
+                <div className="relative overflow-hidden rounded-xl border border-emerald-200 dark:border-gray-700 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-teal-900/20 p-4">
+                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-300">Competencias ganadas</div>
+                  <div className="mt-1 text-3xl font-extrabold text-emerald-800 dark:text-emerald-100">{totalWins}</div>
+                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-emerald-200/60 dark:bg-emerald-800/40" />
                 </div>
-                <div className="relative overflow-hidden rounded-xl border border-[--azul-niebla] dark:border-gray-700 bg-gradient-to-br from-[--azul-niebla] to-[--azul-ultramar]/20 dark:from-emerald-900/30 dark:to-teal-900/20 p-4">
-                  <div className="text-xs font-semibold text-[--azul-ultramar] dark:text-emerald-300">Nivel</div>
-                  <div className="mt-1 text-3xl font-extrabold text-[--azul-noche] dark:text-emerald-100">{level}</div>
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-[--azul-ultramar]/20 dark:bg-emerald-800/40" />
+                <div className={`relative overflow-hidden rounded-xl border p-4 ${level === "Advanced"
+                  ? "border-purple-200 dark:border-gray-700 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-violet-900/20"
+                  : "border-amber-200 dark:border-gray-700 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-rose-900/20"
+                  }`}>
+                  <div className={`text-xs font-semibold ${level === "Advanced"
+                    ? "text-purple-600 dark:text-purple-300"
+                    : "text-amber-600 dark:text-amber-300"
+                    }`}>Nivel</div>
+                  <div className={`mt-1 text-3xl font-extrabold ${level === "Advanced"
+                    ? "text-purple-800 dark:text-purple-100"
+                    : "text-amber-800 dark:text-amber-100"
+                    }`}>{level}</div>
+                  <div className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full ${level === "Advanced"
+                    ? "bg-purple-200/60 dark:bg-purple-800/40"
+                    : "bg-amber-200/60 dark:bg-amber-800/40"
+                    }`} />
                 </div>
               </div>
             </div>
           </section>
 
           {/* Historial de competencias */}
-          <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700 lg:max-h-[calc(100vh-14rem)] lg:overflow-auto">
+          <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
             <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700 flex items-center justify-start">
-              <h2 className="text-xl font-semibold text-[--azul-noche] dark:text-white">Historial de competencias</h2>
+              <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">Historial de competencias</p>
             </div>
             <ul className="p-4 space-y-3">
               {sortedCompetitions.map((c) => {
                 const isUpcoming = c.status === "upcoming";
+                const isInProgress = c.status === "in-progress";
+                const isPast = c.status === "past";
+
+                const getStatusInfo = () => {
+                  if (isUpcoming) return { text: "Próxima", classes: "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200" };
+                  if (isInProgress) return { text: "En curso", classes: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200" };
+                  return { text: "Finalizada", classes: "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200" };
+                };
+
+                const statusInfo = getStatusInfo();
+
                 return (
                   <li key={c.id} className="group">
                     <div className="flex items-start gap-4 p-4 rounded-lg border border-[--azul-niebla] dark:border-gray-700 bg-[--azul-niebla]/30 dark:bg-gray-700/50 hover:bg-[--azul-niebla]/50 dark:hover:bg-gray-700 transition-colors">
-                      <div className="flex-shrink-0">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold ${isUpcoming ? "bg-[--azul-electrico]" : c.placement === 1 ? "bg-emerald-600" : c.placement ? "bg-amber-600" : "bg-gray-500"}`}>
-                          {isUpcoming ? (
-                            <span>{new Date(c.date).toLocaleDateString(undefined, { day: "2-digit" })}</span>
-                          ) : (
-                            <span>{c.placement ?? "—"}</span>
-                          )}
-                        </div>
-                      </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                          <h3 className="text-base font-semibold text-[--azul-noche] dark:text-white truncate">
-                            {c.name}
-                          </h3>
-                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${isUpcoming ? "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200" : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"}`}>
-                            {isUpcoming ? "Próxima" : "Finalizada"}
-                          </span>
-                        </div>
-                        <p className="text-xs text-[--azul-ultramar] dark:text-gray-400 truncate">
+                        <p className="text-base mb-0 font-semibold text-[--azul-noche] dark:text-white truncate">
+                          {c.name}
+                        </p>
+                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-1 ${statusInfo.classes}`}>
+                          {statusInfo.text}
+                        </span>
+                        <p className="text-xs text-[--azul-ultramar] dark:text-gray-400 truncate mt-1">
                           {new Date(c.date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
                           {c.location ? ` · ${c.location}` : ""}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
                         {isUpcoming ? (
-                          <Link href="/auth/login" className="px-3 py-1.5 rounded-md text-sm bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white">
-                            Login
+                          <Link href="/auth/login" className="no-underline px-3 py-1.5 rounded-md text-sm bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white">
+                            Check in
+                          </Link>
+                        ) : isInProgress ? (
+                          <Link href="/rank" className="no-underline px-3 py-1.5 rounded-md text-sm bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white">
+                            Ver progreso
                           </Link>
                         ) : c.placement ? (
                           <span className={`px-2 py-1 rounded-md text-xs font-semibold ${c.placement === 1 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"}`}>
