@@ -75,11 +75,11 @@ export default function ProfilePage() {
                   onClick={() => setIsEditing(prev => !prev)}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors flex items-center justify-center"
                 >
-                  <div className="flex items-center justify-center w-full h-full">
+                  <div className="flex items-center justify-center w-full h-full mx-auto">
                     {isEditing ? (
-                      <i className="fi fi-rr-cross text-sm"></i>
+                      <i className="fi fi-rr-cross w-4 h-4 m-0.5"></i>
                     ) : (
-                      <i className="fi fi-rr-pencil text-sm"></i>
+                      <i className="fi fi-rr-pencil w-4 h-4 m-0.5"></i>
                     )}
                   </div>
                 </button>
