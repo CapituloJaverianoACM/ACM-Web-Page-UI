@@ -60,16 +60,21 @@ function AnimatedTooltipComponent({
   // Use currentTarget (which is correctly typed) instead of target to avoid TS2339
   const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
     if (!isClient) return;
+
+    const target = event.currentTarget;
+    const halfWidth = target.offsetWidth / 2;
+    const offsetX = event.nativeEvent.offsetX;
+
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
+
     animationFrameRef.current = requestAnimationFrame(() => {
-      const halfWidth = event.currentTarget.offsetWidth / 2;
-      x.set(event.nativeEvent.offsetX - halfWidth);
+      x.set(offsetX - halfWidth);
     });
   };
 
-  
+
   const getPositionClasses = () => {
     switch (position) {
       case 'top':
