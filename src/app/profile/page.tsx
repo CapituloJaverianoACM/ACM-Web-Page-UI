@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState("Adrián");
   const [lastName, setLastName] = useState("Ruiz");
   const [email, setEmail] = useState("adrian@example.com");
-  const [level, setLevel] = useState<"Initial" | "Advanced">("Advanced");
+  const [level] = useState<"Initial" | "Advanced">("Advanced");
 
   const competitions: Competition[] = useMemo(
     () => [
@@ -202,7 +202,6 @@ export default function ProfilePage() {
               {sortedCompetitions.map((c) => {
                 const isUpcoming = c.status === "upcoming";
                 const isInProgress = c.status === "in-progress";
-                const isPast = c.status === "past";
 
                 const getStatusInfo = () => {
                   if (isUpcoming) return { text: "Próxima", classes: "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200" };
