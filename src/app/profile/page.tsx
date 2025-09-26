@@ -73,9 +73,15 @@ export default function ProfilePage() {
               <div className="flex items-center gap-2 ml-auto">
                 <button
                   onClick={() => setIsEditing(prev => !prev)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors"
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors flex items-center justify-center"
                 >
-                  {isEditing ? "Cancelar" : "Editar información"}
+                  <div className="flex items-center justify-center w-full h-full">
+                    {isEditing ? (
+                      <i className="fi fi-rr-cross text-sm"></i>
+                    ) : (
+                      <i className="fi fi-rr-pencil text-sm"></i>
+                    )}
+                  </div>
                 </button>
                 <Link
                   href="/auth/change-password"
@@ -88,7 +94,7 @@ export default function ProfilePage() {
 
             <div className="p-6 flex flex-col md:flex-row gap-6">
               {/* Avatar editable */}
-              <div className="flex flex-col items-center md:items-start md:w-1/3">
+              <div className="flex flex-col items-center md:w-1/3">
                 <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-[--azul-niebla] dark:ring-blue-900">
                   {avatarUrl ? (
                     <Image src={avatarUrl} alt="Avatar" fill className="object-cover" />
@@ -99,10 +105,12 @@ export default function ProfilePage() {
                   )}
                 </div>
                 {isEditing && (
-                  <label className="mt-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[--azul-niebla] dark:bg-blue-900 text-[--azul-electrico] dark:text-blue-200 cursor-pointer text-sm">
-                    <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
-                    Subir avatar
-                  </label>
+                  <div className="w-full flex justify-center mt-4">
+                    <label className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[--azul-niebla] dark:bg-blue-900 text-[--azul-electrico] dark:text-blue-200 cursor-pointer text-sm">
+                      <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+                      Subir avatar
+                    </label>
+                  </div>
                 )}
               </div>
 
@@ -228,11 +236,11 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex items-center gap-2">
                         {isUpcoming ? (
-                          <Link href="/auth/login" className="no-underline px-3 py-1.5 rounded-md text-sm bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white">
+                          <Link href="/auth/login" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white">
                             Check in
                           </Link>
                         ) : isInProgress ? (
-                          <Link href="/rank" className="no-underline px-3 py-1.5 rounded-md text-sm bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white">
+                          <Link href="/rank" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white">
                             Ver progreso
                           </Link>
                         ) : c.placement ? (
