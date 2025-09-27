@@ -1,19 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MainNavbar from "@/components/shared/main-navbar";
 import Footer from "@/components/shared/footer";
-
-type Competition = {
-  id: string;
-  name: string;
-  date: string; // ISO
-  location?: string;
-  placement?: number; // 1 = ganador
-  status: "upcoming" | "in-progress" | "past";
-};
+import { Contest } from "@/models/contest.model";
+import { getContestsByStudentId } from "@/controllers/contest.controller";
+import { getStudentById, updateStudent } from "@/controllers/student.controller";
+import { Student } from "@/models/student.model";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
@@ -24,27 +19,52 @@ const navLinks = [
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [firstName, setFirstName] = useState("Adrián");
-  const [lastName, setLastName] = useState("Ruiz");
-  const [email, setEmail] = useState("adrian@example.com");
-  const [level] = useState<"Initial" | "Advanced">("Advanced");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [student, setStudent] = useState<Student>(null);
+  const [loadingStudent, setLoadingStudent] = useState(true);
+  const [contests, setContests] = useState<Contest[]>([]);
+  const [loadingContests, setLoadingContests] = useState(true);
 
-  const competitions: Competition[] = useMemo(
-    () => [
-      { id: "c4", name: "ICPC Regional 2025", date: "2025-03-16", location: "Bogotá", status: "upcoming" },
-      { id: "c3", name: "Competencia Nacional ACM", date: "2025-03-15", location: "Bogotá", status: "in-progress" },
-      { id: "c2", name: "Maratón Nacional 2025", date: "2025-02-15", location: "Medellín", placement: 2, status: "past" },
-      { id: "c1", name: "Hackathon Universitaria 2024", date: "2024-10-02", location: "Cali", placement: 1, status: "past" }
-    ],
-    []
-  );
+  const STUDENT_ID = 9; // TODO: Tomarlo de los datos del student loggeado
+  const email = "quemado@javeriana.edu.co"; // TODO: Tomarlo de los datos del student loggeado
+  const totalParticipations = student?.matches_count || 0;
+  const totalWins = student?.victory_count || 0;
+  const level = student?.level?.toString() || "Initial";
 
-  const sortedCompetitions = useMemo(() => {
-    return [...competitions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [competitions]);
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        setLoadingStudent(true);
+        setStudent(await getStudentById(STUDENT_ID));
+      } catch (error) {
+        console.error("Error el estudiante", error);
+      } finally {
+        setLoadingStudent(false);
+      }
+    };
 
-  const totalParticipations = competitions.length;
-  const totalWins = competitions.filter(c => c.placement === 1).length;
+    fetchStudent();
+  }, []);
+
+  useEffect(() => {
+    const fetchContests = async () => {
+      try {
+        setLoadingContests(true);
+        setContests(await getContestsByStudentId(STUDENT_ID));
+      } catch (error) {
+        console.error("Error al cargar contests:", error);
+      } finally {
+        setLoadingContests(false);
+      }
+    };
+
+    fetchContests();
+  }, []);
+
+  const sortedContests = useMemo(() => {
+    return [...contests].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [contests]);
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -54,13 +74,31 @@ export default function ProfilePage() {
     reader.readAsDataURL(file);
   }
 
-  function handleSave() {
-    // Aquí integrarías tu lógica para persistir los datos (API call)
+  function handleEditing() {
+    setName(student?.name || "");
+    setSurname(student?.surname || "");
+    setAvatarUrl(student?.avatar || null);
+    setIsEditing(!isEditing);
+  }
+
+  async function handleSave() {
+    const updatedStudent = {
+      ...student,
+      name,
+      surname,
+      avatar: avatarUrl,
+    };
+    const newStudent = await updateStudent(STUDENT_ID, updatedStudent);
+    if (newStudent instanceof Error) {
+      alert("Error al actualizar el perfil: " + newStudent.message);
+      return;
+    }
+    setStudent(newStudent);
     setIsEditing(false);
   }
 
   return (
-    <div className="min-h-[100dvh] flex flex-col dark:from-black dark:to-black bg-gradient-to-b from-[--azul-niebla] to-[--white]">
+    <div className="min-h-[100dvh] flex flex-col dark:from-[#121212] dark:to-[#121212] bg-gradient-to-b from-[--azul-niebla] to-[--white]">
       <MainNavbar navLinks={navLinks} />
       <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-[10rem]">
         <h1 className="text-3xl md:text-4xl font-bold text-[--azul-noche] dark:text-white mb-6">Perfil</h1>
@@ -72,7 +110,7 @@ export default function ProfilePage() {
               <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">Información básica</p>
               <div className="flex items-center gap-2 ml-auto">
                 <button
-                  onClick={() => setIsEditing(prev => !prev)}
+                  onClick={() => handleEditing()}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors flex items-center justify-center"
                 >
                   <div className="flex items-center justify-center w-full h-full mx-auto">
@@ -97,11 +135,11 @@ export default function ProfilePage() {
               {/* Avatar editable */}
               <div className="flex flex-col items-center md:w-1/3">
                 <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-[--azul-niebla] dark:ring-blue-900">
-                  {avatarUrl ? (
-                    <Image src={avatarUrl} alt="Avatar" fill className="object-cover" />
+                  {student?.avatar ? (
+                    <Image src={student.avatar} alt="Avatar" fill className="object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[--azul-electrico] to-[--azul-crayon] text-white text-3xl font-bold">
-                      {firstName?.[0]?.toUpperCase()}
+                      {name?.[0]?.toUpperCase()}
                     </div>
                   )}
                 </div>
@@ -121,38 +159,29 @@ export default function ProfilePage() {
                   <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">Nombres</label>
                   {isEditing ? (
                     <input
-                      value={firstName}
-                      onChange={e => setFirstName(e.target.value)}
+                      value={name}
+                      onChange={e => setName(e.target.value)}
                       className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
                     />
                   ) : (
-                    <p className="text-[--azul-noche] dark:text-white font-medium">{firstName}</p>
+                    <p className="text-[--azul-noche] dark:text-white font-medium">{student?.name}</p>
                   )}
                 </div>
                 <div>
                   <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">Apellidos</label>
                   {isEditing ? (
                     <input
-                      value={lastName}
-                      onChange={e => setLastName(e.target.value)}
+                      value={surname}
+                      onChange={e => setSurname(e.target.value)}
                       className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
                     />
                   ) : (
-                    <p className="text-[--azul-noche] dark:text-white font-medium">{lastName}</p>
+                    <p className="text-[--azul-noche] dark:text-white font-medium">{student?.surname}</p>
                   )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">Correo</label>
-                  {isEditing ? (
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
-                    />
-                  ) : (
-                    <p className="text-[--azul-noche] dark:text-white font-medium">{email}</p>
-                  )}
+                  <p className="text-[--azul-noche] dark:text-white font-medium">{email}</p>
                 </div>
 
                 {isEditing && (
@@ -208,52 +237,63 @@ export default function ProfilePage() {
               <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">Historial de competencias</p>
             </div>
             <ul className="p-4 space-y-3">
-              {sortedCompetitions.map((c) => {
-                const isUpcoming = c.status === "upcoming";
-                const isInProgress = c.status === "in-progress";
+              {loadingContests ? (
+                <li className="flex items-center justify-center py-8">
+                  <div className="text-[--azul-ultramar] dark:text-gray-400">Cargando competencias...</div>
+                </li>
+              ) : (
+                sortedContests.map((c) => {
+                  // Determine status based on start_hour and final_hour
+                  const now = new Date();
+                  const startDate = new Date(c.start_hour);
+                  const endDate = new Date(c.final_hour);
 
-                const getStatusInfo = () => {
-                  if (isUpcoming) return { text: "Próxima", classes: "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200" };
-                  if (isInProgress) return { text: "En curso", classes: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200" };
-                  return { text: "Finalizada", classes: "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200" };
-                };
+                  const isUpcoming = now < startDate;
+                  const isInProgress = now >= startDate && now <= endDate;
 
-                const statusInfo = getStatusInfo();
+                  const getStatusInfo = () => {
+                    if (isUpcoming) return { text: "Próxima", classes: "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200" };
+                    if (isInProgress) return { text: "En curso", classes: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200" };
+                    return { text: "Finalizada", classes: "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200" };
+                  };
 
-                return (
-                  <li key={c.id} className="group">
-                    <div className="flex items-start gap-4 p-4 rounded-lg border border-[--azul-niebla] dark:border-gray-700 bg-[--azul-niebla]/30 dark:bg-gray-700/50 hover:bg-[--azul-niebla]/50 dark:hover:bg-gray-700 transition-colors">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-base mb-0 font-semibold text-[--azul-noche] dark:text-white truncate">
-                          {c.name}
-                        </p>
-                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-1 ${statusInfo.classes}`}>
-                          {statusInfo.text}
-                        </span>
-                        <p className="text-xs text-[--azul-ultramar] dark:text-gray-400 truncate mt-1">
-                          {new Date(c.date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
-                          {c.location ? ` · ${c.location}` : ""}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isUpcoming ? (
-                          <Link href="/auth/login" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white">
-                            Check in
-                          </Link>
-                        ) : isInProgress ? (
-                          <Link href="/rank" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white">
-                            Ver progreso
-                          </Link>
-                        ) : c.placement ? (
-                          <span className={`px-2 py-1 rounded-md text-xs font-semibold ${c.placement === 1 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"}`}>
-                            Puesto {c.placement}
+                  const statusInfo = getStatusInfo();
+
+                  return (
+                    <li key={c.id} className="group">
+                      <div className="flex items-start gap-4 p-4 rounded-lg border border-[--azul-niebla] dark:border-gray-700 bg-[--azul-niebla]/30 dark:bg-gray-700/50 hover:bg-[--azul-niebla]/50 dark:hover:bg-gray-700 transition-colors">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-base mb-0 font-semibold text-[--azul-noche] dark:text-white truncate">
+                            {c.name}
+                          </p>
+                          <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mt-1 ${statusInfo.classes}`}>
+                            {statusInfo.text}
                           </span>
-                        ) : null}
+                          <p className="text-xs text-[--azul-ultramar] dark:text-gray-400 truncate mt-1">
+                            {new Date(c.date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
+                            {c.classroom ? ` · ${c.classroom}` : ""}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {isUpcoming ? ( // TODO : Traer si ya hizo checkin de participation
+                            <Link href="/auth/login" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white">
+                              Check in
+                            </Link>
+                          ) : isInProgress ? (
+                            <Link href="/rank" className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white">
+                              Ver progreso
+                            </Link>
+                          ) : 1 ? ( // TODO : Traer el puesto de participation
+                            <span className={`px-2 py-1 rounded-md text-xs font-semibold ${1 === 1 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"}`}>
+                              Puesto {1}
+                            </span>
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                );
-              })}
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </section>
         </div>

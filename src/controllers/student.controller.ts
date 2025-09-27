@@ -13,6 +13,20 @@ export async function getStudents() {
   return json.data;
 }
 
+export async function getStudentById(id: number): Promise<Student> {
+  const res = await fetch(
+    new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
+  );
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el estudiante");
+  }
+
+  const json = await res.json();
+
+  return Array.isArray(json.data) ? json.data[0] : json.data;
+}
+
 export async function getPodiumStudents(): Promise<Student[]> {
   const res = await fetch(
     new URL(
@@ -43,6 +57,29 @@ export async function getRankingStudents({
 
   if (!res.ok) {
     throw new Error("Error al obtener los estudiantes del ranking");
+  }
+
+  const json = await res.json();
+  return json.data;
+}
+
+export async function updateStudent(
+  id: number,
+  student: Partial<Student>,
+): Promise<Student> {
+  const res = await fetch(
+    new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(student),
+    },
+  );
+  console.log(res);
+  if (!res.ok) {
+    throw new Error("Error al actualizar el estudiante: " + res.statusText);
   }
 
   const json = await res.json();
