@@ -1,5 +1,6 @@
 "use client";
 
+import { getUser } from "@/controllers/supabase.controller";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -17,17 +18,16 @@ interface MainNavbarProps {
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     const checkLogged = async () => {
-      const res = await fetch("api/auth/check", { credentials: "include"});
-      const data = await res.json();
-      setIsLogged(true);
+      const user = await getUser();
+
+      setIsLogged(user != null);
     };
     checkLogged();
   }, []);
-
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -126,30 +126,33 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 <IconMoon className="dark:hidden flex"></IconMoon>
                 <IconSun className="hidden dark:flex"></IconSun>
               </div>
-              
+
               {/* User Links */}
               {isLogged ? (
                 <div>
                   <button className="btn btn--primary btn--small dark:text-white">
                     Mi perfil
                     {/*Ahorita cambio esto*/}
-                    <img src = {process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL} className="w-[20px]" ></img>
+                    <img
+                      src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL}
+                      className="w-[20px]"
+                    ></img>
                   </button>
                 </div>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
-                <Link href="/log-in" className="btn btn--outline btn--small ">
-                  Iniciar sesión
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="btn btn--primary btn--small dark:text-white"
-                >
-                  Registrarse
-                </Link>
-              </div>
+                  <Link href="/log-in" className="btn btn--outline btn--small ">
+                    Iniciar sesión
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="btn btn--primary btn--small dark:text-white"
+                  >
+                    Registrarse
+                  </Link>
+                </div>
               )}
-              
+
               {/* Mobile Menu Button */}
               <div className="lg:hidden">
                 <button
@@ -187,10 +190,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden mt-4 transition-all duration-300 ease-in-out ${isMobileMenuOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-4 pointer-events-none hidden"
-            }`}
+          className={`lg:hidden mt-4 transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none hidden"
+          }`}
         >
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">

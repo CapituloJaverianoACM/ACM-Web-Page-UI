@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { signup } from "@/app/(auth)/sign-up/actions";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export function SignUpForm() {
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export function SignUpForm() {
       return;
     }
 
-    redirect('/log-in');
+    redirect("/log-in");
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">

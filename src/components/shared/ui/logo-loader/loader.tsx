@@ -13,7 +13,6 @@ const SvgShineLoader = ({
   shineWidth = 25,
   shineAngle = 45, // Ángulo del shine para efecto más realista
 }) => {
-  const maskId = `mask-${Math.random().toString(36).substr(2, 9)}`;
   const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
   const clipPathId = `clip-${Math.random().toString(36).substr(2, 9)}`;
 

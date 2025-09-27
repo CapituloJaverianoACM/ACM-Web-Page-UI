@@ -1,13 +1,13 @@
-'use server'
+"use server";
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from "@/lib/supabase/server";
 
 export async function signup(
   name: string,
   surname: string,
   email: string,
   password: string,
-  avatar_url: string
+  avatar_url: string,
 ) {
   try {
     if (!name || !surname || !email || !password) {
@@ -31,12 +31,12 @@ export async function signup(
       }
     }
 
-    const supabase = await createClient()
+    const supabase = await createClient();
 
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-    })
+    });
 
     if (error) {
       throw new Error(error.message);

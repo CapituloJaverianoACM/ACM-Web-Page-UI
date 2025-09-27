@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,6 +11,7 @@ export const GET = async (request: NextRequest) => {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
+  const supabase = await createClient();
   if (token_hash && type) {
     const { error } = await supabase.auth.verifyOtp({ type, token_hash });
     if (!error) {

@@ -52,7 +52,10 @@ const ResetEmailForm: React.FC = () => {
             {error}{" "}
           </span>
         )}
-        <Button type="submit" className="text-base font-semibold text-white w-auto">
+        <Button
+          type="submit"
+          className="text-base font-semibold text-white w-auto"
+        >
           Enviar email
         </Button>
         {loading && <LogoLoader size={200} />}

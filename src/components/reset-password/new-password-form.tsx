@@ -1,18 +1,33 @@
 import { Input } from "@/components/shared/ui/input";
 import { Eye, EyeClosed } from "lucide-react";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Button } from "../shared/ui/button";
 import toast, { Toaster } from "react-hot-toast";
 import { ACMToast } from "../shared/ui/toaster/acm-toast";
-import { updatePasswordUser } from "@/controllers/supabase.controller";
+import { getUser, updatePasswordUser } from "@/controllers/supabase.controller";
 import { useRouter } from "next/navigation";
+import LogoLoader from "../shared/ui/logo-loader/loader";
+import { User } from "@supabase/supabase-js";
 
 const NewPasswordForm: React.FC = () => {
   const router = useRouter();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
 
   const passwordVisibility = [useState<boolean>(false), useState(false)];
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await getUser();
+      if (!user) {
+        router.push("/");
+      }
+      setUser(user);
+    };
+    checkUser();
+  }, []);
 
   const togglePasswordVisibility = (e: MouseEvent<HTMLSpanElement>) => {
     const id = e.currentTarget.id === "first" ? 0 : 1;
@@ -33,7 +48,11 @@ const NewPasswordForm: React.FC = () => {
       return;
     }
 
+    setLoading(true);
+
     const confirm = await updatePasswordUser(password);
+
+    setLoading(false);
 
     if (!confirm) {
       toast.custom((t) => (
@@ -54,6 +73,10 @@ const NewPasswordForm: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
+      <p className="font-bold">
+        Editando contraseña de{" "}
+        <span className="text-azul-electrico">{user?.email}</span>
+      </p>
       <div className="flex justify-center items-center gap-3">
         <Input
           type={!passwordVisibility[0][0] ? "password" : "text"}
@@ -96,6 +119,7 @@ const NewPasswordForm: React.FC = () => {
       <Button className="font-semibold text-white" onClick={submitPassword}>
         Reestablecer
       </Button>
+      {loading && <LogoLoader size={200} />}
       <Toaster />
     </div>
   );

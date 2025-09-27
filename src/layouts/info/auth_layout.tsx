@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-type AuthLayoutProps = React.PropsWithChildren<{}>;
+type AuthLayoutProps = React.PropsWithChildren<object>;
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (

@@ -1,10 +1,15 @@
-"use client"
+"use client";
 import Confetti from "@/components/shared/ui/confetti";
 import { AuthLayout } from "./auth_layout";
-import { CardContent, CardTitle, Card, CardHeader} from "@/components/shared/ui/card";
+import {
+  CardContent,
+  CardTitle,
+  Card,
+  CardHeader,
+} from "@/components/shared/ui/card";
 
 type SimpleConfettiLayoutProps = {
-    title: string
+  title: string;
 };
 
 const SimpleConfettiLayout: React.FC<

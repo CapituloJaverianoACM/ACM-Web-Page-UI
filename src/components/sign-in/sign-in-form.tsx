@@ -63,7 +63,10 @@ export function SignInForm() {
               required
             />
           </div>
-          <span className="cursor-pointer w-1/4" onClick={() => setPasswordVisibility(prev => !prev)}>
+          <span
+            className="cursor-pointer w-1/4"
+            onClick={() => setPasswordVisibility((prev) => !prev)}
+          >
             {passwordVisibility ? <Eye /> : <EyeClosed />}
           </span>
         </div>
