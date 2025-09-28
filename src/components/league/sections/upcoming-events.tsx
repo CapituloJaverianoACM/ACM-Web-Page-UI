@@ -8,6 +8,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 import ContestTimer from "../ui/Events/contest-timer";
 import {registerForContest,getStudentParticipations} from "@/controllers/participation.controller";
+import { Participation } from "@/models/participation.model";
 //import { supabase } from "@/lib/supabase";
 
 const formatDateEvent = ({
@@ -135,7 +136,7 @@ export function UpcomingEvents({
           const studentParticipations = await getStudentParticipations(studentData.id);
           const participationMap = new Map<number, ParticipationState>();
           if (studentParticipations && studentParticipations.length > 0) {
-            studentParticipations.forEach((p: any) => {
+            studentParticipations.forEach((p: Participation) => {
               participationMap.set(p.contest_id, {
                 isRegistered: true,
                 hasCheckedIn: p.checkin,
