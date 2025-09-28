@@ -1,7 +1,7 @@
 "use client";
 
+import { Button } from "@/components/shared/ui/button";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/home/ui/button";
 
 // Props que recibirá el componente, incluyendo la fecha del evento.
 interface EventCountdownProps {
