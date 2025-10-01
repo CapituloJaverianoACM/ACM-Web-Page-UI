@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Hero() {
   const particlesRef = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const subtitleRef = useRef<HTMLHeadingElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoVisible, setVideoVisible] = useState(false);
+  // Hardcoded fallback test video URL (CC0)
+  const videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
   // Typing animation util
   function typeText(
@@ -35,6 +39,49 @@ export function Hero() {
 
     tick();
   }
+
+  useEffect(() => {
+    // Try to play video background (fallback to CSS if fails)
+    const v = videoRef.current;
+    if (!videoUrl || !v) return;
+
+    const onLoaded = () => setVideoVisible(true);
+    const onError = () => setVideoVisible(false);
+
+    v.addEventListener("loadeddata", onLoaded);
+    v.addEventListener("error", onError);
+
+    // Attempt to play (muted + playsInline should allow autoplay)
+    try {
+      const maybePromise = v.play();
+      if (maybePromise && typeof (maybePromise as Promise<void>).then === "function") {
+        (maybePromise as Promise<void>).catch(() => {
+          // Ignore autoplay rejection; keep showing the first frame
+        });
+      }
+    } catch {
+      // Ignore; fallback handled by safety timeout and error event
+    }
+
+    // Safety timeout: if it doesn't get ready in time, fallback
+    const readyTimeout = window.setTimeout(() => {
+      if (v.readyState < 2) setVideoVisible(false);
+    }, 4000);
+
+    return () => {
+      v.removeEventListener("loadeddata", onLoaded);
+      v.removeEventListener("error", onError);
+      window.clearTimeout(readyTimeout);
+    };
+  }, [videoUrl]);
+
+  useEffect(() => {
+    // Toggle helper class on hero when video is visible to soften overlays
+    const el = heroRef.current;
+    if (!el) return;
+    if (videoVisible) el.classList.add("has-video");
+    else el.classList.remove("has-video");
+  }, [videoVisible]);
 
   useEffect(() => {
     // Particles
@@ -117,6 +164,23 @@ export function Hero() {
 
   return (
     <section ref={heroRef} className="league-hero">
+      {/* background video layer (fallback to CSS background if hidden) */}
+      {videoUrl ? (
+        <div className={`hero-video-bg ${videoVisible ? "is-visible" : ""}`}>
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            muted
+            autoPlay
+            loop
+            playsInline
+            preload="auto"
+            crossOrigin="anonymous"
+            aria-hidden="true"
+          />
+        </div>
+      ) : null}
+
       {/* dynamic particles layer */}
       <div ref={particlesRef} className="code-particles" />
 
