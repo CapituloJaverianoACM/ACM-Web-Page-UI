@@ -9,8 +9,8 @@ export function Hero() {
   const subtitleRef = useRef<HTMLHeadingElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoVisible, setVideoVisible] = useState(false);
-  // Hardcoded fallback test video URL (CC0)
-  const videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+  // Use cached proxy route for the hero video
+  const videoUrl = "/api/hero-video";
 
   // Typing animation util
   function typeText(
