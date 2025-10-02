@@ -70,21 +70,26 @@ const Step = (props: {
         )}
       </div>
 
-      {showAvatar && (() => {
-        const hasAvatar = !(student.student.avatar?.length == 0 || !student.student.avatar)
-        return <div className="flex absolute -top-[2rem] lg:-top-[3.5rem] left-1/2 transform -translate-x-1/2 mx-auto rounded-full border-2 border-[--azul-niebla] bg-[--azul-niebla] h-[4rem] lg:h-[7rem] aspect-square overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={
-              hasAvatar ? student.student.avatar
-                : process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL
-            }
-            alt={`Avatar de ${student.student.name}`}
-            className={`object-cover ${hasAvatar ? "w-full h-full" : "w-3/4 h-3/4 m-auto"}`}
-          />
-        </div>
-      })()
-      }
+      {showAvatar &&
+        (() => {
+          const hasAvatar = !(
+            student.student.avatar?.length == 0 || !student.student.avatar
+          );
+          return (
+            <div className="flex absolute -top-[2rem] lg:-top-[3.5rem] left-1/2 transform -translate-x-1/2 mx-auto rounded-full border-2 border-[--azul-niebla] bg-[--azul-niebla] h-[4rem] lg:h-[7rem] aspect-square overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={
+                  hasAvatar
+                    ? student.student.avatar
+                    : process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL
+                }
+                alt={`Avatar de ${student.student.name}`}
+                className={`object-cover ${hasAvatar ? "w-full h-full" : "w-3/4 h-3/4 m-auto"}`}
+              />
+            </div>
+          );
+        })()}
 
       {showCrown && (
         <div
