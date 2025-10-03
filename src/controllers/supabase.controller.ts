@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/supabase-js";
+import { redirect } from "next/navigation";
 
 export const sendResetEmail = async (email: string): Promise<void> => {
   const supabase = await createClient();
@@ -30,4 +31,10 @@ export const getUser = async (): Promise<User | null> => {
     return null;
   }
   return data.user;
+};
+
+export const logout = async (): Promise<void> => {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/log-in");
 };
