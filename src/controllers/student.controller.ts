@@ -27,6 +27,20 @@ export async function getStudentById(id: number): Promise<Student> {
   return Array.isArray(json.data) ? json.data[0] : json.data;
 }
 
+export async function getStudentBySupabaseId(id: string): Promise<Student> {
+  const res = await fetch(
+    new URL(`/students/supabase/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
+  );
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el estudiante");
+  }
+
+  const json = await res.json();
+
+  return Array.isArray(json.data) ? json.data[0] : json.data;
+}
+
 export async function getPodiumStudents(): Promise<Student[]> {
   const res = await fetch(
     new URL(
@@ -77,7 +91,7 @@ export async function updateStudent(
       body: JSON.stringify(student),
     },
   );
-  console.log(res);
+
   if (!res.ok) {
     throw new Error("Error al actualizar el estudiante: " + res.statusText);
   }

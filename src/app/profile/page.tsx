@@ -7,8 +7,9 @@ import MainNavbar from "@/components/shared/main-navbar";
 import Footer from "@/components/shared/footer";
 import { Contest } from "@/models/contest.model";
 import { getContestsByStudentId } from "@/controllers/contest.controller";
-import { getStudentById, updateStudent } from "@/controllers/student.controller";
+import { getStudentBySupabaseId, updateStudent } from "@/controllers/student.controller";
 import { Student } from "@/models/student.model";
+import { getUser } from "@/controllers/supabase.controller";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
@@ -18,40 +19,62 @@ const navLinks = [
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
+  const [user, setUser] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
   const [student, setStudent] = useState<Student>(null);
   const [loadingStudent, setLoadingStudent] = useState(true);
   const [contests, setContests] = useState<Contest[]>([]);
   const [loadingContests, setLoadingContests] = useState(true);
 
-  const STUDENT_ID = 9; // TODO: Tomarlo de los datos del student loggeado
-  const email = "quemado@javeriana.edu.co"; // TODO: Tomarlo de los datos del student loggeado
   const totalParticipations = student?.matches_count || 0;
   const totalWins = student?.victory_count || 0;
   const level = student?.level?.toString() || "Initial";
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await getUser();
+        setUser(fetchedUser);
+        setEmail(fetchedUser?.email || "");
+      } catch (error) {
+        console.error("Error al cargar usuario:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
     const fetchStudent = async () => {
       try {
         setLoadingStudent(true);
-        setStudent(await getStudentById(STUDENT_ID));
+        if (user) {
+          const fetchedStudent = await getStudentBySupabaseId(user?.id);
+          setStudent(fetchedStudent);
+        }
       } catch (error) {
-        console.error("Error el estudiante", error);
+        console.error("Error al cargar el estudiante:", error);
       } finally {
         setLoadingStudent(false);
       }
     };
 
-    fetchStudent();
-  }, []);
+    if (user) {
+      fetchStudent();
+    }
+  }, [user]); // Ahora depende de "user"
 
   useEffect(() => {
     const fetchContests = async () => {
       try {
         setLoadingContests(true);
-        setContests(await getContestsByStudentId(STUDENT_ID));
+        if (student) {
+          const fetchedContests = await getContestsByStudentId(Number(student?.id));
+          setContests(fetchedContests);
+        }
       } catch (error) {
         console.error("Error al cargar contests:", error);
       } finally {
@@ -59,8 +82,10 @@ export default function ProfilePage() {
       }
     };
 
-    fetchContests();
-  }, []);
+    if (student) {
+      fetchContests();
+    }
+  }, [student]);
 
   const sortedContests = useMemo(() => {
     return [...contests].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
