@@ -128,7 +128,7 @@ export function PreExamsContent() {
 
               {/* Topics */}
               <div className="mb-6">
-                <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                <h4 className="text-lg text-gray-900 dark:text-white mb-3">
                   🎯 Temas Cubiertos
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -145,7 +145,7 @@ export function PreExamsContent() {
 
               {/* Materials */}
               <div>
-                <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                <h4 className="text-lg text-gray-900 dark:text-white mb-3">
                   📁 Material Utilizado
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

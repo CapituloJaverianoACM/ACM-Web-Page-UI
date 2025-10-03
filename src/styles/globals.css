@@ -131,16 +131,21 @@ body {
 
 /* Headings - Using BC Liguria for headers */
 h1,
-h2,
+h2 {
+  font-family: var(--font-primary);
+  line-height: var(--line-height-tight);
+  color: var(--azul-noche);
+  margin-bottom: var(--space-md);
+}
+
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-primary);
-  font-weight: var(--font-bold);
-  line-height: var(--line-height-tight);
-  color: var(--azul-noche);
-  margin-bottom: var(--space-md);
+    font-family: var(--font-secondary);
+    line-height: var(--line-height-tight);
+    color: var(--azul-noche);
+    margin-bottom: var(--space-sm);
 }
 
 h1 {
