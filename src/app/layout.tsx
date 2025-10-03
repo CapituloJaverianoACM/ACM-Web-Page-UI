@@ -23,8 +23,8 @@ export default async function RootLayout({
           href="https://commondatastorage.googleapis.com"
           crossOrigin="anonymous"
         />
-        {/* Preload cached proxy video to warm up cache */}
-        <link rel="preload" href="/api/hero-video" as="video" />
+        {/* Preload cached proxy video to warm up cache (use fetch for broad support) */}
+        <link rel="preload" href="/api/hero-video" as="fetch" crossOrigin="anonymous" />
       </head>
       <body>
         <main className="dark:bg-[#121212]">{children}</main>

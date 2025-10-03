@@ -1,44 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { typeText } from "@/utils/typeText";
+import { initCodeParticles } from "@/utils/particles";
 
 export function Hero() {
-  const particlesRef = useRef<HTMLDivElement | null>(null);
-  const heroRef = useRef<HTMLElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const subtitleRef = useRef<HTMLHeadingElement | null>(null);
+  const particlesRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoVisible, setVideoVisible] = useState(false);
   // Use cached proxy route for the hero video
   const videoUrl = "/api/hero-video";
-
-  // Typing animation util
-  function typeText(
-    el: HTMLElement,
-    text: string,
-    speed = 30,
-    onDone?: () => void
-  ) {
-    let i = 0;
-    el.innerHTML = "";
-    const cursor = document.createElement("span");
-    cursor.className = "typing-cursor";
-    cursor.textContent = "|";
-    el.appendChild(cursor);
-
-    const tick = () => {
-      if (i < text.length) {
-        cursor.before(document.createTextNode(text[i]));
-        i++;
-        setTimeout(tick, speed);
-      } else {
-        cursor.remove();
-        onDone?.();
-      }
-    };
-
-    tick();
-  }
+  const externalFallback =
+    "https://cdn.pixabay.com/video/2022/10/24/136283-764387738_large.mp4";
 
   useEffect(() => {
     // Try to play video background (fallback to CSS if fails)
@@ -84,67 +60,15 @@ export function Hero() {
   }, [videoVisible]);
 
   useEffect(() => {
-    // Particles
+    // Partículas ahora usando utilidad reutilizable
     const container = particlesRef.current;
     if (!container) return;
-
-    const codeElements = [
-      "for()",
-      "while()",
-      "if()",
-      "class",
-      "function",
-      "return",
-      "var",
-      "let",
-      "const",
-      "{}",
-      "[]",
-      "()",
-      "=>",
-      "==",
-      "!=",
-      "++",
-      "--",
-      "&&",
-      "||",
-      "int",
-      "string",
-      "bool",
-      "array",
-      "list",
-      "dict",
-      "map",
-    ];
-
-    const particles: HTMLElement[] = [];
-
-    const addParticle = () => {
-      const p = document.createElement("div");
-      p.className = "particle";
-      p.textContent =
-        codeElements[Math.floor(Math.random() * codeElements.length)];
-      p.style.left = Math.random() * 100 + "vw";
-      p.style.animationDelay = Math.random() * 2 + "s";
-      p.style.animationDuration = Math.random() * 10 + 10 + "s";
-
-      container.appendChild(p);
-      particles.push(p);
-
-      // remove after animation
-      window.setTimeout(() => {
-        if (p.parentNode) p.parentNode.removeChild(p);
-      }, 25000);
-    };
-
-    // initial particles
-    for (let i = 0; i < 5; i++) setTimeout(addParticle, i * 500);
-    const id = window.setInterval(addParticle, 2000);
-
-    return () => {
-      window.clearInterval(id);
-      particles.forEach((p) => p.remove());
-    };
+    const cleanup = initCodeParticles(container, {
+      initialCount: 5,
+      spawnIntervalMs: 2000,
+      maxLifetimeMs: 25000,
+    });
+    return cleanup;
   }, []);
 
   useEffect(() => {
@@ -153,13 +77,25 @@ export function Hero() {
     const subtitleEl = subtitleRef.current;
     if (!titleEl || !subtitleEl) return;
 
-    const timeoutId = window.setTimeout(() => {
-      typeText(titleEl, "La Liga", 30, () => {
-        window.setTimeout(() => typeText(subtitleEl, "Javeriana de Programación", 30), 300);
+    let cancelTitle: VoidFunction | undefined;
+    let cancelSubtitle: VoidFunction | undefined;
+    const timeouts: number[] = [];
+
+    const startId = window.setTimeout(() => {
+      cancelTitle = typeText(titleEl, "La Liga", 30, () => {
+        const id2 = window.setTimeout(() => {
+          cancelSubtitle = typeText(subtitleEl, "Javeriana de Programación", 30);
+        }, 300);
+        timeouts.push(id2);
       });
     }, 2000);
+    timeouts.push(startId);
 
-    return () => window.clearTimeout(timeoutId);
+    return () => {
+      timeouts.forEach((t) => clearTimeout(t));
+      cancelTitle?.();
+      cancelSubtitle?.();
+    };
   }, []);
 
   return (
@@ -169,7 +105,6 @@ export function Hero() {
         <div className={`hero-video-bg ${videoVisible ? "is-visible" : ""}`}>
           <video
             ref={videoRef}
-            src={videoUrl}
             muted
             autoPlay
             loop
@@ -177,7 +112,11 @@ export function Hero() {
             preload="auto"
             crossOrigin="anonymous"
             aria-hidden="true"
-          />
+          >
+            {/* Try proxy first, then external file as fallback */}
+            <source src={videoUrl} type="video/mp4" />
+            <source src={externalFallback} type="video/mp4" />
+          </video>
         </div>
       ) : null}
 
@@ -235,17 +174,17 @@ export function Hero() {
         {/*TODO: ESTAS STATS SON DE EJEMPLO, CAMBIARLAS DESPUÉS PARA QUE MUESTREN DATOS REALES, PUEDE SER DE LA DB*/}
         <div className="stats">
           <div className="stat-item">
-            <span className="stat-number">500+</span>
-            <span className="stat-label">Participantes</span>
+            <span className="stat-number">10+</span>
+            <span className="stat-label">Años Compitiendo</span>
           </div>
-          <div className="stat-item">
+          {/*<div className="stat-item">
             <span className="stat-number">50+</span>
             <span className="stat-label">Competencias</span>
           </div>
           <div className="stat-item">
             <span className="stat-number">10+</span>
             <span className="stat-label">Años de Historia</span>
-          </div>
+          </div>*/}
         </div>
       </div>
     </section>
