@@ -1,5 +1,5 @@
 "use client";
-import { AboutUs } from "@/components/home/sections/about-us";
+import { Activities } from "@/components/home/sections/activities";
 import { Hero } from "@/components/home/sections/hero";
 import { Members } from "@/components/home/sections/members";
 import { HeroUIProvider } from "@heroui/react";
@@ -11,7 +11,7 @@ import Contributors from "@/components/home/sections/contributors";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "#home" },
-  { key: "about us", label: "Sobre Nosotros", href: "#about-us" },
+  { key: "activities", label: "Actividades", href: "#activities" },
   { key: "members", label: "Miembros", href: "#members" },
   { key: "league", label: "La Liga", href: "/league" },
 ];
@@ -25,7 +25,7 @@ export default function HomePage() {
         <CursorWrapper>
           <MainNavbar navLinks={navLinks} />
           <Hero />
-          <AboutUs />
+          <Activities />
           <Members />
           <Contributors />
           <Footer />
