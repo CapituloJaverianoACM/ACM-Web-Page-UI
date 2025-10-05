@@ -14,12 +14,15 @@ export function Members() {
     const [selectedMember, setSelectedMember] = useState<Member | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { data: members, isLoading } = useQuery({
+    const { data: members, isLoading } = useQuery<Member[]>({
         queryKey: ['members'],
         queryFn: async () => {
             return await getMembers()
         }
     });
+
+    // Garantizar que `membersList` siempre sea un arreglo para evitar errores al usar .filter/.map
+    const membersList: Member[] = Array.isArray(members) ? members : [];
 
     const handleMemberClick = (member: Member) => {
         setSelectedMember(member);
@@ -49,7 +52,7 @@ export function Members() {
                         <p className="text-gray-500">Cargando miembros...</p>
                     </div>
                 )}
-                {!isLoading && members.filter(member => member.active).map((member) => (
+                {!isLoading && membersList.filter(member => member.active).map((member) => (
                     <MemberCard
                         key={member._id}
                         member={member}

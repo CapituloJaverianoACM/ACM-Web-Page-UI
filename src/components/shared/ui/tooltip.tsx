@@ -99,6 +99,12 @@ function AnimatedTooltipComponent({
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
+          {/* */}
+          <div className="flex md:hidden justify-center mb-1">
+            <span className="w-14 text-center text-[5px] font-montserrat from-neutral-500 dark:text-white truncate">
+              {item.name}
+            </span>
+          </div>
           <AnimatePresence>
             {hoveredIndex === item.id && isClient && (
               <motion.div
@@ -176,7 +182,7 @@ function AnimatedTooltipComponent({
   );
 }
 
-// Export dinamico para evitar problemas de SSR
+
 const AnimatedTooltip = dynamic(() => Promise.resolve(AnimatedTooltipComponent), {
   ssr: false,
   loading: () => (

@@ -71,16 +71,20 @@ export default function Footer() {
   return (
     <footer className="w-full px-6 py-8 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg border-t border-gray-200/20 dark:border-gray-700/20 mt-auto">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-3 items-center">
+        {/*
+          Responsive
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4 md:gap-0 text-center md:text-left">
           {/* Información izquierda */}
-          <div className="flex items-center justify-self-start whitespace-nowrap">
+          <div className="flex items-center justify-center md:justify-start whitespace-nowrap">
             <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
               Capítulo Javeriano
             </span>
-            <span className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white" style={{"fontFamily": "'bc-liguria', sanserif"}}>
+            <span className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white" style={{ fontFamily: "'bc-liguria', sanserif" }}>
               ACM
             </span>
           </div>
+
           {/* Contribuidores del proyecto en el centro*/}
           <div className="flex justify-center relative z-0">
             <AnimatedTooltip
@@ -90,8 +94,8 @@ export default function Footer() {
             />
           </div>
 
-          {/* Redes sociales a la derecha */}
-          <div className="flex items-center justify-self-end gap-3 md:gap-4">
+          {/* Redes sociales a la derecha*/}
+          <div className="flex items-center justify-center md:justify-end gap-3 md:gap-4">
             <a
               href="https://www.linkedin.com/company/capitulo-javeriano-acm/"
               target="_blank"

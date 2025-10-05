@@ -6,7 +6,7 @@ import { InactiveMembersTimeline } from "./sections/timeline";
 
 const InactiveMembers = () => {
 
-    const { data: members, isLoading } = useQuery({
+    const { data: members, isLoading } = useQuery<Member[]>({
         queryKey: ['members'],
         queryFn: async () => {
             const members : Member[] = await getMembers();
@@ -17,9 +17,12 @@ const InactiveMembers = () => {
         }
     });
 
+    // Asegurar que `membersList` sea siempre un arreglo
+    const membersList: Member[] = Array.isArray(members) ? members : [];
+
 
     // Group and sort members by period
-    const grouped = isLoading ? {} as Record<string, Member[]> : members.reduce(
+    const grouped = isLoading ? {} as Record<string, Member[]> : membersList.reduce(
         (acc, m) => {
             const period = m.memberSince || "Sin periodo";
             (acc[period] = acc[period] || []).push(m);
