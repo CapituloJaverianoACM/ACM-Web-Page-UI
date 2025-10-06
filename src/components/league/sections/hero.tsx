@@ -183,7 +183,7 @@ export function Hero() {
                     {"#include <code>"}
                 </div>
 
-                <div className="hero-content">
+                <div className="hero-content mt-20">
                     <h1 ref={titleRef} className="league-title"/>
                     <h2 ref={subtitleRef} className="league-subtitle"/>
 
