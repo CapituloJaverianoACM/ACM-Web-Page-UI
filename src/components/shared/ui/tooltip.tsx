@@ -57,7 +57,7 @@ function AnimatedTooltipComponent({
     };
   }, []);
 
-  // Use currentTarget (which is correctly typed) instead of target to avoid TS2339
+ 
   const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
     if (!isClient) return;
 
@@ -99,12 +99,7 @@ function AnimatedTooltipComponent({
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {/* */}
-          <div className="flex md:hidden justify-center mb-1">
-            <span className="w-14 text-center text-[5px] font-montserrat from-neutral-500 dark:text-white truncate">
-              {item.name}
-            </span>
-          </div>
+          
           <AnimatePresence>
             {hoveredIndex === item.id && isClient && (
               <motion.div
