@@ -18,14 +18,19 @@ export async function GET(request: Request) {
     const upstream = await fetch(EXTERNAL_VIDEO_MP4, {
       // Forward Range requests for seeking/streaming
       headers: range ? { Range: range } : undefined,
-      // Let the CDN/browser cache it; also allow Next caching
-      // Note: next.revalidate doesn't affect opaque streams, but it's fine.
       next: { revalidate: 60 * 60 * 24 },
     });
 
     // Accept normal OK and Partial Content responses
     if (!upstream.ok && upstream.status !== 206) {
-      return new Response("Upstream error", { status: upstream.status });
+      // Error: do not cache this response
+      return new Response("Upstream error", {
+        status: upstream.status,
+        headers: {
+          "cache-control": "no-store",
+          vary: "range",
+        },
+      });
     }
 
     // Copy relevant headers through and set strong caching
@@ -52,15 +57,22 @@ export async function GET(request: Request) {
       "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
     );
 
-    // Allow range responses to pass through and vary on Range
-    if (!headers.has("accept-ranges")) headers.set("accept-ranges", "bytes");
-    headers.append("vary", "range");
+    // Always allow range responses to pass through and vary on Range
+    headers.set("accept-ranges", "bytes");
+    headers.set("vary", "range");
 
     return new Response(upstream.body, {
       status: upstream.status,
       headers,
     });
   } catch {
-    return new Response("Video proxy failed", { status: 502 });
+    // Proxy error: do not cache this response
+    return new Response("Video proxy failed", {
+      status: 502,
+      headers: {
+        "cache-control": "no-store",
+        vary: "range",
+      },
+    });
   }
 }
