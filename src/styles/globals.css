@@ -8,6 +8,7 @@
 @import url("https://use.typekit.net/sxb7wzn.css");
 /* Import Flaticon Icons */
 @import url("https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -448,19 +449,25 @@ a:active {
   text-decoration: none;
 }
 
-/* Outline button */
-.btn--outline {
-  background-color: transparent;
-  /* color: var(--azul-noche); */
-  /* border-color: var(--azul-noche); */
-
-  @apply text-[--azul-noche] border-[--azul-noche] dark:text-white;
+/* New: Niebla button (filled with azul niebla) */
+.btn--niebla {
+  background-color: var(--azul-niebla);
+  color: var(--azul-noche);
+  border-color: var(--azul-niebla);
 }
 
-.btn--outline:hover {
-  background-color: var(--azul-noche);
-  color: var(--white);
+.btn--niebla:hover {
+  filter: brightness(0.95);
   text-decoration: none;
+}
+
+.dark .btn--niebla {
+  background-color: var(--azul-niebla);
+  color: var(--azul-noche);
+}
+
+.dark .btn--niebla:hover {
+  filter: brightness(0.9);
 }
 
 /* Button sizes */
@@ -748,40 +755,255 @@ a:active {
 }
 
 /* ===================================
-   BRAND-SPECIFIC COMPONENTS
+   LEAGUE HERO (Liga Javeriana de Programación)
    =================================== */
-/* Values section */
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--space-lg);
-  margin-top: var(--space-2xl);
+/* JetBrains Mono for code elements */
+
+.league-hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--azul-electrico) 0%,
+    var(--azul-ultramar) 50%,
+    var(--azul-electrico) 100%
+  );
+  overflow: hidden;
+  color: rgb(var(--azul-niebla-rgb));
 }
 
-.value-item {
+.league-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(var(--azul-niebla-rgb)/0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(var(--azul-niebla-rgb)/0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(var(--azul-electrico-rgb)/0.05) 0%, transparent 50%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23DDE5F8" stroke-width="0.5" opacity="0.1"/><circle cx="10" cy="10" r="0.5" fill="%23DDE5F8" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.8;
+  animation: float 20s ease-in-out infinite;
+}
+
+.league-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="%23DDE5F8" opacity="0.03"/><circle cx="0" cy="0" r="1" fill="%23004AF5" opacity="0.02"/><circle cx="60" cy="60" r="1" fill="%23004AF5" opacity="0.02"/></pattern></defs><rect width="60" height="60" fill="url(%23dots)"/></svg>');
+  opacity: 0.6;
+  animation: float 25s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+/* When video is visible, soften the overlay layers */
+.league-hero.has-video::before { opacity: 0.35; }
+.league-hero.has-video::after { opacity: 0.2; }
+
+/* Floating code particles layer */
+.code-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Geometric background shapes */
+.geometric-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.geometric-shape {
+  position: absolute;
+  border: 1px solid rgba(var(--azul-niebla-rgb)/0.05);
+  animation: geometricFloat 30s linear infinite;
+}
+
+.shape-1 {
+  top: 10%;
+  left: 5%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  animation-duration: 40s;
+}
+
+.shape-2 {
+  top: 60%;
+  right: 10%;
+  width: 150px;
+  height: 150px;
+  transform: rotate(45deg);
+  animation-duration: 35s;
+  animation-direction: reverse;
+}
+
+.shape-3 {
+  bottom: 20%;
+  left: 15%;
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  animation-duration: 50s;
+}
+
+.shape-4 {
+  top: 30%;
+  right: 25%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border-color: rgba(var(--azul-electrico-rgb)/0.08);
+  animation-duration: 45s;
+  animation-direction: reverse;
+}
+
+/* Individual particle */
+.particle {
+  position: absolute;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: rgba(var(--azul-niebla-rgb)/0.3);
+  animation: codeFloat 15s linear infinite;
+}
+
+/* Content */
+.hero-content {
   text-align: center;
-  padding: var(--space-lg);
-  background-color: var(--azul-niebla);
-  border-radius: var(--radius-lg);
-  transition: transform var(--transition-normal);
+  z-index: 10;
+  max-width: 900px;
+  padding: 0 var(--space-md);
+  position: relative;
 }
 
-.value-item:hover {
-  transform: translateY(-2px);
-}
-
-.value-item__title {
+.league-title {
+  font-size: 10rem;
+  font-weight: var(--font-black);
+  margin-bottom: var(--space-md);
   font-family: var(--font-primary);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-bold);
-  color: var(--azul-electrico);
-  margin-bottom: var(--space-sm);
+  font-style: italic;
+  background: var(--azul-niebla);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  animation: slideInUp 1s ease-out 0.3s both;
+}
+
+.league-subtitle {
+  font-size: 3rem;
+  font-weight: var(--font-black);
+  margin-bottom: var(--space-md);
+  font-family: var(--font-primary);
+  font-style: italic;
+  background: var(--azul-niebla);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  animation: slideInUp 1s ease-out 0.3s both;
+  position: relative;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s steps(1) infinite;
 }
 
 /* ===================================
    RESPONSIVE DESIGN
    =================================== */
 
+.league-text {
+  font-size: 1.5rem;
+  font-weight: var(--font-regular);
+  font-family: var(--font-secondary);
+  color: rgba(var(--azul-niebla-rgb)/0.8);
+  margin-bottom: var(--space-2xl);
+  animation: slideInUp 1s ease-out 0.6s both;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3xl);
+  animation: slideInUp 1s ease-out 0.9s both;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  animation: slideInUp 1s ease-out 1.2s both;
+}
+
+.stat-item { text-align: center; }
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: var(--font-black);
+  color: var(--azul-niebla);
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(var(--azul-niebla-rgb)/0.7);
+  margin-top: 5px;
+}
+
+/* Decorative code snippets */
+.code-snippet {
+  position: absolute;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  color: rgba(var(--azul-niebla-rgb)/0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.code-1 { top: 15%; left: 10%; animation: float 8s ease-in-out infinite; }
+.code-2 { top: 70%; right: 15%; animation: float 10s ease-in-out infinite reverse; }
+.code-3 { bottom: 20%; left: 5%; animation: float 12s ease-in-out infinite; }
+
+/* Animations */
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes geometricFloat {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.05; }
+  25% { transform: translateY(-30px) rotate(90deg) scale(1.1); opacity: 0.08; }
+  50% { transform: translateY(-15px) rotate(180deg) scale(0.9); opacity: 0.03; }
+  75% { transform: translateY(-25px) rotate(270deg) scale(1.05); opacity: 0.06; }
+  100% { transform: translateY(0) rotate(360deg) scale(1); opacity: 0.05; }
+}
+
+@keyframes codeFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   :root {
     --font-size-5xl: 2.5rem;
@@ -813,6 +1035,20 @@ a:active {
 
   .flex-row {
     flex-direction: column;
+  }
+
+  /* Ajustes solicitados: títulos más grandes, subtítulo descriptivo más pequeño, botones más compactos */
+  .league-title { font-size: 3rem; }
+  .league-subtitle { font-size: 2rem; }
+  .league-text { font-size: 1.05rem; line-height: 1.35; }
+  .stats { gap: 40px; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .cta-buttons .btn {
+    width: 160px;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: 0.9rem;
+    border-radius: var(--radius-lg);
   }
 }
 
@@ -906,4 +1142,42 @@ a:active {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--azul-crayon);
+}
+
+/* ===================================
+   HERO VIDEO BACKGROUND
+   =================================== */
+
+/* League hero video background layer */
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* below particles/shapes and content, above section background */
+  opacity: 0;
+  transition: opacity 600ms ease;
+  pointer-events: none; /* keep UI interactive */
+  /* Adjustable dim intensity (0 to 1) */
+  --video-dim: 0.35;
+}
+
+.hero-video-bg.is-visible { opacity: 1; }
+
+.hero-video-bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  z-index: 0;
+}
+
+/* Dim overlay on top of the video to reduce exposure */
+.hero-video-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, var(--video-dim));
+  z-index: 1;
 }
