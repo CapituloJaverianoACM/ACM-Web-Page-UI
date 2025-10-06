@@ -25,7 +25,7 @@ const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a] cursor-none">
+      <DialogContent className="max-w-2xl max-h-[90vh] md:overflow-y-scroll overflow-y-scroll bg-white dark:border-none dark:bg-[#1a1a1a] cursor-none">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             Sobre {member.name}
@@ -33,8 +33,8 @@ const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
         </DialogHeader>
         <div className="space-y-8 font-['Montserrat'] px-6 py-5 sm:p-8 dark:text-gray-100">
           {/* Header Section */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-            <div className="flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center justify-center">
+            <div className="">
               <div className="w-32 h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--azul-electrico)] to-[var(--azul-ultramar)] flex items-center justify-center shadow-lg border-2 border-[var(--azul-niebla)]/20 dark:border-[#505050] mx-auto md:mx-0 select-none">
                 {member.image && !imageError ? (
                   <Image
