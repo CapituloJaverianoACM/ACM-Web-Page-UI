@@ -8,9 +8,13 @@ export const InactiveMemberBody: React.FC<
 > = ({ member }) => {
   return (
     <div className="flex text-center md:text-start flex-col justify-center">
-      <h3 className="card__title mb-0 text-base">{member.name}</h3>
-      <div className="card__subtitle text-xs">{member.title}</div>
-      <div className="text-xs text-blue-700 font-semibold mt-1">
+      <h3 className="card__title mb-0 text-base dark:text-[var(--azul-niebla)]">
+        {member.name}
+      </h3>
+      <div className="card__subtitle text-xs dark:text-[var(--azul-niebla)]">
+        {member.title}
+      </div>
+      <div className="text-xs text-blue-700 font-semibold mt-1 dark:text-[var(--azul-niebla)]">
         {member.role}
       </div>
       {/* Botones de contacto debajo del rol */}
@@ -18,7 +22,7 @@ export const InactiveMemberBody: React.FC<
         <Button
           variant="outline"
           size="icon"
-          className="p-0 btn--secondary btn--small"
+          className="p-0 btn--secondary"
           onClick={() => window.open(`mailto:${member.email}`, "_blank")}
         >
           <Mail className="w-3 h-3" />

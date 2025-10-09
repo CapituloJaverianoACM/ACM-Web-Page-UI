@@ -1,0 +1,80 @@
+"use client";
+
+import { useState } from "react";
+import { Input } from "../shared/ui/input";
+import { Button } from "../shared/ui/button";
+import { Eye, EyeClosed } from "lucide-react";
+import { login } from "@/app/(auth)/log-in/actions";
+import { redirect } from "next/navigation";
+
+export function SignInForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await login(email, password);
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    redirect("/");
+  };
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="email"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
+        >
+          Correo electrónico
+        </label>
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
+        >
+          Contraseña
+        </label>
+        <div className="flex items-center gap-5">
+          <div className="w-3/4">
+            <Input
+              id="password"
+              type={passwordVisibility ? "text" : "password"}
+              className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <span
+            className="cursor-pointer w-1/4"
+            onClick={() => setPasswordVisibility((prev) => !prev)}
+          >
+            {passwordVisibility ? <Eye /> : <EyeClosed />}
+          </span>
+        </div>
+      </div>
+      {error && <span className="text-red-600 text-sm">{error}</span>}
+      <Button type="submit" className="w-full mt-2" disabled={loading}>
+        {loading ? "Ingresando..." : "Iniciar sesión"}
+      </Button>
+    </form>
+  );
+}

@@ -21,9 +21,9 @@ type LinkPreviewProps = {
   quality?: number;
   layout?: string;
 } & (
-    | { isStatic: true; imageSrc: string }
-    | { isStatic?: false; imageSrc?: never }
-  );
+  | { isStatic: true; imageSrc: string }
+  | { isStatic?: false; imageSrc?: never }
+);
 
 export const LinkPreview = ({
   children,
@@ -80,12 +80,7 @@ export const LinkPreview = ({
     <>
       {isMounted ? (
         <div className="hidden">
-          <img
-            src={src}
-            width={width}
-            height={height}
-            alt="hidden image"
-          />
+          <img src={src} width={width} height={height} alt="hidden image" />
         </div>
       ) : null}
 
