@@ -4,7 +4,15 @@ import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import { useEffect, useState } from "react";
 
-export function Podium() {
+/**
+ * Muestra a los 3 mejores estudiantes de la liga
+ * @param updateInterval segundos para actualizar la información, 0 para no actualizar la información
+ */
+export function Podium({
+  updateInterval = 0
+}: {
+  updateInterval?: number
+}) {
   const [loading, setloading] = useState<boolean>(true);
 
   const [students, setStudents] = useState<
@@ -38,7 +46,16 @@ export function Podium() {
   useEffect(() => {
     handlerGetPodiumStudents();
     setloading(false);
-  }, []);
+
+    if (updateInterval > 0) {
+      const interval = setInterval(() => {
+        console.log("actualizado")
+        handlerGetPodiumStudents();
+      }, updateInterval * 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [updateInterval]);
 
   useEffect(() => {
     setSortedStudents(() => {
