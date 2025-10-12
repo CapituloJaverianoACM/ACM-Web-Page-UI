@@ -20,7 +20,7 @@ const Container = (props: {
             style={{
               height: `${((0.8 / steps_count) * (steps_count - step.order) + 0.2) * 100}%`,
             }}
-            className="flex-grow"
+            className="flex-grow flex-1"
             key={step.order}
           >
             {step.children}
