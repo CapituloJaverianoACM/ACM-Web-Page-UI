@@ -8,7 +8,7 @@ export const Ranking = () => {
       <RankingComponent.RankingContainer>
         <RankingComponent.Padding className="max-w-[65rem] mx-auto">
           <p className="text-lg font-semibold text-center">Ranking</p>
-          <RankingComponent.RankingList student_number={5} offset={2} />
+          <RankingComponent.RankingList student_number={5} offset={3} />
         </RankingComponent.Padding>
       </RankingComponent.RankingContainer>
     </div>
