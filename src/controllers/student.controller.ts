@@ -31,12 +31,14 @@ export async function getPodiumStudents(): Promise<Student[]> {
 
 export async function getRankingStudents({
   student_number,
+  offset = 0,
 }: {
   student_number: number;
+  offset?: number
 }): Promise<Student[]> {
   const res = await fetch(
     new URL(
-      `/students?limit=${student_number}&ordercol=victory_count&subordercol=matches_count&subasc=1`,
+      `/students?limit=${student_number}&ordercol=victory_count&subordercol=matches_count&subasc=1&offset=${offset}`,
       process.env.NEXT_PUBLIC_BACKEND_URL,
     ),
   );
