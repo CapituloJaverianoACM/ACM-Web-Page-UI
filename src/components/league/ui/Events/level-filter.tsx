@@ -14,7 +14,11 @@ export const LevelFilter = ({
     Past: "Pasados",
   };
 
-  const LevelButton = ({ f }: { f: "Initial" | "all" | "Advanced" | "Past" }) => {
+  const LevelButton = ({
+    f,
+  }: {
+    f: "Initial" | "all" | "Advanced" | "Past";
+  }) => {
     return (
       <div
         onClick={() => setFilter(f)}

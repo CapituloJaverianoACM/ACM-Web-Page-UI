@@ -52,7 +52,7 @@ export function initCodeParticles(
     maxExtraAnimDurationSec = 10,
     minAnimDelaySec = 0,
     maxAnimDelaySec = 2,
-  }: InitCodeParticlesOptions = {}
+  }: InitCodeParticlesOptions = {},
 ): () => void {
   const particles: HTMLElement[] = [];
   const timeouts: number[] = [];
@@ -60,11 +60,12 @@ export function initCodeParticles(
   const addParticle = () => {
     const p = document.createElement("div");
     p.className = "particle";
-    p.textContent = codeElements[Math.floor(Math.random() * codeElements.length)];
+    p.textContent =
+      codeElements[Math.floor(Math.random() * codeElements.length)];
     p.style.left = Math.random() * 100 + "vw";
-    const delay = Math.random() * (maxAnimDelaySec - minAnimDelaySec) + minAnimDelaySec;
-    const dur =
-      Math.random() * maxExtraAnimDurationSec + minAnimDurationSec;
+    const delay =
+      Math.random() * (maxAnimDelaySec - minAnimDelaySec) + minAnimDelaySec;
+    const dur = Math.random() * maxExtraAnimDurationSec + minAnimDurationSec;
     p.style.animationDelay = delay + "s";
     p.style.animationDuration = dur + "s";
 
