@@ -91,7 +91,7 @@ export function Podium({
                   <PodiumContainer.Step
                     showUserInfo
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_0.2)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.5)]"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
                     className="border-[rgb(var(--azul-electrico-rgb)_/_0.2)] border-1"
                     student={{
                       order: s.order,
@@ -122,8 +122,7 @@ export function Podium({
                     showCrown
                     showAvatar
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_0.2)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.5)]"
-                    className="border-[rgb(var(--azul-electrico-rgb)_/_0.2)] border-1"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
                     student={s}
                   ></PodiumContainer.Step>
                 ),

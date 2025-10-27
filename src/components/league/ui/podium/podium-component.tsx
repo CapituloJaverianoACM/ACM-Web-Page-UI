@@ -53,21 +53,46 @@ const Step = (props: {
     showCrown = false,
   } = props;
 
-  const val = 1 - student.order * 0.045;
+  const val = 1 - student.order * 0.25;
+
+  const roundedDirection = student.order == 0 ? "rounded-tl-[8rem]" : "rounded-tr-[8rem]"
 
   return (
     <div className="flex flex-col gap-2 w-full h-full relative transition hover:scale-105 cursor-pointer">
-      <div
-        style={{
-          backdropFilter: `brightness(${val})`,
-        }}
-        className={`flex flex-col items-center justify-center rounded-3xl flex-grow ${bg_color} ${className} shadow-md`}
-      >
-        <div className="h-[1.5rem] w-full"></div>
+      <div className="relative flex flex-col items-center justify-center flex-grow overflow-hidden">
+        {/* Fondo */}
+        <div
+          className={`absolute inset-0 shadow-md flex flex-col items-center justify-end ${bg_color} ${roundedDirection} ${className}`}
+          style={{
+            filter: `brightness(${val})`,
+          }}
+        >
+        </div>
 
-        {showNumber && (
-          <b className="text-6xl text-white">{student.order + 1}°</b>
-        )}
+        <div className="absolute h-full flex flex-col gap-2 items-center justify-end z-10">
+          {showNumber && (
+            <b className="relative z-10 text-6xl text-white text-bold font-[var(--font-primary)]">
+              #{student.order + 1}
+            </b>
+          )}
+          {showUserInfo && (
+            <div className=" text-white flex flex-col items-center justify-center p-2 text-center text-xs lg:text-base shadow font-[var(--font-secondary)]">
+              <p
+                className="m-0"
+                title={`${student.student.name} ${student.student.surname}`}
+              >
+                {student.student.name}
+              </p>
+              <p className="m-0 flex gap-1 items-center">
+                {" "}
+                <IconCrown className="text-yellow-500" size={15} />
+                {student.student.victory_count}{" "}
+                <span className="hidden lg:flex">Victorias</span>
+              </p>
+            </div>
+          )}
+        </div>
+
       </div>
 
       {showAvatar &&
@@ -100,22 +125,6 @@ const Step = (props: {
         </div>
       )}
 
-      {showUserInfo && (
-        <div className="glassmorphic dark:glassmorphic-dark dark:text-white flex flex-col items-center justify-center p-2 text-center text-xs lg:text-base h-16 shadow">
-          <p
-            className="m-0"
-            title={`${student.student.name} ${student.student.surname}`}
-          >
-            <b>{student.student.name}</b>
-          </p>
-          <p className="m-0 flex gap-1 items-center">
-            {" "}
-            <IconCrown className="text-yellow-500" size={15} />
-            {student.student.victory_count}{" "}
-            <span className="hidden lg:flex">Victorias</span>
-          </p>
-        </div>
-      )}
     </div>
   );
 };
