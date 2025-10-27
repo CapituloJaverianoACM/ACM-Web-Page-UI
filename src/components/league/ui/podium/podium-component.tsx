@@ -55,7 +55,8 @@ const Step = (props: {
 
   const val = 1 - student.order * 0.25;
 
-  const roundedDirection = student.order == 0 ? "rounded-tl-[8rem]" : "rounded-tr-[8rem]"
+  const roundedDirection =
+    student.order == 0 ? "rounded-tl-[8rem]" : "rounded-tr-[8rem]";
 
   return (
     <div className="flex flex-col gap-2 w-full h-full relative transition hover:scale-105 cursor-pointer">
@@ -66,8 +67,7 @@ const Step = (props: {
           style={{
             filter: `brightness(${val})`,
           }}
-        >
-        </div>
+        ></div>
 
         <div className="absolute h-full flex flex-col gap-2 items-center justify-end z-10">
           {showNumber && (
@@ -92,7 +92,6 @@ const Step = (props: {
             </div>
           )}
         </div>
-
       </div>
 
       {showAvatar &&
@@ -124,7 +123,6 @@ const Step = (props: {
           <IconCrown className="flex lg:hidden" size={45} />
         </div>
       )}
-
     </div>
   );
 };

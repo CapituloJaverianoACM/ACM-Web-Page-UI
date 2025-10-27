@@ -8,11 +8,7 @@ import { useEffect, useState } from "react";
  * Muestra a los 3 mejores estudiantes de la liga
  * @param updateInterval segundos para actualizar la información, 0 para no actualizar la información
  */
-export function Podium({
-  updateInterval = 0
-}: {
-  updateInterval?: number
-}) {
+export function Podium({ updateInterval = 0 }: { updateInterval?: number }) {
   const [loading, setloading] = useState<boolean>(true);
 
   const [students, setStudents] = useState<
@@ -49,7 +45,7 @@ export function Podium({
 
     if (updateInterval > 0) {
       const interval = setInterval(() => {
-        console.log("actualizado")
+        console.log("actualizado");
         handlerGetPodiumStudents();
       }, updateInterval * 1000);
 

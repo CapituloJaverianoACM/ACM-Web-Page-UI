@@ -34,7 +34,7 @@ export async function getRankingStudents({
   offset = 0,
 }: {
   student_number: number;
-  offset?: number
+  offset?: number;
 }): Promise<Student[]> {
   const res = await fetch(
     new URL(

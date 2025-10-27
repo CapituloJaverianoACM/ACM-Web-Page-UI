@@ -77,12 +77,12 @@ const RankingList = ({
   className = "",
   student_number = 20,
   offset = 0,
-  updateInterval = 0
+  updateInterval = 0,
 }: {
   className?: string;
   student_number?: number;
-  offset?: number,
-  updateInterval?: number
+  offset?: number;
+  updateInterval?: number;
 }) => {
   const SKELETON_RANKING_USERS_COUNT = 5;
 
@@ -103,7 +103,10 @@ const RankingList = ({
 
   const handlerGetRankingStudents = async () => {
     try {
-      const response = await getRankingStudents({ student_number: student_number, offset });
+      const response = await getRankingStudents({
+        student_number: student_number,
+        offset,
+      });
 
       setStudents(response);
     } catch {
@@ -129,7 +132,12 @@ const RankingList = ({
     <div className={`flex flex-col gap-2 ${className}`}>
       {students.map((s, i) => {
         return (
-          <StudentComponent skeleton={loading} student={s} key={i} pos={i + offset} />
+          <StudentComponent
+            skeleton={loading}
+            student={s}
+            key={i}
+            pos={i + offset}
+          />
         );
       })}
     </div>
@@ -142,4 +150,4 @@ const exp = {
   RankingList,
 };
 
-export default exp
+export default exp;
