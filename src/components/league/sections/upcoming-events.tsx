@@ -4,19 +4,14 @@ import { Carousel } from "@/components/home/apple-cards-carousel";
 import EventCard from "@/components/league/ui/Events/event-card";
 import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
-import {
-  ReactNode,
-  
-
-
-
-  useEffect,
-  useState
-} from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 
-const formatDateEvent = ({ date, 
-                         start_hour, final_hour, }: {
+const formatDateEvent = ({
+  date,
+  start_hour,
+  final_hour,
+}: {
   date: Date;
   start_hour: Date;
   final_hour: Date;
@@ -61,7 +56,7 @@ export function UpcomingEvents({
       className="justify-end !w-[20rem] xl:!w-[30rem]"
     >
       <div className="flex w-full aspect-video">
-                                        <EventCard.Image
+        <EventCard.Image
           src={"/Logo_Oscuro.svg"}
           className="!object-contain opacity-15 w-2/3 m-auto"
         />
