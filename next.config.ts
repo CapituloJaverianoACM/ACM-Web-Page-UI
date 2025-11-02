@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
       "api.microlink.io",
       "api.github.com",
       "avatars.githubusercontent.com",
-      "i.imgur.com"
+      "i.imgur.com",
     ],
   },
 };

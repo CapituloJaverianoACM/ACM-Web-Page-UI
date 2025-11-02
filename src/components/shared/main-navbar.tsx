@@ -134,7 +134,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
               {/* User Links */}
               {isLogged ? (
-                <AvatarMenu avatarUrl={student?.avatar || ""} userName={student?.name || ""} />
+                <AvatarMenu
+                  avatarUrl={student?.avatar || ""}
+                  userName={student?.name || ""}
+                />
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link href="/log-in" className="btn btn--outline btn--small ">
@@ -186,10 +189,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden mt-4 transition-all duration-300 ease-in-out ${isMobileMenuOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-4 pointer-events-none hidden"
-            }`}
+          className={`lg:hidden mt-4 transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none hidden"
+          }`}
         >
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">

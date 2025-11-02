@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+} from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
 
@@ -11,7 +16,9 @@ interface AvatarMenuProps {
 export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  avatarUrl = avatarUrl || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F009%2F292%2F244%2Fnon_2x%2Fdefault-avatar-icon-of-social-media-user-vector.jpg&f=1&nofb=1&ipt=3497eab29c4558bc00f4140ab8dbd34da0d03f3b01c0bb2c77019968e3e23a55";
+  avatarUrl =
+    avatarUrl ||
+    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F009%2F292%2F244%2Fnon_2x%2Fdefault-avatar-icon-of-social-media-user-vector.jpg&f=1&nofb=1&ipt=3497eab29c4558bc00f4140ab8dbd34da0d03f3b01c0bb2c77019968e3e23a55";
   userName = userName || "Usuario";
 
   return (
@@ -51,7 +58,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
               Perfil
             </Link>
             <button
-              onClick={() => { }}
+              onClick={() => {}}
               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
             >
               Cerrar sesión

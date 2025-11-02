@@ -34,7 +34,9 @@ export async function getContestsWithPictures(): Promise<
   return json.data;
 }
 
-export async function getContestByIds(contestIds: number[]): Promise<Contest[]> {
+export async function getContestByIds(
+  contestIds: number[],
+): Promise<Contest[]> {
   const resContests = await fetch(
     new URL(`/contests/bulk-query/id`, process.env.NEXT_PUBLIC_BACKEND_URL),
     {
@@ -43,7 +45,7 @@ export async function getContestByIds(contestIds: number[]): Promise<Contest[]> 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ ids: contestIds }),
-    }
+    },
   );
 
   if (!resContests.ok) {
@@ -53,8 +55,12 @@ export async function getContestByIds(contestIds: number[]): Promise<Contest[]> 
   return jsonContests.data;
 }
 
-export async function getContestsByStudentId(studentId: number): Promise<Contest[]> {
+export async function getContestsByStudentId(
+  studentId: number,
+): Promise<Contest[]> {
   const participations = await getParticipationsByStudentId(studentId);
-  const contestsIds = participations.map((participation: Participation) => participation.contest_id);
+  const contestsIds = participations.map(
+    (participation: Participation) => participation.contest_id,
+  );
   return getContestByIds(contestsIds);
 }
