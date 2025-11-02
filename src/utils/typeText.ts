@@ -4,7 +4,7 @@ export function typeText(
   el: HTMLElement,
   text: string,
   speed = 30,
-  onDone?: () => void
+  onDone?: () => void,
 ): CancelTypeText {
   let i = 0;
   let destroyed = false;
@@ -37,4 +37,3 @@ export function typeText(
     if (cursor.isConnected) cursor.remove();
   };
 }
-

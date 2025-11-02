@@ -14,9 +14,10 @@ export function Activities() {
       <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-40">
         <h1 className="dark:text-white">Nuestras Actividades</h1>
         <p className="text-xl dark:text-white/80">
-          En nuestra comunidad organizamos actividades como talleres prácticos, competencias de programación
-          y proyectos colaborativos. Nuestro objetivo es aprender juntos, mejorar nuestras habilidades y
-          disfrutar resolviendo retos tecnológicos en equipo.
+          En nuestra comunidad organizamos actividades como talleres prácticos,
+          competencias de programación y proyectos colaborativos. Nuestro
+          objetivo es aprender juntos, mejorar nuestras habilidades y disfrutar
+          resolviendo retos tecnológicos en equipo.
         </p>
       </div>
       <Carousel items={cards} />
@@ -92,7 +93,8 @@ const carrousel_items = [
   },
   {
     category: "Talleres Pre-Parciales",
-    title: "Refuerza tus conocimientos antes de los parciales con nuestros talleres",
+    title:
+      "Refuerza tus conocimientos antes de los parciales con nuestros talleres",
     src: "https://drive.google.com/uc?export=view&id=1mAWVNMh5wmlaBaciCkSMOV2nQXVYkMAu",
     content: <PreExamsContent />,
   },
