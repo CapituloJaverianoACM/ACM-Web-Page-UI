@@ -8,6 +8,9 @@ import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 
 const formatDateEvent = ({
+
+
+
   date,
   start_hour,
   final_hour,
