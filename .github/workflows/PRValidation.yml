@@ -2,11 +2,10 @@ name: Setup Bun
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-      - develop
-    types: [opened, edited, reopened, synchronize]
+  workflow_run:
+    workflows: ["Format"]
+    types:
+      - completed
 
 jobs:
   pr-check:
