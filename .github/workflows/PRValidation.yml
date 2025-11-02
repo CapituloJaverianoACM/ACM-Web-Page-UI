@@ -55,7 +55,7 @@ jobs:
         run: |
           # Intentamos hacer un "check" del formateador; si está bien, devolvemos formatted=true
           # Si el check falla, devolvemos formatted=false para ejecutar el formatter luego.
-          if bun run format -- --check; then
+          if bun run prettier . --check; then
             echo "formatted=true" >> $GITHUB_OUTPUT
           else
             echo "formatted=false" >> $GITHUB_OUTPUT
