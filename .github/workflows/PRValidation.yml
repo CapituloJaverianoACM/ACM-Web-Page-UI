@@ -38,6 +38,7 @@ jobs:
           branch: ${{ github.event.pull_request.head.ref }}
           
   pr-check:
+    needs: format
     runs-on: ubuntu-latest
 
     steps:
