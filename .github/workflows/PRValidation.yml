@@ -12,33 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
-          
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2.0.2
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Run formatter
-        run: bun run format
-      
-      - name: Commit changes
-        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref != 'develop' }}
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply formatting changes
-          file_pattern: 'src/**'
-          branch: ${{ github.event.pull_request.head.ref }}
-          
   pr-check:
-    needs: format
     runs-on: ubuntu-latest
 
     steps:
@@ -58,3 +32,43 @@ jobs:
 
       - name: Run build
         run: bun run build
+
+  format:
+    needs: pr-check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Si esto es un PR, checkoutea la rama del PR; sino usa la ref normal (workflow_dispatch / push)
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2.0.2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Check formatting
+        id: fmt-check
+        run: |
+          # Intentamos hacer un "check" del formateador; si está bien, devolvemos formatted=true
+          # Si el check falla, devolvemos formatted=false para ejecutar el formatter luego.
+          if bun run format -- --check; then
+            echo "formatted=true" >> $GITHUB_OUTPUT
+          else
+            echo "formatted=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run formatter (only if needed)
+        if: ${{ steps.fmt-check.outputs.formatted == 'false' }}
+        run: bun run format
+
+      - name: Commit formatting changes
+        if: ${{ github.event_name == 'pull_request' && steps.fmt-check.outputs.formatted == 'false' && github.event.pull_request.head.ref != 'develop' }}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply formatting changes
+          file_pattern: 'src/**'
+          branch: ${{ github.event.pull_request.head.ref }}
