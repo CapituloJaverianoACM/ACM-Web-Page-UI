@@ -28,8 +28,7 @@ jobs:
 
       - name: Check formatting
         run: |
-          bun run format
-          git diff --exit-code || (echo "Formatting issues found. Please run bun run format locally." && exit 1)
+          bun run prettier . --check || (echo "Formatting issues found. Please run bun run format locally." && exit 1)
 
   pr-check:
     needs: format
