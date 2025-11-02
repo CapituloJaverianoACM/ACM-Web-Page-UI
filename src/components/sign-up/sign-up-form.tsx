@@ -1,9 +1,10 @@
 "use client";
 
-import { signUp } from "@/controllers/supabase.controller";
 import { useState } from "react";
 import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
+import { signup } from "@/app/(auth)/sign-up/actions";
+import { redirect } from "next/navigation";
 
 export function SignUpForm() {
   const [name, setName] = useState("");
@@ -18,15 +19,14 @@ export function SignUpForm() {
     e.preventDefault();
 
     setLoading(true);
-    const response = await signUp(name, surname, email, password, avatar_url);
-    if (response.error) {
-      setError(response.error);
+    const { error } = await signup(name, surname, email, password, avatar_url);
+    if (error) {
+      setError(error);
       setLoading(false);
       return;
     }
-    setLoading(false);
-    setError("");
-    window.location.href = "/log-in";
+
+    redirect("/log-in");
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">

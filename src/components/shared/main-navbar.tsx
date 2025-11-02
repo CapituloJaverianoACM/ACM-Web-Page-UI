@@ -1,8 +1,9 @@
 "use client";
 
+import { getUser } from "@/controllers/supabase.controller";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export type NavLink = {
   key: string;
@@ -17,6 +18,16 @@ interface MainNavbarProps {
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    const checkLogged = async () => {
+      const user = await getUser();
+
+      setIsLogged(user != null);
+    };
+    checkLogged();
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -117,17 +128,31 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
               </div>
 
               {/* User Links */}
-              <div className="hidden lg:flex items-center gap-4">
-                <Link href="/log-in" className="btn btn--outline btn--small ">
-                  Iniciar sesión
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="btn btn--primary btn--small dark:text-white"
-                >
-                  Registrarse
-                </Link>
-              </div>
+              {isLogged ? (
+                <div>
+                  <button className="btn btn--primary btn--small dark:text-white">
+                    Mi perfil
+                    {/*Ahorita cambio esto*/}
+                    <img
+                      src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL}
+                      className="w-[20px]"
+                    ></img>
+                  </button>
+                </div>
+              ) : (
+                <div className="hidden lg:flex items-center gap-4">
+                  <Link href="/log-in" className="btn btn--outline btn--small ">
+                    Iniciar sesión
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="btn btn--primary btn--small dark:text-white"
+                  >
+                    Registrarse
+                  </Link>
+                </div>
+              )}
+
               {/* Mobile Menu Button */}
               <div className="lg:hidden">
                 <button
