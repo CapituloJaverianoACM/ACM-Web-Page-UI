@@ -7,8 +7,7 @@ import { LevelEnum } from "@/models/level.enum";
 import {
   ReactNode,
   useEffect,
-  useState,
-  memo
+  useState
 } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 
