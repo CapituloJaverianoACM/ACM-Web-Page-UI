@@ -26,7 +26,7 @@ jobs:
         run: bun install
 
       - name: Run formatter
-      - run: bun run format
+        run: bun run format
       
       - name: Commit changes
         if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref != 'develop' }}
