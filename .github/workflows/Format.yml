@@ -6,6 +6,10 @@ on:
       - main
       - develop
     types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: write
+  
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -13,16 +17,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+          
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2.0.2
 
       - name: Install dependencies
         run: bun install
 
+      - name: Run formatter
       - run: bun run format
+      
       - name: Commit changes
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref != 'develop' }}
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply formatting changes
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.event.pull_request.head.ref }}
