@@ -26,7 +26,7 @@ Branches must be reviewed and approved via pull request **before merging to `mai
 
 ## 🌐 Estilo de código / Code Style
 
-- Todo el código debe estar escrito en **inglés**.  
+- Todo el código debe estar escrito en **inglés**.
 - Se deben usar **Tailwind CSS** para todos los estilos. Evita CSS personalizado salvo que sea necesario.
 
 The entire codebase must be written in **English**.  
@@ -40,6 +40,7 @@ Use **Tailwind CSS** for all styling—avoid custom CSS unless necessary.
 bun install
 bun dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.

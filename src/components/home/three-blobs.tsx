@@ -1,82 +1,82 @@
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 const ThreeBlobs = () => {
-    const mountRef = useRef<HTMLDivElement>(null);
-    const sceneRef = useRef<THREE.Scene | null>(null);
-    const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-    const animationIdRef = useRef<number | null>(null);
-    const mouseRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
-    // Store actual screen coordinates for direct blob manipulation
-    const screenMouseRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
+  const mountRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const animationIdRef = useRef<number | null>(null);
+  const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  // Store actual screen coordinates for direct blob manipulation
+  const screenMouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-    useEffect(() => {
-        if (!mountRef.current) return;
+  useEffect(() => {
+    if (!mountRef.current) return;
 
-        // Scene setup
-        const scene = new THREE.Scene();
-        sceneRef.current = scene;
+    // Scene setup
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
 
-        const camera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
 
-        const renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true
-        });
-        rendererRef.current = renderer;
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+    });
+    rendererRef.current = renderer;
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
-        renderer.setClearColor(0x000000, 0);
-        mountRef.current.appendChild(renderer.domElement);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+    renderer.setClearColor(0x000000, 0);
+    mountRef.current.appendChild(renderer.domElement);
 
-        // Create simplified noise texture for better performance
-        const createNoiseTexture = () => {
-            const size = 256; // Reduced size for better performance
-            const canvas = document.createElement('canvas');
-            canvas.width = size;
-            canvas.height = size;
-            const context = canvas.getContext('2d')!;
+    // Create simplified noise texture for better performance
+    const createNoiseTexture = () => {
+      const size = 256; // Reduced size for better performance
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const context = canvas.getContext("2d")!;
 
-            const imageData = context.createImageData(size, size);
-            const data = imageData.data;
+      const imageData = context.createImageData(size, size);
+      const data = imageData.data;
 
-            for (let i = 0; i < data.length; i += 4) {
-                const value = Math.floor(Math.random() * 255);
-                data[i] = value;     // Red
-                data[i + 1] = value; // Green
-                data[i + 2] = value; // Blue
-                data[i + 3] = 255;   // Alpha
-            }
+      for (let i = 0; i < data.length; i += 4) {
+        const value = Math.floor(Math.random() * 255);
+        data[i] = value; // Red
+        data[i + 1] = value; // Green
+        data[i + 2] = value; // Blue
+        data[i + 3] = 255; // Alpha
+      }
 
-            context.putImageData(imageData, 0, 0);
+      context.putImageData(imageData, 0, 0);
 
-            const texture = new THREE.CanvasTexture(canvas);
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            return texture;
-        };
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      return texture;
+    };
 
-        const noiseTexture = createNoiseTexture();
+    const noiseTexture = createNoiseTexture();
 
-        // Enhanced shader material with stronger mouse interaction and center protection
-        const createBlobMaterial = (colorA: string, colorB: string) => {
-            return new THREE.ShaderMaterial({
-                uniforms: {
-                    uTime: { value: 0 },
-                    uColorA: { value: new THREE.Color(colorA) },
-                    uColorB: { value: new THREE.Color(colorB) },
-                    uNoiseTexture: { value: noiseTexture },
-                    uOpacity: { value: 1.0 }, // Make blobs fully opaque
-                    uMouse: { value: new THREE.Vector2(0, 0) },
-                    uMouseIntensity: { value: 0.0 }
-                },
-                vertexShader: `
+    // Enhanced shader material with stronger mouse interaction and center protection
+    const createBlobMaterial = (colorA: string, colorB: string) => {
+      return new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uColorA: { value: new THREE.Color(colorA) },
+          uColorB: { value: new THREE.Color(colorB) },
+          uNoiseTexture: { value: noiseTexture },
+          uOpacity: { value: 1.0 }, // Make blobs fully opaque
+          uMouse: { value: new THREE.Vector2(0, 0) },
+          uMouseIntensity: { value: 0.0 },
+        },
+        vertexShader: `
           varying vec2 vUv;
           varying vec3 vPosition;
           varying float vSphereT;
@@ -127,7 +127,7 @@ const ThreeBlobs = () => {
             gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
           }
         `,
-                fragmentShader: `
+        fragmentShader: `
           uniform vec3 uColorA;
           uniform vec3 uColorB;
           uniform sampler2D uNoiseTexture;
@@ -157,200 +157,205 @@ const ThreeBlobs = () => {
             gl_FragColor = vec4(finalColor, alpha);
           }
         `,
-                transparent: false, // Not transparent, fully colored
-                side: THREE.FrontSide // Only front faces
-            });
-        };
+        transparent: false, // Not transparent, fully colored
+        side: THREE.FrontSide, // Only front faces
+      });
+    };
 
-        // ACM Javeriana color palette gradients
-        const gradients = [
-            ['#022983', '#3A75FF'],
-            ['#004AF5', '#3A75FF'],
-            ['#022983', '#004AF5']
-        ];
-        const blobs: THREE.Mesh[] = [];
-        gradients.forEach((gradient, index) => {
-            // Reduced segments from 64 to 32 for better performance
-            const geometry = new THREE.SphereGeometry(2, 32, 32);
-            const material = createBlobMaterial(gradient[0], gradient[1]);
-            const blob = new THREE.Mesh(geometry, material);
+    // ACM Javeriana color palette gradients
+    const gradients = [
+      ["#022983", "#3A75FF"],
+      ["#004AF5", "#3A75FF"],
+      ["#022983", "#004AF5"],
+    ];
+    const blobs: THREE.Mesh[] = [];
+    gradients.forEach((gradient, index) => {
+      // Reduced segments from 64 to 32 for better performance
+      const geometry = new THREE.SphereGeometry(2, 32, 32);
+      const material = createBlobMaterial(gradient[0], gradient[1]);
+      const blob = new THREE.Mesh(geometry, material);
 
-            // Position blobs
-            const angle = (index / gradients.length) * Math.PI * 2;
-            blob.position.set(
-                Math.cos(angle) * 4,
-                Math.sin(angle) * 2,
-                Math.sin(angle) * 3
-            );
+      // Position blobs
+      const angle = (index / gradients.length) * Math.PI * 2;
+      blob.position.set(
+        Math.cos(angle) * 4,
+        Math.sin(angle) * 2,
+        Math.sin(angle) * 3,
+      );
 
-            blobs.push(blob);
-            scene.add(blob);
-        });
+      blobs.push(blob);
+      scene.add(blob);
+    });
 
-        // Basic lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
+    // Basic lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
 
-        camera.position.z = 10;
+    camera.position.z = 10;
 
-        // Mouse movement handler - store both normalized and screen coordinates
-        const handleMouseMove = (event: MouseEvent) => {
-            // Store normalized coordinates for shader calculations
-            mouseRef.current = {
-                x: (event.clientX / window.innerWidth) * 2 - 1,
-                y: -(event.clientY / window.innerHeight) * 2 + 1
-            };
+    // Mouse movement handler - store both normalized and screen coordinates
+    const handleMouseMove = (event: MouseEvent) => {
+      // Store normalized coordinates for shader calculations
+      mouseRef.current = {
+        x: (event.clientX / window.innerWidth) * 2 - 1,
+        y: -(event.clientY / window.innerHeight) * 2 + 1,
+      };
 
-            // Store actual screen coordinates for direct blob manipulation
-            screenMouseRef.current = {
-                x: event.clientX,
-                y: event.clientY
-            };
-        };
+      // Store actual screen coordinates for direct blob manipulation
+      screenMouseRef.current = {
+        x: event.clientX,
+        y: event.clientY,
+      };
+    };
 
-        window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
-        // Convert normalized mouse position to world coordinates (improved version)
-        const getMouseWorldPosition = () => {
-            // Create a vector at the mouse position and correct z-depth
-            const vector = new THREE.Vector3(
-                mouseRef.current.x,
-                mouseRef.current.y,
-                0.5  // z=0.5 is at the center of the scene depth
-            );
+    // Convert normalized mouse position to world coordinates (improved version)
+    const getMouseWorldPosition = () => {
+      // Create a vector at the mouse position and correct z-depth
+      const vector = new THREE.Vector3(
+        mouseRef.current.x,
+        mouseRef.current.y,
+        0.5, // z=0.5 is at the center of the scene depth
+      );
 
-            // Convert to world coordinates
-            vector.unproject(camera);
-            const dir = vector.sub(camera.position).normalize();
-            const distance = -camera.position.z / dir.z;
-            const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+      // Convert to world coordinates
+      vector.unproject(camera);
+      const dir = vector.sub(camera.position).normalize();
+      const distance = -camera.position.z / dir.z;
+      const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
-            return pos;
-        };
+      return pos;
+    };
 
-        // Animation loop with enhanced mouse interaction
-        let time = 0;
-        const animate = () => {
-            time += 0.01;
+    // Animation loop with enhanced mouse interaction
+    let time = 0;
+    const animate = () => {
+      time += 0.01;
 
-            // Get mouse position in world space
-            const mouseWorldPos = getMouseWorldPosition();
+      // Get mouse position in world space
+      const mouseWorldPos = getMouseWorldPosition();
 
-            // Update all blobs with stronger mouse interaction
-            blobs.forEach((blob, index) => {
-                // Update shader uniforms
-                if (blob.material instanceof THREE.ShaderMaterial) {
-                    const material = blob.material;
-                    material.uniforms.uTime.value = time;
+      // Update all blobs with stronger mouse interaction
+      blobs.forEach((blob, index) => {
+        // Update shader uniforms
+        if (blob.material instanceof THREE.ShaderMaterial) {
+          const material = blob.material;
+          material.uniforms.uTime.value = time;
 
-                    // Pass mouse position to shader
-                    material.uniforms.uMouse.value = new THREE.Vector2(mouseWorldPos.x, mouseWorldPos.y);
+          // Pass mouse position to shader
+          material.uniforms.uMouse.value = new THREE.Vector2(
+            mouseWorldPos.x,
+            mouseWorldPos.y,
+          );
 
-                    // Calculate distance between blob and mouse with safety minimum
-                    const blobPos = blob.position;
-                    const dx = blobPos.x - mouseWorldPos.x;
-                    const dy = blobPos.y - mouseWorldPos.y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    dist = Math.max(dist, 1.0); // Minimum safe distance to prevent extreme behavior
+          // Calculate distance between blob and mouse with safety minimum
+          const blobPos = blob.position;
+          const dx = blobPos.x - mouseWorldPos.x;
+          const dy = blobPos.y - mouseWorldPos.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          dist = Math.max(dist, 1.0); // Minimum safe distance to prevent extreme behavior
 
-                    // More controlled mouse interaction
-                    const intensity = Math.max(0, 1 - dist / 6);
-                    material.uniforms.uMouseIntensity.value = Math.min(intensity * 1.0, 0.5); // reduced clamp from 1.5 to 0.5
+          // More controlled mouse interaction
+          const intensity = Math.max(0, 1 - dist / 6);
+          material.uniforms.uMouseIntensity.value = Math.min(
+            intensity * 1.0,
+            0.5,
+          ); // reduced clamp from 1.5 to 0.5
 
-                    // Direct blob movement in response to mouse - with safety limits
-                    if (dist < 5.0) {
-                        // Calculate normalized direction with safety check
-                        let dirX = dx;
-                        let dirY = dy;
-                        const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
+          // Direct blob movement in response to mouse - with safety limits
+          if (dist < 5.0) {
+            // Calculate normalized direction with safety check
+            let dirX = dx;
+            let dirY = dy;
+            const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
-                        // Avoid division by zero
-                        if (dirLength > 0.001) {
-                            dirX /= dirLength;
-                            dirY /= dirLength;
-                        } else {
-                            // Random direction if too close to center
-                            const angle = index * Math.PI * 0.7 + time;
-                            dirX = Math.cos(angle);
-                            dirY = Math.sin(angle);
-                        }
-
-                        // Limit the repulsion force
-                        const repulsionForce = Math.min(0.02 * (1 - dist / 5.0), 0.01);
-
-                        // Apply controlled position change
-                        blob.position.x += dirX * repulsionForce;
-                        blob.position.y += dirY * repulsionForce;
-                    }
-                }
-
-                // Simpler rotation animation
-                blob.rotation.x += 0.002 * (index + 1);
-                blob.rotation.y += 0.003 * (index + 1);
-
-                // Simple floating motion
-                const offset = index * Math.PI * 0.7;
-                blob.position.y += Math.sin(time + offset) * 0.01;
-                blob.position.x += Math.cos(time * 0.8 + offset) * 0.008;
-
-                // Ensure blobs don't drift too far
-                const distanceFromCenter = Math.sqrt(
-                    blob.position.x * blob.position.x +
-                    blob.position.y * blob.position.y
-                );
-
-                if (distanceFromCenter > 8) {
-                    // Gently pull back toward center
-                    blob.position.x *= 0.99;
-                    blob.position.y *= 0.99;
-                }
-            });
-
-            renderer.render(scene, camera);
-            animationIdRef.current = requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        // Handle window resize
-        const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            window.removeEventListener('mousemove', handleMouseMove);
-
-            if (animationIdRef.current) {
-                cancelAnimationFrame(animationIdRef.current);
+            // Avoid division by zero
+            if (dirLength > 0.001) {
+              dirX /= dirLength;
+              dirY /= dirLength;
+            } else {
+              // Random direction if too close to center
+              const angle = index * Math.PI * 0.7 + time;
+              dirX = Math.cos(angle);
+              dirY = Math.sin(angle);
             }
-            if (mountRef.current && renderer.domElement) {
-                mountRef.current.removeChild(renderer.domElement);
-            }
-            renderer.dispose();
 
-            // Dispose geometries and materials
-            blobs.forEach(blob => {
-                blob.geometry.dispose();
-                if (blob.material instanceof THREE.ShaderMaterial) {
-                    blob.material.dispose();
-                }
-            });
-        };
-    }, []);
+            // Limit the repulsion force
+            const repulsionForce = Math.min(0.02 * (1 - dist / 5.0), 0.01);
 
-    return (
-        <div
-            ref={mountRef}
-            className="absolute inset-0 w-full h-full opacity-100 dark:opacity-40"
-            style={{ filter: 'blur(0.3px)', cursor: 'none' }}
-        />
-    );
+            // Apply controlled position change
+            blob.position.x += dirX * repulsionForce;
+            blob.position.y += dirY * repulsionForce;
+          }
+        }
+
+        // Simpler rotation animation
+        blob.rotation.x += 0.002 * (index + 1);
+        blob.rotation.y += 0.003 * (index + 1);
+
+        // Simple floating motion
+        const offset = index * Math.PI * 0.7;
+        blob.position.y += Math.sin(time + offset) * 0.01;
+        blob.position.x += Math.cos(time * 0.8 + offset) * 0.008;
+
+        // Ensure blobs don't drift too far
+        const distanceFromCenter = Math.sqrt(
+          blob.position.x * blob.position.x + blob.position.y * blob.position.y,
+        );
+
+        if (distanceFromCenter > 8) {
+          // Gently pull back toward center
+          blob.position.x *= 0.99;
+          blob.position.y *= 0.99;
+        }
+      });
+
+      renderer.render(scene, camera);
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // Handle window resize
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      if (mountRef.current && renderer.domElement) {
+        mountRef.current.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+
+      // Dispose geometries and materials
+      blobs.forEach((blob) => {
+        blob.geometry.dispose();
+        if (blob.material instanceof THREE.ShaderMaterial) {
+          blob.material.dispose();
+        }
+      });
+    };
+  }, []);
+
+  return (
+    <div
+      ref={mountRef}
+      className="absolute inset-0 w-full h-full opacity-100 dark:opacity-40"
+      style={{ filter: "blur(0.3px)", cursor: "none" }}
+    />
+  );
 };
 
 export default ThreeBlobs;
