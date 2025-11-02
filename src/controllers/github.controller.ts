@@ -3,7 +3,7 @@ export interface GitHubContributor {
   login: string;
   avatar_url: string;
   html_url: string;
-  type: string; 
+  type: string;
 }
 
 // Define the minimal shape we rely on from the GitHub API
@@ -37,10 +37,9 @@ const DEFAULT_REPOS: RepoRef[] = [
   { owner: "CapituloJaverianoACM", repo: "ACM-api" },
 ];
 
-
 async function fetchContributorsFromRepo(
   { owner, repo }: RepoRef,
-  perRepoLimit: number = 6
+  perRepoLimit: number = 6,
 ): Promise<GitHubContributor[]> {
   const url = `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=${perRepoLimit}&anon=0`;
 
@@ -54,13 +53,17 @@ async function fetchContributorsFromRepo(
   });
 
   if (!response.ok) {
-    console.error(`Error GitHub API (${owner}/${repo}): ${response.status} ${response.statusText}`);
+    console.error(
+      `Error GitHub API (${owner}/${repo}): ${response.status} ${response.statusText}`,
+    );
     return [];
   }
 
   const data: unknown = await response.json();
   if (!Array.isArray(data)) {
-    console.error(`Respuesta inesperada en ${owner}/${repo} (no es un arreglo).`);
+    console.error(
+      `Respuesta inesperada en ${owner}/${repo} (no es un arreglo).`,
+    );
     return [];
   }
 
@@ -71,7 +74,7 @@ async function fetchContributorsFromRepo(
       (c) =>
         typeof c.type === "string" &&
         c.type === "User" &&
-        !c.login.endsWith("[bot]")
+        !c.login.endsWith("[bot]"),
     )
     .map((c) => ({
       id: c.id,
@@ -81,29 +84,29 @@ async function fetchContributorsFromRepo(
       type: String(c.type),
     }));
 
-  console.log(`Contribuidores obtenidos en ${owner}/${repo}: ${contributors.length}`);
+  console.log(
+    `Contribuidores obtenidos en ${owner}/${repo}: ${contributors.length}`,
+  );
   return contributors;
 }
-
 
 export async function getGitHubContributors(
   owner: string = "CapituloJaverianoACM",
   repo: string = "ACM-Web-Page-UI",
-  limit: number = 6
+  limit: number = 6,
 ): Promise<GitHubContributor[]> {
   const list = await fetchContributorsFromRepo({ owner, repo }, limit);
 
   return list.slice(0, limit);
 }
 
-
 export async function getGitHubContributorsFromRepos(
   repos: RepoRef[] = DEFAULT_REPOS,
   perRepoLimit: number = 6,
-  totalLimit: number = 12
+  totalLimit: number = 12,
 ): Promise<GitHubContributor[]> {
   const results = await Promise.all(
-    repos.map((r) => fetchContributorsFromRepo(r, perRepoLimit))
+    repos.map((r) => fetchContributorsFromRepo(r, perRepoLimit)),
   );
 
   // Aplana
@@ -119,7 +122,6 @@ export async function getGitHubContributorsFromRepos(
     }
   }
 
-  
   deduped.sort((a, b) => a.login.localeCompare(b.login));
 
   console.log(`Total contribuidores únicos: ${deduped.length}`);

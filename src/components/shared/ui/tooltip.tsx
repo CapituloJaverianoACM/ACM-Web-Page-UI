@@ -9,22 +9,22 @@ import {
   useSpring,
 } from "motion/react";
 import { cn } from "./cn";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 type TooltipItem = {
   id: string | number;
   name: string;
   designation?: string;
-  image: string;  
-  imageDark?: string;  
+  image: string;
+  imageDark?: string;
   className?: string;
-  html_url?: string; 
+  html_url?: string;
 };
 
 type AnimatedTooltipProps = {
   items: TooltipItem[];
   className?: string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
+  position?: "top" | "bottom" | "left" | "right";
   tooltipOffset?: string;
 };
 
@@ -32,20 +32,22 @@ const springConfig = { stiffness: 100, damping: 15 };
 
 function AnimatedTooltipComponent({
   items,
-  position = 'top',
-  }: AnimatedTooltipProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<string | number | null>(null);
+  position = "top",
+}: AnimatedTooltipProps) {
+  const [hoveredIndex, setHoveredIndex] = useState<string | number | null>(
+    null,
+  );
   const [isClient, setIsClient] = useState(false);
   const x = useMotionValue(0);
   const animationFrameRef = useRef<number | null>(null);
 
   const rotate = useSpring(
     useTransform(x, [-100, 100], [-45, 45]),
-    springConfig
+    springConfig,
   );
   const translateX = useSpring(
     useTransform(x, [-100, 100], [-50, 50]),
-    springConfig
+    springConfig,
   );
 
   useEffect(() => {
@@ -57,7 +59,6 @@ function AnimatedTooltipComponent({
     };
   }, []);
 
- 
   const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
     if (!isClient) return;
 
@@ -74,19 +75,18 @@ function AnimatedTooltipComponent({
     });
   };
 
-
   const getPositionClasses = () => {
     switch (position) {
-      case 'top':
-        return 'absolute -top-16 left-0 -translate-x-1/4';
-      case 'bottom':
-        return 'absolute -bottom-16 left-0 -translate-x-1/4';
-      case 'left':
-        return 'absolute top-1/2 -left-16 -translate-y-1/2';
-      case 'right':
-        return 'absolute top-1/2 -right-16 -translate-y-1/2';
+      case "top":
+        return "absolute -top-16 left-0 -translate-x-1/4";
+      case "bottom":
+        return "absolute -bottom-16 left-0 -translate-x-1/4";
+      case "left":
+        return "absolute top-1/2 -left-16 -translate-y-1/2";
+      case "right":
+        return "absolute top-1/2 -right-16 -translate-y-1/2";
       default:
-        return 'absolute -top-16 left-0 -translate-x-1/4';
+        return "absolute -top-16 left-0 -translate-x-1/4";
     }
   };
 
@@ -99,7 +99,6 @@ function AnimatedTooltipComponent({
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          
           <AnimatePresence>
             {hoveredIndex === item.id && isClient && (
               <motion.div
@@ -122,7 +121,7 @@ function AnimatedTooltipComponent({
                 }}
                 className={cn(
                   getPositionClasses(),
-                  "z-[100] flex flex-col items-center justify-center rounded-lg bg-black/90 backdrop-blur-sm px-3 py-2 text-xs shadow-2xl border border-white/10"
+                  "z-[100] flex flex-col items-center justify-center rounded-lg bg-black/90 backdrop-blur-sm px-3 py-2 text-xs shadow-2xl border border-white/10",
                 )}
               >
                 <div className="absolute inset-x-10 -bottom-px z-30 h-0.5 w-[40%] bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
@@ -131,7 +130,9 @@ function AnimatedTooltipComponent({
                   {item.name}
                 </div>
                 {item.designation && (
-                  <div className="text-xs text-white/80">{item.designation}</div>
+                  <div className="text-xs text-white/80">
+                    {item.designation}
+                  </div>
                 )}
               </motion.div>
             )}
@@ -141,11 +142,11 @@ function AnimatedTooltipComponent({
             className={cn(
               "relative h-14 w-14 rounded-full border-2 border-white overflow-hidden cursor-pointer",
               "!m-0 !p-0 transition duration-500 group-hover:z-[100] group-hover:scale-105",
-              item.className
+              item.className,
             )}
             onClick={() => {
-              if (item.html_url) { 
-                window.open(item.html_url, '_blank');
+              if (item.html_url) {
+                window.open(item.html_url, "_blank");
               }
             }}
           >
@@ -156,7 +157,7 @@ function AnimatedTooltipComponent({
               alt={item.name}
               className={cn(
                 "absolute inset-0 h-full w-full object-cover object-top bg-transparent",
-                item.imageDark ? "dark:hidden" : ""
+                item.imageDark ? "dark:hidden" : "",
               )}
               draggable={false}
             />
@@ -177,19 +178,21 @@ function AnimatedTooltipComponent({
   );
 }
 
-
-const AnimatedTooltip = dynamic(() => Promise.resolve(AnimatedTooltipComponent), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div 
-          key={i}
-          className="h-14 w-14 rounded-full border-2 border-white bg-gray-200 animate-pulse -mr-4" 
-        />
-      ))}
-    </div>
-  ),
-});
+const AnimatedTooltip = dynamic(
+  () => Promise.resolve(AnimatedTooltipComponent),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-14 w-14 rounded-full border-2 border-white bg-gray-200 animate-pulse -mr-4"
+          />
+        ))}
+      </div>
+    ),
+  },
+);
 
 export default AnimatedTooltip;
