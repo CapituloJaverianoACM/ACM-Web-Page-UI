@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { checkInForContest } from '@/controllers/participation.controller';
-import EventCard from './event-card';
+import React, { useState, useEffect } from "react";
+import { checkInForContest } from "@/controllers/participation.controller";
+import EventCard from "./event-card";
 
 interface ContestTimerProps {
   startTime: string; // La fecha y hora de inicio del concurso
@@ -9,7 +9,12 @@ interface ContestTimerProps {
   hasCheckedIn: boolean;
 }
 
-const ContestTimer: React.FC<ContestTimerProps> = ({ startTime, contestId, studentId, hasCheckedIn }) => {
+const ContestTimer: React.FC<ContestTimerProps> = ({
+  startTime,
+  contestId,
+  studentId,
+  hasCheckedIn,
+}) => {
   // Función para calcular el tiempo restante
   const calculateRemainingTime = () => {
     const difference = +new Date(startTime) - +new Date();
@@ -39,7 +44,8 @@ const ContestTimer: React.FC<ContestTimerProps> = ({ startTime, contestId, stude
       setRemainingTime(newRemainingTime);
 
       // Lógica para habilitar el check-in
-      const totalHoursRemaining = (newRemainingTime.days * 24) + newRemainingTime.hours;
+      const totalHoursRemaining =
+        newRemainingTime.days * 24 + newRemainingTime.hours;
       if (totalHoursRemaining < 2) {
         setCheckInEnabled(true);
       }
@@ -73,7 +79,9 @@ const ContestTimer: React.FC<ContestTimerProps> = ({ startTime, contestId, stude
     return (
       <div className="text-center p-4">
         <p className="font-semibold text-green-600">¡Ya estás listo!</p>
-        <p className="text-sm">Ya estamos a menos de dos horas de empezar, ¡prepárate!</p>
+        <p className="text-sm">
+          Ya estamos a menos de dos horas de empezar, ¡prepárate!
+        </p>
       </div>
     );
   }

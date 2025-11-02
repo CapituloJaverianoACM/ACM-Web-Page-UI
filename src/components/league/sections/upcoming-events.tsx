@@ -7,7 +7,10 @@ import { LevelEnum } from "@/models/level.enum";
 import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 import ContestTimer from "../ui/Events/contest-timer";
-import {registerForContest,getStudentParticipations} from "@/controllers/participation.controller";
+import {
+  registerForContest,
+  getStudentParticipations,
+} from "@/controllers/participation.controller";
 import { Participation } from "@/models/participation.model";
 //import { supabase } from "@/lib/supabase";
 
@@ -54,7 +57,7 @@ export function UpcomingEvents({
   events = [],
   loadingInitialState = false,
 }: {
-  events: (Contest & { picture?: { link: string } })[]; 
+  events: (Contest & { picture?: { link: string } })[];
   loadingInitialState?: boolean;
 }) {
   const NoEventsCard: ReactNode = (
@@ -96,7 +99,7 @@ export function UpcomingEvents({
       key="unique"
       className="justify-end !w-[20rem] xl:!w-[30rem]"
     >
-       <div className="flex w-full aspect-video">
+      <div className="flex w-full aspect-video">
         <EventCard.Image
           src={"/Logo_Oscuro.svg"}
           className="!object-contain opacity-15 !w-2/3 m-auto"
@@ -113,27 +116,33 @@ export function UpcomingEvents({
   );
 
   const [loading, setLoading] = useState<boolean>(loadingInitialState);
-  const [allCards, setAllCards] = useState<{ comp: ReactNode; level: string | LevelEnum }[]>([]);
+  const [allCards, setAllCards] = useState<
+    { comp: ReactNode; level: string | LevelEnum }[]
+  >([]);
   const [cards, setCards] = useState<ReactNode[]>([]);
   const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
 
-  const [participations, setParticipations] = useState<Map<number, ParticipationState>>(new Map());
+  const [participations, setParticipations] = useState<
+    Map<number, ParticipationState>
+  >(new Map());
   const [studentId, setStudentId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchStudentData = async () => {
       //const { data: { user } } = await supabase.auth.getUser();
       //if (user) {
-        // const { data: studentData } = await supabase
-        //   .from("student")
-        //   .select("id")
-        //   .eq("supabase_user_id", user.id)
-        //   .single();
-        const studentData = {id: 9};
-      if(true){
+      // const { data: studentData } = await supabase
+      //   .from("student")
+      //   .select("id")
+      //   .eq("supabase_user_id", user.id)
+      //   .single();
+      const studentData = { id: 9 };
+      if (true) {
         if (studentData) {
           setStudentId(studentData.id);
-          const studentParticipations = await getStudentParticipations(studentData.id);
+          const studentParticipations = await getStudentParticipations(
+            studentData.id,
+          );
           const participationMap = new Map<number, ParticipationState>();
           if (studentParticipations && studentParticipations.length > 0) {
             studentParticipations.forEach((p: Participation) => {
@@ -157,7 +166,12 @@ export function UpcomingEvents({
     }
     try {
       await registerForContest(contestId);
-      setParticipations(prev => new Map(prev).set(contestId, { isRegistered: true, hasCheckedIn: false }));
+      setParticipations((prev) =>
+        new Map(prev).set(contestId, {
+          isRegistered: true,
+          hasCheckedIn: false,
+        }),
+      );
       alert("¡Te has registrado exitosamente!");
     } catch (error) {
       alert((error as Error).message);
@@ -173,8 +187,11 @@ export function UpcomingEvents({
       events.map((event) => {
         const { date, start_hour, final_hour } = event;
         const contestId = event.id;
-        const participationState = participations.get(contestId) || { isRegistered: false, hasCheckedIn: false };
-        
+        const participationState = participations.get(contestId) || {
+          isRegistered: false,
+          hasCheckedIn: false,
+        };
+
         // 1. Obtenemos las fechas para poder compararlas
         const now = new Date();
         const startTime = new Date(start_hour);
@@ -186,14 +203,26 @@ export function UpcomingEvents({
         if (now > endTime) {
           // El concurso ya terminó
           cardActionContent = (
-            <EventCard.RegisterButton onClick={() => alert("Implementación futura: Aquí se verán los resultados del concurso.")}>
+            <EventCard.RegisterButton
+              onClick={() =>
+                alert(
+                  "Implementación futura: Aquí se verán los resultados del concurso.",
+                )
+              }
+            >
               Ver Resultados
             </EventCard.RegisterButton>
           );
         } else if (now >= startTime) {
           // El concurso está en progreso
           cardActionContent = (
-            <EventCard.RegisterButton onClick={() => alert("Implementación futura: Aquí se verán los resultados del concurso.")}>
+            <EventCard.RegisterButton
+              onClick={() =>
+                alert(
+                  "Implementación futura: Aquí se verán los resultados del concurso.",
+                )
+              }
+            >
               Ver Resultados
             </EventCard.RegisterButton>
           );
@@ -238,10 +267,17 @@ export function UpcomingEvents({
                 <EventCard.WrapContainer>
                   <EventCard.Title>{event.name}</EventCard.Title>
                   {event.level === LevelEnum.Initial && (
-                    <p title="Nivel Inicial" className="text-[--azul-electrico] m-0">Inicial</p>
+                    <p
+                      title="Nivel Inicial"
+                      className="text-[--azul-electrico] m-0"
+                    >
+                      Inicial
+                    </p>
                   )}
                   {event.level === LevelEnum.Advanced && (
-                    <p title="Nivel Avanzado" className="text-red-400 m-0">Avanzado</p>
+                    <p title="Nivel Avanzado" className="text-red-400 m-0">
+                      Avanzado
+                    </p>
                   )}
                 </EventCard.WrapContainer>
                 <EventCard.Padding>
@@ -253,16 +289,14 @@ export function UpcomingEvents({
 
                 {/* 3. Renderizamos el contenido de acción que decidimos antes */}
                 {cardActionContent}
-                
               </EventCard.Padding>
             </EventCard.Container>
           ),
           level: event.level,
         };
-      })
+      }),
     );
   }, [events, participations, studentId]);
-
 
   useEffect(() => {
     setCards(allCards?.map((x) => x.comp) ?? []);
@@ -273,10 +307,12 @@ export function UpcomingEvents({
 
   useEffect(() => {
     setCards(
-      allCards.filter((x) => {
-        if (filter === "all") return true;
-        return x.level === filter;
-      }).map((x) => x.comp)
+      allCards
+        .filter((x) => {
+          if (filter === "all") return true;
+          return x.level === filter;
+        })
+        .map((x) => x.comp),
     );
   }, [filter, allCards]);
   return (
@@ -288,7 +324,8 @@ export function UpcomingEvents({
         <div className="flex flex-col gap-2 w-full">
           <h2 className="dark:text-white">Próximos Eventos</h2>
           <p className="dark:text-white">
-            ¡Inscríbete en nuestros próximos concursos y demuestra tus habilidades!
+            ¡Inscríbete en nuestros próximos concursos y demuestra tus
+            habilidades!
           </p>
         </div>
         <div className="flex flex-col">
