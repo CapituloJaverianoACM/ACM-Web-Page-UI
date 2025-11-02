@@ -33,4 +33,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply formatting changes
+          file_pattern: 'src/**'
           branch: ${{ github.event.pull_request.head.ref }}
