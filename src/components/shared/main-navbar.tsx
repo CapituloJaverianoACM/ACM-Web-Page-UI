@@ -1,9 +1,12 @@
 "use client";
 
+import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
+import { Student } from "@/models/student.model";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import AvatarMenu from "./ui/avatar-menu";
 
 export type NavLink = {
   key: string;
@@ -19,12 +22,14 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {
     const checkLogged = async () => {
       const user = await getUser();
-
+      const student = await getStudentBySupabaseId(user?.id);
       setIsLogged(user != null);
+      setStudent(student);
     };
     checkLogged();
   }, []);
@@ -129,16 +134,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
               {/* User Links */}
               {isLogged ? (
-                <div>
-                  <button className="btn btn--primary btn--small dark:text-white">
-                    Mi perfil
-                    {/*Ahorita cambio esto*/}
-                    <img
-                      src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL}
-                      className="w-[20px]"
-                    ></img>
-                  </button>
-                </div>
+                <AvatarMenu
+                  avatarUrl={student?.avatar || ""}
+                  userName={student?.name || ""}
+                />
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link href="/log-in" className="btn btn--outline btn--small ">
