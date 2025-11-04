@@ -122,6 +122,7 @@ export function UpcomingEvents({
     {
       comp: ReactNode;
       level: LevelEnum;
+      endDate: Date;
     }[]
   >([]);
 
@@ -129,6 +130,16 @@ export function UpcomingEvents({
     setAllCards(
       events.map((event) => {
         const { date, start_hour, final_hour } = event;
+
+        const d = new Date(date);
+        const f = new Date(final_hour);
+        const endDate = new Date(d);
+        endDate.setHours(
+          f.getHours(),
+          f.getMinutes(),
+          f.getSeconds(),
+          f.getMilliseconds(),
+        );
 
         return {
           comp: (
@@ -186,13 +197,16 @@ export function UpcomingEvents({
           ),
           level:
             event.level == "Advanced" ? LevelEnum.Advanced : LevelEnum.Initial,
+          endDate: endDate,
         };
       }),
     );
   }, [events]);
 
   const [cards, setCards] = useState<ReactNode[]>([]);
-  const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
+  const [filter, setFilter] = useState<"all" | "Initial" | "Advanced" | "Past">(
+    "all",
+  );
 
   useEffect(() => {
     setCards(AllCards?.map((x) => x.comp) ?? []);
@@ -209,6 +223,7 @@ export function UpcomingEvents({
           return true;
         else if (filter == "Initial" && x.level == LevelEnum.Initial)
           return true;
+        else if (filter == "Past") return x.endDate.getTime() < Date.now();
         return false;
       }).map((x) => x.comp),
     );
