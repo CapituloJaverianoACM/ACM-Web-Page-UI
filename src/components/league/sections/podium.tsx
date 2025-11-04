@@ -4,7 +4,11 @@ import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import { useEffect, useState } from "react";
 
-export function Podium() {
+/**
+ * Muestra a los 3 mejores estudiantes de la liga
+ * @param updateInterval segundos para actualizar la información, 0 para no actualizar la información
+ */
+export function Podium({ updateInterval = 0 }: { updateInterval?: number }) {
   const [loading, setloading] = useState<boolean>(true);
 
   const [students, setStudents] = useState<
@@ -38,7 +42,16 @@ export function Podium() {
   useEffect(() => {
     handlerGetPodiumStudents();
     setloading(false);
-  }, []);
+
+    if (updateInterval > 0) {
+      const interval = setInterval(() => {
+        console.log("actualizado");
+        handlerGetPodiumStudents();
+      }, updateInterval * 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [updateInterval]);
 
   useEffect(() => {
     setSortedStudents(() => {
@@ -74,7 +87,7 @@ export function Podium() {
                   <PodiumContainer.Step
                     showUserInfo
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_0.2)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.5)]"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
                     className="border-[rgb(var(--azul-electrico-rgb)_/_0.2)] border-1"
                     student={{
                       order: s.order,
@@ -105,8 +118,7 @@ export function Podium() {
                     showCrown
                     showAvatar
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_0.2)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.5)]"
-                    className="border-[rgb(var(--azul-electrico-rgb)_/_0.2)] border-1"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
                     student={s}
                   ></PodiumContainer.Step>
                 ),
