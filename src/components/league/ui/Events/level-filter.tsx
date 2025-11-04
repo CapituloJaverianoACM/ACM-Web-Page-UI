@@ -4,16 +4,21 @@ export const LevelFilter = ({
   filter,
   setFilter,
 }: {
-  filter: "Initial" | "all" | "Advanced";
-  setFilter: Dispatch<SetStateAction<"Initial" | "all" | "Advanced">>;
+  filter: "Initial" | "all" | "Advanced" | "Past";
+  setFilter: Dispatch<SetStateAction<"Initial" | "all" | "Advanced" | "Past">>;
 }) => {
   const texts = {
     Initial: "Inicial",
     all: "Todos",
     Advanced: "Avanzado",
+    Past: "Pasados",
   };
 
-  const LevelButton = ({ f }: { f: "Initial" | "all" | "Advanced" }) => {
+  const LevelButton = ({
+    f,
+  }: {
+    f: "Initial" | "all" | "Advanced" | "Past";
+  }) => {
     return (
       <div
         onClick={() => setFilter(f)}
@@ -29,6 +34,7 @@ export const LevelFilter = ({
       <LevelButton f={"all"} />
       <LevelButton f={"Initial"} />
       <LevelButton f={"Advanced"} />
+      <LevelButton f={"Past"} />
     </div>
   );
 };
