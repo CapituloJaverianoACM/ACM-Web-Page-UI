@@ -33,6 +33,16 @@ export const getUser = async (): Promise<User | null> => {
   return data.user;
 };
 
+export const getAccessToken = async (): Promise<string | null> => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data?.session?.access_token) {
+    return null;
+  }
+  return data.session.access_token;
+};
+
 export const logout = async (): Promise<void> => {
   const supabase = await createClient();
   await supabase.auth.signOut();

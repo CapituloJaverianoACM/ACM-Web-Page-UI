@@ -1,4 +1,7 @@
+"use server";
+
 import { Student } from "@/models/student.model";
+import { getAccessToken } from "./supabase.controller";
 
 export async function getStudents() {
   const res = await fetch(
@@ -94,12 +97,20 @@ export async function updateStudent(
   id: number,
   student: Partial<Student>,
 ): Promise<Student> {
+  const token = await getAccessToken();
+
+  if (!token) {
+    throw new Error("No se pudo obtener el token de autenticación");
+  }
+
   const res = await fetch(
     new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        "acm-auth-signed-supabase": "true",
       },
       body: JSON.stringify(student),
     },

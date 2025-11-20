@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import MainNavbar from "@/components/shared/main-navbar";
 import Footer from "@/components/shared/footer";
@@ -111,12 +110,9 @@ export default function ProfilePage() {
     );
   }, [contests]);
 
-  function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setAvatarUrl(reader.result as string);
-    reader.readAsDataURL(file);
+  function handleAvatarUrlChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const url = e.target.value.trim();
+    setAvatarUrl(url || null);
   }
 
   function handleEditing() {
@@ -127,7 +123,7 @@ export default function ProfilePage() {
   }
 
   async function handleSave() {
-    if (!student?.id) {
+    if (!student?.id || !user?.id) {
       alert("Error: No se puede actualizar el perfil sin un estudiante válido");
       return;
     }
@@ -139,15 +135,17 @@ export default function ProfilePage() {
         surname,
         avatar: avatarUrl,
       };
-      const newStudent = await updateStudent(
-        Number(student.id),
-        updatedStudent,
-      );
-      if (newStudent instanceof Error) {
-        alert("Error al actualizar el perfil: " + newStudent.message);
-        return;
+
+      await updateStudent(Number(student.id), updatedStudent);
+
+      const refreshedStudent = await getStudentBySupabaseId(user.id);
+      if (refreshedStudent) {
+        setStudent(refreshedStudent);
+        setName(refreshedStudent.name || "");
+        setSurname(refreshedStudent.surname || "");
+        setAvatarUrl(refreshedStudent.avatar || null);
       }
-      setStudent(newStudent);
+
       setIsEditing(false);
     } catch (error) {
       alert("Error al actualizar el perfil: " + error);
@@ -235,30 +233,40 @@ export default function ProfilePage() {
                 {/* Avatar editable */}
                 <div className="flex flex-col items-center md:w-1/3">
                   <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-[--azul-niebla] dark:ring-blue-900">
-                    {student?.avatar ? (
-                      <Image
-                        src={student.avatar}
+                    {(isEditing ? avatarUrl : student?.avatar) ? (
+                      <img
+                        src={isEditing ? avatarUrl : student?.avatar}
                         alt="Avatar"
-                        fill
-                        className="object-cover"
+                        className="w-full h-full object-cover"
+                        onError={() => {
+                          // Si la imagen falla al cargar, mostrar placeholder
+                          if (isEditing) {
+                            setAvatarUrl(null);
+                          }
+                        }}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[--azul-electrico] to-[--azul-crayon] text-white text-3xl font-bold">
-                        {name?.[0]?.toUpperCase()}
+                        {name?.[0]?.toUpperCase() ||
+                          student?.name?.[0]?.toUpperCase() ||
+                          "U"}
                       </div>
                     )}
                   </div>
                   {isEditing && (
-                    <div className="w-full flex justify-center mt-4">
-                      <label className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[--azul-niebla] dark:bg-blue-900 text-[--azul-electrico] dark:text-blue-200 cursor-pointer text-sm">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleAvatarChange}
-                        />
-                        Subir avatar
-                      </label>
+                    <div className="w-full mt-4 space-y-2">
+                      <input
+                        type="url"
+                        value={avatarUrl || ""}
+                        onChange={handleAvatarUrlChange}
+                        placeholder="https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg?nii=t"
+                        className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico] text-sm"
+                      />
+                      {avatarUrl && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                          La imagen se previsualizará arriba
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
