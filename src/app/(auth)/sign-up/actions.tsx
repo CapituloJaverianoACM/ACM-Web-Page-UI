@@ -6,10 +6,8 @@ const checkImage = async (url: string) => {
   let blob_image = null;
   try {
     const im = await fetch(url);
-    console.log(im);
     blob_image = await im.blob();
-    console.log(blob_image);
-  } catch (e) {
+  } catch {
     throw new Error("Image isn't valid");
   }
 
