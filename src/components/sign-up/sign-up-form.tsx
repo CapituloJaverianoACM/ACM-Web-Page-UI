@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
@@ -19,7 +17,14 @@ export function SignUpForm() {
     e.preventDefault();
 
     setLoading(true);
-    const { error } = await signup(name, surname, email, password, avatar_url);
+    const form_data = new FormData();
+    form_data.set("name", name);
+    form_data.set("surname", surname);
+    form_data.set("email", email);
+    form_data.set("password", password);
+    form_data.set("avatar_url", avatar_url);
+
+    const { error } = await signup(form_data);
     if (error) {
       setError(error);
       setLoading(false);
