@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [student, setStudent] = useState<Student>(null);
+  const [student, setStudent] = useState<Student | null>(null);
   const [loadingStudent, setLoadingStudent] = useState(true);
   const [contests, setContests] = useState<Contest[]>([]);
   const [loadingContests, setLoadingContests] = useState(true);
@@ -54,12 +54,15 @@ export default function ProfilePage() {
     const fetchStudent = async () => {
       try {
         setLoadingStudent(true);
-        if (user) {
-          const fetchedStudent = await getStudentBySupabaseId(user?.id);
+        if (user?.id) {
+          const fetchedStudent = await getStudentBySupabaseId(user.id);
           setStudent(fetchedStudent);
+        } else {
+          setStudent(null);
         }
       } catch (error) {
         console.error("Error al cargar el estudiante:", error);
+        setStudent(null);
       } finally {
         setLoadingStudent(false);
       }
@@ -67,8 +70,11 @@ export default function ProfilePage() {
 
     if (user) {
       fetchStudent();
+    } else {
+      setStudent(null);
+      setLoadingStudent(false);
     }
-  }, [user]); // Ahora depende de "user"
+  }, [user]);
 
   useEffect(() => {
     const fetchContests = async () => {

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  DialogPortal,
 } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 interface AvatarMenuProps {
   avatarUrl: string;
@@ -15,18 +18,54 @@ interface AvatarMenuProps {
 
 export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ top: 0, right: 0 });
+  const router = useRouter();
+  const supabase = createClient();
 
   avatarUrl =
     avatarUrl ||
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F009%2F292%2F244%2Fnon_2x%2Fdefault-avatar-icon-of-social-media-user-vector.jpg&f=1&nofb=1&ipt=3497eab29c4558bc00f4140ab8dbd34da0d03f3b01c0bb2c77019968e3e23a55";
   userName = userName || "Usuario";
 
+  useEffect(() => {
+    if (isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + 8,
+        right: window.innerWidth - rect.right,
+      });
+    }
+  }, [isOpen]);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      setIsOpen(false);
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error("Error al cerrar sesión:", error);
+      }
+
+      router.push("/log-in");
+      router.refresh();
+    } catch (error) {
+      console.error("Error inesperado al cerrar sesión:", error);
+      router.push("/log-in");
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
     <div className="relative">
       {/* Avatar de usuario */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <div className="cursor-pointer">
+          <div ref={triggerRef} className="cursor-pointer">
             <img
               src={avatarUrl}
               alt="User Avatar"
@@ -36,35 +75,53 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
         </DialogTrigger>
 
         {/* Menú Desplegable */}
-        <DialogContent className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-300 z-50">
-          {/* Título de Dialog, solo accesible */}
-          <VisuallyHidden>
-            <DialogTitle>Menú del Usuario</DialogTitle>
-          </VisuallyHidden>
+        <DialogPortal>
+          <DialogContent
+            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-300 dark:border-gray-700 z-[100] p-0"
+            style={{
+              top: `${position.top}px`,
+              right: `${position.right}px`,
+              transform: "none",
+              left: "auto",
+              bottom: "auto",
+            }}
+            onInteractOutside={(e) => {
+              // Permitir que se cierre al hacer clic fuera
+            }}
+          >
+            {/* Título de Dialog, solo accesible */}
+            <VisuallyHidden>
+              <DialogTitle>Menú del Usuario</DialogTitle>
+            </VisuallyHidden>
 
-          <div className="py-2">
-            <div className="flex items-center px-4 py-2">
-              <img
-                src={avatarUrl}
-                alt="Avatar"
-                className="h-8 w-8 rounded-full mr-2"
-              />
-              <span className="text-sm">{userName}</span>
+            <div className="py-2">
+              <div className="flex items-center px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                <img
+                  src={avatarUrl}
+                  alt="Avatar"
+                  className="h-8 w-8 rounded-full mr-2"
+                />
+                <span className="text-sm text-gray-900 dark:text-gray-100">
+                  {userName}
+                </span>
+              </div>
+              <Link
+                href="/profile"
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 block no-underline"
+                onClick={() => setIsOpen(false)}
+              >
+                Perfil
+              </Link>
+              <button
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[--azul-crayon] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
+              </button>
             </div>
-            <Link
-              href="/profile"
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-            >
-              Perfil
-            </Link>
-            <button
-              onClick={() => {}}
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-            >
-              Cerrar sesión
-            </button>
-          </div>
-        </DialogContent>
+          </DialogContent>
+        </DialogPortal>
       </Dialog>
     </div>
   );

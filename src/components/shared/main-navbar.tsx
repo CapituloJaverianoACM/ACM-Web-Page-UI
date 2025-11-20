@@ -26,10 +26,26 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
   useEffect(() => {
     const checkLogged = async () => {
-      const user = await getUser();
-      const student = await getStudentBySupabaseId(user?.id);
-      setIsLogged(user != null);
-      setStudent(student);
+      try {
+        const user = await getUser();
+        setIsLogged(user != null);
+
+        if (user?.id) {
+          try {
+            const student = await getStudentBySupabaseId(user.id);
+            setStudent(student);
+          } catch (error) {
+            console.error("Error al obtener el estudiante:", error);
+            setStudent(null);
+          }
+        } else {
+          setStudent(null);
+        }
+      } catch (error) {
+        console.error("Error al verificar el usuario:", error);
+        setIsLogged(false);
+        setStudent(null);
+      }
     };
     checkLogged();
   }, []);

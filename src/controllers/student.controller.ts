@@ -27,18 +27,32 @@ export async function getStudentById(id: number): Promise<Student> {
   return Array.isArray(json.data) ? json.data[0] : json.data;
 }
 
-export async function getStudentBySupabaseId(id: string): Promise<Student> {
-  const res = await fetch(
-    new URL(`/students/supabase/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
-
-  if (!res.ok) {
-    throw new Error("Error al obtener el estudiante");
+export async function getStudentBySupabaseId(
+  id: string,
+): Promise<Student | null> {
+  if (!id) {
+    return null;
   }
 
-  const json = await res.json();
+  try {
+    const res = await fetch(
+      new URL(`/students/supabase/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
+    );
 
-  return Array.isArray(json.data) ? json.data[0] : json.data;
+    if (!res.ok) {
+      // Si el estudiante no existe o hay un error, retornar null en lugar de lanzar error
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`Error al obtener el estudiante: ${res.statusText}`);
+    }
+
+    const json = await res.json();
+    return Array.isArray(json.data) ? json.data[0] : json.data;
+  } catch (error) {
+    console.error("Error en getStudentBySupabaseId:", error);
+    return null;
+  }
 }
 
 export async function getPodiumStudents(): Promise<Student[]> {
