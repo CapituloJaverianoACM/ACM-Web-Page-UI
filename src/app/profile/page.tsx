@@ -163,179 +163,219 @@ export default function ProfilePage() {
 
         <div className="space-y-6">
           {/* Información básica */}
-          <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
-            <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700 flex items-center justify-start">
-              <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">
-                Información básica
-              </p>
-              <div className="flex items-center gap-2 ml-auto">
-                <button
-                  onClick={() => handleEditing()}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors flex items-center justify-center"
-                >
-                  <div className="flex items-center justify-center w-full h-full mx-auto">
-                    {isEditing ? (
-                      <i className="fi fi-rr-cross w-4 h-4 m-0.5"></i>
+          {loadingStudent ? (
+            <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
+              <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700">
+                <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              </div>
+              <div className="p-6 flex flex-col md:flex-row gap-6">
+                <div className="flex flex-col items-center md:w-1/3">
+                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                </div>
+                <div className="md:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2"></div>
+                    <div className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  </div>
+                  <div>
+                    <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2"></div>
+                    <div className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2"></div>
+                    <div className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="px-6 pb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl border border-gray-200 dark:border-gray-700 p-4"
+                    >
+                      <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2"></div>
+                      <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ) : (
+            <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
+              <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700 flex items-center justify-start">
+                <p className="text-xl font-semibold text-[--azul-noche] dark:text-white">
+                  Información básica
+                </p>
+                <div className="flex items-center gap-2 ml-auto">
+                  <button
+                    onClick={() => handleEditing()}
+                    className="px-4 py-2 rounded-lg text-sm font-medium bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white transition-colors flex items-center justify-center"
+                  >
+                    <div className="flex items-center justify-center w-full h-full mx-auto">
+                      {isEditing ? (
+                        <i className="fi fi-rr-cross w-4 h-4 m-0.5"></i>
+                      ) : (
+                        <i className="fi fi-rr-pencil w-4 h-4 m-0.5"></i>
+                      )}
+                    </div>
+                  </button>
+                  <Link
+                    href="/auth/change-password"
+                    className="no-underline inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors bg-[--azul-niebla] hover:bg-[--azul-crayon] dark:bg-gray-700 dark:hover:bg-gray-600 text-[--azul-noche] dark:text-gray-100 hover:text-white px-4 py-2 text-sm"
+                  >
+                    <i className="fi fi-rr-lock w-4 h-4 m-0.5"></i>
+                    <span className="hidden sm:inline">Cambiar contraseña</span>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="p-6 flex flex-col md:flex-row gap-6">
+                {/* Avatar editable */}
+                <div className="flex flex-col items-center md:w-1/3">
+                  <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-[--azul-niebla] dark:ring-blue-900">
+                    {student?.avatar ? (
+                      <Image
+                        src={student.avatar}
+                        alt="Avatar"
+                        fill
+                        className="object-cover"
+                      />
                     ) : (
-                      <i className="fi fi-rr-pencil w-4 h-4 m-0.5"></i>
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[--azul-electrico] to-[--azul-crayon] text-white text-3xl font-bold">
+                        {name?.[0]?.toUpperCase()}
+                      </div>
                     )}
                   </div>
-                </button>
-                <Link
-                  href="/auth/change-password"
-                  className="no-underline inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors bg-[--azul-niebla] hover:bg-[--azul-crayon] dark:bg-gray-700 dark:hover:bg-gray-600 text-[--azul-noche] dark:text-gray-100 hover:text-white px-4 py-2 text-sm"
-                >
-                  <i className="fi fi-rr-lock w-4 h-4 m-0.5"></i>
-                  <span className="hidden sm:inline">Cambiar contraseña</span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="p-6 flex flex-col md:flex-row gap-6">
-              {/* Avatar editable */}
-              <div className="flex flex-col items-center md:w-1/3">
-                <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-[--azul-niebla] dark:ring-blue-900">
-                  {student?.avatar ? (
-                    <Image
-                      src={student.avatar}
-                      alt="Avatar"
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[--azul-electrico] to-[--azul-crayon] text-white text-3xl font-bold">
-                      {name?.[0]?.toUpperCase()}
+                  {isEditing && (
+                    <div className="w-full flex justify-center mt-4">
+                      <label className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[--azul-niebla] dark:bg-blue-900 text-[--azul-electrico] dark:text-blue-200 cursor-pointer text-sm">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleAvatarChange}
+                        />
+                        Subir avatar
+                      </label>
                     </div>
                   )}
                 </div>
-                {isEditing && (
-                  <div className="w-full flex justify-center mt-4">
-                    <label className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[--azul-niebla] dark:bg-blue-900 text-[--azul-electrico] dark:text-blue-200 cursor-pointer text-sm">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleAvatarChange}
-                      />
-                      Subir avatar
+
+                {/* Campos editables */}
+                <div className="md:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
+                      Nombres
                     </label>
+                    {isEditing ? (
+                      <input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
+                      />
+                    ) : (
+                      <p className="text-[--azul-noche] dark:text-white font-medium">
+                        {student?.name}
+                      </p>
+                    )}
                   </div>
-                )}
-              </div>
-
-              {/* Campos editables */}
-              <div className="md:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
-                    Nombres
-                  </label>
-                  {isEditing ? (
-                    <input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
-                    />
-                  ) : (
-                    <p className="text-[--azul-noche] dark:text-white font-medium">
-                      {student?.name}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
-                    Apellidos
-                  </label>
-                  {isEditing ? (
-                    <input
-                      value={surname}
-                      onChange={(e) => setSurname(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
-                    />
-                  ) : (
-                    <p className="text-[--azul-noche] dark:text-white font-medium">
-                      {student?.surname}
-                    </p>
-                  )}
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
-                    Correo
-                  </label>
-                  <p className="text-[--azul-noche] dark:text-white font-medium">
-                    {email}
-                  </p>
-                </div>
-
-                {isEditing && (
+                  <div>
+                    <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
+                      Apellidos
+                    </label>
+                    {isEditing ? (
+                      <input
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
+                      />
+                    ) : (
+                      <p className="text-[--azul-noche] dark:text-white font-medium">
+                        {student?.surname}
+                      </p>
+                    )}
+                  </div>
                   <div className="sm:col-span-2">
-                    <button
-                      onClick={handleSave}
-                      className="w-full md:w-auto px-5 py-2.5 rounded-lg bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white font-semibold"
-                    >
-                      Guardar cambios
-                    </button>
+                    <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
+                      Correo
+                    </label>
+                    <p className="text-[--azul-noche] dark:text-white font-medium">
+                      {email}
+                    </p>
                   </div>
-                )}
-              </div>
-            </div>
 
-            {/* Estadísticas creativas */}
-            <div className="px-6 pb-6">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="relative overflow-hidden rounded-xl border border-blue-200 dark:border-gray-700 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-indigo-900/20 p-4">
-                  <div className="text-xs font-semibold text-blue-600 dark:text-blue-300">
-                    Participaciones
-                  </div>
-                  <div className="mt-1 text-3xl font-extrabold text-blue-800 dark:text-blue-100">
-                    {totalParticipations}
-                  </div>
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-blue-200/60 dark:bg-blue-800/40" />
-                </div>
-                <div className="relative overflow-hidden rounded-xl border border-emerald-200 dark:border-gray-700 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-teal-900/20 p-4">
-                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-300">
-                    Competencias ganadas
-                  </div>
-                  <div className="mt-1 text-3xl font-extrabold text-emerald-800 dark:text-emerald-100">
-                    {totalWins}
-                  </div>
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-emerald-200/60 dark:bg-emerald-800/40" />
-                </div>
-                <div
-                  className={`relative overflow-hidden rounded-xl border p-4 ${
-                    level === "Advanced"
-                      ? "border-purple-200 dark:border-gray-700 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-violet-900/20"
-                      : "border-amber-200 dark:border-gray-700 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-rose-900/20"
-                  }`}
-                >
-                  <div
-                    className={`text-xs font-semibold ${
-                      level === "Advanced"
-                        ? "text-purple-600 dark:text-purple-300"
-                        : "text-amber-600 dark:text-amber-300"
-                    }`}
-                  >
-                    Nivel
-                  </div>
-                  <div
-                    className={`mt-1 text-3xl font-extrabold ${
-                      level === "Advanced"
-                        ? "text-purple-800 dark:text-purple-100"
-                        : "text-amber-800 dark:text-amber-100"
-                    }`}
-                  >
-                    {level}
-                  </div>
-                  <div
-                    className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full ${
-                      level === "Advanced"
-                        ? "bg-purple-200/60 dark:bg-purple-800/40"
-                        : "bg-amber-200/60 dark:bg-amber-800/40"
-                    }`}
-                  />
+                  {isEditing && (
+                    <div className="sm:col-span-2">
+                      <button
+                        onClick={handleSave}
+                        className="w-full md:w-auto px-5 py-2.5 rounded-lg bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white font-semibold"
+                      >
+                        Guardar cambios
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          </section>
+
+              {/* Estadísticas creativas */}
+              <div className="px-6 pb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="relative overflow-hidden rounded-xl border border-blue-200 dark:border-gray-700 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-indigo-900/20 p-4">
+                    <div className="text-xs font-semibold text-blue-600 dark:text-blue-300">
+                      Participaciones
+                    </div>
+                    <div className="mt-1 text-3xl font-extrabold text-blue-800 dark:text-blue-100">
+                      {totalParticipations}
+                    </div>
+                    <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-blue-200/60 dark:bg-blue-800/40" />
+                  </div>
+                  <div className="relative overflow-hidden rounded-xl border border-emerald-200 dark:border-gray-700 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-teal-900/20 p-4">
+                    <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-300">
+                      Competencias ganadas
+                    </div>
+                    <div className="mt-1 text-3xl font-extrabold text-emerald-800 dark:text-emerald-100">
+                      {totalWins}
+                    </div>
+                    <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-emerald-200/60 dark:bg-emerald-800/40" />
+                  </div>
+                  <div
+                    className={`relative overflow-hidden rounded-xl border p-4 ${
+                      level === "Advanced"
+                        ? "border-purple-200 dark:border-gray-700 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-violet-900/20"
+                        : "border-amber-200 dark:border-gray-700 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-rose-900/20"
+                    }`}
+                  >
+                    <div
+                      className={`text-xs font-semibold ${
+                        level === "Advanced"
+                          ? "text-purple-600 dark:text-purple-300"
+                          : "text-amber-600 dark:text-amber-300"
+                      }`}
+                    >
+                      Nivel
+                    </div>
+                    <div
+                      className={`mt-1 text-3xl font-extrabold ${
+                        level === "Advanced"
+                          ? "text-purple-800 dark:text-purple-100"
+                          : "text-amber-800 dark:text-amber-100"
+                      }`}
+                    >
+                      {level}
+                    </div>
+                    <div
+                      className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full ${
+                        level === "Advanced"
+                          ? "bg-purple-200/60 dark:bg-purple-800/40"
+                          : "bg-amber-200/60 dark:bg-amber-800/40"
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* Historial de competencias */}
           <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
