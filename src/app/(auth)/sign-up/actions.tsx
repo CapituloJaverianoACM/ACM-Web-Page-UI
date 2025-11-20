@@ -2,13 +2,27 @@
 
 import { createClient } from "@/lib/supabase/server";
 
-export async function signup(
-  name: string,
-  surname: string,
-  email: string,
-  password: string,
-  avatar_url: string,
-) {
+const checkImage = async (url: string) => {
+  let blob_image = null;
+  try {
+    const im = await fetch(url);
+    console.log(im);
+    blob_image = await im.blob();
+    console.log(blob_image);
+  } catch (e) {
+    throw new Error("Image isn't valid");
+  }
+
+  return blob_image.type.startsWith("image/");
+};
+
+export async function signup(form_data: FormData) {
+  const name = form_data.get("name").toString();
+  const surname = form_data.get("surname").toString();
+  const email = form_data.get("email").toString();
+  const password = form_data.get("password").toString();
+  const avatar_url = form_data.get("avatar_url")?.toString();
+
   try {
     if (!name || !surname || !email || !password) {
       throw new Error("Por favor, completa todos los campos.");
@@ -19,13 +33,7 @@ export async function signup(
       );
     }
     if (avatar_url) {
-      const img = new Image();
-      const isValidImage = new Promise((resolve) => {
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = avatar_url;
-      });
-      const validImage = await isValidImage;
+      const validImage = await checkImage(avatar_url);
       if (!validImage) {
         throw new Error("El URL del avatar no apunta a una imagen válida.");
       }
