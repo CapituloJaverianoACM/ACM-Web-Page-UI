@@ -80,21 +80,27 @@ export default function ProfilePage() {
     const fetchContests = async () => {
       try {
         setLoadingContests(true);
-        if (student) {
+        if (student?.id) {
           const fetchedContests = await getContestsByStudentId(
-            Number(student?.id),
+            Number(student.id),
           );
-          setContests(fetchedContests);
+          setContests(fetchedContests || []);
+        } else {
+          setContests([]);
         }
       } catch (error) {
         console.error("Error al cargar contests:", error);
+        setContests([]);
       } finally {
         setLoadingContests(false);
       }
     };
 
-    if (student) {
+    if (student?.id) {
       fetchContests();
+    } else {
+      setContests([]);
+      setLoadingContests(false);
     }
   }, [student]);
 
@@ -120,19 +126,31 @@ export default function ProfilePage() {
   }
 
   async function handleSave() {
-    const updatedStudent = {
-      ...student,
-      name,
-      surname,
-      avatar: avatarUrl,
-    };
-    const newStudent = await updateStudent(STUDENT_ID, updatedStudent);
-    if (newStudent instanceof Error) {
-      alert("Error al actualizar el perfil: " + newStudent.message);
+    if (!student?.id) {
+      alert("Error: No se puede actualizar el perfil sin un estudiante válido");
       return;
     }
-    setStudent(newStudent);
-    setIsEditing(false);
+
+    try {
+      const updatedStudent = {
+        ...student,
+        name,
+        surname,
+        avatar: avatarUrl,
+      };
+      const newStudent = await updateStudent(
+        Number(student.id),
+        updatedStudent,
+      );
+      if (newStudent instanceof Error) {
+        alert("Error al actualizar el perfil: " + newStudent.message);
+        return;
+      }
+      setStudent(newStudent);
+      setIsEditing(false);
+    } catch (error) {
+      alert("Error al actualizar el perfil. Por favor, intenta nuevamente.");
+    }
   }
 
   return (
@@ -331,6 +349,17 @@ export default function ProfilePage() {
                 <li className="flex items-center justify-center py-8">
                   <div className="text-[--azul-ultramar] dark:text-gray-400">
                     Cargando competencias...
+                  </div>
+                </li>
+              ) : sortedContests.length === 0 ? (
+                <li className="flex items-center justify-center py-8">
+                  <div className="text-center">
+                    <p className="text-[--azul-ultramar] dark:text-gray-400 text-base mb-2">
+                      No tienes competencias registradas aún
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                      Cuando participes en una competencia, aparecerá aquí
+                    </p>
                   </div>
                 </li>
               ) : (

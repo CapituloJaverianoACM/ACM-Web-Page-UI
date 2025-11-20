@@ -58,9 +58,23 @@ export async function getContestByIds(
 export async function getContestsByStudentId(
   studentId: number,
 ): Promise<Contest[]> {
-  const participations = await getParticipationsByStudentId(studentId);
-  const contestsIds = participations.map(
-    (participation: Participation) => participation.contest_id,
-  );
-  return getContestByIds(contestsIds);
+  try {
+    const participations = await getParticipationsByStudentId(studentId);
+
+    if (!participations || participations.length === 0) {
+      return [];
+    }
+
+    const contestsIds = participations.map(
+      (participation: Participation) => participation.contest_id,
+    );
+
+    if (!contestsIds || contestsIds.length === 0) {
+      return [];
+    }
+
+    return await getContestByIds(contestsIds);
+  } catch (error) {
+    return [];
+  }
 }

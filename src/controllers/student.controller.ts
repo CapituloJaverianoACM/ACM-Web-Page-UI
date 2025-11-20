@@ -50,7 +50,6 @@ export async function getStudentBySupabaseId(
     const json = await res.json();
     return Array.isArray(json.data) ? json.data[0] : json.data;
   } catch (error) {
-    console.error("Error en getStudentBySupabaseId:", error);
     return null;
   }
 }
