@@ -24,9 +24,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const router = useRouter();
   const supabase = createClient();
 
-  avatarUrl =
-    avatarUrl ||
-    "https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg?nii=t";
+  avatarUrl = avatarUrl || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   userName = userName || "Usuario";
 
   useEffect(() => {
