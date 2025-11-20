@@ -133,7 +133,7 @@ export function UpcomingEvents({
         return {
           comp: (
             <EventCard.Container
-              key={event._id}
+              key={event.id}
               className="h-full justify-end !w-[20rem] xl:!w-[30rem]"
             >
               {event.picture ? (
