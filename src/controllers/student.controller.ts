@@ -50,7 +50,7 @@ export async function getStudentBySupabaseId(
     const json = await res.json();
     return Array.isArray(json.data) ? json.data[0] : json.data;
   } catch (error) {
-    return null;
+    throw new Error("Error al obtener el estudiante: " + error.message);
   }
 }
 

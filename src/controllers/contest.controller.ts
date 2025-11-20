@@ -75,6 +75,6 @@ export async function getContestsByStudentId(
 
     return await getContestByIds(contestsIds);
   } catch (error) {
-    return [];
+    throw new Error("Error al obtener contests: " + error.message);
   }
 }

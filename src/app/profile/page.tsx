@@ -13,6 +13,7 @@ import {
 } from "@/controllers/student.controller";
 import { Student } from "@/models/student.model";
 import { getUser } from "@/controllers/supabase.controller";
+import { LevelEnum } from "@/models/level.enum";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
@@ -34,7 +35,7 @@ export default function ProfilePage() {
 
   const totalParticipations = student?.matches_count || 0;
   const totalWins = student?.victory_count || 0;
-  const level = student?.level?.toString() || "Initial";
+  const level = student?.level?.toString() || LevelEnum.Initial.toString();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -43,7 +44,7 @@ export default function ProfilePage() {
         setUser(fetchedUser);
         setEmail(fetchedUser?.email || "");
       } catch (error) {
-        console.error("Error al cargar usuario:", error);
+        alert("Error al cargar usuario: " + error);
       }
     };
 
@@ -149,7 +150,7 @@ export default function ProfilePage() {
       setStudent(newStudent);
       setIsEditing(false);
     } catch (error) {
-      alert("Error al actualizar el perfil. Por favor, intenta nuevamente.");
+      alert("Error al actualizar el perfil: " + error);
     }
   }
 

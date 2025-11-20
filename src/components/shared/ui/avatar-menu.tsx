@@ -87,6 +87,9 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
             }}
             onInteractOutside={(e) => {
               // Permitir que se cierre al hacer clic fuera
+              e.preventDefault();
+              e.stopPropagation();
+              setIsOpen(false);
             }}
           >
             {/* Título de Dialog, solo accesible */}

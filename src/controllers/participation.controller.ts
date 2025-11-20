@@ -22,6 +22,6 @@ export async function getParticipationsByStudentId(
     const json = await res.json();
     return json.data || [];
   } catch (error) {
-    return [];
+    throw new Error("Error al obtener participaciones: " + error.message);
   }
 }
