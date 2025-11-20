@@ -24,9 +24,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const router = useRouter();
   const supabase = createClient();
 
-  avatarUrl =
-    avatarUrl ||
-    "https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg?nii=t";
+  avatarUrl = avatarUrl || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   userName = userName || "Usuario";
 
   useEffect(() => {
@@ -77,13 +75,17 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
         {/* Menú Desplegable */}
         <DialogPortal>
           <DialogContent
-            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-300 dark:border-gray-700 z-[100] p-0"
+            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-300 dark:border-gray-700 z-[100] p-0 overflow-hidden"
             style={{
               top: `${position.top}px`,
               right: `${position.right}px`,
               transform: "none",
               left: "auto",
               bottom: "auto",
+            }}
+            onOpenAutoFocus={(e) => {
+              // Prevenir el auto-focus cuando se abre el dialog
+              e.preventDefault();
             }}
             onInteractOutside={(e) => {
               // Permitir que se cierre al hacer clic fuera
@@ -97,7 +99,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
               <DialogTitle>Menú del Usuario</DialogTitle>
             </VisuallyHidden>
 
-            <div className="py-2">
+            <div>
               <div className="flex items-center px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                 <img
                   src={avatarUrl}
@@ -118,7 +120,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[--azul-crayon] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[--azul-crayon] disabled:opacity-50 disabled:cursor-not-allowed rounded-b-lg"
               >
                 {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
               </button>
