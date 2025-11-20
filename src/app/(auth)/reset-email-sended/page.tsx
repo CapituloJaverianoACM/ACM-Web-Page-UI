@@ -7,14 +7,15 @@ const ResetEmailSended: React.FC = () => {
   const email = searchParams.get("email") || "No hay email, bug?";
   return (
     <SimpleConfettiLayout title={"¡Bravo!"}>
-      <p className="text-center">
+      <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-4">
         Si tienes un correo registrado en{" "}
-        <span className="text-blue-700">{email}</span> vas a recibir un email
-        para reestablecer tu contraseña.
-        <br />
-        <span className="text-[17px] text-center font-semibold">
-          ¡Dale click al logo de ACM para volver al home!
-        </span>
+        <span className="text-[var(--azul-electrico)] font-semibold">
+          {email}
+        </span>{" "}
+        vas a recibir un email para reestablecer tu contraseña.
+      </p>
+      <p className="text-center text-base text-[var(--azul-ultramar)] dark:text-gray-300 font-semibold">
+        ¡Dale click al logo de ACM para volver al home!
       </p>
     </SimpleConfettiLayout>
   );

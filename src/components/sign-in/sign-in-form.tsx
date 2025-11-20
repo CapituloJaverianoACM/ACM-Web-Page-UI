@@ -39,7 +39,6 @@ export function SignInForm() {
           id="email"
           type="email"
           autoComplete="email"
-          className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -52,23 +51,27 @@ export function SignInForm() {
         >
           Contraseña
         </label>
-        <div className="flex items-center gap-5">
-          <div className="w-3/4">
-            <Input
-              id="password"
-              type={passwordVisibility ? "text" : "password"}
-              className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-white dark:bg-black text-base"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <span
-            className="cursor-pointer w-1/4"
+        <div className="relative w-full">
+          <Input
+            id="password"
+            type={passwordVisibility ? "text" : "password"}
+            autoComplete="current-password"
+            className="pr-10 w-full"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
             onClick={() => setPasswordVisibility((prev) => !prev)}
           >
-            {passwordVisibility ? <Eye /> : <EyeClosed />}
-          </span>
+            {passwordVisibility ? (
+              <Eye className="h-5 w-5" />
+            ) : (
+              <EyeClosed className="h-5 w-5" />
+            )}
+          </button>
         </div>
       </div>
       {error && <span className="text-red-600 text-sm">{error}</span>}
