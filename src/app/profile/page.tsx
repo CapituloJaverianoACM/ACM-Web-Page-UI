@@ -259,7 +259,7 @@ export default function ProfilePage() {
                         type="url"
                         value={avatarUrl || ""}
                         onChange={handleAvatarUrlChange}
-                        placeholder="https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg?nii=t"
+                        placeholder="www.example.com/avatar.png"
                         className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico] text-sm"
                       />
                       {avatarUrl && (

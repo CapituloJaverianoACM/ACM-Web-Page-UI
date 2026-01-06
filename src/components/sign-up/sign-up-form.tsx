@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
+import { Eye, EyeClosed } from "lucide-react";
 import { signup } from "@/app/(auth)/sign-up/actions";
 import { redirect } from "next/navigation";
 
@@ -12,6 +13,7 @@ export function SignUpForm() {
   const [avatar_url, setAvatarUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,14 +90,28 @@ export function SignUpForm() {
         >
           Contraseña
         </label>
-        <Input
-          id="password"
-          type="password"
-          autoComplete="new-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="relative w-full">
+          <Input
+            id="password"
+            type={passwordVisibility ? "text" : "password"}
+            autoComplete="new-password"
+            className="pr-10 w-full"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            onClick={() => setPasswordVisibility((prev) => !prev)}
+          >
+            {passwordVisibility ? (
+              <Eye className="h-5 w-5" />
+            ) : (
+              <EyeClosed className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
       <div className="flex flex-col gap-1">
         <label
