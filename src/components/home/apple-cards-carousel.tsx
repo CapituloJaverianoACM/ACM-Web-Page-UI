@@ -204,7 +204,14 @@ export const Card = ({
   const containerRef = useRef<HTMLDivElement>(null);
   // Se quito currentIndex
   const { onCardClose } = useContext(CarouselContext);
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+    onCardClose(index);
+  };
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -223,15 +230,6 @@ export const Card = ({
   }, [open]);
 
   useOutsideClick(containerRef, () => handleClose());
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    onCardClose(index);
-  };
 
   return (
     <>
