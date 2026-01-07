@@ -10,6 +10,8 @@ import { Contest } from "@/models/contest.model";
 import Footer from "@/components/shared/footer";
 import { getContestsWithPictures } from "@/controllers/contest.controller";
 import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { suscribe_leaderboard } from "@/lib/supabase/channel_subscribe";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
@@ -20,6 +22,7 @@ const navLinks = [
     href: "#upcoming-events",
   },
   { key: "podium", label: "Podio", href: "#podium" },
+  { key: "rank", label: "Raking", href: "/rank" },
 ];
 
 export default function LeagueHomePage() {
@@ -31,10 +34,23 @@ export default function LeagueHomePage() {
     })[]
   >([]);
 
+  const [refresh_students, setRefreshStudents] = useState<boolean>(false);
+
   useEffect(() => {
     getContestsWithPictures()
       .then(setContests)
       .catch(() => setContests([]));
+  }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+    const channel = suscribe_leaderboard(supabase, () => {
+      setRefreshStudents((prev) => !prev);
+    });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return (
@@ -43,7 +59,7 @@ export default function LeagueHomePage() {
       <Hero />
       <Rules />
       <UpcomingEvents events={contests} loadingInitialState />
-      <Podium />
+      <Podium refresh_toggle={refresh_students} />
       <Footer />
     </HeroUIProvider>
   );

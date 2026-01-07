@@ -71,18 +71,18 @@ const StudentComponent = ({
  * @param className clases normales de html, se puede agregar tailwind sin problema (a pesar que no sirva el autocompletado a veces)
  * @param student_number cantidad de estudiantes maxima que puede mostrar el ranking
  * @param offset cantidad de estudiantes a ignorar, se implemento para poner arriba el podio
- * @param updateInterval segundos para actualizar la información, 0 para no actualizar la información
+ * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
  */
 const RankingList = ({
   className = "",
   student_number = 20,
   offset = 0,
-  updateInterval = 0,
+  refresh_toggle,
 }: {
   className?: string;
   student_number?: number;
   offset?: number;
-  updateInterval?: number;
+  refresh_toggle: boolean;
 }) => {
   const SKELETON_RANKING_USERS_COUNT = 5;
 
@@ -118,15 +118,7 @@ const RankingList = ({
 
   useEffect(() => {
     handlerGetRankingStudents();
-
-    if (updateInterval > 0) {
-      const interval = setInterval(() => {
-        handlerGetRankingStudents();
-      }, updateInterval * 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [updateInterval]);
+  }, [refresh_toggle]);
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>

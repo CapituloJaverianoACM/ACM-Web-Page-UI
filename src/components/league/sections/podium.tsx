@@ -1,16 +1,14 @@
 import PodiumContainer from "@/components/league/ui/podium/podium-component";
 import { getPodiumStudents } from "@/controllers/student.controller";
-import { createClient } from "@/lib/supabase/client";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import { useEffect, useState } from "react";
 
-const SUPABASE_CHANNEL_RESULTS: string = "topic:results";
-
 /**
  * Muestra a los 3 mejores estudiantes de la liga
+ * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
  */
-export function Podium() {
+export function Podium({ refresh_toggle }: { refresh_toggle: boolean }) {
   const [loading, setloading] = useState<boolean>(true);
 
   const [students, setStudents] = useState<
@@ -45,38 +43,7 @@ export function Podium() {
   useEffect(() => {
     handlerGetPodiumStudents();
     setloading(false);
-
-    const supabase = createClient();
-
-    const channel = supabase
-      .channel(SUPABASE_CHANNEL_RESULTS, { config: { private: false } })
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "results" },
-        () => handlerGetPodiumStudents(),
-      )
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "results" },
-        () => handlerGetPodiumStudents(),
-      )
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "results" },
-        () => handlerGetPodiumStudents(),
-      )
-      .subscribe((status, err) => {
-        if (status === "SUBSCRIBED") {
-          console.log("Conectado a Supabase fafai");
-        } else {
-          console.error(err);
-        }
-      });
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+  }, [refresh_toggle]);
 
   useEffect(() => {
     setSortedStudents(() => {
