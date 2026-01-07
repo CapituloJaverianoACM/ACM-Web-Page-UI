@@ -46,7 +46,7 @@ function AnimatedTooltipComponent({
     springConfig,
   );
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-150, 85]), // Cuidado con esto, esto descuadra los anuncios
+    useTransform(x, [-100, 100], [-150, 75]), // Cuidado con esto, esto descuadra los anuncios
     springConfig,
   );
 
@@ -65,8 +65,6 @@ function AnimatedTooltipComponent({
     const target = event.currentTarget;
     const halfWidth = target.offsetWidth / 2;
     const offsetX = event.nativeEvent.offsetX;
-
-    console.log(offsetX - halfWidth);
 
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);

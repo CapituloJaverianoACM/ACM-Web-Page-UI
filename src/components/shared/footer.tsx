@@ -45,7 +45,7 @@ export default function Footer() {
   const contributorItems = contributors.map((contributor) => ({
     id: contributor.id,
     name: contributor.login,
-    designation: "ACM Member",
+    designation: "ACM Contributor",
     image: contributor.avatar_url,
     html_url: contributor.html_url,
     className: "border-gray-200 hover:border-blue-400",
@@ -80,7 +80,7 @@ export default function Footer() {
             <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
               Capítulo Javeriano
             </span>
-            <h1 className="ml-2 md:text-xl font-semibold text-[--azul-noche] dark:text-white">
+            <h1 className="ml-2 mb-0 md:text-xl font-bold text-[--azul-noche] dark:text-white">
               ACM
             </h1>
           </div>
