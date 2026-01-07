@@ -3,7 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 const SUPABASE_CHANNEL_RESULTS: string = "topic:results";
 
 type SubscriptionCallback = {
-  (): any;
+  (): unknown;
 };
 
 export function suscribe_leaderboard(
