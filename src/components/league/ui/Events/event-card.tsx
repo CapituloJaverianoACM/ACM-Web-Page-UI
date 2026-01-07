@@ -90,7 +90,7 @@ const WrapContainer = (props: {
   return <div className={`flex flex-wrap gap-2 ${className}`}>{children}</div>;
 };
 
-export default {
+const event_card = {
   Container,
   Image,
   Title,
@@ -99,3 +99,5 @@ export default {
   Description,
   WrapContainer,
 };
+
+export default event_card;

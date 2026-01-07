@@ -66,12 +66,23 @@ const StudentComponent = ({
   );
 };
 
+/**
+ * Muestra la información de `student_number` estudiantes
+ * @param className clases normales de html, se puede agregar tailwind sin problema (a pesar que no sirva el autocompletado a veces)
+ * @param student_number cantidad de estudiantes maxima que puede mostrar el ranking
+ * @param offset cantidad de estudiantes a ignorar, se implemento para poner arriba el podio
+ * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
+ */
 const RankingList = ({
   className = "",
   student_number = 20,
+  offset = 0,
+  refresh_toggle,
 }: {
   className?: string;
   student_number?: number;
+  offset?: number;
+  refresh_toggle: boolean;
 }) => {
   const SKELETON_RANKING_USERS_COUNT = 5;
 
@@ -92,7 +103,10 @@ const RankingList = ({
 
   const handlerGetRankingStudents = async () => {
     try {
-      const response = await getRankingStudents({ student_number });
+      const response = await getRankingStudents({
+        student_number: student_number,
+        offset,
+      });
 
       setStudents(response);
     } catch {
@@ -104,21 +118,28 @@ const RankingList = ({
 
   useEffect(() => {
     handlerGetRankingStudents();
-  }, []);
+  }, [refresh_toggle]);
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {students.map((s, i) => {
         return (
-          <StudentComponent skeleton={loading} student={s} key={i} pos={i} />
+          <StudentComponent
+            skeleton={loading}
+            student={s}
+            key={i}
+            pos={i + offset}
+          />
         );
       })}
     </div>
   );
 };
 
-export default {
+const exp = {
   RankingContainer,
   Padding,
   RankingList,
 };
+
+export default exp;
