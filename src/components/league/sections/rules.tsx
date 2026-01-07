@@ -56,10 +56,10 @@ export function Rules() {
           icon={<Target className={Icon_Class} />}
         >
           {/* list of bullet points */}
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 Promover la resolución de problemas y el pensamiento lógico a
                 través de la programación.{" "}
@@ -73,18 +73,18 @@ export function Rules() {
           title="Criterios de Participación"
           icon={<Users className={Icon_Class} />}
         >
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 El concurso está abierto a estudiantes de todas las facultades
                 de la Universidad Javeriana.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 Los participantes deben inscribirse previamente en la plataforma
                 del evento.{" "}
@@ -98,25 +98,25 @@ export function Rules() {
           title="Formato del Concurso"
           icon={<Trophy className={Icon_Class} />}
         >
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className=" mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[7px]">
                 {" "}
                 Los concursos se dividen en eliminatorias y finales.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[7px]">
                 {" "}
                 El participante tendrá un tiempo limitado para resolver una
                 serie de problemas de programación.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[5px]">
                 {" "}
                 Se permitirá el uso de cualquier lenguaje de programación.{" "}
               </span>
@@ -129,10 +129,10 @@ export function Rules() {
           title="Evaluación"
           icon={<ClipboardCheck className={Icon_Class} />}
         >
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 La evaluación se basará en el resultado dado por el sistema de
                 evaluación de{" "}
@@ -153,18 +153,18 @@ export function Rules() {
           title="Reglas Específicas"
           icon={<Gavel className={Icon_Class} />}
         >
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[7px]">
                 {" "}
                 No se puede hacer uso de ninguna Inteligencia Artificial
                 (IA).{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[6px]">
                 {"Solo se puede utilizar la documentación oficial de C++: "}
                 <LinkPreview
                   url="https://cplusplus.com"
@@ -182,25 +182,24 @@ export function Rules() {
                 .
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 Si después de 15 minutos ninguno ha mandado el ejercicio, se
                 desempatara con una prueba de velocidad.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
-                {" "}
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[7px]">
                 La dinámica de las competencias es un 1vs1: el que primero mande
-                el ejercicio resuelto gana.{" "}
+                el ejercicio resuelto gana.
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[1px]">
                 {" "}
                 El ranking se determina por la cantidad de victorias. En caso de
                 empate en victorias, el ganador será el que menos partidas haya
@@ -215,26 +214,26 @@ export function Rules() {
           title="Conducta Durante el Concurso"
           icon={<ShieldCheck className={Icon_Class} />}
         >
-          <ul className="space-y-2">
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+          <ul className="mt-1 space-y-2">
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 Se prohíbe el uso de recursos externos no autorizados, como
                 foros de discusión o códigos previamente resueltos.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[7px]">
                 {" "}
                 Se espera que todos los participantes mantengan una actitud de
                 respeto y honestidad.{" "}
               </span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-1 h-1 w-1 rounded-full bg-blue-600 shrink-0" />
-              <span>
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+              <span className="leading-6 mt-[2px]">
                 {" "}
                 El incumplimiento de las normas puede resultar en
                 descalificación.{" "}
