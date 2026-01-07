@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import ThreeBlobs from "../three-blobs";
+import Image from "next/image";
 
 export function Hero() {
   return (
