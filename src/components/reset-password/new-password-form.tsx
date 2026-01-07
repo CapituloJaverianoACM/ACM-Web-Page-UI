@@ -29,7 +29,7 @@ const NewPasswordForm: React.FC = () => {
     checkUser();
   }, []);
 
-  const togglePasswordVisibility = (e: MouseEvent<HTMLSpanElement>) => {
+  const togglePasswordVisibility = (e: MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id === "first" ? 0 : 1;
     passwordVisibility[id][1]((prev) => !prev);
   };
@@ -72,52 +72,86 @@ const NewPasswordForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <p className="font-bold">
+    <div className="flex flex-col gap-4 w-full">
+      <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-2">
         Editando contraseña de{" "}
-        <span className="text-azul-electrico">{user?.email}</span>
+        <span className="text-[var(--azul-electrico)] font-semibold">
+          {user?.email}
+        </span>
       </p>
-      <div className="flex justify-center items-center gap-3">
-        <Input
-          type={!passwordVisibility[0][0] ? "password" : "text"}
-          autoComplete="password"
-          className="border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-[#FFFFF] dark:bg-black text-base"
-          value={password}
-          placeholder="Nueva contraseña"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <span
-          id="first"
-          className="cursor-pointer"
-          onClick={togglePasswordVisibility}
+
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="new-password"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
         >
-          {passwordVisibility[0][0] ? <Eye /> : <EyeClosed />}
-        </span>
-      </div>
-      <div className="flex justify-center items-center gap-3">
-        <Input
-          type={!passwordVisibility[1][0] ? "password" : "text"}
-          autoComplete="password"
-          className={
-            "border border-azul-crayon rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azul-crayon bg-[#FFFFF] dark:bg-black text-base"
-          }
-          value={confirmPassword}
-          placeholder="Confirmar contraseña"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <span
-          id="second"
-          className="cursor-pointer"
-          onClick={togglePasswordVisibility}
-        >
-          {passwordVisibility[1][0] ? <Eye /> : <EyeClosed />}
-        </span>
+          Nueva contraseña
+        </label>
+        <div className="relative w-full">
+          <Input
+            id="new-password"
+            type={!passwordVisibility[0][0] ? "password" : "text"}
+            autoComplete="new-password"
+            className="pr-10 w-full"
+            value={password}
+            placeholder="Nueva contraseña"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            id="first"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            onClick={togglePasswordVisibility}
+          >
+            {passwordVisibility[0][0] ? (
+              <Eye className="h-5 w-5" />
+            ) : (
+              <EyeClosed className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
 
-      <Button className="font-semibold text-white" onClick={submitPassword}>
-        Establecer contraseña
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="confirm-password"
+          className="text-sm font-medium text-azul-ultramar dark:text-white"
+        >
+          Confirmar contraseña
+        </label>
+        <div className="relative w-full">
+          <Input
+            id="confirm-password"
+            type={!passwordVisibility[1][0] ? "password" : "text"}
+            autoComplete="new-password"
+            className="pr-10 w-full"
+            value={confirmPassword}
+            placeholder="Confirmar contraseña"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            id="second"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            onClick={togglePasswordVisibility}
+          >
+            {passwordVisibility[1][0] ? (
+              <Eye className="h-5 w-5" />
+            ) : (
+              <EyeClosed className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      <Button
+        className="w-full mt-2"
+        onClick={submitPassword}
+        disabled={loading}
+      >
+        {loading ? "Reestableciendo..." : "Reestablecer"}
       </Button>
       {loading && <LogoLoader size={200} />}
       <Toaster />
