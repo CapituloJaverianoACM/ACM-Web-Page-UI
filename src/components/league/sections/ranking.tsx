@@ -4,7 +4,7 @@ import { Podium } from "./podium";
 export const Ranking = () => {
   return (
     <div>
-      <Podium updateInterval={15} />
+      <Podium />
       <RankingComponent.RankingContainer>
         <RankingComponent.Padding className="max-w-[65rem] mx-auto">
           <p className="text-lg font-semibold text-center">Ranking</p>
