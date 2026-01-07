@@ -1,14 +1,16 @@
 import PodiumContainer from "@/components/league/ui/podium/podium-component";
 import { getPodiumStudents } from "@/controllers/student.controller";
+import { createClient } from "@/lib/supabase/client";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import { useEffect, useState } from "react";
 
+const SUPABASE_CHANNEL_RESULTS: string = "topic:results";
+
 /**
  * Muestra a los 3 mejores estudiantes de la liga
- * @param updateInterval segundos para actualizar la información, 0 para no actualizar la información
  */
-export function Podium({ updateInterval = 0 }: { updateInterval?: number }) {
+export function Podium() {
   const [loading, setloading] = useState<boolean>(true);
 
   const [students, setStudents] = useState<
@@ -25,6 +27,7 @@ export function Podium({ updateInterval = 0 }: { updateInterval?: number }) {
   >([]);
 
   const handlerGetPodiumStudents = async () => {
+    console.log("Recuperando estudiantes...");
     try {
       const response = await getPodiumStudents();
 
@@ -43,15 +46,37 @@ export function Podium({ updateInterval = 0 }: { updateInterval?: number }) {
     handlerGetPodiumStudents();
     setloading(false);
 
-    if (updateInterval > 0) {
-      const interval = setInterval(() => {
-        console.log("actualizado");
-        handlerGetPodiumStudents();
-      }, updateInterval * 1000);
+    const supabase = createClient();
 
-      return () => clearInterval(interval);
-    }
-  }, [updateInterval]);
+    const channel = supabase
+      .channel(SUPABASE_CHANNEL_RESULTS, { config: { private: false } })
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "results" },
+        () => handlerGetPodiumStudents(),
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "results" },
+        () => handlerGetPodiumStudents(),
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "results" },
+        () => handlerGetPodiumStudents(),
+      )
+      .subscribe((status, err) => {
+        if (status === "SUBSCRIBED") {
+          console.log("Conectado a Supabase fafai");
+        } else {
+          console.error(err);
+        }
+      });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   useEffect(() => {
     setSortedStudents(() => {
