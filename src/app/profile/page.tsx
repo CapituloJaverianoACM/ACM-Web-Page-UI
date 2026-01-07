@@ -220,7 +220,7 @@ export default function ProfilePage() {
                     </div>
                   </button>
                   <Link
-                    href="/auth/change-password"
+                    href="/profile/change-password"
                     className="no-underline inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors bg-[--azul-niebla] hover:bg-[--azul-crayon] dark:bg-gray-700 dark:hover:bg-gray-600 text-[--azul-noche] dark:text-gray-100 hover:text-white px-4 py-2 text-sm"
                   >
                     <i className="fi fi-rr-lock w-4 h-4 m-0.5"></i>

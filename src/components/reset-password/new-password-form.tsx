@@ -117,7 +117,7 @@ const NewPasswordForm: React.FC = () => {
       </div>
 
       <Button className="font-semibold text-white" onClick={submitPassword}>
-        Reestablecer
+        Establecer contraseña
       </Button>
       {loading && <LogoLoader size={200} />}
       <Toaster />
