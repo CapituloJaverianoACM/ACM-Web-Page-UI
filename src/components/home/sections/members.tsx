@@ -16,9 +16,7 @@ export function Members() {
 
   const { data: members, isLoading } = useQuery({
     queryKey: ["members"],
-    queryFn: async () => {
-      return await getMembers();
-    },
+    queryFn: getMembers,
   });
 
   const handleMemberClick = (member: Member) => {
