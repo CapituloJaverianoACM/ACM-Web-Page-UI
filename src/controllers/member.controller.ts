@@ -3,6 +3,7 @@ export async function getMembers() {
     new URL(`/members`, process.env.NEXT_PUBLIC_BACKEND_URL),
   );
 
+  console.log(res);
   if (!res.ok) {
     throw new Error("Error al obtener miembros");
   }
