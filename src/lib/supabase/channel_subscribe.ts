@@ -1,7 +1,15 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
 const SUPABASE_CHANNEL_RESULTS: string = "topic:results";
-export function suscribe_leaderboard(supabase: SupabaseClient, cb: Function) {
+
+type SubscriptionCallback = {
+  (): any;
+};
+
+export function suscribe_leaderboard(
+  supabase: SupabaseClient,
+  cb: SubscriptionCallback,
+) {
   const channel = supabase
     .channel(SUPABASE_CHANNEL_RESULTS, { config: { private: false } })
     .on(
