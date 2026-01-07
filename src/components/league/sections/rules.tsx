@@ -7,7 +7,6 @@ import {
   Gavel,
 } from "lucide-react";
 import { LinkPreview } from "../ui/link-preview";
-import { Rule } from "postcss";
 
 function RuleCard({
   // this is the component for each rule section, so all the rules have the same style.
