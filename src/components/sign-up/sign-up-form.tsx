@@ -42,7 +42,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="nombre"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Nombre
         </label>
@@ -57,7 +57,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="apellido"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Apellido
         </label>
@@ -72,7 +72,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="email"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Correo electrónico
         </label>
@@ -88,7 +88,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="password"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Contraseña
         </label>
@@ -118,7 +118,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="avatar_url"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Avatar URL (Opcional)
         </label>

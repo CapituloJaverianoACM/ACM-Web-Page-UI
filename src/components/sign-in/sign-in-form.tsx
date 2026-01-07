@@ -31,7 +31,7 @@ export function SignInForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="email"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Correo electrónico
         </label>
@@ -47,7 +47,7 @@ export function SignInForm() {
       <div className="flex flex-col gap-1">
         <label
           htmlFor="password"
-          className="text-sm font-medium text-azul-ultramar dark:text-white"
+          className="text-sm font-bold text-azul-ultramar dark:text-white"
         >
           Contraseña
         </label>
