@@ -117,7 +117,7 @@ export function Podium() {
                     student={{
                       order: s.order,
                       student: {
-                        _id: "",
+                        id: "0",
                         avatar: "",
                         level: LevelEnum.Advanced,
                         matches_count: 0,

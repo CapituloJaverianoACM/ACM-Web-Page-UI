@@ -2,7 +2,7 @@ import { LevelEnum } from "./level.enum";
 import { Picture } from "./picture.model";
 
 export interface Contest {
-  _id: string;
+  id: string;
   name: string;
   date: Date;
   start_hour: Date;
