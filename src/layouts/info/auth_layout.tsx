@@ -51,7 +51,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
           href="/"
           className="mb-16 flex flex-col items-center group select-none transition-all duration-300"
         >
-          <div className="p-4 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 shadow-2xl group-hover:bg-white/20 transition-all duration-300">
+          <div className="p-4 rounded-2xl group-hover:bg-white/20 transition-all duration-300">
             <Image
               src="/Logo_Claro.svg"
               alt="Logo ACM Javeriana"

@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 const ResetEmailSended: React.FC = () => {
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "No hay email, bug?";
+  const email = searchParams.get("email") || "email@inexistente.com";
   return (
     <SimpleConfettiLayout title={"¡Bravo!"}>
       <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-4">

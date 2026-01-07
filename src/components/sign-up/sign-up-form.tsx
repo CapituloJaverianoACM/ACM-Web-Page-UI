@@ -118,9 +118,9 @@ export function SignUpForm() {
           htmlFor="avatar_url"
           className="text-sm font-medium text-azul-ultramar dark:text-white"
         >
-          Avatar URL (Optional)
+          Avatar URL (Opcional)
         </label>
-        <div className="flex items-center gap-2">
+        <div className="flex items-end gap-2">
           <div className="flex-grow">
             <Input
               id="avatar_url"

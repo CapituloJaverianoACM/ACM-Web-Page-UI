@@ -20,7 +20,7 @@ const ResetEmailForm: React.FC = () => {
       await sendResetEmail(email);
       setLoading(false);
       setEmail("");
-      router.push("/reset-email-sended?email=" + email);
+      router.push("/reset-email-sent?email=" + email);
     } catch (e) {
       console.error(e);
       setLoading(false);

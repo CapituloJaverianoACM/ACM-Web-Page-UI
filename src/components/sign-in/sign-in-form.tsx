@@ -19,7 +19,7 @@ export function SignInForm() {
     setLoading(true);
     const { error } = await login(email, password);
     if (error) {
-      setError(error.message);
+      setError("Ups, algo no salió bien.");
       setLoading(false);
       return;
     }
@@ -74,8 +74,14 @@ export function SignInForm() {
           </button>
         </div>
       </div>
-      {error && <span className="text-red-600 text-sm">{error}</span>}
-      <Button type="submit" className="w-full mt-2" disabled={loading}>
+      {error && (
+        <span className="text-red-600 text-sm text-center">{error}</span>
+      )}
+      <Button
+        type="submit"
+        className="w-full mt-2 font-bold"
+        disabled={loading}
+      >
         {loading ? "Ingresando..." : "Iniciar sesión"}
       </Button>
     </form>
