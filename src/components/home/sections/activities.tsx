@@ -30,9 +30,20 @@ const CPMembersContent = () => {
   const [cp_coaches, setCPCoaches] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const CP_MEMBERS: string[] = [
+    "adrianrrruiz",
+    "TalkySafe143",
+    "achalogy",
+    "Avila_Sa",
+    "Cojuan",
+    "Lorenzo_lrc",
+    "harry3008",
+    "sandoval95",
+  ];
+
   useEffect(() => {
     fetch(
-      "https://codeforces.com/api/user.info?checkHistoricHandles=false&handles=aruiz08;firulo;TalkySafe143;achalogy;Cojuan;Avila_Sa;sandoval95",
+      `https://codeforces.com/api/user.info?checkHistoricHandles=false&handles=${CP_MEMBERS.join(";")}`,
       {
         cache: "no-store",
       },
