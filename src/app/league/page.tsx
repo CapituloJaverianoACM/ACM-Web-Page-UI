@@ -12,6 +12,7 @@ import { getContestsWithPictures } from "@/controllers/contest.controller";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { suscribe_leaderboard } from "@/lib/supabase/channel_subscribe";
+import { RoadmapButton } from "@/components/home/ui/roadmap-button";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
@@ -61,6 +62,7 @@ export default function LeagueHomePage() {
       <UpcomingEvents events={contests} loadingInitialState />
       <Podium refresh_toggle={refresh_students} />
       <Footer />
+      <RoadmapButton />
     </HeroUIProvider>
   );
 }
