@@ -45,7 +45,7 @@ export default function Footer() {
   const contributorItems = contributors.map((contributor) => ({
     id: contributor.id,
     name: contributor.login,
-    designation: "ACM Contributor",
+    designation: "Colaborador ACM",
     image: contributor.avatar_url,
     html_url: contributor.html_url,
     className: "border-gray-200 hover:border-blue-400",
