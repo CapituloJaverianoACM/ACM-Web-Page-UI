@@ -5,6 +5,7 @@ import MemberCard from "../member-card";
 import MemberModal from "../member-modal";
 import { Member } from "@/models/member.model";
 import Link from "next/link";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 import { Card, CardContent } from "../../shared/ui/card";
 import { Users } from "lucide-react";
 import { getMembers } from "@/controllers/member.controller";
@@ -42,11 +43,17 @@ export function Members() {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {isLoading && (
-          <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3 text-center">
-            <p className="text-gray-500">Cargando miembros...</p>
-          </div>
-        )}
+        {isLoading &&
+          Array.from({ length: 6 }).map((_, i) => (
+            <Card
+              key={`member-loader-${i}`}
+              className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-0 shadow-lg aspect-[3/4] relative mx-auto max-w-sm w-full glass-noise dark:glass-noise-dark"
+            >
+              <CardContent className="p-0 h-full relative flex items-center justify-center">
+                <LogoLoader size={175} />
+              </CardContent>
+            </Card>
+          ))}
         {!isLoading &&
           members
             .filter((member) => member.active)
