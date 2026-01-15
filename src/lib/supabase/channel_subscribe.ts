@@ -31,7 +31,7 @@ export function suscribe_leaderboard(
       if (status === "SUBSCRIBED") {
         console.log("Conectado a Supabase fafai");
       } else {
-        console.error(err);
+        console.log(err);
       }
     });
   return channel;
