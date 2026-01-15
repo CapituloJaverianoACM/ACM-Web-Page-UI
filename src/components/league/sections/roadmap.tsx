@@ -1,115 +1,246 @@
 "use client";
 
-import { Play } from "lucide-react";
-
-interface RoadmapStep {
-  id: number;
+interface VideoCardProps {
+  number: number;
+  videoSrc?: string;
   title: string;
-  description: string;
-  videoUrl?: string;
+  subtitle?: string;
 }
 
-const roadmapSteps: RoadmapStep[] = [
-  {
-    id: 1,
-    title: "Cómo crear tu cuenta de Codeforces",
-    description: "Tutorial: Registro en Codeforces",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-  {
-    id: 2,
-    title: "Como enviar un problema a codeforces",
-    description: "Tutorial: Configuración de perfil",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-  {
-    id: 3,
-    title: "Participar en tu primer concurso",
-    description: "Tutorial: Primeros pasos",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-];
+function VideoCard({ number, videoSrc, title, subtitle }: VideoCardProps) {
+  // Convertir link de YouTube a formato embed
+  const getEmbedUrl = (url: string) => {
+    let videoId = "";
+
+    if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1].split("?")[0];
+    } else if (url.includes("youtube.com/watch")) {
+      videoId = url.split("v=")[1]?.split("&")[0];
+    } else {
+      return url;
+    }
+
+    // Agregar parámetros para mostrar todos los controles de YouTube y máxima calidad
+    return `https://www.youtube.com/embed/${videoId}?controls=1&rel=0&showinfo=1&vq=hd1080`;
+  };
+
+  const isYouTube =
+    videoSrc &&
+    (videoSrc.includes("youtube.com") || videoSrc.includes("youtu.be"));
+
+  return (
+    <div className="rounded-3xl bg-[var(--azul-niebla)] dark:bg-[var(--azul-ultramar)] p-6 shadow-lg w-full transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--azul-crayon)]/30 dark:hover:shadow-[var(--azul-electrico)]/40 hover:scale-[1.02]">
+      {/* Video Player Container - 16:9 Aspect Ratio */}
+      <div className="relative w-full bg-gradient-to-br from-blue-200 to-blue-100 rounded-2xl overflow-hidden mb-4 aspect-video flex items-center justify-center">
+        {videoSrc ? (
+          isYouTube ? (
+            <iframe
+              src={getEmbedUrl(videoSrc)}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              src={videoSrc}
+              className="w-full h-full object-cover"
+              controls
+            />
+          )
+        ) : (
+          <>
+            {/* Play Button Icon */}
+            <div className="absolute flex items-center justify-center w-20 h-20 rounded-full bg-[var(--azul-crayon)] hover:bg-[var(--azul-electrico)] transition-colors cursor-pointer shadow-lg">
+              <svg
+                className="w-8 h-8 text-[var(--white)] fill-current ml-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Text Content */}
+      <div className="text-center">
+        <h3 className="text-lg font-bold text-[var(--azul-noche)] dark:text-[var(--azul-niebla)]">
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="text-sm text-[var(--azul-ultramar)] dark:text-[var(--azul-niebla)] opacity-80 mt-1">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface RoadmapStep {
+  number: number;
+  title: string;
+  subtitle?: string;
+  videoSrc?: string;
+}
 
 export function Roadmap() {
+  const steps: RoadmapStep[] = [
+    {
+      number: 1,
+      title: "Introduccion",
+      subtitle: "¿Que es la liga? ¿ Que necesito para participar?",
+      videoSrc:
+        "https://www.youtube.com/watch?v=QFzXQNZ6zvQ&pp=ugUEEgJlbtIHCQlNCgGHKiGM7w%3D%3D",
+    },
+    {
+      number: 2,
+      title: "Subiendo tu primer problema a la plataforma de Codeforces",
+      subtitle: "¿Como envio un problema?",
+    },
+  ];
+
+  const cardHeight = 400; // Altura estimada de cada tarjeta
+  const cardSpacing = 96; // Espacio entre tarjetas (space-y-24 = 6rem = 96px)
+
+  // Calcular altura total más ajustada
+  const totalHeight =
+    steps.length * cardHeight + (steps.length - 1) * cardSpacing;
+
+  // Generar el path curvo que conecta las tarjetas
+  const generateCurvePath = () => {
+    if (steps.length < 2) return "";
+
+    let pathData = "";
+
+    for (let i = 0; i < steps.length - 1; i++) {
+      // Posición vertical de cada tarjeta
+      const currentCardY = i * (cardHeight + cardSpacing) + cardHeight / 2;
+      const nextCardY = (i + 1) * (cardHeight + cardSpacing) + cardHeight / 2;
+
+      // Puntos de inicio y fin en los lados de las tarjetas
+      const startY = currentCardY + cardHeight * 0.25;
+      const endY = nextCardY - cardHeight * 0.25;
+      const midY = (startY + endY) / 2;
+
+      let startX, endX, control1X, control2X;
+
+      if (i % 2 === 0) {
+        // Tarjeta par (visual izquierda):
+        // Sale desde lado izquierdo, se aleja a la izquierda, vuelve a derecha
+        startX = -480; // Centro del lado izquierdo
+        endX = 480; // Centro del lado derecho de la siguiente
+
+        // Ambos puntos de control en la rama izquierda
+        control1X = -700; // Se aleja hacia la izquierda
+        control2X = -650; // Continúa en la rama izquierda
+      } else {
+        // Tarjeta impar (visual derecha):
+        // Sale desde lado derecho, se aleja a la derecha, vuelve a izquierda
+        startX = 480; // Centro del lado derecho
+        endX = -480; // Centro del lado izquierdo de la siguiente
+
+        // Ambos puntos de control en la rama derecha
+        control1X = 700; // Se aleja hacia la derecha
+        control2X = 650; // Continúa en la rama derecha
+      }
+
+      const control1Y = startY + (endY - startY) * 0.35;
+      const control2Y = endY - (endY - startY) * 0.35;
+
+      if (i === 0) {
+        pathData += `M ${startX} ${startY} `;
+      } else {
+        pathData += `M ${startX} ${startY} `;
+      }
+
+      // Curva cúbica Bezier que crea arcos por fuera
+      pathData += `C ${control1X} ${control1Y}, ${control2X} ${control2Y}, ${endX} ${endY} `;
+    }
+
+    return pathData;
+  };
+
   return (
-    <section
-      id="roadmap"
-      className="min-h-screen w-full bg-white dark:bg-black py-20 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="mx-auto max-w-2xl">
-        {/* Header */}
-        <div className="mb-20 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl mt-8">
-            Roadmap de la Liga
-          </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-            Sigue estos pasos para comenzar tu viaje en la competencia
-          </p>
-        </div>
+    <div className="pt-32 pb-8 px-4">
+      <div className="relative flex flex-col items-center">
+        {/* SVG connector lines - positioned absolutely behind */}
+        <svg
+          className="absolute left-1/2 top-0 -translate-x-1/2 overflow-visible"
+          style={{
+            width: "800px",
+            height: `${totalHeight}px`,
+            zIndex: 0,
+          }}
+          viewBox={`-400 0 800 ${totalHeight}`}
+          preserveAspectRatio="xMidYMin meet"
+        >
+          <defs>
+            <style>{`
+              path, circle { 
+                pointer-events: none;
+              }
+            `}</style>
+          </defs>
 
-        {/* Roadmap Timeline */}
-        <div className="relative space-y-12">
-          {roadmapSteps.map((step, index) => (
-            <div key={step.id} className="relative">
-              {/* Step Container */}
+          {/* Curved path connecting cards */}
+          <path
+            d={generateCurvePath()}
+            className="stroke-[var(--azul-crayon)] dark:stroke-[var(--azul-electrico)]"
+            strokeWidth="3"
+            fill="none"
+            strokeDasharray="8,4"
+          />
+
+          {/* Circles at each step */}
+          {steps.map((_, index) => {
+            const x = index % 2 === 0 ? -480 : 480;
+            const y = index * (cardHeight + cardSpacing) + cardHeight / 2;
+            return (
+              <circle
+                key={`dot-${index}`}
+                cx={x}
+                cy={y}
+                r="8"
+                className="fill-[var(--azul-crayon)] dark:fill-[var(--azul-electrico)]"
+              />
+            );
+          })}
+        </svg>
+
+        {/* Roadmap steps */}
+        <div className="space-y-24 w-full relative z-10">
+          {steps.map((step, index) => (
+            <div
+              key={step.number}
+              className="flex items-center justify-center w-full"
+            >
+              {/* Video Card - más grande con número en esquina */}
               <div
-                className={`flex items-start gap-8 ${
-                  index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-                }`}
+                className="w-[32rem] relative"
+                style={{
+                  marginLeft: index % 2 === 0 ? "-30rem" : "30rem",
+                }}
               >
-                {/* Step Number - Fixed position */}
-                <div className="relative flex-shrink-0">
-                  <div className="h-14 w-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-500/50 z-10 relative">
-                    <span className="text-2xl font-bold text-white">
-                      {step.id}
-                    </span>
-                  </div>
-
-                  {/* Dashed connection line */}
-                  {index < roadmapSteps.length - 1 && (
-                    <svg
-                      className="absolute left-1/2 top-14 h-20 w-24 -translate-x-1/2 overflow-visible"
-                      preserveAspectRatio="none"
-                    >
-                      <path
-                        d={`M 0 0 Q ${index % 2 === 0 ? "96" : "-96"} 80 0 160`}
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeDasharray="8,8"
-                        fill="none"
-                        className="text-blue-500 dark:text-blue-500"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <div className="flex-1 pt-2">
-                  <div className="rounded-3xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    {/* Video Placeholder */}
-                    <div className="mb-6 aspect-video w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-900/50 dark:to-blue-800/30 flex items-center justify-center group cursor-pointer">
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-300/50 dark:from-blue-500/30 to-transparent"></div>
-                        <div className="absolute rounded-full bg-blue-600 p-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-500 shadow-lg">
-                          <Play className="h-8 w-8 text-white fill-white" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="space-y-3">
-                      <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                        {step.description}
-                      </p>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">
-                        {step.title}
-                      </h3>
-                    </div>
+                {/* Number Badge - esquina superior izquierda */}
+                <div className="absolute -top-4 -left-4 z-20">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--azul-crayon)] dark:bg-[var(--azul-electrico)] text-[var(--white)] font-bold text-2xl shadow-lg">
+                    {step.number}
                   </div>
                 </div>
+
+                <VideoCard
+                  number={step.number}
+                  title={step.title}
+                  subtitle={step.subtitle}
+                  videoSrc="https://youtu.be/EVUEIHcbZic"
+                />
               </div>
             </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
