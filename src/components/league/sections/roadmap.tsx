@@ -7,7 +7,7 @@ interface VideoCardProps {
   subtitle?: string;
 }
 
-function VideoCard({ number, videoSrc, title, subtitle }: VideoCardProps) {
+function VideoCard({ videoSrc, title, subtitle }: VideoCardProps) {
   // Convertir link de YouTube a formato embed
   const getEmbedUrl = (url: string) => {
     let videoId = "";
@@ -122,7 +122,6 @@ export function Roadmap() {
       // Puntos de inicio y fin en los lados de las tarjetas
       const startY = currentCardY + cardHeight * 0.25;
       const endY = nextCardY - cardHeight * 0.25;
-      const midY = (startY + endY) / 2;
 
       let startX, endX, control1X, control2X;
 
