@@ -11,7 +11,6 @@ import { redirect, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { User } from "@supabase/supabase-js";
 import { registerUserToContest } from "@/controllers/participation.controller";
-import event_card from "@/components/league/ui/Events/event-card";
 
 const formatDateEvent = ({
   date,
