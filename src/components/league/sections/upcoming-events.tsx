@@ -26,21 +26,25 @@ const formatDateEvent = ({
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   };
 
   const optionsHour: Intl.DateTimeFormatOptions = {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: "America/Bogota",
   };
 
-  const formattedDate = new Date(date).toLocaleDateString("es-ES", optionsDate);
+  const LOCALE: string = "es-CO";
+
+  const formattedDate = new Date(date).toLocaleDateString(LOCALE, optionsDate);
   const formattedInitialHour = new Date(start_hour).toLocaleTimeString(
-    "es-ES",
+    LOCALE,
     optionsHour,
   );
   const formattedFinalHour = new Date(final_hour).toLocaleTimeString(
-    "es-ES",
+    LOCALE,
     optionsHour,
   );
 
@@ -206,7 +210,10 @@ export function UpcomingEvents({
                     handleRegisterContest(event);
                   }}
                   className={event.registered ? "bg-green-500 " : " "}
-                  disabled={!event.checkin}
+                  disabled={
+                    (!event.registered && new Date() > new Date(start_hour)) ||
+                    (event.registered && !event.checkin)
+                  }
                 >
                   {event.registered ? "Ir al contest" : "Registrarse"}
                 </EventCard.RegisterButton>

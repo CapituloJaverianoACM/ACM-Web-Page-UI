@@ -16,8 +16,14 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
   deadline.setMinutes(deadline.getMinutes() - MINUTES_BEFORE_CHECKIN);
 
   const handleCheckin = async () => {
+    if (new Date() > deadline) {
+      toast.error("Ya pasó la hora de check-in");
+      return;
+    }
     const result = await checkInStudent(contest.id);
     toast[result.ok ? "success" : "error"](result.msg);
+
+    window.location.reload();
   };
 
   return (
