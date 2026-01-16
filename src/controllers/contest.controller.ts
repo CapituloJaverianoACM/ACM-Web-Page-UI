@@ -117,7 +117,7 @@ export async function getMatchmakingTree(
     const res = await fetch(
       new URL(
         `/matchmaking/tree/${contestId}`,
-        process.env.NEXT_PUBLIC_BACKEND_URL,
+        process.env.NEXT_PUBLIC_BACKEND_URL_DEV,
       ),
       { cache: "no-store" },
     );

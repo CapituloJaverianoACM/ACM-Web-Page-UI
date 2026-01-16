@@ -12,6 +12,8 @@ interface TreeNodeProps {
   onClick?: () => void;
 }
 
+const NODE_RADIUS: number = 55;
+
 export default function TreeNode({
   nodeDatum,
   toggleNode,
@@ -36,12 +38,9 @@ export default function TreeNode({
 
   return (
     <g onClick={toggleNode}>
-      {/* Círculo del nodo */}
       <circle
-        r={55}
+        r={NODE_RADIUS}
         fill={fillColor}
-        stroke="#dde5f8"
-        strokeWidth={2.5}
         style={{
           cursor: "pointer",
           filter: "drop-shadow(0 4px 6px rgba(0, 8, 27, 0.15))",
@@ -49,40 +48,11 @@ export default function TreeNode({
         }}
         className="hover:opacity-90"
       />
-
-      {/* Texto del ID */}
-      <text
-        x={0}
-        y={-8}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        style={{
-          fontSize: "12px",
-          fontWeight: "600",
-          fill: "#dde5f8",
-          fontFamily: "Montserrat, sans-serif",
-          pointerEvents: "none",
-        }}
-      >
-        ID:
-      </text>
-
-      {/* Número del estudiante */}
-      <text
-        x={0}
-        y={12}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        style={{
-          fontSize: "20px",
-          fontWeight: "500",
-          fill: "#eeeeee",
-          fontFamily: "Montserrat, sans-serif",
-          pointerEvents: "none",
-        }}
-      >
-        {studentId !== null && studentId !== 0 ? studentId : "?"}
-      </text>
+      <foreignObject width={100} height={100} x={-50} y={-50}>
+        <div>
+          <p className="text-center">{studentId}</p>
+        </div>
+      </foreignObject>
     </g>
   );
 }

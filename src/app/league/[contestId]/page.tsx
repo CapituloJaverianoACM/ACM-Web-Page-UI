@@ -13,6 +13,16 @@ import {
 } from "@/controllers/contest.controller";
 import MatchmakingTree from "@/components/league/matchmaking-tree";
 
+// Función helper para obtener contest por ID
+async function fetchContestById(id: number): Promise<Contest> {
+  try {
+    const contest = await getContestById(id);
+    return contest;
+  } catch (error) {
+    throw new Error("No se pudo cargar el contest");
+  }
+}
+
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },
   { key: "league", label: "Liga", href: "/league" },
@@ -50,39 +60,22 @@ export default function ContestDetailPage() {
       <MainNavbar navLinks={navLinks} />
       <main className="min-h-screen py-20">
         <div className="container mx-auto space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold mb-4">{contest.name}</h1>
-            <p className="text-gray-600">Nivel: {contest.level}</p>
-          </div>
-
-          <section className="rounded-lg border border-[#dde5f8] bg-gradient-to-b from-[#eeeeee]/50 to-[#dde5f8]/20 p-8 shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-[#00081b]">
-              Árbol de Matchmaking
-            </h2>
-            {treeError && (
-              <p className="text-red-600 mb-4 font-semibold">{treeError}</p>
-            )}
-            {tree ? (
-              <MatchmakingTree tree={tree} />
-            ) : (
-              <p className="text-gray-600 text-center py-8">
-                No hay datos del árbol.
-              </p>
-            )}
-          </section>
+          <h2 className="text-3xl font-bold mb-6 text-[#00081b] text-center">
+            Árbol de Matchmaking
+          </h2>
+          {treeError && (
+            <p className="text-red-600 mb-4 font-semibold">{treeError}</p>
+          )}
+          {tree ? (
+            <MatchmakingTree tree={tree} />
+          ) : (
+            <p className="text-gray-600 text-center py-8">
+              No hay datos del árbol.
+            </p>
+          )}
         </div>
       </main>
       <Footer />
     </HeroUIProvider>
   );
-}
-
-// Función helper para obtener contest por ID
-async function fetchContestById(id: number): Promise<Contest> {
-  try {
-    const contest = await getContestById(id);
-    return contest;
-  } catch (error) {
-    throw new Error("No se pudo cargar el contest");
-  }
 }
