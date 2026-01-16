@@ -25,6 +25,20 @@ export async function getParticipationsByStudentId(
   }
 }
 
+export const getParticipationsBySupabaseStudentId = async (
+  user: User,
+): Promise<Participation[]> => {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from(STUDENT_TABLE)
+    .select()
+    .eq(STUDENT_ID_COLUMN, user.id);
+
+  if (error || !data || data.length == 0) return [];
+
+  return await getParticipationsByStudentId(data[0].id);
+};
+
 export enum RegisterContestResult {
   OK = "Registrado exitosamente.",
   NO_USER = "Debes loggearte primero.",

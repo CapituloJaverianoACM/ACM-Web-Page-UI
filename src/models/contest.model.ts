@@ -10,4 +10,5 @@ export interface Contest {
   level: string | LevelEnum;
   classroom: string;
   picture?: Picture;
+  registered?: boolean;
 }

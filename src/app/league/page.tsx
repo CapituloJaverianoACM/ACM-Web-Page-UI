@@ -27,13 +27,7 @@ const navLinks = [
 ];
 
 export default function LeagueHomePage() {
-  const [contests, setContests] = useState<
-    (Contest & {
-      picture: {
-        link: string;
-      };
-    })[]
-  >([]);
+  const [contests, setContests] = useState<Contest[]>([]);
 
   const [refresh_students, setRefreshStudents] = useState<boolean>(false);
 

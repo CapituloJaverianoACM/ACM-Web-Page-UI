@@ -7,10 +7,11 @@ import { LevelEnum } from "@/models/level.enum";
 import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
 import { createClient } from "@/lib/supabase/client";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { User } from "@supabase/supabase-js";
 import { registerUserToContest } from "@/controllers/participation.controller";
+import event_card from "@/components/league/ui/Events/event-card";
 
 const formatDateEvent = ({
   date,
@@ -53,7 +54,13 @@ export function UpcomingEvents({
   events: Contest[];
   loadingInitialState?: boolean;
 }) {
+  const router = useRouter();
   const handleRegisterContest = async (contest: Contest) => {
+    if (contest.registered) {
+      router.push(`/contest/${contest.id}`);
+      return;
+    }
+
     const supabase = createClient();
     const user_metadata: User = (await supabase.auth.getUser()).data.user;
 
@@ -187,7 +194,10 @@ export function UpcomingEvents({
                   onClick={() => {
                     handleRegisterContest(event);
                   }}
-                ></EventCard.RegisterButton>
+                  className={event.registered ? "bg-green-500" : ""}
+                >
+                  {event.registered ? "Ir al contest" : "Registrarse"}
+                </EventCard.RegisterButton>
               </EventCard.Padding>
             </EventCard.Container>
           ),

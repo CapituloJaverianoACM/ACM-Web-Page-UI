@@ -1,6 +1,11 @@
 import { Contest } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
-import { getParticipationsByStudentId } from "./participation.controller";
+import {
+  getParticipationsByStudentId,
+  getParticipationsBySupabaseStudentId,
+} from "./participation.controller";
+import { createClient } from "@/lib/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(
@@ -15,13 +20,7 @@ export async function getContests(): Promise<Contest[]> {
   return json.data;
 }
 
-export async function getContestsWithPictures(): Promise<
-  (Contest & {
-    picture: {
-      link: string;
-    };
-  })[]
-> {
+export async function getContestsWithPictures(): Promise<Contest[]> {
   const res = await fetch(
     new URL(`/contests?picture=1`, process.env.NEXT_PUBLIC_BACKEND_URL),
   );
@@ -31,7 +30,25 @@ export async function getContestsWithPictures(): Promise<
   }
 
   const json = await res.json();
-  return json.data;
+
+  const contests: Contest[] = json.data;
+  const supabase = createClient();
+
+  const user: User = (await supabase.auth.getUser()).data.user;
+
+  if (!user) return contests;
+
+  const user_participations = await getParticipationsBySupabaseStudentId(user);
+
+  return await Promise.all(
+    contests.map(async (contest) => {
+      contest.registered =
+        user_participations.find(
+          (participation) => participation.contest_id == contest.id,
+        ) != undefined;
+      return contest;
+    }),
+  );
 }
 
 export async function getContestByIds(
