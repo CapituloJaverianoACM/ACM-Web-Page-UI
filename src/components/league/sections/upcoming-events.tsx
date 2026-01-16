@@ -6,6 +6,11 @@ import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
+import { createClient } from "@/lib/supabase/client";
+import { redirect } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import { User } from "@supabase/supabase-js";
+import { registerUserToContest } from "@/controllers/participation.controller";
 
 const formatDateEvent = ({
   date,
@@ -48,8 +53,16 @@ export function UpcomingEvents({
   events: Contest[];
   loadingInitialState?: boolean;
 }) {
-  // Diseño de una tarjeta para decir que no hay eventos
+  const handleRegisterContest = async (contest: Contest) => {
+    const supabase = createClient();
+    const user_metadata: User = (await supabase.auth.getUser()).data.user;
 
+    const result = await registerUserToContest(user_metadata, contest);
+
+    toast[result.ok ? "success" : "error"](result.msg);
+  };
+
+  // Diseño de una tarjeta para decir que no hay eventos
   const NoEventsCard: ReactNode = (
     <EventCard.Container
       key="unique"
@@ -75,7 +88,7 @@ export function UpcomingEvents({
 
         <EventCard.RegisterButton
           onClick={() => {
-            alert("click");
+            redirect("https://www.instagram.com/acmjaveriana/");
           }}
         >
           Redes Sociales
@@ -104,13 +117,7 @@ export function UpcomingEvents({
           <EventCard.Description className="bg-neutral-200 rounded" />
         </EventCard.Padding>
 
-        <EventCard.RegisterButton
-          onClick={() => {
-            alert("click");
-          }}
-        >
-          {"  "}
-        </EventCard.RegisterButton>
+        <EventCard.RegisterButton>{"  "}</EventCard.RegisterButton>
       </EventCard.Padding>
     </EventCard.Container>
   );
@@ -178,7 +185,7 @@ export function UpcomingEvents({
 
                 <EventCard.RegisterButton
                   onClick={() => {
-                    alert("click");
+                    handleRegisterContest(event);
                   }}
                 ></EventCard.RegisterButton>
               </EventCard.Padding>
@@ -222,6 +229,7 @@ export function UpcomingEvents({
       id="upcoming-events"
       className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center"
     >
+      <Toaster position="bottom-center" />
       <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">
         <div className="flex flex-col gap-2 w-full">
           <h2 className="dark:text-white">Próximos Eventos</h2>
