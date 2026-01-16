@@ -69,7 +69,7 @@ export const registerUserToContest = async (
     return result;
   }
 
-  const user: any = data[0];
+  const user = data[0];
 
   if (user.level != contest.level) {
     result.msg = RegisterContestResult.LEVEL_MISMATCH;
@@ -114,7 +114,7 @@ export const registerUserToContest = async (
 
     if (!res.ok) throw new Error("Sucedió algo en la API");
 
-    const res_json: any = await res.json();
+    const res_json = await res.json();
     if (res_json.error) throw res_json.error;
 
     result.ok = true;
