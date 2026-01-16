@@ -11,4 +11,5 @@ export interface Contest {
   classroom: string;
   picture?: Picture;
   registered?: boolean;
+  checkin?: boolean;
 }

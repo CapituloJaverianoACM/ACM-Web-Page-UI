@@ -11,6 +11,7 @@ import { redirect, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { User } from "@supabase/supabase-js";
 import { registerUserToContest } from "@/controllers/participation.controller";
+import { CheckinTimer } from "@/components/checkin/CheckinTimer";
 
 const formatDateEvent = ({
   date,
@@ -25,21 +26,25 @@ const formatDateEvent = ({
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   };
 
   const optionsHour: Intl.DateTimeFormatOptions = {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: "America/Bogota",
   };
 
-  const formattedDate = new Date(date).toLocaleDateString("es-ES", optionsDate);
+  const LOCALE: string = "es-CO";
+
+  const formattedDate = new Date(date).toLocaleDateString(LOCALE, optionsDate);
   const formattedInitialHour = new Date(start_hour).toLocaleTimeString(
-    "es-ES",
+    LOCALE,
     optionsHour,
   );
   const formattedFinalHour = new Date(final_hour).toLocaleTimeString(
-    "es-ES",
+    LOCALE,
     optionsHour,
   );
 
@@ -56,6 +61,11 @@ export function UpcomingEvents({
   const router = useRouter();
   const handleRegisterContest = async (contest: Contest) => {
     if (contest.registered) {
+      if (!contest.checkin) {
+        toast.error("¡Realiza el check-in primero!");
+        return;
+      }
+
       router.push(`/contest/${contest.id}`);
       return;
     }
@@ -189,11 +199,21 @@ export function UpcomingEvents({
                   </EventCard.Description>
                 </EventCard.Padding>
 
+                {event.registered && !event.checkin && (
+                  <EventCard.Padding>
+                    <CheckinTimer contest={event} />
+                  </EventCard.Padding>
+                )}
+
                 <EventCard.RegisterButton
                   onClick={() => {
                     handleRegisterContest(event);
                   }}
-                  className={event.registered ? "bg-green-500" : ""}
+                  className={event.registered ? "bg-green-500 " : " "}
+                  disabled={
+                    (!event.registered && new Date() > new Date(start_hour)) ||
+                    (event.registered && !event.checkin)
+                  }
                 >
                   {event.registered ? "Ir al contest" : "Registrarse"}
                 </EventCard.RegisterButton>
