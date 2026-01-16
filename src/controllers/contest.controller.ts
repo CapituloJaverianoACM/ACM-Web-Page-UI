@@ -1,5 +1,6 @@
 import { Contest } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
+import { MatchmakingTreeNode } from "@/models/matchmaking.model";
 import {
   getParticipationsByStudentId,
   getParticipationsBySupabaseStudentId,
@@ -14,6 +15,19 @@ export async function getContests(): Promise<Contest[]> {
 
   if (!res.ok) {
     throw new Error("Error al obtener contests");
+  }
+
+  const json = await res.json();
+  return json.data;
+}
+
+export async function getContestById(id: number): Promise<Contest> {
+  const res = await fetch(
+    new URL(`/contests/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
+  );
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el contest");
   }
 
   const json = await res.json();
@@ -93,5 +107,32 @@ export async function getContestsByStudentId(
     return await getContestByIds(contestsIds);
   } catch (error) {
     throw new Error("Error al obtener contests: " + error.message);
+  }
+}
+
+export async function getMatchmakingTree(
+  contestId: number,
+): Promise<MatchmakingTreeNode | null> {
+  try {
+    const res = await fetch(
+      new URL(
+        `/matchmaking/tree/${contestId}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL,
+      ),
+      { cache: "no-store" },
+    );
+    if (!res.ok) {
+      if (res.status === 404) return null;
+      throw new Error("Error al obtener matchmaking tree");
+    }
+
+    const json = await res.json();
+    console.log("La data es: " + json.data + " xd.");
+    const tree: MatchmakingTreeNode | null =
+      json.data?.tree ?? json.data ?? null;
+    return tree;
+  } catch (error) {
+    console.error("Error al obtener matchmaking tree:", error);
+    return null;
   }
 }

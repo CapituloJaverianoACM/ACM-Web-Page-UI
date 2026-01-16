@@ -56,7 +56,7 @@ export function UpcomingEvents({
   const router = useRouter();
   const handleRegisterContest = async (contest: Contest) => {
     if (contest.registered) {
-      router.push(`/contest/${contest.id}`);
+      router.push(`/league/${contest.id}`);
       return;
     }
 
