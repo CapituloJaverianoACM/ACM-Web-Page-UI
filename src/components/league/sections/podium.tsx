@@ -84,7 +84,7 @@ export function Podium({ refresh_toggle }: { refresh_toggle: boolean }) {
                     student={{
                       order: s.order,
                       student: {
-                        id: "0",
+                        id: 0,
                         avatar: "",
                         level: LevelEnum.Advanced,
                         matches_count: 0,

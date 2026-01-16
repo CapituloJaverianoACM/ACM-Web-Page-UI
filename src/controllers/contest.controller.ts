@@ -42,10 +42,11 @@ export async function getContestsWithPictures(): Promise<Contest[]> {
 
   return await Promise.all(
     contests.map(async (contest) => {
-      contest.registered =
-        user_participations.find(
-          (participation) => participation.contest_id == contest.id,
-        ) != undefined;
+      const participation: Participation | undefined = user_participations.find(
+        (participation) => participation.contest_id == contest.id,
+      );
+      contest.registered = participation != undefined;
+      contest.checkin = contest.registered && participation.checkin;
       return contest;
     }),
   );

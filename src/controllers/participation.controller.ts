@@ -1,7 +1,12 @@
-import { createClient } from "@/lib/supabase/client";
 import { Contest } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
 import { User } from "@supabase/supabase-js";
+import {
+  getAccessToken,
+  getUser,
+  getUserTableFromSupabaseId,
+} from "./supabase.controller";
+import { Student } from "@/models/student.model";
 
 export async function getParticipationsByStudentId(
   studentId: number,
@@ -28,15 +33,11 @@ export async function getParticipationsByStudentId(
 export const getParticipationsBySupabaseStudentId = async (
   user: User,
 ): Promise<Participation[]> => {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from(STUDENT_TABLE)
-    .select()
-    .eq(STUDENT_ID_COLUMN, user.id);
+  const supabase_user = await getUserTableFromSupabaseId(user.id);
 
-  if (error || !data || data.length == 0) return [];
+  if (!supabase_user) return [];
 
-  return await getParticipationsByStudentId(data[0].id);
+  return await getParticipationsByStudentId(supabase_user.id);
 };
 
 export enum RegisterContestResult {
@@ -48,9 +49,6 @@ export enum RegisterContestResult {
   SUPABASE_ERROR = "Algo salió mal de nuestro lado.",
 }
 
-const STUDENT_TABLE: string = "student";
-const STUDENT_ID_COLUMN: string = "supabase_user_id";
-
 export const registerUserToContest = async (
   user_metadata: User | null,
   contest: Contest,
@@ -61,25 +59,7 @@ export const registerUserToContest = async (
     return result;
   }
 
-  const supabase = createClient();
-  const { data, error: supabase_error } = await supabase
-    .from(STUDENT_TABLE)
-    .select()
-    .eq(STUDENT_ID_COLUMN, user_metadata.id);
-
-  if (supabase_error) {
-    console.log(supabase_error);
-    result.msg = RegisterContestResult.SUPABASE_ERROR;
-
-    return result;
-  }
-
-  if (!data || data.length == 0) {
-    result.msg = RegisterContestResult.SUPABASE_ERROR;
-    return result;
-  }
-
-  const user = data[0];
+  const user = await getUserTableFromSupabaseId(user_metadata.id);
 
   if (user.level != contest.level) {
     result.msg = RegisterContestResult.LEVEL_MISMATCH;
@@ -107,7 +87,7 @@ export const registerUserToContest = async (
     checkin: false,
   };
 
-  const token = (await supabase.auth.getSession()).data.session.access_token;
+  const token = await getAccessToken();
   try {
     const res = await fetch(
       new URL(`/participation/create`, process.env.NEXT_PUBLIC_BACKEND_URL),
@@ -132,6 +112,75 @@ export const registerUserToContest = async (
   } catch (e) {
     console.log(e);
     result.msg = RegisterContestResult.SUPABASE_ERROR;
+  }
+
+  return result;
+};
+
+export enum CheckInResult {
+  NOT_LOGGED = "Necesitas estas loggeado.",
+  SUPABASE_ERROR = "Algo paso de nuestro lado.",
+  NOT_REGISTERED = "Al parecer no estas registrado al contest.",
+  OK = "Check-in exitoso.",
+  ALREADY_CHECK = "Tu check-in ya esta hecho.",
+}
+
+export const checkInStudent = async (
+  contest_id: number,
+): Promise<{ ok: boolean; msg: CheckInResult }> => {
+  const result = { ok: false, msg: CheckInResult.NOT_LOGGED };
+  const user_metadata = await getUser();
+
+  if (!user_metadata) return result;
+
+  const user: Student | null = await getUserTableFromSupabaseId(
+    user_metadata.id,
+  );
+  if (!user) {
+    result.msg = CheckInResult.SUPABASE_ERROR;
+    return result;
+  }
+
+  const participation: Participation[] = (
+    await getParticipationsByStudentId(user.id)
+  ).filter((p) => p.contest_id == contest_id);
+
+  if (participation.length == 0) {
+    result.msg = CheckInResult.NOT_REGISTERED;
+    return result;
+  }
+
+  if (participation[0].checkin) {
+    result.msg = CheckInResult.ALREADY_CHECK;
+    return result;
+  }
+
+  const token = await getAccessToken();
+
+  try {
+    const res = await fetch(
+      new URL(
+        `/participation/${contest_id}/${user.id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL,
+      ),
+      {
+        method: "PUT",
+        body: JSON.stringify({ checkin: true }),
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token!}`,
+          "acm-auth-signed-supabase": "",
+        },
+      },
+    );
+
+    if (!res.ok) throw "";
+
+    result.ok = true;
+    result.msg = CheckInResult.OK;
+  } catch (e) {
+    console.log(e);
+    result.msg = CheckInResult.SUPABASE_ERROR;
   }
 
   return result;

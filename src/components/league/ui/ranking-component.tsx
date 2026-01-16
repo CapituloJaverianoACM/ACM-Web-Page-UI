@@ -90,7 +90,7 @@ const RankingList = ({
 
   const [students, setStudents] = useState<Student[]>(
     Array.from({ length: SKELETON_RANKING_USERS_COUNT }).map(() => ({
-      id: "0",
+      id: 0,
       avatar: "",
       level: LevelEnum.Initial,
       matches_count: 0,
