@@ -27,6 +27,7 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
+  const [codeforcesHandle, setCodeforcesHandle] = useState("");
   const [student, setStudent] = useState<Student | null>(null);
   const [loadingStudent, setLoadingStudent] = useState(true);
   const [contests, setContests] = useState<Contest[]>([]);
@@ -57,6 +58,7 @@ export default function ProfilePage() {
         if (user?.id) {
           const fetchedStudent = await getStudentBySupabaseId(user.id);
           setStudent(fetchedStudent);
+          setCodeforcesHandle(fetchedStudent?.codeforces_handle || "");
         } else {
           setStudent(null);
         }
@@ -119,6 +121,7 @@ export default function ProfilePage() {
     setName(student?.name || "");
     setSurname(student?.surname || "");
     setAvatarUrl(student?.avatar || null);
+    setCodeforcesHandle(student?.codeforces_handle || "");
     setIsEditing(!isEditing);
   }
 
@@ -127,13 +130,13 @@ export default function ProfilePage() {
       alert("Error: No se puede actualizar el perfil sin un estudiante válido");
       return;
     }
-
     try {
       const updatedStudent = {
         ...student,
         name,
         surname,
         avatar: avatarUrl,
+        codeforces_handle: codeforcesHandle,
       };
 
       await updateStudent(Number(student.id), updatedStudent);
@@ -144,6 +147,7 @@ export default function ProfilePage() {
         setName(refreshedStudent.name || "");
         setSurname(refreshedStudent.surname || "");
         setAvatarUrl(refreshedStudent.avatar || null);
+        setCodeforcesHandle(refreshedStudent.codeforces_handle || "a");
       }
 
       setIsEditing(false);
@@ -159,7 +163,6 @@ export default function ProfilePage() {
         <h1 className="text-3xl md:text-4xl font-bold text-[--azul-noche] dark:text-white mb-6">
           Perfil
         </h1>
-
         <div className="space-y-6">
           {/* Información básica */}
           {loadingStudent ? (
@@ -305,13 +308,30 @@ export default function ProfilePage() {
                       </p>
                     )}
                   </div>
-                  <div className="sm:col-span-2">
+                  <div>
                     <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
                       Correo
                     </label>
                     <p className="text-[--azul-noche] dark:text-white font-medium">
                       {email}
                     </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-[--azul-ultramar] dark:text-gray-400 mb-1">
+                      Handle de Codeforces
+                    </label>
+                    {isEditing ? (
+                      <input
+                        value={codeforcesHandle}
+                        onChange={(e) => setCodeforcesHandle(e.target.value)}
+                        placeholder="Tu usuario de Codeforces"
+                        className="w-full px-3 py-2 rounded-lg bg-[--azul-niebla] dark:bg-gray-700 text-[--azul-noche] dark:text-white border border-[--azul-niebla] dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[--azul-electrico]"
+                      />
+                    ) : (
+                      <p className="text-[--azul-noche] dark:text-white font-medium">
+                        {student?.codeforces_handle || "No especificado"}
+                      </p>
+                    )}
                   </div>
 
                   {isEditing && (

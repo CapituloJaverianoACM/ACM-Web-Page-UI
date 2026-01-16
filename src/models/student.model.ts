@@ -9,4 +9,5 @@ export interface Student {
   matches_count: number;
   avatar: string;
   supabase_user_id: string;
+  codeforces_handle?: string;
 }

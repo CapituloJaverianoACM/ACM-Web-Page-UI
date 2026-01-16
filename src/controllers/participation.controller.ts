@@ -12,10 +12,6 @@ export async function getParticipationsByStudentId(
     );
 
     if (!res.ok) {
-      // Si el estudiante no tiene participaciones o hay un error, retornar array vacío
-      if (res.status === 404) {
-        return [];
-      }
       return [];
     }
 
