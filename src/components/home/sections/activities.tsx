@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { FocusCards } from "../focus-cards";
 import { PreExamsContent } from "../pre-exams-content";
+import { CoursesContent } from "../ui/courses-content";
 
 export function Activities() {
   const cards = carrousel_items.map((card, index) => (
@@ -102,6 +103,6 @@ const carrousel_items = [
     category: "Cursos y Talleres",
     title: "Aprende nuevas habilidades con nuestros cursos y talleres",
     src: "https://drive.google.com/uc?export=view&id=1HH58GMKbAqUc06YbqzhHifatfKGDRpV0",
-    content: <></>,
+    content: <CoursesContent />,
   },
 ];

@@ -48,7 +48,7 @@ export function Members() {
           </div>
         )}
         {!isLoading &&
-          members
+          (members ?? [])
             .filter((member) => member.active)
             .map((member) => (
               <MemberCard
