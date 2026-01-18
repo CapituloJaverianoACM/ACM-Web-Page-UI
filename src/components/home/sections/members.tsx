@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 export function Members() {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const MEMBERS_PRIORITY = { Presidente: 3, Vicepresidente: 2, Tesorero: 1 };
   const { data: members, isLoading } = useQuery({
     queryKey: ["members"],
     queryFn: getMembers,
@@ -57,6 +57,11 @@ export function Members() {
         {!isLoading &&
           members
             .filter((member) => member.active)
+            .toSorted(
+              (first, second) =>
+                (MEMBERS_PRIORITY[second.role] ?? 0) -
+                (MEMBERS_PRIORITY[first.role] ?? 0),
+            )
             .map((member) => (
               <MemberCard
                 key={member._id}
