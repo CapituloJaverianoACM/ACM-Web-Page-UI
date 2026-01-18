@@ -1,19 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUser } from "@/controllers/supabase.controller";
 import {
   getStudentBySupabaseId,
   updateStudent,
 } from "@/controllers/student.controller";
 import { Student } from "@/models/student.model";
-import { User } from "@supabase/supabase-js"; // Assuming User type comes from here or similar
 
 export const useProfileData = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [student, setStudent] = useState<Student | null>(null);
-  const [loadingStudent, setLoadingStudent] = useState(true);
+  const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
-
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -22,49 +18,49 @@ export const useProfileData = () => {
     avatarUrl: null as string | null,
   });
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const fetchedUser = await getUser();
-        setUser(fetchedUser);
-        setFormData((prev) => ({ ...prev, email: fetchedUser?.email || "" }));
-      } catch (error) {
-        alert("Error al cargar usuario: " + error);
+  // Query for User
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const u = await getUser();
+      if (u) {
+        setFormData((prev) => ({ ...prev, email: u.email || "" }));
       }
-    };
+      return u;
+    },
+  });
 
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        setLoadingStudent(true);
-        if (user?.id) {
-          const fetchedStudent = await getStudentBySupabaseId(user.id);
-          setStudent(fetchedStudent);
-          setFormData((prev) => ({
-            ...prev,
-            codeforcesHandle: fetchedStudent?.codeforces_handle || "",
-          }));
-        } else {
-          setStudent(null);
-        }
-      } catch (error) {
-        console.error("Error al cargar el estudiante:", error);
-        setStudent(null);
-      } finally {
-        setLoadingStudent(false);
+  // Query for Student
+  const { data: student, isLoading: loadingStudent } = useQuery({
+    queryKey: ["student", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      const s = await getStudentBySupabaseId(user.id);
+      if (s) {
+        setFormData((prev) => ({
+          ...prev,
+          codeforcesHandle: s.codeforces_handle || "",
+        }));
       }
-    };
+      return s;
+    },
+    enabled: !!user?.id,
+  });
 
-    if (user) {
-      fetchStudent();
-    } else {
-      setStudent(null);
-      setLoadingStudent(false);
-    }
-  }, [user]);
+  // Mutation for updating student
+  const updateStudentMutation = useMutation({
+    mutationFn: async (updatedStudent: Partial<Student>) => {
+      if (!student?.id) throw new Error("No student ID");
+      return updateStudent(Number(student.id), updatedStudent);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["student", user?.id] });
+      setIsEditing(false);
+    },
+    onError: (error) => {
+      alert("Error al actualizar el perfil: " + error);
+    },
+  });
 
   const handleEditing = () => {
     setFormData((prev) => ({
@@ -86,38 +82,17 @@ export const useProfileData = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!student?.id || !user?.id) {
       alert("Error: No se puede actualizar el perfil sin un estudiante válido");
       return;
     }
-    try {
-      const updatedStudent = {
-        ...student,
-        name: formData.name,
-        surname: formData.surname,
-        avatar: formData.avatarUrl,
-        codeforces_handle: formData.codeforcesHandle,
-      };
-
-      await updateStudent(Number(student.id), updatedStudent);
-
-      const refreshedStudent = await getStudentBySupabaseId(user.id);
-      if (refreshedStudent) {
-        setStudent(refreshedStudent);
-        setFormData((prev) => ({
-          ...prev,
-          name: refreshedStudent.name || "",
-          surname: refreshedStudent.surname || "",
-          avatarUrl: refreshedStudent.avatar || null,
-          codeforcesHandle: refreshedStudent.codeforces_handle || "a",
-        }));
-      }
-
-      setIsEditing(false);
-    } catch (error) {
-      alert("Error al actualizar el perfil: " + error);
-    }
+    updateStudentMutation.mutate({
+      name: formData.name,
+      surname: formData.surname,
+      avatar: formData.avatarUrl,
+      codeforces_handle: formData.codeforcesHandle,
+    });
   };
 
   return {
@@ -130,7 +105,7 @@ export const useProfileData = () => {
     handleAvatarUrlChange,
     handleSave,
     handleInputChange,
-    setIsEditing, // In case we need manual control
-    setFormData, // In case needed (e.g. onError of image)
+    setIsEditing,
+    setFormData,
   };
 };

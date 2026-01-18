@@ -1,44 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
-import { Contest } from "@/models/contest.model";
+import { useQuery } from "@tanstack/react-query";
 import { getContestsByStudentId } from "@/controllers/contest.controller";
 
 export const useStudentContests = (studentId: string | number | undefined) => {
-  const [contests, setContests] = useState<Contest[]>([]);
-  const [loadingContests, setLoadingContests] = useState(true);
+  const { data: contests = [], isLoading: loadingContests } = useQuery({
+    queryKey: ["contests", studentId],
+    queryFn: async () => {
+      if (!studentId) return [];
+      const fetchedContests = await getContestsByStudentId(Number(studentId));
+      return fetchedContests || [];
+    },
+    enabled: !!studentId,
+  });
 
-  useEffect(() => {
-    const fetchContests = async () => {
-      try {
-        setLoadingContests(true);
-        if (studentId) {
-          const fetchedContests = await getContestsByStudentId(
-            Number(studentId),
-          );
-          setContests(fetchedContests || []);
-        } else {
-          setContests([]);
-        }
-      } catch (error) {
-        console.error("Error al cargar contests:", error);
-        setContests([]);
-      } finally {
-        setLoadingContests(false);
-      }
-    };
-
-    if (studentId) {
-      fetchContests();
-    } else {
-      setContests([]);
-      setLoadingContests(false);
-    }
-  }, [studentId]);
-
-  const sortedContests = useMemo(() => {
-    return [...contests].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
-  }, [contests]);
+  const sortedContests = contests.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
   return { contests: sortedContests, loadingContests };
 };

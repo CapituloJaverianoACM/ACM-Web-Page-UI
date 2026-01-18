@@ -1,7 +1,8 @@
 import { getRankingStudents } from "@/controllers/student.controller";
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
-import { ReactNode, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ReactNode } from "react";
 
 const RankingContainer = ({
   className = "",
@@ -77,55 +78,38 @@ const RankingList = ({
   className = "",
   student_number = 20,
   offset = 0,
-  refresh_toggle,
 }: {
   className?: string;
   student_number?: number;
   offset?: number;
-  refresh_toggle: boolean;
 }) => {
   const SKELETON_RANKING_USERS_COUNT = 5;
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const { data: students = [], isLoading } = useQuery({
+    queryKey: ["ranking-students", student_number, offset],
+    queryFn: () => getRankingStudents({ student_number, offset }),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
-  const [students, setStudents] = useState<Student[]>(
-    Array.from({ length: SKELETON_RANKING_USERS_COUNT }).map(() => ({
-      id: 0,
-      avatar: "",
-      level: LevelEnum.Initial,
-      matches_count: 0,
-      victory_count: 0,
-      name: "",
-      supabase_user_id: "",
-      surname: "",
-    })),
-  );
-
-  const handlerGetRankingStudents = async () => {
-    try {
-      const response = await getRankingStudents({
-        student_number: student_number,
-        offset,
-      });
-
-      setStudents(response);
-    } catch {
-      return;
-    }
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    handlerGetRankingStudents();
-  }, [refresh_toggle]);
+  const studentsToRender = isLoading
+    ? Array.from({ length: SKELETON_RANKING_USERS_COUNT }).map(() => ({
+        id: 0,
+        avatar: "",
+        level: LevelEnum.Initial,
+        matches_count: 0,
+        victory_count: 0,
+        name: "",
+        supabase_user_id: "",
+        surname: "",
+      }))
+    : students;
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      {students.map((s, i) => {
+      {studentsToRender.map((s, i) => {
         return (
           <StudentComponent
-            skeleton={loading}
+            skeleton={isLoading}
             student={s}
             key={i}
             pos={i + offset}

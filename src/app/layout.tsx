@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { cookies } from "next/headers";
+import { Providers } from "@/components/shared/providers";
 
 // https://nextjs.org/docs/app/api-reference/functions/cookies
 
@@ -18,7 +19,9 @@ export default async function RootLayout({
         <title>Capitulo Javeriano ACM</title>
       </head>
       <body>
-        <main className="dark:bg-[#121212]">{children}</main>
+        <main className="dark:bg-[#121212]">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );
