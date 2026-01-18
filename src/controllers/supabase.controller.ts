@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { Student } from "@/models/student.model";
 import { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
@@ -41,6 +42,23 @@ export const getAccessToken = async (): Promise<string | null> => {
     return null;
   }
   return data.session.access_token;
+};
+
+const STUDENT_TABLE: string = "student";
+const STUDENT_ID_COLUMN: string = "supabase_user_id";
+
+export const getUserTableFromSupabaseId = async (
+  user_id: string,
+): Promise<Student | null> => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from(STUDENT_TABLE)
+    .select()
+    .eq(STUDENT_ID_COLUMN, user_id);
+
+  if (error || !data || data.length == 0) return null;
+
+  return data[0] as Student;
 };
 
 export const logout = async (): Promise<void> => {

@@ -1,66 +1,39 @@
 import PodiumContainer from "@/components/league/ui/podium/podium-component";
 import { getPodiumStudents } from "@/controllers/student.controller";
 import { LevelEnum } from "@/models/level.enum";
-import { Student } from "@/models/student.model";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 /**
  * Muestra a los 3 mejores estudiantes de la liga
  * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
  */
-export function Podium({ refresh_toggle }: { refresh_toggle: boolean }) {
-  const [loading, setloading] = useState<boolean>(true);
-
-  const [students, setStudents] = useState<
-    {
-      student: Student;
-      order: number;
-    }[]
-  >([]);
-  const [sortedStudents, setSortedStudents] = useState<
-    {
-      student: Student;
-      order: number;
-    }[]
-  >([]);
-
-  const handlerGetPodiumStudents = async () => {
-    console.log("Recuperando estudiantes...");
-    try {
+export function Podium() {
+  const { data: students = [], isLoading } = useQuery({
+    queryKey: ["podium-students"],
+    queryFn: async () => {
       const response = await getPodiumStudents();
+      return response.map((s, i) => ({
+        student: s,
+        order: i,
+      }));
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
-      setStudents(
-        response.map((s, i) => ({
-          student: s,
-          order: i,
-        })),
-      );
-    } catch {
-      return;
-    }
-  };
+  const sortedStudents = useMemo(() => {
+    let ss: typeof students = [];
+    let d = false;
 
-  useEffect(() => {
-    handlerGetPodiumStudents();
-    setloading(false);
-  }, [refresh_toggle]);
-
-  useEffect(() => {
-    setSortedStudents(() => {
-      let ss = [];
-      let d = false;
-
-      students
-        .toSorted((a, b) => a.order - b.order)
-        .forEach((x) => {
-          if (d) ss = [x, ...ss];
-          else ss = [...ss, x];
-
-          d = !d;
-        });
-
-      return ss;
+    // students is already ordered by rank (order 0, 1, 2...)
+    // logic to visually arrange for podium: 2, 1, 3
+    students.forEach((x) => {
+      if (d) ss = [x, ...ss];
+      else ss = [...ss, x];
+      d = !d;
     });
+
+    return ss;
   }, [students]);
 
   return (
@@ -71,7 +44,7 @@ export function Podium({ refresh_toggle }: { refresh_toggle: boolean }) {
       <div className="flex flex-col gap-2 lg:w-[80%] mx-auto">
         <h2 className="dark:text-white">Mejores 3 de la liga</h2>
         <div className="w-full h-[20rem] lg:h-[30rem] max-w-full lg:max-w-[45rem] mx-auto mt-[4rem]">
-          {loading ? (
+          {isLoading ? (
             <PodiumContainer.Container
               steps={[{ order: 1 }, { order: 0 }, { order: 2 }].map((s) => ({
                 order: s.order,
@@ -84,7 +57,7 @@ export function Podium({ refresh_toggle }: { refresh_toggle: boolean }) {
                     student={{
                       order: s.order,
                       student: {
-                        id: "0",
+                        id: 0,
                         avatar: "",
                         level: LevelEnum.Advanced,
                         matches_count: 0,
