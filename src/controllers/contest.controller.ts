@@ -1,3 +1,4 @@
+"use server";
 import { Contest } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
 import {

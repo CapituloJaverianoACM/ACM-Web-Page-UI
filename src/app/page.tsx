@@ -8,12 +8,7 @@ import { CursorWrapper } from "@/components/home/ui/cursor-wrapper";
 import Footer from "../components/shared/footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const navLinks = [
-  { key: "home", label: "Inicio", href: "#home" },
-  { key: "activities", label: "Actividades", href: "#activities" },
-  { key: "members", label: "Miembros", href: "#members" },
-  { key: "league", label: "La Liga", href: "/league" },
-];
+import { navLinks } from "@/lib/nav-links";
 
 const queryClient = new QueryClient();
 
