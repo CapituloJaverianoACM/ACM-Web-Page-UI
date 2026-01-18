@@ -2,44 +2,25 @@
 import { useEffect, useState } from "react";
 import AnimatedTooltip from "./ui/tooltip";
 import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
-import {
-  getGitHubContributorsFromRepos,
-  GitHubContributor,
-} from "@/controllers/github.controller";
+import { getGitHubContributorsFromRepos } from "@/controllers/github.controller";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Footer() {
-  const [contributors, setContributors] = useState<GitHubContributor[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!isMounted) return;
-
-    const fetchContributors = async () => {
-      try {
-        setIsLoading(true);
-
-        // Obtener contribuidores
-        console.log("Cargando contribuidores del proyecto...");
-        const contributorsData = await getGitHubContributorsFromRepos(
-          undefined,
-          6,
-          10,
-        );
-        setContributors(contributorsData);
-      } catch (error) {
-        console.error("Error loading contributors:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchContributors();
-  }, [isMounted]);
+  const { data: contributors = [], isLoading } = useQuery({
+    queryKey: ["github-contributors"],
+    queryFn: async () => {
+      console.log("Cargando contribuidores del proyecto...");
+      return await getGitHubContributorsFromRepos(undefined, 6, 10);
+    },
+    enabled: isMounted,
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  });
 
   // Convertir contribuidores al formato del tooltip
   const contributorItems = contributors.map((contributor) => ({

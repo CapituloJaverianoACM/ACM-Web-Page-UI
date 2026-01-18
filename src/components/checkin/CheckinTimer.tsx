@@ -4,6 +4,7 @@ import Countdown from "react-countdown";
 import EventCard from "@/components/league/ui/Events/event-card";
 import toast, { Toaster } from "react-hot-toast";
 import { checkInStudent } from "@/controllers/participation.controller";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CheckinTimerProps {
   contest: Contest;
@@ -14,6 +15,7 @@ const MINUTES_BEFORE_CHECKIN: number = 5;
 export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
   const deadline = new Date(contest.start_hour);
   deadline.setMinutes(deadline.getMinutes() - MINUTES_BEFORE_CHECKIN);
+  const queryClient = useQueryClient();
 
   const handleCheckin = async () => {
     if (new Date() > deadline) {
@@ -22,8 +24,7 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
     }
     const result = await checkInStudent(contest.id);
     toast[result.ok ? "success" : "error"](result.msg);
-
-    window.location.reload();
+    queryClient.invalidateQueries({ queryKey: ["league-contests"] });
   };
 
   return (

@@ -1,55 +1,13 @@
 // Code de Acha 😎
 
 import { Carousel } from "@/components/home/apple-cards-carousel";
-import EventCard from "@/components/league/ui/Events/event-card";
 import { Contest } from "@/models/contest.model";
-import { LevelEnum } from "@/models/level.enum";
-import { ReactNode, useEffect, useState } from "react";
 import { LevelFilter } from "../ui/Events/level-filter";
-import { createClient } from "@/lib/supabase/client";
-import { redirect, useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
-import { User } from "@supabase/supabase-js";
-import { registerUserToContest } from "@/controllers/participation.controller";
-import { CheckinTimer } from "@/components/checkin/CheckinTimer";
-
-const formatDateEvent = ({
-  date,
-  start_hour,
-  final_hour,
-}: {
-  date: Date;
-  start_hour: Date;
-  final_hour: Date;
-}) => {
-  const optionsDate: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
-  };
-
-  const optionsHour: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-    timeZone: "America/Bogota",
-  };
-
-  const LOCALE: string = "es-CO";
-
-  const formattedDate = new Date(date).toLocaleDateString(LOCALE, optionsDate);
-  const formattedInitialHour = new Date(start_hour).toLocaleTimeString(
-    LOCALE,
-    optionsHour,
-  );
-  const formattedFinalHour = new Date(final_hour).toLocaleTimeString(
-    LOCALE,
-    optionsHour,
-  );
-
-  return `${formattedDate}, de ${formattedInitialHour} a ${formattedFinalHour}`;
-};
+import { Toaster } from "react-hot-toast";
+import { useUpcomingEvents } from "@/hooks/use-upcoming-events";
+import { UpcomingEventCard } from "@/components/league/ui/Events/upcoming-event-card";
+import { NoEventsCard } from "@/components/league/ui/Events/no-events-card";
+import { EventSkeletonCard } from "@/components/league/ui/Events/event-skeleton-card";
 
 export function UpcomingEvents({
   events = [],
@@ -58,200 +16,16 @@ export function UpcomingEvents({
   events: Contest[];
   loadingInitialState?: boolean;
 }) {
-  const router = useRouter();
-  const handleRegisterContest = async (contest: Contest) => {
-    if (contest.registered) {
-      if (!contest.checkin) {
-        toast.error("¡Realiza el check-in primero!");
-        return;
-      }
+  const { loading, filter, setFilter, filteredEvents, handleRegisterContest } =
+    useUpcomingEvents(events, loadingInitialState);
 
-      router.push(`/contest/${contest.id}`);
-      return;
-    }
-
-    const supabase = createClient();
-    const user_metadata: User = (await supabase.auth.getUser()).data.user;
-
-    const result = await registerUserToContest(user_metadata, contest);
-
-    toast[result.ok ? "success" : "error"](result.msg);
-  };
-
-  // Diseño de una tarjeta para decir que no hay eventos
-  const NoEventsCard: ReactNode = (
-    <EventCard.Container
-      key="unique"
-      className="justify-end !w-[20rem] xl:!w-[30rem]"
-    >
-      <div className="flex w-full aspect-video">
-        <EventCard.Image
-          src={"/Logo_Oscuro.svg"}
-          className="!object-contain opacity-15 w-2/3 m-auto"
-        />
-      </div>
-
-      <EventCard.Padding>
-        <EventCard.Title>
-          No hay eventos con tus parámetros de busqueda
-        </EventCard.Title>
-        <EventCard.Padding>
-          <EventCard.Description>
-            ¡Mantene alerta a nuestras redes sociales! Así sabrás cuando
-            tengamos un evento de tu interés.
-          </EventCard.Description>
-        </EventCard.Padding>
-
-        <EventCard.RegisterButton
-          onClick={() => {
-            redirect("https://www.instagram.com/acmjaveriana/");
-          }}
-        >
-          Redes Sociales
-        </EventCard.RegisterButton>
-      </EventCard.Padding>
-    </EventCard.Container>
-  );
-
-  // Diseño de un tarjeta skeleton
-
-  const SkeletonCard: ReactNode = (
-    <EventCard.Container
-      key="unique"
-      className="justify-end !w-[20rem] xl:!w-[30rem]"
-    >
-      <div className="flex w-full aspect-video">
-        <EventCard.Image
-          src={"/Logo_Oscuro.svg"}
-          className="!object-contain opacity-15 !w-2/3 m-auto"
-        />
-      </div>
-
-      <EventCard.Padding>
-        <EventCard.Title className="bg-neutral-200 rounded" />
-        <EventCard.Padding>
-          <EventCard.Description className="bg-neutral-200 rounded" />
-        </EventCard.Padding>
-
-        <EventCard.RegisterButton>{"  "}</EventCard.RegisterButton>
-      </EventCard.Padding>
-    </EventCard.Container>
-  );
-
-  // Diseño de las tarjetas
-
-  const [loading, setLoading] = useState<boolean>(loadingInitialState);
-  const [AllCards, setAllCards] = useState<
-    {
-      comp: ReactNode;
-      level: LevelEnum;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    setAllCards(
-      events.map((event) => {
-        const { date, start_hour, final_hour } = event;
-
-        return {
-          comp: (
-            <EventCard.Container
-              key={event.id}
-              className="h-full justify-end !w-[20rem] xl:!w-[30rem]"
-            >
-              {event.picture ? (
-                <EventCard.Image src={event.picture.link} />
-              ) : (
-                <div className="flex w-full aspect-video">
-                  <EventCard.Image
-                    src={"/Logo_Oscuro.svg"}
-                    className="!object-contain opacity-15 !w-2/3 m-auto"
-                  />
-                </div>
-              )}
-
-              <EventCard.Padding>
-                <EventCard.WrapContainer>
-                  <EventCard.Title>{event.name}</EventCard.Title>
-                  {event.level == LevelEnum.Initial && (
-                    <p
-                      title="Nivel Inicial"
-                      className="text-[--azul-electrico] m-0"
-                    >
-                      Inicial
-                    </p>
-                  )}
-                  {event.level == LevelEnum.Advanced && (
-                    <p title="Nivel Avanzado" className="text-red-400 m-0">
-                      Avanzado
-                    </p>
-                  )}
-                </EventCard.WrapContainer>
-
-                <EventCard.Padding>
-                  <EventCard.Description>
-                    Salón {event.classroom} -{" "}
-                    {formatDateEvent({
-                      date,
-                      start_hour,
-                      final_hour,
-                    })}
-                  </EventCard.Description>
-                </EventCard.Padding>
-
-                {event.registered && !event.checkin && (
-                  <EventCard.Padding>
-                    <CheckinTimer contest={event} />
-                  </EventCard.Padding>
-                )}
-
-                <EventCard.RegisterButton
-                  onClick={() => {
-                    handleRegisterContest(event);
-                  }}
-                  className={event.registered ? "bg-green-500 " : " "}
-                  disabled={
-                    (!event.registered && new Date() > new Date(start_hour)) ||
-                    (event.registered && !event.checkin)
-                  }
-                >
-                  {event.registered ? "Ir al contest" : "Registrarse"}
-                </EventCard.RegisterButton>
-              </EventCard.Padding>
-            </EventCard.Container>
-          ),
-          level:
-            event.level == "Advanced" ? LevelEnum.Advanced : LevelEnum.Initial,
-        };
-      }),
-    );
-  }, [events]);
-
-  const [cards, setCards] = useState<ReactNode[]>([]);
-  const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
-
-  useEffect(() => {
-    setCards(AllCards?.map((x) => x.comp) ?? []);
-    if (AllCards.length > 0) setLoading(false);
-  }, [AllCards]);
-
-  // Acá se filtran los eventos
-
-  useEffect(() => {
-    setCards(
-      AllCards.filter((x) => {
-        if (filter == "all") return true;
-        else if (filter == "Advanced" && x.level == LevelEnum.Advanced)
-          return true;
-        else if (filter == "Initial" && x.level == LevelEnum.Initial)
-          return true;
-        return false;
-      }).map((x) => x.comp),
-    );
-    if (cards.length > 0) setLoading(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+  const cards = filteredEvents.map((event) => (
+    <UpcomingEventCard
+      key={event.id}
+      event={event}
+      onRegister={handleRegisterContest}
+    />
+  ));
 
   return (
     <div
@@ -270,7 +44,11 @@ export function UpcomingEvents({
       </div>
       <Carousel
         items={
-          loading ? [SkeletonCard] : cards.length > 0 ? cards : [NoEventsCard]
+          loading
+            ? [<EventSkeletonCard key="skeleton" />]
+            : cards.length > 0
+              ? cards
+              : [<NoEventsCard key="no-events" />]
         }
       />
     </div>
