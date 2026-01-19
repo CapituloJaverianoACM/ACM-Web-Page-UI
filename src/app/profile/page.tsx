@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import MainNavbar from "@/components/shared/main-navbar";
 import Footer from "@/components/shared/footer";
 import { useProfileData } from "@/hooks/use-profile-data";
@@ -8,9 +9,12 @@ import { ProfileSkeleton } from "@/components/profile/profile-skeleton";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { ProfileStats } from "@/components/profile/profile-stats";
 import { ContestsHistory } from "@/components/profile/contests-history";
-import { navLinks } from "@/lib/nav-links";
+import { getNavLinks } from "@/lib/nav-links";
 
 export default function ProfilePage() {
+  const t = useTranslations();
+  const navLinks = getNavLinks(t);
+
   const {
     student,
     loadingStudent,

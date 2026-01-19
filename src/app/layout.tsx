@@ -11,6 +11,8 @@ export default async function RootLayout({
 }) {
   const cookieStore = await cookies();
   const theme = cookieStore.get("theme")?.value ?? "light";
+  const locale = cookieStore.get("locale")?.value ?? "en";
+  const messages = (await import(`@/../messages/${locale}.json`)).default;
 
   return (
     <html className={`${theme}`} lang="es" style={{ scrollBehavior: "smooth" }}>
@@ -20,7 +22,9 @@ export default async function RootLayout({
       </head>
       <body>
         <main className="dark:bg-[#121212]">
-          <Providers>{children}</Providers>
+          <Providers locale={locale} messages={messages}>
+            {children}
+          </Providers>
         </main>
       </body>
     </html>

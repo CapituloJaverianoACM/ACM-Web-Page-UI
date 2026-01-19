@@ -1,10 +1,12 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 import { Map } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function RoadmapButton() {
+  const t = useTranslations("League");
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function RoadmapButton() {
           isCollapsed ? "max-w-0 opacity-0" : "max-w-xs opacity-100"
         }`}
       >
-        Mira como comenzar!
+        {t("roadmapButton")}
       </span>
     </Link>
   );

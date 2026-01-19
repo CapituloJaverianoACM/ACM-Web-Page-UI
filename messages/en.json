@@ -1,0 +1,127 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "activities": "Activities",
+    "members": "Members",
+    "league": "The League",
+    "rules": "Rules",
+    "upcomingEvents": "Upcoming Events",
+    "podium": "Podium",
+    "rank": "Ranking",
+    "login": "Log In",
+    "signup": "Sign Up"
+  },
+  "Hero": {
+    "subtitle": "Hello! We are ACM Javeriana, a group of students passionate about technology and innovation."
+  },
+  "Activities": {
+    "title": "Our Activities",
+    "description": "In our community, we organize activities such as practical workshops, programming competitions, and collaborative projects. Our goal is to learn together, improve our skills, and enjoy solving technological challenges as a team.",
+    "cpMembers": {
+      "category": "Competitive Programming",
+      "title": "Meet our competitive programming group!",
+      "description": "We are a passionate group committed to competing and standing out every day",
+      "coach": "Our Coach",
+      "loading": "Loading..."
+    },
+    "preExams": {
+      "category": "Pre-Exam Workshops",
+      "title": "Reinforce your knowledge before exams with our workshops"
+    },
+    "courses": {
+      "category": "Courses and Workshops",
+      "title": "Learn new skills with our courses and workshops"
+    }
+  },
+  "Members": {
+    "title": "Our Team",
+    "description": "Meet the talented individuals who make our chapter exceptional",
+    "inactiveMembers": "Former Members",
+    "viewInactive": "View Former Members",
+    "roles": {
+      "president": "President",
+      "vicepresident": "Vice President",
+      "treasurer": "Treasurer"
+    }
+  },
+  "Footer": {
+    "chapter": "Javeriana Chapter",
+    "contributor": "ACM Contributor",
+    "universitaryChapter": "University Chapter"
+  },
+  "League": {
+    "hero": {
+      "title1": "The League",
+      "title2": "Javeriana Programming League",
+      "text": "Where algorithms come alive and the passion for code unites us",
+      "ctaJoin": "Join the League",
+      "ctaSee": "See Competitions",
+      "yearsLabel": "Years Competing"
+    },
+    "rules": {
+      "title": "Rules of the Javeriana Programming League",
+      "objectives": {
+        "title": "Contest Objectives",
+        "item1": "Promote problem-solving and logical thinking through programming."
+      },
+      "participation": {
+        "title": "Participation Criteria",
+        "item1": "The contest is open to students from all faculties of Universidad Javeriana.",
+        "item2": "Participants must register in advance on the event platform."
+      },
+      "format": {
+        "title": "Contest Format",
+        "item1": "Contests are divided into qualifiers and finals.",
+        "item2": "Participants will have limited time to solve a series of programming problems.",
+        "item3": "Any programming language is allowed."
+      },
+      "evaluation": {
+        "title": "Evaluation",
+        "item1": "Evaluation will be based on the results provided by the evaluation system of"
+      },
+      "specific": {
+        "title": "Specific Rules",
+        "item1": "No Artificial Intelligence (AI) may be used.",
+        "item2": "Only official C++ documentation may be used:",
+        "item2b": "and",
+        "item3": "If after 15 minutes no one has submitted the exercise, a speed test will be used as a tiebreaker.",
+        "item4": "The contest dynamics are 1vs1: whoever submits the solved exercise first wins.",
+        "item5": "Rankings are determined by number of victories. In case of a tie in victories, the winner will be the one who has played fewer matches."
+      },
+      "conduct": {
+        "title": "Conduct During the Contest",
+        "item1": "The use of unauthorized external resources, such as discussion forums or previously solved code, is prohibited.",
+        "item2": "All participants are expected to maintain an attitude of respect and honesty.",
+        "item3": "Failure to comply with the rules may result in disqualification."
+      }
+    },
+    "upcomingEvents": {
+      "title": "Upcoming Events",
+      "subtitle": "Don't miss any contest!",
+      "noEvents": "No events match your search parameters",
+      "followSocial": "Stay tuned to our social networks! That's how you'll know when we have an event of your interest.",
+      "socialNetworks": "Social Networks",
+      "register": "Register",
+      "goToContest": "Go to Contest",
+      "initial": "Beginner",
+      "advanced": "Advanced",
+      "classroom": "Room"
+    },
+    "podium": {
+      "title": "Top 3 of the League"
+    },
+    "roadmapButton": "See how to get started!"
+  },
+  "Roadmap": {
+    "steps": {
+      "step1": {
+        "title": "Introduction",
+        "subtitle": "What is the league? What do I need to participate?"
+      },
+      "step2": {
+        "title": "Submitting your first problem to the Codeforces platform",
+        "subtitle": "How do I submit a problem?"
+      }
+    }
+  }
+}

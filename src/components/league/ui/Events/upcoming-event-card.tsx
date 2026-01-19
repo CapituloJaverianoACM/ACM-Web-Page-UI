@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 import EventCard from "@/components/league/ui/Events/event-card";
 import { Contest } from "@/models/contest.model";
@@ -14,6 +15,7 @@ export const UpcomingEventCard = ({
   event,
   onRegister,
 }: UpcomingEventCardProps) => {
+  const t = useTranslations("League.upcomingEvents");
   const { date, start_hour, final_hour } = event;
 
   return (
@@ -36,20 +38,20 @@ export const UpcomingEventCard = ({
         <EventCard.WrapContainer className="flex flex-col align-center items-center">
           <EventCard.Title>{event.name}</EventCard.Title>
           {event.level == LevelEnum.Initial && (
-            <p title="Nivel Inicial" className="text-[--azul-electrico] m-0">
-              Inicial
+            <p title={t("initial")} className="text-[--azul-electrico] m-0">
+              {t("initial")}
             </p>
           )}
           {event.level == LevelEnum.Advanced && (
-            <p title="Nivel Avanzado" className="text-red-400 m-0">
-              Avanzado
+            <p title={t("advanced")} className="text-red-400 m-0">
+              {t("advanced")}
             </p>
           )}
         </EventCard.WrapContainer>
 
         <EventCard.Padding>
           <EventCard.Description>
-            Salón {event.classroom} -{" "}
+            {t("classroom")} {event.classroom} -{" "}
             {formatDateEvent({
               date,
               start_hour,
@@ -72,7 +74,7 @@ export const UpcomingEventCard = ({
             (event.registered && !event.checkin)
           }
         >
-          {event.registered ? "Ir al contest" : "Registrarse"}
+          {event.registered ? t("goToContest") : t("register")}
         </EventCard.RegisterButton>
       </EventCard.Padding>
     </EventCard.Container>

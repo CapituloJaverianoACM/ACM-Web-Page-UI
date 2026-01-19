@@ -43,7 +43,6 @@ async function fetchContributorsFromRepo(
 ): Promise<GitHubContributor[]> {
   const url = `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=${perRepoLimit}&anon=0`;
 
-  console.log(`Obteniendo contribuidores de ${owner}/${repo}...`);
   const response = await fetch(url, {
     headers: {
       Accept: "application/vnd.github.v3+json",
@@ -84,9 +83,6 @@ async function fetchContributorsFromRepo(
       type: String(c.type),
     }));
 
-  console.log(
-    `Contribuidores obtenidos en ${owner}/${repo}: ${contributors.length}`,
-  );
   return contributors;
 }
 
@@ -124,6 +120,5 @@ export async function getGitHubContributorsFromRepos(
 
   deduped.sort((a, b) => a.login.localeCompare(b.login));
 
-  console.log(`Total contribuidores únicos: ${deduped.length}`);
   return deduped.slice(0, totalLimit);
 }

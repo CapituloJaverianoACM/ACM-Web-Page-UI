@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 import { FocusCards } from "./focus-cards";
 import { useCodeforcesData } from "@/hooks/use-codeforces-data";
 
@@ -14,19 +16,18 @@ const CP_MEMBERS: string[] = [
 ];
 
 export const CPMembersContent = () => {
+  const t = useTranslations("Activities.cpMembers");
   const { members, coaches, loading } = useCodeforcesData(CP_MEMBERS);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{t("loading")}</p>;
 
   return (
     <>
-      <p className="dark:text-[--azul-niebla]">
-        Somos un grupo apasionado por competir y desctacarnos cada día más
-      </p>
+      <p className="dark:text-[--azul-niebla]">{t("description")}</p>
       <br />
       <FocusCards cards={members} />
       <p className="text-3xl text-center my-10 font-semibold dark:text-[--azul-niebla]">
-        Nuestro Coach
+        {t("coach")}
       </p>
       <FocusCards cards={coaches} />
     </>

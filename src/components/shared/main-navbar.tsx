@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
 import { Student } from "@/models/student.model";
@@ -7,6 +8,7 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
+import LanguageToggle from "./ui/language-toggle";
 
 export type NavLink = {
   key: string;
@@ -19,6 +21,7 @@ interface MainNavbarProps {
 }
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
+  const t = useTranslations("Navigation");
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
@@ -106,7 +109,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
+            <div className="hidden md:flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
                 <a
                   key={item.key}
@@ -138,9 +141,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </div>
 
             <div className="flex gap-4 justify-end items-center ml-auto flex-1">
+              <LanguageToggle />
+
               <div
                 onClick={changeTheme}
-                className="glassmorphic dark:glassmorphic-dark p-2"
+                className="glassmorphic dark:glassmorphic-dark p-2 cursor-pointer"
               >
                 <IconMoon className="dark:hidden flex"></IconMoon>
                 <IconSun className="hidden dark:flex"></IconSun>
@@ -153,18 +158,18 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   userName={student?.name || ""}
                 />
               ) : (
-                <div className="hidden lg:flex items-center gap-4">
+                <div className="hidden lg:flex items-center gap-2">
                   <Link
                     href="/log-in"
                     className="btn btn--outline btn--small dark:text-white"
                   >
-                    Iniciar sesión
+                    {t("login")}
                   </Link>
                   <Link
                     href="/sign-up"
                     className="btn btn--primary btn--small dark:text-white"
                   >
-                    Registrarse
+                    {t("signup")}
                   </Link>
                 </div>
               )}
@@ -247,14 +252,14 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   className="btn btn--outline btn--small w-full dark:text-white"
                   onClick={closeMobileMenu}
                 >
-                  Iniciar sesión
+                  {t("login")}
                 </Link>
                 <Link
                   href="/sign-up"
                   className="btn btn--primary btn--small w-full"
                   onClick={closeMobileMenu}
                 >
-                  Registrarse
+                  {t("signup")}
                 </Link>
               </div>
             </div>
