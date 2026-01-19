@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { PreExamsContent } from "../pre-exams-content";
 import { CPMembersContent } from "../cp-members-content";
+import { LeagueContent } from "../league-content";
 
 export function Activities() {
   const t = useTranslations("Activities");
@@ -28,6 +29,12 @@ const carrousel_items = (t) => [
     title: t("cpMembers.title"),
     src: "https://drive.google.com/uc?export=view&id=1RW9BeAFChl4J9darhpCqwl1NEvrNi_jJ",
     content: <CPMembersContent />,
+  },
+  {
+    category: t("league.category"),
+    title: t("league.title"),
+    src: "https://drive.google.com/uc?export=view&id=1HH58GMKbAqUc06YbqzhHifatfKGDRpV0",
+    content: <LeagueContent />,
   },
   {
     category: t("preExams.category"),

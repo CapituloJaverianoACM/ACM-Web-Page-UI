@@ -24,9 +24,65 @@
       "coach": "Our Coach",
       "loading": "Loading..."
     },
+    "league": {
+      "category": "Javeriana Programming League",
+      "title": "Get to know your league!",
+      "summary": "The Javeriana Programming League is our competition where students from all faculties compete in 1vs1 programming duels. With a dynamic and competitive format, participants solve algorithmic problems in real-time, accumulating victories to climb the rankings. Discover the rules, upcoming events, and meet the best competitors on the podium.",
+      "links": {
+        "rulesDesc": "Learn the tournament rules",
+        "eventsDesc": "Upcoming competitions",
+        "podiumDesc": "Top 3 of the league",
+        "rankDesc": "Complete ranking",
+        "exploreTitle": "Explore the Full League",
+        "exploreDesc": "Discover all the details and join the competition"
+      }
+    },
     "preExams": {
       "category": "Pre-Exam Workshops",
-      "title": "Reinforce your knowledge before exams with our workshops"
+      "title": "Reinforce your knowledge before exams with our workshops",
+      "summary": "Our pre-exam workshops are designed to help you review and reinforce key concepts before your exams. With study materials, mock exams, and guided practice, we prepare you to achieve your best academic performance.",
+      "description": "Workshops focused on the most important topics of your courses",
+      "materialsAvailable": "Materials available",
+      "pastWorkshops": "Past workshops",
+      "dates": "Dates",
+      "topicsCovered": "Topics Covered",
+      "materialsUsed": "Materials Used",
+      "ctaText": "Interested in participating in our upcoming pre-exam workshops?",
+      "ctaButton": "Sign Up for Upcoming Workshops",
+      "workshops": {
+        "intro": {
+          "title": "Workshop: Introduction to Programming",
+          "description": "Fundamental programming concepts and computational logic."
+        },
+        "advanced": {
+          "title": "Workshop: Advanced Programming",
+          "description": "Advanced programming techniques and introduction to object-oriented paradigm."
+        },
+        "dataStructures": {
+          "title": "Workshop: Data Structures",
+          "description": "Implementation and use of fundamental data structures to solve complex problems."
+        }
+      },
+      "materials": {
+        "slides": "Slides",
+        "mockExam": "Mock Exam",
+        "solution": "Solution Mock Exam",
+        "exam": "Exam",
+        "inPerson": "in-person",
+        "virtual": "virtual"
+      },
+      "topics": {
+        "variables": "Variables",
+        "controlStructures": "Control Structures",
+        "functions": "Functions",
+        "arrays": "Arrays",
+        "oop": "OOP",
+        "pointers": "Pointers",
+        "errorHandling": "Error Handling",
+        "stl": "STL",
+        "trees": "Trees",
+        "graphs": "Graphs"
+      }
     },
     "courses": {
       "category": "Courses and Workshops",
