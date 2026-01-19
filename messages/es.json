@@ -108,7 +108,8 @@
       "classroom": "Salón"
     },
     "podium": {
-      "title": "Mejores 3 de la liga"
+      "title": "Mejores 3 de la liga",
+      "victories": "Victorias"
     },
     "roadmapButton": "¡Mira cómo comenzar!"
   },

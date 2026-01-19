@@ -108,7 +108,8 @@
       "classroom": "Room"
     },
     "podium": {
-      "title": "Top 3 of the League"
+      "title": "Top 3 of the League",
+      "victories": "Victories"
     },
     "roadmapButton": "See how to get started!"
   },
