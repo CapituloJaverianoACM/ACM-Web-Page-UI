@@ -15,33 +15,105 @@ interface Course {
 const courses: Course[] = [
   {
     id: "c1",
-    title: "Curso X",
+    title: "Curso De Python",
     description:
-      "Descripción del curso X. Aquí puedes explicar brevemente de qué trata, a quién va dirigido y qué se aprende.",
-    image: "/images/curso-x.jpg",
-    dates: ["Marzo 2025", "Abril 2025"],
-    topics: ["Tema 1", "Tema 2", "Tema 3"],
-    materials: [{ name: "Slides del Curso", url: "#", type: "ppt" }],
+      "Curso dirigido a estudiantes interesados en aprender Python desde cero y aplicar programación, análisis de datos y fundamentos de machine learning en un proyecto práctico.",
+    image: "",
+    dates: ["Agosto 2024", "Noviembre 2024"],
+    topics: ["Estructuras de datos", "Python", "Logica de programación"],
+    materials: [
+      {
+        name: "Slides del Curso",
+        url: "https://drive.google.com/file/d/1qPEWKgM_EKlcRyBNREXCbRR5y7VsqfNs/view?usp=drive_link",
+        type: "pdf",
+      },
+      {
+        name: "Estructuras de datos en Python",
+        url: "https://drive.google.com/file/d/1yGrrsWhHvIuGzJ2k-0PbDZ8vdwf8o8OA/view?usp=drive_link",
+        type: "pdf",
+      },
+      {
+        name: "Programación orientada a objetos",
+        url: "https://www.canva.com/design/DAGMiKy41SA/fhM5NlKTiyu7fBRG973xkg/edit",
+        type: "link",
+      },
+      {
+        name: "Introducción al machine learning",
+        url: "https://www.canva.com/design/DAGMiJv4HQQ/7iRBH2RgnwGBPkozjWo1qw/edit",
+        type: "link",
+      },
+      {
+        name: "Modelos de clasificación",
+        url: "https://www.canva.com/design/DAGMiJuNh-I/mMI_h4yrsGhi7c2iODg1bg/edit",
+        type: "link",
+      },
+      {
+        name: "Algoritmos genéticos",
+        url: "https://www.canva.com/design/DAGMjlgpawI/wE5YFShwxaOJvb0NlqkHRA/edit",
+        type: "link",
+      },
+    ],
   },
   {
     id: "c2",
-    title: "Curso Y",
+    title: "Curso Front-End (Angular)",
     description:
-      "Descripción del curso Y. Puedes cambiar completamente el contenido manteniendo el mismo diseño.",
-    image: "/images/curso-y.jpg",
-    dates: ["Mayo 2025"],
-    topics: ["Concepto A", "Concepto B"],
-    materials: [{ name: "Repositorio", url: "#", type: "link" }],
+      "Curso dirigido a estudiantes interesados en el desarrollo frontend, que introduce desde los fundamentos de HTML y CSS hasta la creación de aplicaciones web modernas utilizando Angular 17.",
+    image: "",
+    dates: ["Enero 2024", "Junio 2024"],
+    topics: ["Angular", "UI/UX", "Desarrollo Web"],
+    materials: [
+      {
+        name: "HTML",
+        url: "https://drive.google.com/file/d/1ZLE1RUrIsy22Q487X1JiC8vJwRfhwjVm/view?usp=drive_link",
+        type: "pdf",
+      },
+      {
+        name: "CSS",
+        url: "https://drive.google.com/file/d/1ZLE1RUrIsy22Q487X1JiC8vJwRfhwjVm/view",
+        type: "pdf",
+      },
+      {
+        name: "Animaciones CSS",
+        url: "https://drive.google.com/file/d/1o3zMaXMI18I08034a5mZytrO5ZZmBHG6/view?usp=drive_link",
+        type: "pdf",
+      },
+    ],
   },
   {
     id: "c3",
-    title: "Curso z",
+    title: "Curso de colegios - Introducción a la programación",
     description:
-      "Descripción del curso z. Puedes cambiar completamente el contenido manteniendo el mismo diseño.",
-    image: "/images/curso-z.jpg",
-    dates: ["Mayo 2025"],
-    topics: ["Concepto A", "Concepto B"],
-    materials: [{ name: "Repositorio", url: "#", type: "link" }],
+      "Curso introductorio dirigido a estudiantes de colegio sin experiencia previa, orientado a desarrollar el pensamiento lógico y algorítmico mediante la resolución de problemas y la implementación de conceptos básicos de programación y desarrollo web.",
+    image: "",
+    dates: ["Enero 2024", "Junio 2024"],
+    topics: [
+      "Pensamiento algoritmico",
+      "Programación básica",
+      "Desarrollo web",
+    ],
+    materials: [
+      {
+        name: "Introducción al curso",
+        url: "https://drive.google.com/file/d/13y-0zba-PtH6Hrar4UucerTAaclX7nWA/view?usp=drive_link",
+        type: "link",
+      },
+      {
+        name: "Construcciones basicas de programación",
+        url: "https://drive.google.com/file/d/1cJINGmR4Zdvg1VDXHPMJvxtbsGfUuSyS/view?usp=drive_link",
+        type: "pdf",
+      },
+      {
+        name: "Condicionales y operadores lógicos",
+        url: "https://drive.google.com/file/d/1y9EBToN4Qwk5ZuHsByAVQm8xyHMl_sk5/view?usp=drive_link",
+        type: "pdf",
+      },
+      {
+        name: "Sesiones iterativas",
+        url: "https://drive.google.com/file/d/1S-4RKwhRfdXyjk4bBCSRBk9dr9wDE6rX/view?usp=drive_link",
+        type: "pdf",
+      },
+    ],
   },
 ];
 export function CoursesContent() {
@@ -139,20 +211,6 @@ export function CoursesContent() {
                         {material.type === "ppt" && (
                           <svg
                             className="w-6 h-6 text-orange-500"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        )}
-
-                        {material.type === "doc" && (
-                          <svg
-                            className="w-6 h-6 text-blue-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
