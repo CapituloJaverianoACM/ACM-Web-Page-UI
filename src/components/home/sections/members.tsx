@@ -45,7 +45,7 @@ export function Members() {
             <MemberLoaderCard key={`member-loader-${i}`} />
           ))}
         {!isLoading &&
-          (members ?? [])
+          members 
             .filter((member) => member.active)
             .toSorted(
               (first, second) =>
