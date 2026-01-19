@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { useEffect, useRef, useState } from "react";
 import { typeText } from "@/utils/typeText";
@@ -6,6 +7,7 @@ import { initCodeParticles } from "@/utils/particles";
 import Head from "next/head";
 
 export function Hero() {
+  const t = useTranslations("League.hero");
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const subtitleRef = useRef<HTMLHeadingElement | null>(null);
   const particlesRef = useRef<HTMLDivElement | null>(null);
@@ -106,13 +108,9 @@ export function Hero() {
     const timeouts: number[] = [];
 
     const startId = window.setTimeout(() => {
-      cancelTitle = typeText(titleEl, "La Liga", 30, () => {
+      cancelTitle = typeText(titleEl, t("title1"), 30, () => {
         const id2 = window.setTimeout(() => {
-          cancelSubtitle = typeText(
-            subtitleEl,
-            "Javeriana de Programación",
-            30,
-          );
+          cancelSubtitle = typeText(subtitleEl, t("title2"), 30);
         }, 300);
         timeouts.push(id2);
       });
@@ -203,23 +201,21 @@ export function Hero() {
           <h1 ref={titleRef} className="league-title" />
           <h2 ref={subtitleRef} className="league-subtitle" />
 
-          <p className="league-text">
-            Donde los algoritmos cobran vida y la pasión por el código nos une
-          </p>
+          <p className="league-text">{t("text")}</p>
 
           <div className="cta-buttons">
             <a href="#" className="btn btn--niebla">
-              🚀 Únete a la Liga
+              🚀 {t("ctaJoin")}
             </a>
             <a href="#upcoming-events" className="btn btn--niebla">
-              📊 Ver Competencias
+              📊 {t("ctaSee")}
             </a>
           </div>
 
           <div className="stats">
             <div className="stat-item">
               <span className="stat-number">10+</span>
-              <span className="stat-label">Años Compitiendo</span>
+              <span className="stat-label">{t("yearsLabel")}</span>
             </div>
           </div>
         </div>

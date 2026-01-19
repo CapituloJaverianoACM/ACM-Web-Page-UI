@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import VideoCard from "../ui/video-card";
 
@@ -10,18 +11,20 @@ interface RoadmapStep {
 }
 
 export function Roadmap() {
+  const t = useTranslations("Roadmap.steps");
+
   const steps: RoadmapStep[] = [
     {
       number: 1,
-      title: "Introduccion",
-      subtitle: "¿Que es la liga? ¿ Que necesito para participar?",
+      title: t("step1.title"),
+      subtitle: t("step1.subtitle"),
       videoSrc:
         "https://www.youtube.com/watch?v=QFzXQNZ6zvQ&pp=ugUEEgJlbtIHCQlNCgGHKiGM7w%3D%3D",
     },
     {
       number: 2,
-      title: "Subiendo tu primer problema a la plataforma de Codeforces",
-      subtitle: "¿Como envio un problema?",
+      title: t("step2.title"),
+      subtitle: t("step2.subtitle"),
     },
   ];
 

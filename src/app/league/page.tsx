@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import MainNavbar from "@/components/shared/main-navbar";
 import { Hero } from "@/components/league/sections/hero";
@@ -13,19 +14,20 @@ import { suscribe_leaderboard } from "@/lib/supabase/channel_subscribe";
 import { RoadmapButton } from "@/components/home/ui/roadmap-button";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const navLinks = [
-  { key: "home", label: "Inicio", href: "/" },
-  { key: "rules", label: "Reglas", href: "#rules" },
-  {
-    key: "upcoming-events",
-    label: "Próximos Eventos",
-    href: "#upcoming-events",
-  },
-  { key: "podium", label: "Podio", href: "#podium" },
-  { key: "rank", label: "Ranking", href: "/rank" },
-];
-
 export default function LeagueHomePage() {
+  const t = useTranslations("Navigation");
+  const navLinks = [
+    { key: "home", label: t("home"), href: "/" },
+    { key: "rules", label: t("rules"), href: "#rules" },
+    {
+      key: "upcoming-events",
+      label: t("upcomingEvents"),
+      href: "#upcoming-events",
+    },
+    { key: "podium", label: t("podium"), href: "#podium" },
+    { key: "rank", label: t("rank"), href: "/rank" },
+  ];
+
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["league-contests"],
     queryFn: async () => {

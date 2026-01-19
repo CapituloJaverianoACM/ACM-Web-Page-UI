@@ -1,3 +1,4 @@
+// import { useTranslations } from "next-intl";
 import PodiumContainer from "@/components/league/ui/podium/podium-component";
 import { getPodiumStudents } from "@/controllers/student.controller";
 import { LevelEnum } from "@/models/level.enum";
@@ -9,6 +10,7 @@ import { useMemo } from "react";
  * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
  */
 export function Podium() {
+  // const t = useTranslations("League.podium");
   const { data: students = [], isLoading } = useQuery({
     queryKey: ["podium-students"],
     queryFn: async () => {
