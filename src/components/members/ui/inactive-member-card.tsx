@@ -20,7 +20,7 @@ export const InactiveMemberCard: React.FC<InactiveMemberCardProps> = ({
       onClick={onClick}
     >
       <div className="flex-1">
-        <div className="card bg-(--azul-niebla) flex-row p-md transition-all duration-300 hover:scale-[1.025] overflow-hidden dark:bg-(--azul-electrico)">
+        <div className="card rounded-md bg-(--azul-niebla) flex-row p-md transition-all duration-300 hover:scale-[1.025] overflow-hidden dark:bg-(--azul-electrico)">
           {/* Imagen, info y botones en una fila */}
           <div className="flex flex-row items-center gap-6">
             {/* Imagen */}

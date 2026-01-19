@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 interface TreeNodeProps {
   nodeDatum: {
     name: string;
@@ -45,11 +43,13 @@ export default function TreeNode({
           cursor: "pointer",
           filter: "drop-shadow(0 4px 6px rgba(0, 8, 27, 0.15))",
           transition: "all 300ms ease-in-out",
+          border: "none",
         }}
         className="hover:opacity-90"
       />
       <foreignObject width={100} height={100} x={-50} y={-50}>
         <div>
+          <img src="/Logo_Oscuro.svg" className="mt-5" />
           <p className="text-center">{studentId}</p>
         </div>
       </foreignObject>
