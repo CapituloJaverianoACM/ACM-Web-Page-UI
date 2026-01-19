@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Student } from "@/models/student.model";
 import { IconCrown } from "@tabler/icons-react";
 import { ReactNode } from "react";
@@ -43,6 +46,7 @@ const Step = (props: {
   showUserInfo?: boolean;
   showCrown?: boolean;
 }) => {
+  const t = useTranslations("League.podium");
   const {
     bg_color = "#000",
     className = "",
@@ -87,7 +91,7 @@ const Step = (props: {
                 {" "}
                 <IconCrown className="text-yellow-500" size={15} />
                 {student.student.victory_count}{" "}
-                <span className="hidden lg:flex">Victorias</span>
+                <span className="hidden lg:flex">{t("victories")}</span>
               </p>
             </div>
           )}

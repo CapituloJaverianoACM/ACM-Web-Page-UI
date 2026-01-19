@@ -1,8 +1,12 @@
 "use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 import ThreeBlobs from "../three-blobs";
+import { HeroBackground } from "../ui/hero-background";
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <section
       className="relative min-h-screen w-full overflow-hidden cursor-none bg-[#dde5f8] dark:bg-transparent"
@@ -12,24 +16,7 @@ export function Hero() {
       <ThreeBlobs />
 
       {/* Blurry overlay between blobs and content */}
-      <div
-        className="absolute inset-0 z-15 pointer-events-none bg-[#ffffff10]"
-        style={{
-          backdropFilter: "blur(50px)",
-          WebkitBackdropFilter: "blur(50px)",
-        }}
-      >
-        {/* Grain overlay */}
-        <div
-          className="opacity-25 dark:opacity-10 absolute inset-0 w-full h-full"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noise)'/></svg>\")",
-            pointerEvents: "none",
-            zIndex: 1,
-          }}
-        />
-      </div>
+      <HeroBackground />
 
       {/* Content Overlay with slightly increased z-index to ensure visibility over blurred blobs */}
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-6 text-center">
@@ -48,8 +35,7 @@ export function Hero() {
 
           {/* Subtitle */}
           <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow dark:text-white">
-            ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por
-            la tecnología y la innovación.
+            {t("subtitle")}
           </p>
         </div>
 

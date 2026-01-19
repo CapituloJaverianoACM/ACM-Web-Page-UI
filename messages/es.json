@@ -1,0 +1,184 @@
+{
+  "Navigation": {
+    "home": "Inicio",
+    "activities": "Actividades",
+    "members": "Miembros",
+    "league": "La Liga",
+    "rules": "Reglas",
+    "upcomingEvents": "Eventos",
+    "podium": "Podio",
+    "rank": "Ranking",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse"
+  },
+  "Hero": {
+    "subtitle": "¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la innovación."
+  },
+  "Activities": {
+    "title": "Nuestras Actividades",
+    "description": "En nuestra comunidad organizamos actividades como talleres prácticos, competencias de programación y proyectos colaborativos. Nuestro objetivo es aprender juntos, mejorar nuestras habilidades y disfrutar resolviendo retos tecnológicos en equipo.",
+    "cpMembers": {
+      "category": "Programación Competitiva",
+      "title": "¡Conoce a nuestro grupo de programación competitiva!",
+      "description": "Somos un grupo apasionado por competir y destacarnos cada día más",
+      "coach": "Nuestro Coach",
+      "loading": "Cargando..."
+    },
+    "league": {
+      "category": "Liga javeriana de programacion",
+      "title": "¡Conoce tu liga!",
+      "summary": "La Liga Javeriana de Programación es nuestra competencia donde estudiantes de todas las facultades se enfrentan en duelos 1vs1 de programación. Con un formato dinámico y competitivo, los participantes resuelven problemas algorítmicos en tiempo real, acumulando victorias para escalar en el ranking. Descubre las reglas, próximos eventos y conoce a los mejores competidores en el podio.",
+      "links": {
+        "rulesDesc": "Conoce las reglas del torneo",
+        "eventsDesc": "Próximas competencias",
+        "podiumDesc": "Top 3 de la liga",
+        "rankDesc": "Ranking completo",
+        "exploreTitle": "Explora la Liga Completa",
+        "exploreDesc": "Descubre todos los detalles y únete a la competencia"
+      }
+    },
+    "preExams": {
+      "category": "Talleres Pre-Parciales",
+      "title": "Refuerza tus conocimientos antes de los parciales con nuestros talleres",
+      "summary": "Nuestros talleres preparciales están diseñados para ayudarte a repasar y reforzar los conceptos clave antes de tus exámenes. Con materiales de estudio, simulacros y prácticas guiadas, te preparamos para que logres tu mejor desempeño académico.",
+      "description": "Talleres enfocados en los temas más importantes de tus cursos",
+      "materialsAvailable": "Materiales disponibles",
+      "pastWorkshops": "Talleres anteriores",
+      "dates": "Fechas",
+      "topicsCovered": "Temas Cubiertos",
+      "materialsUsed": "Material Utilizado",
+      "ctaText": "¿Te interesa participar en nuestros próximos preparciales?",
+      "ctaButton": "Inscribirse en Próximos Talleres",
+      "workshops": {
+        "intro": {
+          "title": "Taller: Introducción a la Programación",
+          "description": "Conceptos fundamentales de programación y lógica computacional."
+        },
+        "advanced": {
+          "title": "Taller: Programación Avanzada",
+          "description": "Técnicas avanzadas de programación e introducción al paradigma orientado a objetos."
+        },
+        "dataStructures": {
+          "title": "Taller: Estructuras de Datos",
+          "description": "Implementación y uso de estructuras de datos fundamentales para resolver problemas complejos."
+        }
+      },
+      "materials": {
+        "slides": "Slides",
+        "mockExam": "Simulacro",
+        "solution": "Solución Simulacro",
+        "exam": "Parcial",
+        "inPerson": "presencial",
+        "virtual": "virtual"
+      },
+      "topics": {
+        "variables": "Variables",
+        "controlStructures": "Estructuras de control",
+        "functions": "Funciones",
+        "arrays": "Arrays",
+        "oop": "POO",
+        "pointers": "Apuntadores",
+        "errorHandling": "Manejo de errores",
+        "stl": "STL",
+        "trees": "Árboles",
+        "graphs": "Grafos"
+      }
+    },
+    "courses": {
+      "category": "Cursos y Talleres",
+      "title": "Aprende nuevas habilidades con nuestros cursos y talleres"
+    }
+  },
+  "Members": {
+    "title": "Nuestro Equipo",
+    "description": "Conoce a los talentosos individuos que hacen que nuestro capítulo sea excepcional",
+    "inactiveMembers": "Miembros Anteriores",
+    "viewInactive": "Ver Miembros Anteriores",
+    "roles": {
+      "president": "Presidente",
+      "vicepresident": "Vicepresidente",
+      "treasurer": "Tesorero"
+    }
+  },
+  "Footer": {
+    "chapter": "Capítulo Javeriano",
+    "contributor": "Colaborador ACM",
+    "universitaryChapter": "Capítulo Universitario"
+  },
+  "League": {
+    "hero": {
+      "title1": "La Liga",
+      "title2": "Javeriana de Programación",
+      "text": "Donde los algoritmos cobran vida y la pasión por el código nos une",
+      "ctaJoin": "Únete a la Liga",
+      "ctaSee": "Ver Competencias",
+      "yearsLabel": "Años Compitiendo"
+    },
+    "rules": {
+      "title": "Reglas de la Liga Javeriana de Programación",
+      "objectives": {
+        "title": "Objetivos del Concurso",
+        "item1": "Promover la resolución de problemas y el pensamiento lógico a través de la programación."
+      },
+      "participation": {
+        "title": "Criterios de Participación",
+        "item1": "El concurso está abierto a estudiantes de todas las facultades de la Universidad Javeriana.",
+        "item2": "Los participantes deben inscribirse previamente en la plataforma del evento."
+      },
+      "format": {
+        "title": "Formato del Concurso",
+        "item1": "Los concursos se dividen en eliminatorias y finales.",
+        "item2": "El participante tendrá un tiempo limitado para resolver una serie de problemas de programación.",
+        "item3": "Se permitirá el uso de cualquier lenguaje de programación."
+      },
+      "evaluation": {
+        "title": "Evaluación",
+        "item1": "La evaluación se basará en el resultado dado por el sistema de evaluación de"
+      },
+      "specific": {
+        "title": "Reglas Específicas",
+        "item1": "No se puede hacer uso de ninguna Inteligencia Artificial (IA).",
+        "item2": "Solo se puede utilizar la documentación oficial de C++:",
+        "item2b": "y",
+        "item3": "Si después de 15 minutos ninguno ha mandado el ejercicio, se desempatará con una prueba de velocidad.",
+        "item4": "La dinámica de las competencias es un 1vs1: el que primero mande el ejercicio resuelto gana.",
+        "item5": "El ranking se determina por la cantidad de victorias. En caso de empate en victorias, el ganador será el que menos partidas haya jugado."
+      },
+      "conduct": {
+        "title": "Conducta Durante el Concurso",
+        "item1": "Se prohíbe el uso de recursos externos no autorizados, como foros de discusión o códigos previamente resueltos.",
+        "item2": "Se espera que todos los participantes mantengan una actitud de respeto y honestidad.",
+        "item3": "El incumplimiento de las normas puede resultar en descalificación."
+      }
+    },
+    "upcomingEvents": {
+      "title": "Próximos Eventos",
+      "subtitle": "¡No te pierdas de ningún contest!",
+      "noEvents": "No hay eventos con tus parámetros de búsqueda",
+      "followSocial": "¡Mantente alerta a nuestras redes sociales! Así sabrás cuando tengamos un evento de tu interés.",
+      "socialNetworks": "Redes Sociales",
+      "register": "Registrarse",
+      "goToContest": "Ir al contest",
+      "initial": "Inicial",
+      "advanced": "Avanzado",
+      "classroom": "Salón"
+    },
+    "podium": {
+      "title": "Mejores 3 de la liga",
+      "victories": "Victorias"
+    },
+    "roadmapButton": "¡Mira cómo comenzar!"
+  },
+  "Roadmap": {
+    "steps": {
+      "step1": {
+        "title": "Introducción",
+        "subtitle": "¿Qué es la liga? ¿Qué necesito para participar?"
+      },
+      "step2": {
+        "title": "Subiendo tu primer problema a la plataforma de Codeforces",
+        "subtitle": "¿Cómo envío un problema?"
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
 import { Student } from "@/models/student.model";
@@ -7,6 +8,7 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
+import LanguageToggle from "./ui/language-toggle";
 
 export type NavLink = {
   key: string;
@@ -19,6 +21,7 @@ interface MainNavbarProps {
 }
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
+  const t = useTranslations("Navigation");
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
@@ -106,12 +109,16 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
+            <div className="hidden md:flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
                 <a
                   key={item.key}
                   href={item.href}
-                  className={`text-base text-semibold px-md py-md relative ${activeLink === item.key ? "text-[--azul-electrico]" : "text-[--azul-noche] dark:text-white"}`}
+                  className={`text-base text-semibold px-md py-md relative ${
+                    activeLink === item.key
+                      ? "text-[--azul-electrico] dark:text-[--azul-niebla]"
+                      : "text-[--azul-noche] dark:text-white"
+                  }`}
                   style={{
                     textDecoration: "none",
                     // color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
@@ -123,16 +130,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
+                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-[var(--radius-sm)] transform -translate-x-1/2 bg-[--azul-electrico] dark:bg-[--azul-niebla]`}
                     style={{
-                      position: "absolute",
-                      bottom: "0",
-                      left: "50%",
                       width: activeLink === item.key ? "30px" : "0",
-                      height: "3px",
-                      backgroundColor: "var(--azul-electrico)",
-                      borderRadius: "var(--radius-sm)",
                       transition: "width var(--transition-normal)",
-                      transform: "translateX(-50%)",
                     }}
                   ></span>
                 </a>
@@ -140,9 +141,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </div>
 
             <div className="flex gap-4 justify-end items-center ml-auto flex-1">
+              <LanguageToggle />
+
               <div
                 onClick={changeTheme}
-                className="glassmorphic dark:glassmorphic-dark p-2"
+                className="glassmorphic dark:glassmorphic-dark p-2 cursor-pointer"
               >
                 <IconMoon className="dark:hidden flex"></IconMoon>
                 <IconSun className="hidden dark:flex"></IconSun>
@@ -155,15 +158,18 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   userName={student?.name || ""}
                 />
               ) : (
-                <div className="hidden lg:flex items-center gap-4">
-                  <Link href="/log-in" className="btn btn--outline btn--small ">
-                    Iniciar sesión
+                <div className="hidden lg:flex items-center gap-2">
+                  <Link
+                    href="/log-in"
+                    className="btn btn--outline btn--small dark:text-white"
+                  >
+                    {t("login")}
                   </Link>
                   <Link
                     href="/sign-up"
                     className="btn btn--primary btn--small dark:text-white"
                   >
-                    Registrarse
+                    {t("signup")}
                   </Link>
                 </div>
               )}
@@ -231,22 +237,29 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   }}
                 >
                   {item.label}
+                  <span
+                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-[var(--radius-sm)] transform -translate-x-1/2 bg-[--azul-electrico] dark:bg-[--azul-niebla]`}
+                    style={{
+                      width: activeLink === item.key ? "30px" : "0",
+                      transition: "width var(--transition-normal)",
+                    }}
+                  ></span>
                 </a>
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
                   href="/log-in"
-                  className="btn btn--outline btn--small w-full"
+                  className="btn btn--outline btn--small w-full dark:text-white"
                   onClick={closeMobileMenu}
                 >
-                  Iniciar sesión
+                  {t("login")}
                 </Link>
                 <Link
                   href="/sign-up"
                   className="btn btn--primary btn--small w-full"
                   onClick={closeMobileMenu}
                 >
-                  Registrarse
+                  {t("signup")}
                 </Link>
               </div>
             </div>
