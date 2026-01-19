@@ -8,6 +8,28 @@ import {
 } from "./supabase.controller";
 import { Student } from "@/models/student.model";
 
+export async function getParticipationByContestId(
+  contest_id: number,
+): Promise<Participation[]> {
+  try {
+    const res = await fetch(
+      new URL(
+        `/participation/contest/${contest_id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL,
+      ),
+    );
+    if (!res.ok) {
+      return [];
+    }
+
+    const json = await res.json();
+    return json.data || [];
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+}
+
 export async function getParticipationsByStudentId(
   studentId: number,
 ): Promise<Participation[]> {

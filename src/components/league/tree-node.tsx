@@ -24,10 +24,10 @@ export default function TreeNode({
   const isLeaf = !hasChildren;
 
   const fillColor = isLeaf
-    ? "#004af5" // azul-electrico
+    ? "#ffffff" // azul-electrico
     : nodeDatum.children && nodeDatum.children.length === 2
-      ? "#3a75ff" // azul-crayon
-      : "#022983"; // azul-ultramar
+      ? "#ffffff" // azul-crayon
+      : "#ffffff"; // azul-ultramar
 
   // Extraer el ID del nombre o usar el prop
   const studentId =

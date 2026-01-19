@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../globals.css";
 import { cookies } from "next/headers";
 import { Providers } from "@/components/shared/providers";
 

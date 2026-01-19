@@ -104,6 +104,7 @@ export async function updateStudent(
   if (!token) {
     throw new Error("No se pudo obtener el token de autenticación");
   }
+  console.log(student);
 
   const res = await fetch(
     new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
@@ -124,4 +125,29 @@ export async function updateStudent(
 
   const json = await res.json();
   return json.data;
+}
+
+export async function queryStudentsByBulkIds(
+  students_ids: number[],
+): Promise<Student[]> {
+  try {
+    const res = await fetch(
+      new URL(`/students/bulk-query/id`, process.env.NEXT_PUBLIC_BACKEND_URL),
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ ids: students_ids }),
+      },
+    );
+
+    if (!res.ok) return [];
+
+    const result = await res.json();
+    return result.data || [];
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 }
