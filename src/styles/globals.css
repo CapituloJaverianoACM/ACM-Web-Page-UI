@@ -470,6 +470,101 @@ a:active {
   filter: brightness(0.9);
 }
 
+/* Info button - expanded styles */
+.btn--info {
+  /* control sizes via CSS variables for easy tuning */
+  --btn-info-expanded-width: min(48rem, calc(100vw - 4rem));
+  --btn-info-collapsed-width: 3.5rem; /* ~56px */
+  --btn-info-duration: 420ms;
+  --btn-info-ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  background-color: var(--azul-crayon);
+  color: var(--white);
+
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  justify-content: flex-start;
+
+  /* allow the button to size to its content up to a max */
+  height: 3.5rem;
+  padding: 0 1rem;
+  width: -webkit-max-content; /* let content define width */
+  width: max-content;
+  max-width: var(--btn-info-expanded-width); /* but don't overflow viewport */
+  min-width: var(--btn-info-collapsed-width);
+
+  overflow: visible; /* show full label when expanded */
+  transition:
+    box-shadow var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+/* Keep text/icon white on hover in light mode */
+.btn--info:hover {
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* Icon should always be visible and centered in collapsed state */
+.btn--info .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  transition:
+    transform 260ms var(--btn-info-ease),
+    opacity 160ms linear;
+  display: inline-block;
+}
+
+/* Make the label take its natural size so the button grows to fit it */
+.btn--info .label {
+  margin-left: 0.5rem;
+  white-space: nowrap; /* keep on a single line if possible */
+  flex: 0 0 auto; /* do not shrink; let the container expand */
+  min-width: 0;
+  overflow: visible;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition:
+    opacity 320ms var(--btn-info-ease),
+    transform 360ms var(--btn-info-ease);
+}
+
+/* Collapsed state: show only the icon centered */
+.btn--info.collapsed {
+  width: var(--btn-info-collapsed-width) !important;
+  padding: 0 !important;
+  border-radius: 9999px !important;
+  justify-content: center;
+  overflow: hidden; /* hide the label while collapsed */
+}
+
+.btn--info.collapsed .icon {
+  margin: 0; /* center icon */
+  display: inline-block;
+  opacity: 1;
+  width: 1.4rem; /* slightly larger for clarity */
+  height: 1.4rem;
+}
+
+/* ensure label is hidden during collapse animation as well */
+.btn--info.collapsing .label,
+.btn--info.collapsed .label {
+  opacity: 0;
+  transform: translateX(8px) scale(0.98);
+  transition-duration: 200ms;
+  transition-timing-function: var(--btn-info-ease);
+}
+
 /* Button sizes */
 .btn--small {
   padding: var(--space-sm) var(--space-md);

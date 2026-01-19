@@ -21,11 +21,13 @@ const Title = (props: {
   const { children, className = "" } = props;
 
   return (
-    <p
-      className={`font-semibold text-lg m-0 dark:text-[var(--azul-niebla)] min-h-7 ${className}`}
-    >
-      {children}
-    </p>
+    <div className="text-center">
+      <p
+        className={`font-semibold text-lg m-0 dark:text-[var(--azul-niebla)] min-h-7 ${className}`}
+      >
+        {children}
+      </p>
+    </div>
   );
 };
 
@@ -68,13 +70,20 @@ const RegisterButton = (props: {
   onClick?: MouseEventHandler;
   className?: string;
   children?: ReactNode | string;
+  disabled?: boolean;
 }) => {
-  const { onClick = () => {}, className = "", children = null } = props;
+  const {
+    onClick = () => {},
+    className = "",
+    children = null,
+    disabled = false,
+  } = props;
 
   return (
     <button
-      className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)_/_0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full ${className}`}
+      className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)_/_0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full disabled:opacity-20 ${className}`}
       onClick={onClick}
+      disabled={disabled}
     >
       <div className="h-6 text-base">{children ?? "Registrarse"}</div>
     </button>
@@ -90,7 +99,7 @@ const WrapContainer = (props: {
   return <div className={`flex flex-wrap gap-2 ${className}`}>{children}</div>;
 };
 
-export default {
+const event_card = {
   Container,
   Image,
   Title,
@@ -99,3 +108,5 @@ export default {
   Description,
   WrapContainer,
 };
+
+export default event_card;
