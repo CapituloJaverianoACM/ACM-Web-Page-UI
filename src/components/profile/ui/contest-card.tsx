@@ -20,7 +20,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
       return {
         text: "Próxima",
         classes:
-          "bg-[--azul-niebla] text-[--azul-electrico] dark:bg-blue-900 dark:text-blue-200",
+          "bg-(--azul-niebla) text-(--azul-electrico) dark:bg-blue-900 dark:text-blue-200",
       };
     if (isInProgress)
       return {
@@ -38,9 +38,9 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
 
   return (
     <li className="group">
-      <div className="flex items-start gap-4 p-4 rounded-lg border border-[--azul-niebla] dark:border-gray-700 bg-[--azul-niebla]/30 dark:bg-gray-700/50 hover:bg-[--azul-niebla]/50 dark:hover:bg-gray-700 transition-colors">
+      <div className="flex items-start gap-4 p-4 rounded-sm border border-(--azul-niebla) dark:border-gray-700 bg-(--azul-niebla)/30 dark:bg-gray-700/50 hover:bg-(--azul-niebla)/50 dark:hover:bg-gray-700 transition-colors">
         <div className="flex-1 min-w-0">
-          <p className="text-base mb-0 font-semibold text-[--azul-noche] dark:text-white truncate">
+          <p className="text-base mb-0 font-semibold text-(--azul-noche) dark:text-white truncate">
             {contest.name}
           </p>
           <span
@@ -48,7 +48,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
           >
             {statusInfo.text}
           </span>
-          <p className="text-xs text-[--azul-ultramar] dark:text-gray-400 truncate mt-1">
+          <p className="text-xs text-(--azul-ultramar) dark:text-gray-400 truncate mt-1">
             {new Date(contest.date).toLocaleDateString(undefined, {
               year: "numeric",
               month: "long",
@@ -61,7 +61,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
           {isUpcoming && !contest.checkin ? ( // TODO : Traer si ya hizo checkin de participation
             <Link
               href="/auth/login"
-              className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-[--azul-electrico] hover:bg-[--azul-crayon] text-white hover:text-white"
+              className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-(--azul-electrico) hover:bg-(--azul-crayon) text-white hover:text-white"
             >
               Check in
             </Link>

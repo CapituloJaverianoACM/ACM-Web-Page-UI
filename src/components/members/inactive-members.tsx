@@ -39,7 +39,7 @@ const InactiveMembers = () => {
   });
 
   return (
-    <div className="pt-[10vh] min-h-screen bg-gradient-to-br ">
+    <div className="pt-[10vh] min-h-screen bg-linear-to-br ">
       <div className="container mx-auto px-4 ">
         <div className="space-y-8">
           {/* Header */}

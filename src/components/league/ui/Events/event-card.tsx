@@ -23,7 +23,7 @@ const Title = (props: {
   return (
     <div className="text-center">
       <p
-        className={`font-semibold text-lg m-0 dark:text-[var(--azul-niebla)] min-h-7 ${className}`}
+        className={`font-semibold text-lg m-0 dark:text-(--azul-niebla) min-h-7 ${className}`}
       >
         {children}
       </p>
@@ -44,7 +44,7 @@ const Container = (props: { children: ReactNode; className?: string }) => {
 
   return (
     <div
-      className={`glassmorphic dark:glassmorphic-dark w-full flex flex-col gap-2 !rounded-3xl hover:shadow-md hover:transition hover:duration-100 border border-[--azul-niebla] overflow-hidden ${className}`}
+      className={`glassmorphic dark:glassmorphic-dark w-full flex flex-col gap-2 rounded-3xl! hover:shadow-md hover:transition hover:duration-100 border border-(--azul-niebla) overflow-hidden ${className}`}
     >
       {children}
     </div>
@@ -59,7 +59,7 @@ const Description = (props: {
 
   return (
     <p
-      className={`text-xs h-[3rem] max-h-[3rem] text-neutral-800 dark:text-[var(--azul-niebla)] m-0 ${className}`}
+      className={`text-xs h-12 max-h-12 text-neutral-800 dark:text-(--azul-niebla) m-0 ${className}`}
     >
       {children}
     </p>
@@ -81,7 +81,7 @@ const RegisterButton = (props: {
 
   return (
     <button
-      className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)_/_0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full disabled:opacity-20 ${className}`}
+      className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)/0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)/0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full disabled:opacity-20 ${className}`}
       onClick={onClick}
       disabled={disabled}
     >

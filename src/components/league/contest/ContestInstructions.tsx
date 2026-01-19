@@ -1,6 +1,6 @@
 export const ContestInstructions: React.FC = () => {
   return (
-    <div className="w-full max-w-[3000px] flex-grow p-10 bg-white/20 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-2xl flex flex-col justify-between">
+    <div className="w-full max-w-[3000px] grow p-10 bg-white/20 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-2xl flex flex-col justify-between">
       <div>
         <h2 className="text-4xl font-extralight text-white italic mb-6 tracking-tight">
           Instrucciones

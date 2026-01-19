@@ -110,7 +110,7 @@ export function Roadmap() {
           {/* Curved path connecting cards */}
           <path
             d={generateCurvePath()}
-            className="stroke-[var(--azul-crayon)] dark:stroke-[var(--azul-electrico)]"
+            className="stroke-(--azul-crayon) dark:stroke-(--azul-electrico)"
             strokeWidth="3"
             fill="none"
             strokeDasharray="8,4"
@@ -126,7 +126,7 @@ export function Roadmap() {
                 cx={x}
                 cy={y}
                 r="8"
-                className="fill-[var(--azul-crayon)] dark:fill-[var(--azul-electrico)]"
+                className="fill-(--azul-crayon) dark:fill-(--azul-electrico)"
               />
             );
           })}
@@ -141,14 +141,14 @@ export function Roadmap() {
             >
               {/* Video Card - más grande con número en esquina */}
               <div
-                className="w-[32rem] relative"
+                className="w-lg relative"
                 style={{
                   marginLeft: index % 2 === 0 ? "-30rem" : "30rem",
                 }}
               >
                 {/* Number Badge - esquina superior izquierda */}
                 <div className="absolute -top-4 -left-4 z-20">
-                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--azul-crayon)] dark:bg-[var(--azul-electrico)] text-[var(--white)] font-bold text-2xl shadow-lg">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-(--azul-crayon) dark:bg-(--azul-electrico) text-(--white) font-bold text-2xl shadow-lg">
                     {step.number}
                   </div>
                 </div>

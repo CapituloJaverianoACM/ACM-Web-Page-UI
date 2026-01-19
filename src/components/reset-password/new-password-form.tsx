@@ -73,9 +73,9 @@ const NewPasswordForm: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-2">
+      <p className="text-center text-sm text-(--azul-ultramar) dark:text-gray-400 mb-2">
         Editando contraseña de{" "}
-        <span className="text-[var(--azul-electrico)] font-semibold">
+        <span className="text-(--azul-electrico) font-semibold">
           {user?.email}
         </span>
       </p>
@@ -101,7 +101,7 @@ const NewPasswordForm: React.FC = () => {
           <button
             type="button"
             id="first"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={togglePasswordVisibility}
           >
             {passwordVisibility[0][0] ? (
@@ -134,7 +134,7 @@ const NewPasswordForm: React.FC = () => {
           <button
             type="button"
             id="second"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={togglePasswordVisibility}
           >
             {passwordVisibility[1][0] ? (

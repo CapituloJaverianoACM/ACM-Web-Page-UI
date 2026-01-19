@@ -15,10 +15,10 @@ export const InactiveMembersHeader = () => {
         </Button>
       </Link>
       <div>
-        <h1 className="text-4xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold text-gray-900 bg-linear-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
           Miembros Inactivos
         </h1>
-        <p className="text-xl text-gray-600 dark:text-[var(--azul-niebla)] mt-2">
+        <p className="text-xl text-gray-600 dark:text-(--azul-niebla) mt-2">
           Línea de tiempo de miembros que ya no están activos
         </p>
       </div>

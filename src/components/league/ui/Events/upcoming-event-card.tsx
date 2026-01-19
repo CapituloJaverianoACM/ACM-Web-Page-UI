@@ -19,7 +19,7 @@ export const UpcomingEventCard = ({
   return (
     <EventCard.Container
       key={event.id}
-      className="h-full justify-end !w-[20rem] xl:!w-[30rem]"
+      className="h-full justify-end w-[20rem]! xl:w-120!"
     >
       {event.picture ? (
         <EventCard.Image src={event.picture.link} />
@@ -27,7 +27,7 @@ export const UpcomingEventCard = ({
         <div className="flex w-full aspect-video">
           <EventCard.Image
             src={"/Logo_Oscuro.svg"}
-            className="!object-contain opacity-15 !w-2/3 m-auto"
+            className="object-contain! opacity-15 w-2/3! m-auto"
           />
         </div>
       )}
@@ -36,7 +36,7 @@ export const UpcomingEventCard = ({
         <EventCard.WrapContainer className="flex flex-col align-center items-center">
           <EventCard.Title>{event.name}</EventCard.Title>
           {event.level == LevelEnum.Initial && (
-            <p title="Nivel Inicial" className="text-[--azul-electrico] m-0">
+            <p title="Nivel Inicial" className="text-(--azul-electrico) m-0">
               Inicial
             </p>
           )}

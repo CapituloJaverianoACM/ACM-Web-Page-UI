@@ -26,10 +26,10 @@ export default function ProfilePage() {
   const { contests, loadingContests } = useStudentContests(student?.id);
 
   return (
-    <div className="min-h-[100dvh] flex flex-col dark:from-[#121212] dark:to-[#121212] bg-gradient-to-b from-[--azul-niebla] to-[--white]">
+    <div className="min-h-dvh flex flex-col dark:from-[#121212] dark:to-[#121212] bg-linear-to-b from-(--azul-niebla) to-(--white)">
       <MainNavbar navLinks={navLinks} />
-      <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-[10rem]">
-        <h1 className="text-3xl md:text-4xl font-bold text-[--azul-noche] dark:text-white mb-6">
+      <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-40">
+        <h1 className="text-3xl md:text-4xl font-bold text-(--azul-noche) dark:text-white mb-6">
           Perfil
         </h1>
         <div className="space-y-6">

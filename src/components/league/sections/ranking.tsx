@@ -27,7 +27,7 @@ export const Ranking = () => {
       </div>
       <Podium />
       <RankingComponent.RankingContainer>
-        <RankingComponent.Padding className="max-w-[65rem] mx-auto">
+        <RankingComponent.Padding className="max-w-260 mx-auto">
           <p className="text-lg font-semibold text-center">Ranking</p>
           <RankingComponent.RankingList student_number={5} offset={3} />
         </RankingComponent.Padding>

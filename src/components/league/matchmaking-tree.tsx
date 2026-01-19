@@ -55,7 +55,7 @@ export default function MatchmakingTree({
 
   if (!tree) {
     return (
-      <div className="flex items-center justify-center p-8 text-[color:var(--black)]/50">
+      <div className="flex items-center justify-center p-8 text-(--black)/50">
         No hay árbol de matchmaking disponible
       </div>
     );
@@ -64,7 +64,7 @@ export default function MatchmakingTree({
   return (
     <div
       ref={containerRef}
-      className="mb-10 w-full rounded-[var(--radius-md)] min-h-[600px] h-[50vh] overflow-hidden bg-white/20 backdrop-blur-lg border border-white"
+      className="mb-10 w-full rounded-md min-h-[600px] h-[50vh] overflow-hidden bg-white/20 backdrop-blur-lg border border-white"
     >
       {d3TreeData && (
         <Tree

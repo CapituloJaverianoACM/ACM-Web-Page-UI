@@ -63,7 +63,7 @@ export function SignInForm() {
           />
           <button
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={() => setPasswordVisibility((prev) => !prev)}
           >
             {passwordVisibility ? (

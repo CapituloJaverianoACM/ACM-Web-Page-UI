@@ -75,7 +75,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
         {/* Menú Desplegable */}
         <DialogPortal>
           <DialogContent
-            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-300 dark:border-gray-700 z-[100] p-0 overflow-hidden"
+            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-sm border border-gray-300 dark:border-gray-700 z-100 p-0 overflow-hidden"
             style={{
               top: `${position.top}px`,
               right: `${position.right}px`,
@@ -120,7 +120,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[--azul-crayon] disabled:opacity-50 disabled:cursor-not-allowed rounded-b-lg"
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-(--azul-crayon) disabled:opacity-50 disabled:cursor-not-allowed rounded-b-lg"
               >
                 {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
               </button>

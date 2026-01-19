@@ -28,7 +28,7 @@ export function Rules() {
           {/* list of bullet points */}
           <ul className="mt-3 space-y-2 list-none p-0">
             <li className="flex items-start gap-3">
-              <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 Promover la resolución de problemas y el pensamiento lógico a
@@ -45,7 +45,7 @@ export function Rules() {
         >
           <ul className="mt-3 space-y-2 list-none p-0">
             <li className="flex items-start gap-3">
-              <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 El concurso está abierto a estudiantes de todas las facultades
@@ -53,7 +53,7 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 Los participantes deben inscribirse previamente en la plataforma
@@ -70,14 +70,14 @@ export function Rules() {
         >
           <ul className="mt-3 space-y-2 list-none p-0">
             <li className="flex items-start gap-3">
-              <span className=" mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className=" mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[7px]">
                 {" "}
                 Los concursos se dividen en eliminatorias y finales.{" "}
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[7px]">
                 {" "}
                 El participante tendrá un tiempo limitado para resolver una
@@ -85,7 +85,7 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-2 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[5px]">
                 {" "}
                 Se permitirá el uso de cualquier lenguaje de programación.{" "}
@@ -101,14 +101,14 @@ export function Rules() {
         >
           <ul className="mt-3 space-y-2 list-none p-0">
             <li className="flex items-start gap-3">
-              <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 La evaluación se basará en el resultado dado por el sistema de
                 evaluación de{" "}
                 <LinkPreview
                   url="https://codeforces.com"
-                  className="text-[var(--azul-electrico)] dark:text-[var(--azul-crayon)] dark:hover:text-[var(--azul-niebla)] hover:underline"
+                  className="text-(--azul-electrico) dark:text-(--azul-crayon) dark:hover:text-(--azul-niebla) hover:underline"
                 >
                   Codeforces
                 </LinkPreview>
@@ -125,7 +125,7 @@ export function Rules() {
         >
           <ul className="mt-3 space-y-2 list-none p-0">
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[7px]">
                 {" "}
                 No se puede hacer uso de ninguna Inteligencia Artificial
@@ -133,19 +133,19 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[6px]">
                 {"Solo se puede utilizar la documentación oficial de C++: "}
                 <LinkPreview
                   url="https://cplusplus.com"
-                  className="text-[var(--azul-electrico)] dark:text-[var(--azul-ultramar)] dark:hover:text-[var(--azul-crayon)] hover:underline"
+                  className="text-(--azul-electrico) dark:text-(--azul-ultramar) dark:hover:text-(--azul-crayon) hover:underline"
                 >
                   cplusplus.com
                 </LinkPreview>
                 {" y "}
                 <LinkPreview
                   url="https://en.cppreference.com"
-                  className="text-[var(--azul-electrico)] dark:text-[var(--azul-ultramar)] dark:hover:text-[var(--azul-crayon)] hover:underline"
+                  className="text-(--azul-electrico) dark:text-(--azul-ultramar) dark:hover:text-(--azul-crayon) hover:underline"
                 >
                   cppreference.com
                 </LinkPreview>
@@ -153,7 +153,7 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 Si después de 15 minutos ninguno ha mandado el ejercicio, se
@@ -161,15 +161,15 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[7px]">
                 La dinámica de las competencias es un 1vs1: el que primero mande
                 el ejercicio resuelto gana.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
-              <span className="leading-6 mt-[1px]">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-px">
                 {" "}
                 El ranking se determina por la cantidad de victorias. En caso de
                 empate en victorias, el ganador será el que menos partidas haya
@@ -186,7 +186,7 @@ export function Rules() {
         >
           <ul className="mt-1 space-y-2">
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 Se prohíbe el uso de recursos externos no autorizados, como
@@ -194,7 +194,7 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[7px]">
                 {" "}
                 Se espera que todos los participantes mantengan una actitud de
@@ -202,7 +202,7 @@ export function Rules() {
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--azul-electrico)] shrink-0" />
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">
                 {" "}
                 El incumplimiento de las normas puede resultar en

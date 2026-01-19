@@ -12,7 +12,7 @@ const RankingContainer = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={`p-2 rounded-md bg-[#fff] shadow-md ${className}`}>
+    <div className={`p-2 rounded-md bg-white shadow-md ${className}`}>
       {children}
     </div>
   );
@@ -38,7 +38,7 @@ const StudentComponent = ({
   skeleton?: boolean;
 }) => {
   return (
-    <div className="flex gap-2 p-2 px-4 rounded-md bg-[#fff] shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg">
+    <div className="flex gap-2 p-2 px-4 rounded-md bg-white shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg">
       {skeleton ? (
         <>
           <div className="w-12 h-4 bg-neutral-200 rounded-sm"></div>
@@ -47,7 +47,7 @@ const StudentComponent = ({
       ) : (
         <>
           <p
-            className={`w-10 m-0 ${pos == 0 ? "text-yellow-500" : pos == 1 ? "text-neutral-500" : pos == 2 ? "text-orange-500" : "text-[--azul-electrico]"} font-semibold`}
+            className={`w-10 m-0 ${pos == 0 ? "text-yellow-500" : pos == 1 ? "text-neutral-500" : pos == 2 ? "text-orange-500" : "text-(--azul-electrico)"} font-semibold`}
           >
             {pos + 1}.
           </p>
