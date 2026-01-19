@@ -1,3 +1,6 @@
+"use client";
+import { useTranslations } from "next-intl";
+
 interface PreExam {
   id: string;
   title: string;
@@ -112,6 +115,111 @@ const preExams: PreExam[] = [
 ];
 
 export function PreExamsContent() {
+  const t = useTranslations("Activities.preExams");
+
+  const preExams: PreExam[] = [
+    {
+      id: "1",
+      title: t("workshops.intro.title"),
+      description: t("workshops.intro.description"),
+      dates: [
+        "23 de Agosto, 2023",
+        "8 de Noviembre, 2023",
+        "4 de Marzo, 2025",
+        "7 de Abril, 2025",
+        "19 de Mayo, 2025",
+      ],
+      materials: [
+        {
+          name: `${t("materials.slides")} - ${t("materials.exam")} No. 1`,
+          url: "https://drive.google.com/file/d/1gWnlsfQTYN-qMi2M9cEa5l2Qz2W6dsdv/view?usp=drive_link",
+          type: "ppt",
+        },
+        {
+          name: `${t("materials.mockExam")} - ${t("materials.exam")} No. 2`,
+          url: "https://drive.google.com/file/d/150yucdufPKI1WpLxzlGUFbTf4tMgzDcX/view?usp=drive_link",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.mockExam")} - ${t("materials.exam")} No. 3`,
+          url: "https://drive.google.com/file/d/1euu3OwXiu4OtuOYg4N4A9fZDv-IAkui2/view?usp=drive_link",
+          type: "pdf",
+        },
+      ],
+      topics: [
+        t("topics.variables"),
+        t("topics.controlStructures"),
+        t("topics.functions"),
+        t("topics.arrays"),
+        "C++",
+      ],
+    },
+    {
+      id: "2",
+      title: t("workshops.advanced.title"),
+      description: t("workshops.advanced.description"),
+      dates: ["8 de Noviembre, 2023", "20 de Marzo, 2025", "19 de Mayo, 2025"],
+      materials: [
+        {
+          name: `${t("materials.mockExam")} - ${t("materials.exam")} No. 1`,
+          url: "https://drive.google.com/file/d/1sHX0NrQoqPfqF0VriHFbTZArsQ84DGYz/view?usp=drive_link",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.slides")} - ${t("materials.exam")} No. 2`,
+          url: "https://drive.google.com/file/d/1tkwQnNmzPcSGHb58dqekBJBxaq_7sLm3/view?usp=drive_link",
+          type: "ppt",
+        },
+        {
+          name: `${t("materials.mockExam")} - ${t("materials.exam")} No. 2`,
+          url: "https://drive.google.com/file/d/1oywoalikehnSqVLAYtni-kxqndmZFktM/view?usp=drive_link",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.slides")} - ${t("materials.exam")} No. 3`,
+          url: "https://drive.google.com/file/d/1fdLJsQBw3hNAATq3Z65aj6MM_R7vg0QY/view?usp=drive_link",
+          type: "ppt",
+        },
+      ],
+      topics: [
+        t("topics.oop"),
+        t("topics.pointers"),
+        t("topics.errorHandling"),
+        "Java",
+        "C++",
+      ],
+    },
+    {
+      id: "3",
+      title: t("workshops.dataStructures.title"),
+      description: t("workshops.dataStructures.description"),
+      dates: ["29 de Febrero, 2025", "9 de Abril, 2025", "29 de Mayo, 2025"],
+      materials: [
+        {
+          name: `${t("materials.mockExam")} - ${t("materials.exam")} No. 2`,
+          url: "https://drive.google.com/file/d/1p9_xnDmhrYLXkz-1jybUHx_rgb-dnOMo/view?usp=drive_link",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.solution")} - ${t("materials.exam")} No. 2`,
+          url: "https://drive.google.com/file/d/1Bs1gWolsEWe0zTA4Ecpf3bnHYhfiyUB2/view?usp=drive_link",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.mockExam")} (${t("materials.inPerson")}) - ${t("materials.exam")} No. 3`,
+          url: "https://drive.google.com/file/d/1gqrUUhCenLDZxbGtxcQ7iheBy5I4BaIg/view?usp=drive_linkk",
+          type: "pdf",
+        },
+        {
+          name: `${t("materials.mockExam")} (${t("materials.virtual")}) - ${t("materials.exam")} No. 3`,
+          url: "https://drive.google.com/file/d/1H3fIQTNZgWYw0DVlFCs-2gOzXJ5yDYdn/view?usp=drive_link",
+          type: "pdf",
+        },
+      ],
+      topics: [t("topics.stl"), t("topics.trees"), t("topics.graphs"), "C++"],
+    },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg">
       <div className="space-y-8">
@@ -127,7 +235,7 @@ export function PreExamsContent() {
               </h3>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-gray-600 dark:text-gray-400 text-sm">
-                  📅 Fechas:
+                  📅 {t("dates")}:
                 </span>
                 {preExam.dates.map((date, index) => (
                   <span
@@ -149,7 +257,7 @@ export function PreExamsContent() {
               {/* Topics */}
               <div className="mb-6">
                 <h4 className="text-lg text-gray-900 dark:text-white mb-3">
-                  🎯 Temas Cubiertos
+                  🎯 {t("topicsCovered")}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {preExam.topics.map((topic, index) => (
@@ -166,7 +274,7 @@ export function PreExamsContent() {
               {/* Materials */}
               <div>
                 <h4 className="text-lg text-gray-900 dark:text-white mb-3">
-                  📁 Material Utilizado
+                  📁 {t("materialsUsed")}
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {preExam.materials.map((material, index) => (
@@ -262,15 +370,13 @@ export function PreExamsContent() {
 
       {/* Call to Action */}
       <div className="mt-8 text-center">
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
-          ¿Te interesa participar en nuestros próximos preparciales?
-        </p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{t("ctaText")}</p>
         <a
           href="https://www.instagram.com/acmjaveriana"
           target="_blank"
           className="no-underline bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
         >
-          📝 Inscribirse en Próximos Talleres
+          📝 {t("ctaButton")}
         </a>
       </div>
     </div>

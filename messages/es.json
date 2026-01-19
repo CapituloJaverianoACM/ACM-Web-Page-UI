@@ -24,9 +24,65 @@
       "coach": "Nuestro Coach",
       "loading": "Cargando..."
     },
+    "league": {
+      "category": "Liga javeriana de programacion",
+      "title": "¡Conoce tu liga!",
+      "summary": "La Liga Javeriana de Programación es nuestra competencia donde estudiantes de todas las facultades se enfrentan en duelos 1vs1 de programación. Con un formato dinámico y competitivo, los participantes resuelven problemas algorítmicos en tiempo real, acumulando victorias para escalar en el ranking. Descubre las reglas, próximos eventos y conoce a los mejores competidores en el podio.",
+      "links": {
+        "rulesDesc": "Conoce las reglas del torneo",
+        "eventsDesc": "Próximas competencias",
+        "podiumDesc": "Top 3 de la liga",
+        "rankDesc": "Ranking completo",
+        "exploreTitle": "Explora la Liga Completa",
+        "exploreDesc": "Descubre todos los detalles y únete a la competencia"
+      }
+    },
     "preExams": {
       "category": "Talleres Pre-Parciales",
-      "title": "Refuerza tus conocimientos antes de los parciales con nuestros talleres"
+      "title": "Refuerza tus conocimientos antes de los parciales con nuestros talleres",
+      "summary": "Nuestros talleres preparciales están diseñados para ayudarte a repasar y reforzar los conceptos clave antes de tus exámenes. Con materiales de estudio, simulacros y prácticas guiadas, te preparamos para que logres tu mejor desempeño académico.",
+      "description": "Talleres enfocados en los temas más importantes de tus cursos",
+      "materialsAvailable": "Materiales disponibles",
+      "pastWorkshops": "Talleres anteriores",
+      "dates": "Fechas",
+      "topicsCovered": "Temas Cubiertos",
+      "materialsUsed": "Material Utilizado",
+      "ctaText": "¿Te interesa participar en nuestros próximos preparciales?",
+      "ctaButton": "Inscribirse en Próximos Talleres",
+      "workshops": {
+        "intro": {
+          "title": "Taller: Introducción a la Programación",
+          "description": "Conceptos fundamentales de programación y lógica computacional."
+        },
+        "advanced": {
+          "title": "Taller: Programación Avanzada",
+          "description": "Técnicas avanzadas de programación e introducción al paradigma orientado a objetos."
+        },
+        "dataStructures": {
+          "title": "Taller: Estructuras de Datos",
+          "description": "Implementación y uso de estructuras de datos fundamentales para resolver problemas complejos."
+        }
+      },
+      "materials": {
+        "slides": "Slides",
+        "mockExam": "Simulacro",
+        "solution": "Solución Simulacro",
+        "exam": "Parcial",
+        "inPerson": "presencial",
+        "virtual": "virtual"
+      },
+      "topics": {
+        "variables": "Variables",
+        "controlStructures": "Estructuras de control",
+        "functions": "Funciones",
+        "arrays": "Arrays",
+        "oop": "POO",
+        "pointers": "Apuntadores",
+        "errorHandling": "Manejo de errores",
+        "stl": "STL",
+        "trees": "Árboles",
+        "graphs": "Grafos"
+      }
     },
     "courses": {
       "category": "Cursos y Talleres",
