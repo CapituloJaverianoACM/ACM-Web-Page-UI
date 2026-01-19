@@ -13,7 +13,6 @@ import { createClient } from "@/lib/supabase/client";
 import { suscribe_leaderboard } from "@/lib/supabase/channel_subscribe";
 import { RoadmapButton } from "@/components/home/ui/roadmap-button";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getNavLinks } from "@/lib/nav-links";
 
 export default function LeagueHomePage() {
   const t = useTranslations("Navigation");

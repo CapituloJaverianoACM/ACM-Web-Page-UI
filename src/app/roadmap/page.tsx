@@ -5,7 +5,6 @@ import { HeroUIProvider } from "@heroui/react";
 import MainNavbar from "@/components/shared/main-navbar";
 import { Roadmap } from "@/components/league/sections/roadmap";
 import Footer from "@/components/shared/footer";
-import { getNavLinks } from "@/lib/nav-links";
 
 export default function RoadmapPage() {
   const t = useTranslations("Navigation");

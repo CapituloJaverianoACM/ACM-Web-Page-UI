@@ -22,7 +22,7 @@ export function Activities() {
   );
 }
 
-const carrousel_items = (t: any) => [
+const carrousel_items = (t) => [
   {
     category: t("cpMembers.category"),
     title: t("cpMembers.title"),
