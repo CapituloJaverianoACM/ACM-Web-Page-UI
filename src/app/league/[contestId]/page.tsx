@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, permanentRedirect } from "next/navigation";
 import MainNavbar from "@/components/shared/main-navbar";
 import Footer from "@/components/shared/footer";
 import { useQuery } from "@tanstack/react-query";
@@ -9,9 +9,10 @@ import {
   getContestMatchInfo,
 } from "@/controllers/contest.controller";
 import { MeshGradient } from "@/layouts/mesh-gradient";
-import { ContestantsCards } from "@/components/league/contest/ContestantsCards";
-import { ContestInstructions } from "@/components/league/contest/ContestInstructions";
+import { ContestantsCards } from "@/components/league/contest/contestants-cards";
+import { ContestInstructions } from "@/components/league/contest/contest-instructions";
 import MatchmakingTree from "@/components/league/matchmaking-tree";
+import { getUser } from "@/controllers/supabase.controller";
 
 const navLinks = [
   { key: "home", label: "Inicio", href: "/" },

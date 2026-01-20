@@ -15,8 +15,11 @@ export const ContestInstructions: React.FC = () => {
           Instrucciones
         </h2>
         <div className="space-y-4 max-w-2xl">
-          {INSTRUCTIONS.map((instruction) => (
-            <p className="text-white text-lg leading-relaxed border-l-2 border-white/50 pl-4">
+          {INSTRUCTIONS.map((instruction, i) => (
+            <p
+              key={i}
+              className="text-white text-lg leading-relaxed border-l-2 border-white/50 pl-4"
+            >
               {instruction}
             </p>
           ))}

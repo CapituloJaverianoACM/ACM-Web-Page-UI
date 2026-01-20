@@ -1,4 +1,5 @@
 export type Contestant = {
+  id: number;
   name: string;
   ready: boolean;
   victories: number;

@@ -11,6 +11,7 @@ import {
 import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
+import { getUser } from "./supabase.controller";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(
