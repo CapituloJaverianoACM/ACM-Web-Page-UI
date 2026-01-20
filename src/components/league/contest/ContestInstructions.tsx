@@ -1,17 +1,25 @@
+const INSTRUCTIONS: string[] = [
+  "Cuando estes listo, presiona el botón de 'Listo'.",
+  "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
+  "Cuando los dos contricantes esten listos, se asignará un problema de Codeforces.",
+  "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
+  "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
+  "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto.",
+];
+
 export const ContestInstructions: React.FC = () => {
   return (
-    <div className="w-full max-w-[3000px] grow p-10 bg-white/20 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-2xl flex flex-col justify-between">
+    <div className="w-full max-w-750 grow p-10 bg-white/20 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-2xl flex flex-col justify-between">
       <div>
         <h2 className="text-4xl font-extralight text-white italic mb-6 tracking-tight">
           Instrucciones
         </h2>
         <div className="space-y-4 max-w-2xl">
-          <p className="text-white text-lg leading-relaxed border-l-2 border-white/50 pl-4">
-            Sigue el flujo de nodos para completar el nivel.
-          </p>
-          <p className="text-white text-lg leading-relaxed border-l-2 border-white/50 pl-4">
-            Haz clic en "Listo" cuando tu equipo esté preparado.
-          </p>
+          {INSTRUCTIONS.map((instruction) => (
+            <p className="text-white text-lg leading-relaxed border-l-2 border-white/50 pl-4">
+              {instruction}
+            </p>
+          ))}
         </div>
       </div>
 

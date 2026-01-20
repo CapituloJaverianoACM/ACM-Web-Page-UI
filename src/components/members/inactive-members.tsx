@@ -6,7 +6,7 @@ import { InactiveMembersTimeline } from "./sections/timeline";
 
 const InactiveMembers = () => {
   const { data: members, isLoading } = useQuery({
-    queryKey: ["members"],
+    queryKey: ["inactive-members"],
     queryFn: async () => {
       const members: Member[] = await getMembers();
       return members
