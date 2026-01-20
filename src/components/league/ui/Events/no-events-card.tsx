@@ -9,12 +9,12 @@ export const NoEventsCard = () => {
   return (
     <EventCard.Container
       key="unique"
-      className="justify-end !w-[20rem] xl:!w-[30rem]"
+      className="justify-end w-[20rem]! xl:w-120!"
     >
       <div className="flex w-full aspect-video">
         <EventCard.Image
           src={"/Logo_Oscuro.svg"}
-          className="!object-contain opacity-15 w-2/3 m-auto"
+          className="object-contain! opacity-15 w-2/3 m-auto"
         />
       </div>
 

@@ -6,7 +6,7 @@ import { InactiveMembersTimeline } from "./sections/timeline";
 
 const InactiveMembers = () => {
   const { data: members, isLoading } = useQuery({
-    queryKey: ["members"],
+    queryKey: ["inactive-members"],
     queryFn: async () => {
       const members: Member[] = await getMembers();
       return members
@@ -39,7 +39,7 @@ const InactiveMembers = () => {
   });
 
   return (
-    <div className="pt-[10vh] min-h-screen bg-gradient-to-br ">
+    <div className="pt-[10vh] min-h-screen bg-linear-to-br ">
       <div className="container mx-auto px-4 ">
         <div className="space-y-8">
           {/* Header */}

@@ -7,16 +7,33 @@ import {
   getUserTableFromSupabaseId,
 } from "./supabase.controller";
 import { Student } from "@/models/student.model";
+import { BACKEND_URL } from "@/config/env";
+
+export async function getParticipationByContestId(
+  contest_id: number,
+): Promise<Participation[]> {
+  try {
+    const res = await fetch(
+      new URL(`/participation/contest/${contest_id}`, BACKEND_URL),
+    );
+    if (!res.ok) {
+      return [];
+    }
+
+    const json = await res.json();
+    return json.data || [];
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
+}
 
 export async function getParticipationsByStudentId(
   studentId: number,
 ): Promise<Participation[]> {
   try {
     const res = await fetch(
-      new URL(
-        `/participation/student/${studentId}`,
-        process.env.NEXT_PUBLIC_BACKEND_URL,
-      ),
+      new URL(`/participation/student/${studentId}`, BACKEND_URL),
     );
 
     if (!res.ok) {
@@ -89,18 +106,15 @@ export const registerUserToContest = async (
 
   const token = await getAccessToken();
   try {
-    const res = await fetch(
-      new URL(`/participation/create`, process.env.NEXT_PUBLIC_BACKEND_URL),
-      {
-        method: "POST",
-        body: JSON.stringify(participation_record),
-        headers: {
-          authorization: `Bearer ${token}`,
-          "acm-auth-signed-supabase": "",
-          "content-type": "application/json",
-        },
+    const res = await fetch(new URL(`/participation/create`, BACKEND_URL), {
+      method: "POST",
+      body: JSON.stringify(participation_record),
+      headers: {
+        authorization: `Bearer ${token}`,
+        "acm-auth-signed-supabase": "",
+        "content-type": "application/json",
       },
-    );
+    });
 
     if (!res.ok) throw new Error("Sucedió algo en la API");
 
@@ -159,10 +173,7 @@ export const checkInStudent = async (
 
   try {
     const res = await fetch(
-      new URL(
-        `/participation/${contest_id}/${user.id}`,
-        process.env.NEXT_PUBLIC_BACKEND_URL,
-      ),
+      new URL(`/participation/${contest_id}/${user.id}`, BACKEND_URL),
       {
         method: "PUT",
         body: JSON.stringify({ checkin: true }),

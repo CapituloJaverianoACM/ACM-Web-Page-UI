@@ -23,7 +23,7 @@ export const useUpcomingEvents = (
         return;
       }
 
-      router.push(`/contest/${contest.id}`);
+      router.push(`/league/${contest.id}`);
       return;
     }
 

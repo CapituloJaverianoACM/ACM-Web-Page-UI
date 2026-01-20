@@ -28,7 +28,7 @@ export const InactiveMembersTimeline: React.FC<TimelineProps> = ({
 
   return (
     <div className="relative">
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-blue-300 to-blue-200"></div>
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-linear-to-b from-blue-200 via-blue-300 to-blue-200"></div>
       <div className="space-y-16">
         {sortedPeriods.map((period) => (
           <div key={period} className="relative">

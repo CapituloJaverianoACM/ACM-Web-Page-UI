@@ -284,7 +284,7 @@ export function PreExamsContent() {
                       target="_blank"
                       className="flex items-center p-3 no-underline bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 group min-w-0"
                     >
-                      <div className="flex-shrink-0 mr-3">
+                      <div className="shrink-0 mr-3">
                         {material.type === "pdf" && (
                           <svg
                             className="w-6 h-6 text-red-500"

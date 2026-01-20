@@ -25,10 +25,10 @@ export default function SignUpPage() {
         ></div>
 
         <CardHeader className="text-center pb-6 pt-8">
-          <CardTitle className="text-3xl font-bold text-[var(--azul-noche)] dark:text-white mb-3">
+          <CardTitle className="text-3xl font-bold text-(--azul-noche) dark:text-white mb-3">
             Crear cuenta
           </CardTitle>
-          <p className="text-sm text-[var(--azul-ultramar)] dark:text-gray-400">
+          <p className="text-sm text-(--azul-ultramar) dark:text-gray-400">
             Únete a la comunidad ACM Javeriana
           </p>
         </CardHeader>
@@ -36,12 +36,12 @@ export default function SignUpPage() {
           <SignUpForm />
         </CardContent>
         <CardFooter className="flex flex-col items-center gap-3 pb-8 pt-6">
-          <div className="w-full h-px bg-[var(--azul-niebla)] dark:bg-gray-700"></div>
-          <p className="text-sm text-[var(--azul-ultramar)] dark:text-gray-400">
+          <div className="w-full h-px bg-(--azul-niebla) dark:bg-gray-700"></div>
+          <p className="text-sm text-(--azul-ultramar) dark:text-gray-400">
             ¿Ya tienes cuenta?{" "}
             <Link
               href="/log-in"
-              className="text-[var(--azul-electrico)] dark:text-[var(--azul-crayon)] hover:text-[var(--azul-crayon)] dark:hover:text-[var(--azul-niebla)] font-semibold transition-colors duration-200 underline-offset-4 hover:underline"
+              className="text-(--azul-electrico) dark:text-(--azul-crayon) hover:text-(--azul-crayon) dark:hover:text-(--azul-niebla) font-semibold transition-colors duration-200 underline-offset-4 hover:underline"
             >
               Inicia sesión
             </Link>

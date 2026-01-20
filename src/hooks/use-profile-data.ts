@@ -67,7 +67,7 @@ export const useProfileData = () => {
       ...prev,
       name: student?.name || "",
       surname: student?.surname || "",
-      avatarUrl: student?.avatar || null,
+      avatarUrl: student?.avatar || "",
       codeforcesHandle: student?.codeforces_handle || "",
     }));
     setIsEditing(!isEditing);
@@ -75,7 +75,7 @@ export const useProfileData = () => {
 
   const handleAvatarUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value.trim();
-    setFormData((prev) => ({ ...prev, avatarUrl: url || null }));
+    setFormData((prev) => ({ ...prev, avatarUrl: url || "" }));
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -90,7 +90,7 @@ export const useProfileData = () => {
     updateStudentMutation.mutate({
       name: formData.name,
       surname: formData.surname,
-      avatar: formData.avatarUrl,
+      avatar: formData.avatarUrl || "",
       codeforces_handle: formData.codeforcesHandle,
     });
   };

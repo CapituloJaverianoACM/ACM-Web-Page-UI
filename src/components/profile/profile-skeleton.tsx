@@ -2,8 +2,8 @@ import React from "react";
 
 export const ProfileSkeleton = () => {
   return (
-    <section className="bg-[--white] dark:bg-gray-800 rounded-xl shadow-sm border border-[--azul-niebla] dark:border-gray-700">
-      <div className="p-6 border-b border-[--azul-niebla] dark:border-gray-700">
+    <section className="bg-(--white) dark:bg-gray-800 rounded-xl shadow-sm border border-(--azul-niebla) dark:border-gray-700">
+      <div className="p-6 border-b border-(--azul-niebla) dark:border-gray-700">
         <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
       </div>
       <div className="p-6 flex flex-col md:flex-row gap-6">

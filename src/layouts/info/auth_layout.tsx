@@ -14,7 +14,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
       }}
     >
       {/* Overlay con patrón */}
-      <div className="absolute inset-0 bg-[var(--azul-noche)]/40 dark:bg-[var(--azul-noche)]/60"></div>
+      <div className="absolute inset-0 bg-(--azul-noche)/40 dark:bg-(--azul-noche)/60"></div>
 
       {/* Patrón de puntos decorativo */}
       <div
