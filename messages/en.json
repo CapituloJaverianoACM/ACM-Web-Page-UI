@@ -1,4 +1,14 @@
 {
+  "home": "Home",
+  "activities": "Activities",
+  "members": "Members",
+  "league": "The League",
+  "rules": "Rules",
+  "upcomingEvents": "Upcoming Events",
+  "podium": "Podium",
+  "rank": "Ranking",
+  "login": "Log In",
+  "signup": "Sign Up",
   "Navigation": {
     "home": "Home",
     "activities": "Activities",
