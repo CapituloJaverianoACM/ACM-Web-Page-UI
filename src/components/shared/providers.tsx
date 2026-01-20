@@ -31,9 +31,6 @@ export function Providers({
     });
   });
 
-  // This code is for all users
-  window.__TANSTACK_QUERY_CLIENT__ = queryClient;
-
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <HeroUIProvider>
