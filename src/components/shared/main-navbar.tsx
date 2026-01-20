@@ -3,12 +3,12 @@
 import { useTranslations } from "next-intl";
 import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
-import { Student } from "@/models/student.model";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
 import LanguageToggle from "./ui/language-toggle";
+import { useQuery } from "@tanstack/react-query";
 
 export type NavLink = {
   key: string;
@@ -24,34 +24,15 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const t = useTranslations("Navigation");
   const [activeLink, setActiveLink] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
 
-  useEffect(() => {
-    const checkLogged = async () => {
-      try {
-        const user = await getUser();
-        setIsLogged(user != null);
-
-        if (user?.id) {
-          try {
-            const student = await getStudentBySupabaseId(user.id);
-            setStudent(student);
-          } catch (error) {
-            console.error("Error al obtener el estudiante:", error);
-            setStudent(null);
-          }
-        } else {
-          setStudent(null);
-        }
-      } catch (error) {
-        console.error("Error al verificar el usuario:", error);
-        setIsLogged(false);
-        setStudent(null);
-      }
-    };
-    checkLogged();
-  }, []);
+  const { data: student, isLoading } = useQuery({
+    queryKey: ["navbar-user"],
+    queryFn: async () => {
+      const user = await getUser();
+      if (!user) return null;
+      return await getStudentBySupabaseId(user.id);
+    },
+  });
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -152,10 +133,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
               </div>
 
               {/* User Links */}
-              {isLogged ? (
+              {!isLoading && student ? (
                 <AvatarMenu
-                  avatarUrl={student?.avatar || ""}
-                  userName={student?.name || ""}
+                  avatarUrl={student.avatar || ""}
+                  userName={student.name || ""}
                 />
               ) : (
                 <div className="hidden lg:flex items-center gap-2">

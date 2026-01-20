@@ -1,5 +1,5 @@
 "use server";
-import { Contest } from "@/models/contest.model";
+import { Contest, ContestMatchResult } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
 import { MatchmakingTreeNode } from "@/models/matchmaking.model";
 import {
@@ -12,6 +12,8 @@ import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
 import { BACKEND_URL } from "@/config/env";
+import { Contestant } from "@/models/contestant.model";
+import { getUser, getUserTableFromSupabaseId } from "./supabase.controller";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(new URL(`/contests`, BACKEND_URL));
@@ -134,14 +136,6 @@ export async function getMatchmakingTree(
   }
 }
 
-export enum ContestMatchResult {
-  NO_CONTEST = "No hay un contest que coincida con este id.",
-  NO_TREE = "No existe un matchmaking aun.",
-  NO_USERS = "No hay participantes.",
-  EMPTY = "",
-  OK = "Data retrieved success.",
-}
-
 export type TreeStudentInfo = Pick<
   Student,
   "id" | "name" | "avatar" | "codeforces_handle"
@@ -153,6 +147,7 @@ export type ContestMatchInfo = {
   contest?: Contest;
   tree?: MatchmakingTreeNode;
   students?: Array<TreeStudentInfo>;
+  current_student?: Contestant;
 };
 
 export const getContestMatchInfo = async (
@@ -161,6 +156,28 @@ export const getContestMatchInfo = async (
   let result: ContestMatchInfo = { ok: false, msg: ContestMatchResult.EMPTY };
 
   try {
+    const supabase_user = await getUser();
+
+    if (!supabase_user) {
+      result.msg = ContestMatchResult.NO_LOGGED;
+      throw ContestMatchResult.NO_LOGGED;
+    }
+
+    const user: Student | null = await getUserTableFromSupabaseId(
+      supabase_user.id,
+    );
+
+    if (!user) return result;
+
+    const current_student: Contestant = {
+      id: user.id,
+      name: user.name,
+      ready: false,
+      victories: user.victory_count,
+      avatar_url: user.avatar,
+      codeforces_handle: user.codeforces_handle,
+    };
+
     const contest: Contest = await getContestById(contestId);
     const tree: MatchmakingTreeNode | null =
       await getMatchmakingTree(contestId);
@@ -179,22 +196,24 @@ export const getContestMatchInfo = async (
       throw ContestMatchResult.NO_USERS;
     }
 
-    const students: Pick<
-      Student,
-      "id" | "name" | "avatar" | "codeforces_handle"
-    >[] = (await queryStudentsByBulkIds(participants_id)).map(
-      ({ id, name, avatar, codeforces_handle }) => ({
-        id,
-        name,
-        avatar,
-        codeforces_handle,
-      }),
-    );
+    if (participants_id.find((p) => p === current_student.id) == undefined) {
+      result.msg = ContestMatchResult.NO_PARTICIPANT;
+      throw ContestMatchResult.NO_PARTICIPANT;
+    }
+
+    const students: Array<TreeStudentInfo> = (
+      await queryStudentsByBulkIds(participants_id)
+    ).map(({ id, name, avatar, codeforces_handle }) => ({
+      id,
+      name,
+      avatar,
+      codeforces_handle,
+    }));
 
     result.ok = true;
     result.msg = ContestMatchResult.OK;
 
-    result = { ...result, contest, tree, students };
+    result = { ...result, contest, tree, students, current_student };
   } catch (e) {
     console.log(e);
   }

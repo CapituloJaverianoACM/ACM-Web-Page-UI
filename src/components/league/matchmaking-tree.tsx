@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Tree from "react-d3-tree";
+import { useRef } from "react";
+import Tree, { TreeNodeDatum } from "react-d3-tree";
 import { MatchmakingTreeNode } from "@/models/matchmaking.model";
 import TreeNode from "./tree-node";
-import { Student } from "@/models/student.model";
 import { TreeStudentInfo } from "@/controllers/contest.controller";
 
 interface MatchmakingTreeProps {
@@ -13,7 +12,7 @@ interface MatchmakingTreeProps {
 }
 
 // Interfaz para el formato de react-d3-tree
-interface D3TreeNode {
+export interface D3TreeNode {
   name: string;
   children?: D3TreeNode[];
   student?: TreeStudentInfo;

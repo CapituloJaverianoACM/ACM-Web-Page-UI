@@ -1,11 +1,12 @@
 "use client";
 
+import { IconQuestionMark } from "@tabler/icons-react";
+import { D3TreeNode } from "./matchmaking-tree";
+import { TreeNodeDatum } from "react-d3-tree";
+import { LucideCrown } from "lucide-react";
+
 interface TreeNodeProps {
-  nodeDatum: {
-    name: string;
-    children?: TreeNodeProps["nodeDatum"][];
-    student_id?: number | null;
-  };
+  nodeDatum: TreeNodeDatum & D3TreeNode;
   toggleNode?: () => void;
   onClick?: () => void;
 }
@@ -17,23 +18,8 @@ export default function TreeNode({
   toggleNode,
   onClick,
 }: TreeNodeProps) {
-  // Determinar color basado en si tiene hijos
-  const hasChildren = nodeDatum.children && nodeDatum.children.length > 0;
-  const isLeaf = !hasChildren;
-
-  const fillColor = isLeaf
-    ? "#ffffff" // azul-electrico
-    : nodeDatum.children && nodeDatum.children.length === 2
-      ? "#ffffff" // azul-crayon
-      : "#ffffff"; // azul-ultramar
-
-  // Extraer el ID del nombre o usar el prop
-  const studentId =
-    nodeDatum.student_id ??
-    (nodeDatum.name?.includes("ID:")
-      ? parseInt(nodeDatum.name.split(":")[1]?.trim() || "0")
-      : null);
-
+  const fillColor = "#ffffff";
+  const isRoot = nodeDatum.__rd3t.depth === 0;
   return (
     <g onClick={toggleNode}>
       <circle
@@ -48,9 +34,40 @@ export default function TreeNode({
         className="hover:opacity-90"
       />
       <foreignObject width={100} height={100} x={-50} y={-50}>
-        <div>
-          <img src="/Logo_Oscuro.svg" className="mt-5" />
-          <p className="text-center">{studentId}</p>
+        <div
+          className="flex justify-center items-center rounded-full h-25 w-25"
+          onClick={() =>
+            nodeDatum.student != null &&
+            nodeDatum.student.codeforces_handle != null
+              ? window.open(
+                  "https://codeforces.com/profile/" +
+                    nodeDatum.student.codeforces_handle,
+                )
+              : ""
+          }
+        >
+          {!nodeDatum.student ? (
+            <>
+              {isRoot ? (
+                <LucideCrown
+                  className="text-yellow-500"
+                  width={90}
+                  height={90}
+                />
+              ) : (
+                <IconQuestionMark width={100} height={100} />
+              )}
+            </>
+          ) : (
+            <img
+              src={
+                nodeDatum.student.avatar ||
+                process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL
+              }
+              alt="User"
+              className="object-cover max-w-full h-auto block rounded-full"
+            />
+          )}
         </div>
       </foreignObject>
     </g>

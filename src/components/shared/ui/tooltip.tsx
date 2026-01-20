@@ -46,7 +46,7 @@ function AnimatedTooltipComponent({
     springConfig,
   );
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-150, 75]), // Cuidado con esto, esto descuadra los anuncios
+    useTransform(x, [-100, 100], [-150, 150]), // Cuidado con esto, esto descuadra los anuncios
     springConfig,
   );
 
