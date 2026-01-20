@@ -5,6 +5,7 @@ import {
   getStudentBySupabaseId,
   updateStudent,
 } from "@/controllers/student.controller";
+import { verifyHandle } from "@/controllers/codeforces.controller";
 import { Student } from "@/models/student.model";
 
 export const useProfileData = () => {
@@ -82,11 +83,24 @@ export const useProfileData = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!student?.id || !user?.id) {
       alert("Error: No se puede actualizar el perfil sin un estudiante válido");
       return;
     }
+
+    const handleChanged =
+      formData.codeforcesHandle !== (student?.codeforces_handle || "");
+    if (handleChanged && formData.codeforcesHandle.trim()) {
+      const isValid = await verifyHandle(formData.codeforcesHandle.trim());
+      if (!isValid) {
+        alert(
+          "El handle de Codeforces no es válido. Por favor verifica que el usuario existe en Codeforces.",
+        );
+        return;
+      }
+    }
+
     updateStudentMutation.mutate({
       name: formData.name,
       surname: formData.surname,
