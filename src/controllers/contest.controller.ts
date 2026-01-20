@@ -11,12 +11,10 @@ import {
 import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
-import { getUser } from "./supabase.controller";
+import { BACKEND_URL } from "@/config/env";
 
 export async function getContests(): Promise<Contest[]> {
-  const res = await fetch(
-    new URL(`/contests`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
+  const res = await fetch(new URL(`/contests`, BACKEND_URL));
 
   if (!res.ok) {
     throw new Error("Error al obtener contests");
@@ -27,9 +25,7 @@ export async function getContests(): Promise<Contest[]> {
 }
 
 export async function getContestById(id: number): Promise<Contest> {
-  const res = await fetch(
-    new URL(`/contests/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
+  const res = await fetch(new URL(`/contests/${id}`, BACKEND_URL));
 
   if (!res.ok) {
     throw new Error("Error al obtener el contest");
@@ -42,9 +38,7 @@ export async function getContestById(id: number): Promise<Contest> {
 export async function getContestsWithPictures(
   user: User | null,
 ): Promise<Contest[]> {
-  const res = await fetch(
-    new URL(`/contests?picture=1`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
+  const res = await fetch(new URL(`/contests?picture=1`, BACKEND_URL));
 
   if (!res.ok) {
     throw new Error("Error al obtener contests");
@@ -75,7 +69,7 @@ export async function getContestByIds(
   contestIds: number[],
 ): Promise<Contest[]> {
   const resContests = await fetch(
-    new URL(`/contests/bulk-query/id`, process.env.NEXT_PUBLIC_BACKEND_URL),
+    new URL(`/contests/bulk-query/id`, BACKEND_URL),
     {
       method: "POST",
       headers: {
@@ -121,10 +115,7 @@ export async function getMatchmakingTree(
 ): Promise<MatchmakingTreeNode | null> {
   try {
     const res = await fetch(
-      new URL(
-        `/matchmaking/tree/${contestId}`,
-        process.env.NEXT_PUBLIC_BACKEND_URL!,
-      ),
+      new URL(`/matchmaking/tree/${contestId}`, BACKEND_URL!),
       { cache: "no-store" },
     );
     if (!res.ok) {
