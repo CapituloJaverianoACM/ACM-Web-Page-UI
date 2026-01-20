@@ -1,4 +1,14 @@
 {
+  "home": "Inicio",
+  "activities": "Actividades",
+  "members": "Miembros",
+  "league": "La Liga",
+  "rules": "Reglas",
+  "upcomingEvents": "Eventos",
+  "podium": "Podio",
+  "rank": "Ranking",
+  "login": "Iniciar Sesión",
+  "signup": "Registrarse",
   "Navigation": {
     "home": "Inicio",
     "activities": "Actividades",

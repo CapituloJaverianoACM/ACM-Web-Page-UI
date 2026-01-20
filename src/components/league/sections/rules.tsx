@@ -168,10 +168,6 @@ export function Rules() {
               <span className="leading-6 mt-[2px]">{t("conduct.item2")}</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
-              <span className="leading-6 mt-[7px]">{t("conduct.item2")}</span>
-            </li>
-            <li className="flex items-start gap-3">
               <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
               <span className="leading-6 mt-[2px]">{t("conduct.item3")}</span>
             </li>
