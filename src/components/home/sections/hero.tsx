@@ -48,7 +48,7 @@ export function Hero() {
       </div>
 
       {/* Enhanced gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
     </section>
   );
 }

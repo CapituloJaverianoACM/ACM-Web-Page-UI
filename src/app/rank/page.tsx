@@ -11,9 +11,9 @@ export default function RankPage() {
     /* El contenido interno debe ocupar como mínimo el alto de la pantalla para que el footer se vea bien */
   }
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between">
+    <div className="min-h-dvh flex flex-col justify-between">
       <MainNavbar navLinks={navLinks} />
-      <div className="mt-[10rem] w-full max-w-[90rem] mx-auto p-8">
+      <div className="mt-40 w-full max-w-360 mx-auto p-8">
         <Ranking />
       </div>
       <Footer />

@@ -29,7 +29,7 @@ const SimpleConfettiLayout: React.FC<
         ></div>
 
         <CardHeader className="text-center pb-6 pt-8">
-          <CardTitle className="text-3xl font-bold text-[var(--azul-noche)] dark:text-white mb-3">
+          <CardTitle className="text-3xl font-bold text-(--azul-noche) dark:text-white mb-3">
             {title}
           </CardTitle>
         </CardHeader>

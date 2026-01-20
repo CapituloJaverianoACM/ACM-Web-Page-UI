@@ -116,8 +116,8 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   href={item.href}
                   className={`text-base text-semibold px-md py-md relative ${
                     activeLink === item.key
-                      ? "text-[--azul-electrico] dark:text-[--azul-niebla]"
-                      : "text-[--azul-noche] dark:text-white"
+                      ? "text-(--azul-electrico) dark:text-(--azul-niebla)"
+                      : "text-(--azul-noche) dark:text-white"
                   }`}
                   style={{
                     textDecoration: "none",
@@ -130,7 +130,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-[var(--radius-sm)] transform -translate-x-1/2 bg-[--azul-electrico] dark:bg-[--azul-niebla]`}
+                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",
@@ -238,7 +238,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-[var(--radius-sm)] transform -translate-x-1/2 bg-[--azul-electrico] dark:bg-[--azul-niebla]`}
+                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",

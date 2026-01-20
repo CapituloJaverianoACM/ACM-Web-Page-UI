@@ -31,7 +31,7 @@ const ResetEmailForm: React.FC = () => {
 
   return (
     <form onSubmit={handleResetEmail} className="flex flex-col gap-4">
-      <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-2">
+      <p className="text-center text-sm text-(--azul-ultramar) dark:text-gray-400 mb-2">
         Lamentamos mucho que hayas olvidado tu contraseña, ¡Ingresa tu email
         para poder recuperarlo!
       </p>

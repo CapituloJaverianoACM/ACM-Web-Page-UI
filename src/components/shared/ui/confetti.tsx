@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import CanvasConfetti from "react-canvas-confetti/dist/presets/fireworks";
 
 const Confetti: React.FC = () => {

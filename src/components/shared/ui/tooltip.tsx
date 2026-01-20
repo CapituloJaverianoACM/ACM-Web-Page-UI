@@ -121,11 +121,11 @@ function AnimatedTooltipComponent({
                 }}
                 className={cn(
                   getPositionClasses(),
-                  "z-[100] flex flex-col items-center justify-center rounded-lg bg-black/90 backdrop-blur-sm px-3 py-2 text-xs shadow-2xl border border-white/10",
+                  "z-100 flex flex-col items-center justify-center rounded-lg bg-black/90 backdrop-blur-sm px-3 py-2 text-xs shadow-2xl border border-white/10",
                 )}
               >
-                <div className="absolute inset-x-10 -bottom-px z-30 h-0.5 w-[40%] bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
-                <div className="absolute -bottom-px left-10 z-30 h-px w-[70%] bg-gradient-to-r from-transparent via-cyan-300 to-transparent" />
+                <div className="absolute inset-x-10 -bottom-px z-30 h-0.5 w-[40%] bg-linear-to-r from-transparent via-blue-400 to-transparent" />
+                <div className="absolute -bottom-px left-10 z-30 h-px w-[70%] bg-linear-to-r from-transparent via-cyan-300 to-transparent" />
                 <div className="relative z-30 text-sm font-semibold text-white mb-0.5">
                   {item.name}
                 </div>
@@ -141,7 +141,7 @@ function AnimatedTooltipComponent({
           <div
             className={cn(
               "relative h-14 w-14 rounded-full border-2 border-white overflow-hidden cursor-pointer",
-              "!m-0 !p-0 transition duration-500 group-hover:z-[100] group-hover:scale-105",
+              "m-0! p-0! transition duration-500 group-hover:z-100 group-hover:scale-105",
               item.className,
             )}
             onClick={() => {

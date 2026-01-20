@@ -32,7 +32,7 @@ export function UpcomingEvents({
   return (
     <div
       id="upcoming-events"
-      className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center"
+      className="flex flex-col w-[90%] max-w-400 mx-auto gap-2 items-center"
     >
       <Toaster position="bottom-center" />
       <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">

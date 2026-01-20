@@ -23,10 +23,10 @@ const NewPasswordReset: React.FC = () => {
         ></div>
 
         <CardHeader className="text-center pb-6 pt-8">
-          <CardTitle className="text-3xl font-bold text-[var(--azul-noche)] dark:text-white mb-3">
+          <CardTitle className="text-3xl font-bold text-(--azul-noche) dark:text-white mb-3">
             Establecer nueva contraseña
           </CardTitle>
-          <p className="text-sm text-[var(--azul-ultramar)] dark:text-gray-400">
+          <p className="text-sm text-(--azul-ultramar) dark:text-gray-400">
             Crea una contraseña segura para tu cuenta
           </p>
         </CardHeader>

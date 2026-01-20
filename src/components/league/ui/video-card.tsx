@@ -31,9 +31,9 @@ export default function VideoCard({
     (videoSrc.includes("youtube.com") || videoSrc.includes("youtu.be"));
 
   return (
-    <div className="rounded-3xl bg-[var(--azul-niebla)] dark:bg-[var(--azul-ultramar)] p-6 shadow-lg w-full transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--azul-crayon)]/30 dark:hover:shadow-[var(--azul-electrico)]/40 hover:scale-[1.02]">
+    <div className="rounded-3xl bg-(--azul-niebla) dark:bg-(--azul-ultramar) p-6 shadow-lg w-full transition-all duration-300 hover:shadow-2xl hover:shadow-(--azul-crayon)/30 dark:hover:shadow-(--azul-electrico)/40 hover:scale-[1.02]">
       {/* Video Player Container - 16:9 Aspect Ratio */}
-      <div className="relative w-full bg-gradient-to-br from-blue-200 to-blue-100 rounded-2xl overflow-hidden mb-4 aspect-video flex items-center justify-center">
+      <div className="relative w-full bg-linear-to-br from-blue-200 to-blue-100 rounded-2xl overflow-hidden mb-4 aspect-video flex items-center justify-center">
         {videoSrc ? (
           isYouTube ? (
             <iframe
@@ -52,9 +52,9 @@ export default function VideoCard({
         ) : (
           <>
             {/* Play Button Icon */}
-            <div className="absolute flex items-center justify-center w-20 h-20 rounded-full bg-[var(--azul-crayon)] hover:bg-[var(--azul-electrico)] transition-colors cursor-pointer shadow-lg">
+            <div className="absolute flex items-center justify-center w-20 h-20 rounded-full bg-(--azul-crayon) hover:bg-(--azul-electrico) transition-colors cursor-pointer shadow-lg">
               <svg
-                className="w-8 h-8 text-[var(--white)] fill-current ml-1"
+                className="w-8 h-8 text-(--white) fill-current ml-1"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -67,11 +67,11 @@ export default function VideoCard({
 
       {/* Text Content */}
       <div className="text-center">
-        <h3 className="text-lg font-bold text-[var(--azul-noche)] dark:text-[var(--azul-niebla)]">
+        <h3 className="text-lg font-bold text-(--azul-noche) dark:text-(--azul-niebla)">
           {title}
         </h3>
         {subtitle && (
-          <p className="text-sm text-[var(--azul-ultramar)] dark:text-[var(--azul-niebla)] opacity-80 mt-1">
+          <p className="text-sm text-(--azul-ultramar) dark:text-(--azul-niebla) opacity-80 mt-1">
             {subtitle}
           </p>
         )}

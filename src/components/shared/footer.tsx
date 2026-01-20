@@ -59,10 +59,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4 md:gap-0 text-center md:text-left">
           {/* Información izquierda */}
           <div className="flex items-center justify-center md:justify-start whitespace-nowrap">
-            <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
+            <span className="font-montserrat text-lg md:text-lg text-(--azul-noche) dark:text-white">
               {t("chapter")}
             </span>
-            <h1 className="ml-2 mb-0 md:text-xl font-bold text-[--azul-noche] dark:text-white">
+            <h1 className="ml-2 mb-0 md:text-xl font-bold text-(--azul-noche) dark:text-white">
               ACM
             </h1>
           </div>
@@ -85,7 +85,7 @@ export default function Footer() {
               aria-label="LinkedIn"
               className="inline-flex"
             >
-              <IconBrandLinkedin className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandLinkedin className="w-7 h-7 md:w-8 md:h-8 text-(--azul-noche) dark:text-white hover:opacity-70 transition-opacity" />
             </a>
 
             <a
@@ -95,7 +95,7 @@ export default function Footer() {
               aria-label="Instagram"
               className="inline-flex"
             >
-              <IconBrandInstagram className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandInstagram className="w-7 h-7 md:w-8 md:h-8 text-(--azul-noche) dark:text-white hover:opacity-70 transition-opacity" />
             </a>
           </div>
         </div>
