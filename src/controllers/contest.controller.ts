@@ -41,6 +41,7 @@ export async function getContestsWithPictures(
   const res = await fetch(new URL(`/contests?picture=1`, BACKEND_URL));
 
   if (!res.ok) {
+    console.log(await res.json());
     throw new Error("Error al obtener contests");
   }
 
