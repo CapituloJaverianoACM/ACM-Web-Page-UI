@@ -23,7 +23,6 @@ interface MainNavbarProps {
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const pathname = usePathname().split("/")[1]; // Solo es necesario usar la base
-  console.log(pathname);
   const t = useTranslations("Navigation");
   const [activeLink, setActiveLink] = useState(pathname);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,7 +69,9 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 ">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 ${pathname === "log-in" ? "hidden" : ""}`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
           <div className="flex items-center justify-between">

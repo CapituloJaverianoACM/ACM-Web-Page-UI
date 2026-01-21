@@ -6,6 +6,7 @@ import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 import { login } from "@/app/(auth)/log-in/actions";
 import { redirect } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ export function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +26,8 @@ export function SignInForm() {
       setLoading(false);
       return;
     }
+
+    queryClient.invalidateQueries({ queryKey: ["navbar-user"] });
 
     redirect("/");
   };
