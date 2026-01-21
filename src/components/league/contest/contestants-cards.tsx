@@ -27,6 +27,8 @@ export const ContestantsCards: React.FC<ContestantCardsProps> = ({
 
   const user_avatar =
     user.avatar_url || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
+  const opponent_avatar =
+    oponent?.avatar_url || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   return (
     <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 w-full max-w-750">
       {/* Jugador Izquierda */}
@@ -50,7 +52,7 @@ export const ContestantsCards: React.FC<ContestantCardsProps> = ({
         name={other_user.name}
         ready={other_user.ready}
         wins={other_user.victories}
-        avatar_url={other_user.avatar_url}
+        avatar_url={opponent_avatar}
         matches={other_user.matches_count}
       />
     </div>

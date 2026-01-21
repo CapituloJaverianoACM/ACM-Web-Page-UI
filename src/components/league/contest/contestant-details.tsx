@@ -27,7 +27,7 @@ export const ContestantDetails: React.FC<ContestantDetailsProps> = ({
       <img
         src={avatar_url}
         alt={"Avatar"}
-        className="object-cover max-w-full h-auto block rounded-full"
+        className="object-cover w-full h-full block rounded-full"
       />
     </div>
   );

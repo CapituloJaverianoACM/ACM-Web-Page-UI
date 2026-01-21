@@ -65,7 +65,7 @@ export default function TreeNode({
                 process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL
               }
               alt="User"
-              className="object-cover max-w-full h-auto block rounded-full"
+              className="object-cover w-full h-full block rounded-full"
             />
           )}
         </div>

@@ -13,7 +13,12 @@ import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
 import { BACKEND_URL } from "@/config/env";
 import { Contestant } from "@/models/contestant.model";
-import { getUser, getUserTableFromSupabaseId } from "./supabase.controller";
+import {
+  getAccessToken,
+  getUser,
+  getUserTableFromSupabaseId,
+} from "./supabase.controller";
+import { StandardAPIResponse } from "@/models/api.model";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(new URL(`/contests`, BACKEND_URL));
@@ -171,7 +176,6 @@ export const getContestMatchInfo = async (
     const current_student: Contestant = {
       id: user.id,
       name: user.name,
-      ready: false,
       victories: user.victory_count,
       avatar_url: user.avatar,
       codeforces_handle: user.codeforces_handle,
@@ -212,4 +216,46 @@ export const getContestMatchInfo = async (
   }
 
   return result;
+};
+
+export const getOpponent = async (
+  contest_id: number,
+  student_id: number,
+): Promise<Contestant | null> => {
+  if (!student_id) return null;
+  try {
+    const token = await getAccessToken();
+
+    const res = await fetch(
+      new URL(
+        `/matchmaking/opponent/${contest_id}/${student_id}`,
+        BACKEND_URL!,
+      ),
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    const api_res: StandardAPIResponse = await res.json();
+    if (api_res.error) throw api_res.error;
+
+    const student = api_res.data[0] as Student;
+
+    const contestant: Contestant = {
+      id: student.id,
+      name: student.name,
+      victories: student.victory_count,
+      avatar_url: student.avatar,
+      codeforces_handle: student.codeforces_handle,
+      matches_count: student.matches_count,
+      ready: false,
+    };
+
+    return contestant;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 };

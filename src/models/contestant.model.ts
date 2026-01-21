@@ -3,7 +3,7 @@ export type Contestant = {
   name: string;
   ready?: boolean;
   victories: number;
-  avatar_url: string;
+  avatar_url: string | null;
   codeforces_handle: string;
   matches_count: number;
 };

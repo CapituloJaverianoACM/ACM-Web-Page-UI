@@ -31,16 +31,14 @@ export default function ContestDetailPage() {
     queryFn: async () => getMatchmakingTree(Number(contestId)),
   });
 
+  const [user_ready, toggleUserReady, codeforces_problem, opponent] =
+    useContestMatch(Number(contestId), data?.current_student);
+
   useEffect(() => {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
       router.replace("/log-in");
     }
   }, [data, isLoading, router]);
-
-  const [user_ready, toggleUserReady, codeforces_problem] = useContestMatch(
-    Number(contestId),
-    data?.current_student,
-  );
 
   if (isLoading || isLoadingTree) {
     return (
@@ -66,7 +64,7 @@ export default function ContestDetailPage() {
             </h1>
             <ContestantsCards
               user={{ ...data.current_student, ready: user_ready }}
-              oponent={null}
+              oponent={opponent}
             />
             <ContestInstructions
               ready={user_ready}
