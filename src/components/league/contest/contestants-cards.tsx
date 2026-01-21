@@ -41,7 +41,7 @@ export const ContestantsCards: React.FC<ContestantCardsProps> = ({
 
       {/* Divisor central */}
       <div className="text-2xl select-none bg-transparent ">
-        <h1 className="italic text-white">vs</h1>
+        <h1 className="italic text-black dark:text-white">vs</h1>
       </div>
 
       {/* Jugador Derecha */}

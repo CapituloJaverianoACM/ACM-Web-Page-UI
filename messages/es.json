@@ -204,6 +204,7 @@
     "wins": "porcentaje de victorias.",
     "ready": "¡Listo!",
     "not_ready": "No estoy listo",
-    "waiting_oponent": "Esperando oponente..."
+    "waiting_oponent": "Esperando oponente...",
+    "check": "Verificar"
   }
 }

@@ -204,6 +204,7 @@
     "wins": "of win ratio.",
     "ready": "Ready!",
     "not_ready": "Not ready.",
-    "waiting_oponent": "Waiting oponent..."
+    "waiting_oponent": "Waiting oponent...",
+    "check": "Check"
   }
 }

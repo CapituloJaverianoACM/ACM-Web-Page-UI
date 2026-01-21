@@ -37,7 +37,7 @@ export default function ContestDetailPage() {
     }
   }, [data, isLoading, router]);
 
-  const [user_ready] = useContestMatch(
+  const [user_ready, toggleUserReady, codeforces_problem] = useContestMatch(
     Number(contestId),
     data?.current_student,
   );
@@ -61,13 +61,19 @@ export default function ContestDetailPage() {
           />
         ) : (
           <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
-            <h1 className="text-white">{data.contest[0].name}</h1>
+            <h1 className="text-black dark:text-white">
+              {data.contest[0].name}
+            </h1>
             <ContestantsCards
               user={{ ...data.current_student, ready: user_ready }}
               oponent={null}
             />
-            <ContestInstructions />
-            <h1 className="text-white">Matchmaking</h1>
+            <ContestInstructions
+              ready={user_ready}
+              codeforces_problem={codeforces_problem}
+              toggleReady={toggleUserReady}
+            />
+            <h1 className="text-black dark:text-white">Matchmaking</h1>
             {!isLoadingTree && (
               <MatchmakingTree tree={tree} students={data.students} />
             )}
