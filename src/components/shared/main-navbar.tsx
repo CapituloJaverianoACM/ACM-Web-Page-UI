@@ -21,6 +21,11 @@ interface MainNavbarProps {
   navLinks: NavLink[];
 }
 
+const IGNORE_KEYS = {
+  "log-in": true,
+  "sign-up": true,
+};
+
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const pathname = usePathname().split("/")[1]; // Solo es necesario usar la base
   const t = useTranslations("Navigation");
@@ -70,7 +75,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 ${pathname === "log-in" ? "hidden" : ""}`}
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 ${pathname in IGNORE_KEYS ? "hidden" : ""}`}
     >
       <div className="max-w-7xl mx-auto">
         <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
