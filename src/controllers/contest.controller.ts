@@ -145,7 +145,6 @@ export type ContestMatchInfo = {
   ok: boolean;
   msg: ContestMatchResult;
   contest?: Contest;
-  tree?: MatchmakingTreeNode;
   students?: Array<TreeStudentInfo>;
   current_student?: Contestant;
 };
@@ -176,16 +175,10 @@ export const getContestMatchInfo = async (
       victories: user.victory_count,
       avatar_url: user.avatar,
       codeforces_handle: user.codeforces_handle,
+      matches_count: user.matches_count,
     };
 
     const contest: Contest = await getContestById(contestId);
-    const tree: MatchmakingTreeNode | null =
-      await getMatchmakingTree(contestId);
-
-    if (!tree) {
-      result.msg = ContestMatchResult.NO_TREE;
-      throw ContestMatchResult.NO_TREE;
-    }
 
     const participants_id = (await getParticipationByContestId(contestId)).map(
       (p) => p.student_id,
@@ -213,7 +206,7 @@ export const getContestMatchInfo = async (
     result.ok = true;
     result.msg = ContestMatchResult.OK;
 
-    result = { ...result, contest, tree, students, current_student };
+    result = { ...result, contest, students, current_student };
   } catch (e) {
     console.log(e);
   }

@@ -190,5 +190,20 @@
         "subtitle": "¿Cómo envío un problema?"
       }
     }
+  },
+  "Match": {
+    "instructions": [
+      "Cuando estés listo, presiona el botón de 'Listo'.",
+      "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
+      "Cuando los dos contrincantes estén listos, se asignará un problema de Codeforces.",
+      "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
+      "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
+      "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto."
+    ],
+    "title": "Instrucciones",
+    "wins": "porcentaje de victorias.",
+    "ready": "¡Listo!",
+    "not_ready": "No estoy listo",
+    "waiting_oponent": "Esperando oponente..."
   }
 }

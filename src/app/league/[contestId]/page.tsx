@@ -1,10 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import MainNavbar from "@/components/shared/main-navbar";
-import Footer from "@/components/shared/footer";
 import { useQuery } from "@tanstack/react-query";
-import { getContestMatchInfo } from "@/controllers/contest.controller";
+import {
+  getContestMatchInfo,
+  getMatchmakingTree,
+} from "@/controllers/contest.controller";
 import { MeshGradient } from "@/layouts/mesh-gradient";
 import { ContestantsCards } from "@/components/league/contest/contestants-cards";
 import { ContestInstructions } from "@/components/league/contest/contest-instructions";
@@ -13,12 +14,7 @@ import { ContestMatchResult } from "@/models/contest.model";
 import { useEffect } from "react";
 import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 import { ContestFailedLoad } from "@/components/league/contest/contest-failed-load";
-
-const navLinks = [
-  { key: "home", label: "Inicio", href: "/" },
-  { key: "league", label: "Liga", href: "/league" },
-  { key: "rank", label: "Ranking", href: "/rank" },
-];
+import { useContestMatch } from "@/hooks/use-contest-match";
 
 export default function ContestDetailPage() {
   const params = useParams();
@@ -30,35 +26,54 @@ export default function ContestDetailPage() {
     queryFn: async () => getContestMatchInfo(Number(contestId)),
   });
 
+  const { data: tree, isLoading: isLoadingTree } = useQuery({
+    queryKey: ["matchmaking-tree", contestId],
+    queryFn: async () => getMatchmakingTree(Number(contestId)),
+  });
+
   useEffect(() => {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
       router.replace("/log-in");
     }
   }, [data, isLoading, router]);
 
+  const [user_ready] = useContestMatch(
+    Number(contestId),
+    data?.current_student,
+  );
+
+  if (isLoading || isLoadingTree) {
+    return (
+      <MeshGradient>
+        <div className="w-screen h-screen flex items-center justify-center">
+          <LogoLoader size={300} />
+        </div>
+      </MeshGradient>
+    );
+  }
+
   return (
     <>
-      <MainNavbar navLinks={navLinks} />
       <MeshGradient>
-        {isLoading ? (
-          <div className="w-screen h-screen flex items-center justify-center">
-            <LogoLoader size={300} />
-          </div>
-        ) : !data.ok ? (
-          <ContestFailedLoad data={data} />
+        {!data.ok || !tree ? (
+          <ContestFailedLoad
+            msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
+          />
         ) : (
           <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
             <h1 className="text-white">{data.contest[0].name}</h1>
-            <ContestantsCards />
+            <ContestantsCards
+              user={{ ...data.current_student, ready: user_ready }}
+              oponent={null}
+            />
             <ContestInstructions />
             <h1 className="text-white">Matchmaking</h1>
-            {!isLoading && (
-              <MatchmakingTree tree={data.tree} students={data.students} />
+            {!isLoadingTree && (
+              <MatchmakingTree tree={tree} students={data.students} />
             )}
           </div>
         )}
       </MeshGradient>
-      <Footer />
     </>
   );
 }

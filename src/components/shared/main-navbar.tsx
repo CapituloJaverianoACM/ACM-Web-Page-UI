@@ -9,6 +9,7 @@ import { useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
 import LanguageToggle from "./ui/language-toggle";
 import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 
 export type NavLink = {
   key: string;
@@ -21,8 +22,10 @@ interface MainNavbarProps {
 }
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
+  const pathname = usePathname().split("/")[1]; // Solo es necesario usar la base
+  console.log(pathname);
   const t = useTranslations("Navigation");
-  const [activeLink, setActiveLink] = useState("home");
+  const [activeLink, setActiveLink] = useState(pathname);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { data: student, isLoading } = useQuery({
@@ -92,7 +95,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.key}
                   href={item.href}
                   className={`text-base text-semibold px-md py-md relative ${
@@ -111,13 +114,13 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",
                     }}
                   ></span>
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -219,7 +222,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",

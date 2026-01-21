@@ -1,22 +1,43 @@
-export const ContestantsCards: React.FC = () => {
+import { Contestant } from "@/models/contestant.model";
+import { ContestantDetails } from "./contestant-details";
+import { useTranslations } from "next-intl";
+
+export interface ContestantCardsProps {
+  user: Contestant;
+  oponent: Contestant | null;
+}
+
+export const ContestantsCards: React.FC<ContestantCardsProps> = ({
+  user,
+  oponent,
+}) => {
+  const t = useTranslations();
+
+  const WAITING_OPONENT: Contestant = {
+    id: 0,
+    name: t("Match.waiting_oponent"),
+    ready: false,
+    victories: 0,
+    avatar_url: process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL,
+    codeforces_handle: "",
+    matches_count: 0,
+  };
+
+  const other_user: Contestant = oponent ?? WAITING_OPONENT;
+
+  const user_avatar =
+    user.avatar_url || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   return (
-    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 w-full max-w-[3000px]">
+    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 w-full max-w-750">
       {/* Jugador Izquierda */}
-      <div className="flex items-center gap-4 p-5 bg-radial-[at_90%_35%] from-green-500 to-transparent bg-backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg">
-        <div className="w-14 h-14 rounded-full bg-linear-to-br from-white/30 to-transparent border border-white/40 shadow-inner" />
-        <div>
-          <h2 className="mb-0 font-bold text-lg tracking-tight text-white uppercase">
-            Player 1
-          </h2>
-          <div className="flex gap-2 items-center">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-green-400 text-xs font-medium uppercase tracking-tighter">
-              Status
-            </span>
-          </div>
-          <p className="text-white/50 text-xs mt-1">15 wins</p>
-        </div>
-      </div>
+      <ContestantDetails
+        local_side={true}
+        name={user.name}
+        ready={user.ready}
+        wins={user.victories}
+        avatar_url={user_avatar}
+        matches={user.matches_count}
+      />
 
       {/* Divisor central */}
       <div className="text-2xl select-none bg-transparent ">
@@ -24,21 +45,14 @@ export const ContestantsCards: React.FC = () => {
       </div>
 
       {/* Jugador Derecha */}
-      <div className="flex items-center justify-end gap-4 p-5 bg-white/20  bg-radial-[at_-10%_35%] from-red-500/80 to-transparent backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-right">
-        <div>
-          <h2 className="mb-0 font-bold text-lg tracking-tight text-white uppercase">
-            Player 2
-          </h2>
-          <div className="flex items-center justify-end gap-2">
-            <span className="text-green-400 text-xs font-medium uppercase tracking-tighter">
-              Status
-            </span>
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          </div>
-          <p className="text-white/50 text-xs mt-1">15 wins</p>
-        </div>
-        <div className="w-14 h-14 rounded-full bg-linear-to-br from-white/30 to-transparent border border-white/40 shadow-inner" />
-      </div>
+      <ContestantDetails
+        local_side={false}
+        name={other_user.name}
+        ready={other_user.ready}
+        wins={other_user.victories}
+        avatar_url={other_user.avatar_url}
+        matches={other_user.matches_count}
+      />
     </div>
   );
 };
