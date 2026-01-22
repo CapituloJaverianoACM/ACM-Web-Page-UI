@@ -51,7 +51,7 @@ export async function uploadAvatar(
     if (error.message.includes("Bucket not found")) {
       throw new Error(
         `El bucket '${AVATAR_BUCKET}' no existe. Por favor, créalo en Supabase Storage. ` +
-        `Ve a Storage > Buckets > New bucket y crea un bucket llamado '${AVATAR_BUCKET}' con acceso público.`
+          `Ve a Storage > Buckets > New bucket y crea un bucket llamado '${AVATAR_BUCKET}' con acceso público.`,
       );
     }
     throw new Error(`Error al subir el avatar: ${error.message}`);

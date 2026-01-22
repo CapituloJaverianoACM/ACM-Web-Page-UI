@@ -79,7 +79,10 @@ export const useProfileData = () => {
     setIsEditing(!isEditing);
   };
 
-  const handleAvatarFileChange = (file: File | null, preview: string | null) => {
+  const handleAvatarFileChange = (
+    file: File | null,
+    preview: string | null,
+  ) => {
     setFormData((prev) => ({
       ...prev,
       avatarFile: file,
