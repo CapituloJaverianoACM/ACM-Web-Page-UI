@@ -21,7 +21,7 @@ export default function ProfilePage() {
     isEditing,
     formData,
     handleEditing,
-    handleAvatarUrlChange,
+    handleAvatarFileChange,
     handleSave,
     handleInputChange,
     setFormData,
@@ -49,7 +49,7 @@ export default function ProfilePage() {
               onEditToggle={handleEditing}
               onSave={handleSave}
               onInputChange={handleInputChange}
-              onAvatarUrlChange={handleAvatarUrlChange}
+              onAvatarFileChange={handleAvatarFileChange}
               setFormData={setFormData}
             />
           )}
