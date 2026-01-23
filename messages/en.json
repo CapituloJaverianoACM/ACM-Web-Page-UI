@@ -130,170 +130,215 @@
     },
     "courses": {
       "category": "Courses and Workshops",
-      "title": "Learn new skills with our courses and workshops"
-    }
-  },
-  "Members": {
-    "title": "Our Team",
-    "description": "Meet the talented individuals who make our chapter exceptional",
-    "inactiveMembers": "Former Members",
-    "viewInactive": "View Former Members",
-    "roles": {
-      "president": "President",
-      "vicepresident": "Vice President",
-      "treasurer": "Treasurer"
-    }
-  },
-  "Footer": {
-    "chapter": "Javeriana Chapter",
-    "contributor": "ACM Contributor",
-    "universitaryChapter": "University Chapter"
-  },
-  "League": {
-    "hero": {
-      "title1": "The League",
-      "title2": "Javeriana Programming League",
-      "text": "Where algorithms come alive and the passion for code unites us",
-      "ctaJoin": "Join the League",
-      "ctaSee": "See Competitions",
-      "yearsLabel": "Years Competing"
-    },
-    "rules": {
-      "title": "Rules of the Javeriana Programming League",
-      "objectives": {
-        "title": "Contest Objectives",
-        "item1": "Promote problem-solving and logical thinking through programming."
+      "title": "Learn new skills with our courses and workshops",
+      "labels": {
+        "duration": "Duration",
+        "topics": "Topics",
+        "materials": "Course materials"
       },
-      "participation": {
-        "title": "Participation Criteria",
-        "item1": "The contest is open to students from all faculties of Universidad Javeriana.",
-        "item2": "Participants must register in advance on the event platform."
+
+      "topics": {
+        "dataStructures": "Data structures",
+        "programmingLogic": "Programming logic",
+        "webDevelopment": "Web development",
+        "algorithmicThinking": "Algorithmic thinking",
+        "basicProgramming": "Basic programming"
       },
-      "format": {
-        "title": "Contest Format",
-        "item1": "Contests are divided into qualifiers and finals.",
-        "item2": "Participants will have limited time to solve a series of programming problems.",
-        "item3": "Any programming language is allowed."
-      },
-      "evaluation": {
-        "title": "Evaluation",
-        "item1": "Evaluation will be based on the results provided by the evaluation system of"
-      },
-      "specific": {
-        "title": "Specific Rules",
-        "item1": "No Artificial Intelligence (AI) may be used.",
-        "item2": "Only official C++ documentation may be used:",
-        "item2b": "and",
-        "item3": "If after 15 minutes no one has submitted the exercise, a speed test will be used as a tiebreaker.",
-        "item4": "The contest dynamics are 1vs1: whoever submits the solved exercise first wins.",
-        "item5": "Rankings are determined by number of victories. In case of a tie in victories, the winner will be the one who has played fewer matches."
-      },
-      "conduct": {
-        "title": "Conduct During the Contest",
-        "item1": "The use of unauthorized external resources, such as discussion forums or previously solved code, is prohibited.",
-        "item2": "All participants are expected to maintain an attitude of respect and honesty.",
-        "item3": "Failure to comply with the rules may result in disqualification."
+
+      "items": {
+        "python": {
+          "title": "Python Course",
+          "description": "Course for students who want to learn Python from scratch and apply programming, data analysis and machine learning fundamentals in a practical project.",
+          "materials": {
+            "slides": "Course slides",
+            "dataStructuresPython": "Data structures in Python",
+            "oop": "Object-oriented programming",
+            "introMl": "Introduction to machine learning",
+            "classificationModels": "Classification models",
+            "geneticAlgorithms": "Genetic algorithms"
+          }
+        },
+        "frontendAngular": {
+          "title": "Front-End Course (Angular)",
+          "description": "Course for students interested in frontend development, from HTML and CSS fundamentals to modern web applications using Angular 17.",
+          "materials": {
+            "cssAnimations": "CSS animations"
+          }
+        },
+        "schoolsIntroProgramming": {
+          "title": "High School Course – Introduction to Programming",
+          "description": "Introductory course for high school students with no prior experience, focused on developing logical and algorithmic thinking through problem solving and basic web development.",
+          "materials": {
+            "courseIntro": "Course introduction",
+            "basicConstructions": "Basic programming constructions",
+            "conditionals": "Conditionals and logical operators",
+            "iterativeSessions": "Iterative sessions"
+          }
+        }
       }
     },
-    "upcomingEvents": {
-      "title": "Upcoming Events",
-      "subtitle": "Don't miss any contest!",
-      "noEvents": "No events match your search parameters",
-      "followSocial": "Stay tuned to our social networks! That's how you'll know when we have an event of your interest.",
-      "socialNetworks": "Social Networks",
-      "register": "Register",
-      "goToContest": "Go to Contest",
-      "initial": "Beginner",
-      "advanced": "Advanced",
-      "classroom": "Room"
-    },
-    "podium": {
-      "title": "Top 3 of the League",
-      "victories": "Victories"
-    },
-    "roadmapButton": "See how to get started!"
-  },
-  "Roadmap": {
-    "steps": {
-      "step1": {
-        "title": "Introduction",
-        "subtitle": "What is the league? What do I need to participate?"
-      },
-      "step2": {
-        "title": "Submitting your first problem to the Codeforces platform",
-        "subtitle": "How do I submit a problem?"
+    "Members": {
+      "title": "Our Team",
+      "description": "Meet the talented individuals who make our chapter exceptional",
+      "inactiveMembers": "Former Members",
+      "viewInactive": "View Former Members",
+      "roles": {
+        "president": "President",
+        "vicepresident": "Vice President",
+        "treasurer": "Treasurer"
       }
-    }
-  },
-  "Match": {
-    "instructions": [
-      "When you're ready, press the 'Ready' button.",
-      "If you are no longer ready, you can select 'Not ready'.",
-      "When both contestants are ready, a Codeforces problem will be assigned.",
-      "Once you successfully submit the problem, press verify so our system can check your submission.",
-      "Note that your Codeforces username must match the one used in the submission.",
-      "If the verdict is 'ACCEPTED', a 5-second window will be created in case the opponent also gets the same verdict."
-    ],
-    "title": "Instructions",
-    "wins": "of win ratio.",
-    "ready": "Ready!",
-    "not_ready": "Not ready.",
-    "waiting_oponent": "Waiting oponent...",
-    "check": "Check"
-  },
-  "Results": {
-    "loading": "Loading...",
-    "title": "Contest Results",
-    "userPosition": "Your Position",
-    "matchmakingTree": "Matchmaking Tree",
-    "noMatchmakingTree": "No matchmaking tree available",
-    "finalRanking": "Final Ranking",
-    "noResults": "No results available yet",
-    "you": "(You)"
-  },
-  "Profile": {
-    "title": "Profile",
-    "header": {
-      "title": "Basic Information",
-      "changePassword": "Change Password"
     },
-    "fields": {
-      "name": "First Name",
-      "surname": "Last Name",
-      "email": "Email",
-      "codeforcesHandle": "Codeforces Handle",
-      "codeforcesPlaceholder": "Your Codeforces username",
-      "notSpecified": "Not specified"
+    "Footer": {
+      "chapter": "Javeriana Chapter",
+      "contributor": "ACM Contributor",
+      "universitaryChapter": "University Chapter"
     },
-    "avatar": {
-      "selectImage": "Select image",
-      "removeImage": "Remove image",
-      "formats": "Formats: JPEG, PNG, WEBP. Maximum 1MB",
-      "invalidFile": "Please select a valid image file.",
-      "fileTooLarge": "File is too large. Maximum 1MB."
-    },
-    "buttons": {
-      "save": "Save changes"
-    },
-    "stats": {
-      "participations": "Participations",
-      "wins": "Contests Won",
-      "level": "Level"
-    },
-    "contests": {
-      "title": "Contest History",
-      "loading": "Loading contests...",
-      "noContests": "You don't have any registered contests yet",
-      "noContestsDesc": "When you participate in a contest, it will appear here",
-      "status": {
-        "upcoming": "Upcoming",
-        "inProgress": "In Progress",
-        "finished": "Finished"
+    "League": {
+      "hero": {
+        "title1": "The League",
+        "title2": "Javeriana Programming League",
+        "text": "Where algorithms come alive and the passion for code unites us",
+        "ctaJoin": "Join the League",
+        "ctaSee": "See Competitions",
+        "yearsLabel": "Years Competing"
       },
-      "actions": {
-        "checkIn": "Check in",
-        "viewProgress": "View Progress",
-        "position": "Position"
+      "rules": {
+        "title": "Rules of the Javeriana Programming League",
+        "objectives": {
+          "title": "Contest Objectives",
+          "item1": "Promote problem-solving and logical thinking through programming."
+        },
+        "participation": {
+          "title": "Participation Criteria",
+          "item1": "The contest is open to students from all faculties of Universidad Javeriana.",
+          "item2": "Participants must register in advance on the event platform."
+        },
+        "format": {
+          "title": "Contest Format",
+          "item1": "Contests are divided into qualifiers and finals.",
+          "item2": "Participants will have limited time to solve a series of programming problems.",
+          "item3": "Any programming language is allowed."
+        },
+        "evaluation": {
+          "title": "Evaluation",
+          "item1": "Evaluation will be based on the results provided by the evaluation system of"
+        },
+        "specific": {
+          "title": "Specific Rules",
+          "item1": "No Artificial Intelligence (AI) may be used.",
+          "item2": "Only official C++ documentation may be used:",
+          "item2b": "and",
+          "item3": "If after 15 minutes no one has submitted the exercise, a speed test will be used as a tiebreaker.",
+          "item4": "The contest dynamics are 1vs1: whoever submits the solved exercise first wins.",
+          "item5": "Rankings are determined by number of victories. In case of a tie in victories, the winner will be the one who has played fewer matches."
+        },
+        "conduct": {
+          "title": "Conduct During the Contest",
+          "item1": "The use of unauthorized external resources, such as discussion forums or previously solved code, is prohibited.",
+          "item2": "All participants are expected to maintain an attitude of respect and honesty.",
+          "item3": "Failure to comply with the rules may result in disqualification."
+        }
+      },
+      "upcomingEvents": {
+        "title": "Upcoming Events",
+        "subtitle": "Don't miss any contest!",
+        "noEvents": "No events match your search parameters",
+        "followSocial": "Stay tuned to our social networks! That's how you'll know when we have an event of your interest.",
+        "socialNetworks": "Social Networks",
+        "register": "Register",
+        "goToContest": "Go to Contest",
+        "initial": "Beginner",
+        "advanced": "Advanced",
+        "classroom": "Room"
+      },
+      "podium": {
+        "title": "Top 3 of the League",
+        "victories": "Victories"
+      },
+      "roadmapButton": "See how to get started!"
+    },
+    "Roadmap": {
+      "steps": {
+        "step1": {
+          "title": "Introduction",
+          "subtitle": "What is the league? What do I need to participate?"
+        },
+        "step2": {
+          "title": "Submitting your first problem to the Codeforces platform",
+          "subtitle": "How do I submit a problem?"
+        }
+      }
+    },
+    "Match": {
+      "instructions": [
+        "When you're ready, press the 'Ready' button.",
+        "If you are no longer ready, you can select 'Not ready'.",
+        "When both contestants are ready, a Codeforces problem will be assigned.",
+        "Once you successfully submit the problem, press verify so our system can check your submission.",
+        "Note that your Codeforces username must match the one used in the submission.",
+        "If the verdict is 'ACCEPTED', a 5-second window will be created in case the opponent also gets the same verdict."
+      ],
+      "title": "Instructions",
+      "wins": "of win ratio.",
+      "ready": "Ready!",
+      "not_ready": "Not ready.",
+      "waiting_oponent": "Waiting oponent...",
+      "check": "Check"
+    },
+    "Results": {
+      "loading": "Loading...",
+      "title": "Contest Results",
+      "userPosition": "Your Position",
+      "matchmakingTree": "Matchmaking Tree",
+      "noMatchmakingTree": "No matchmaking tree available",
+      "finalRanking": "Final Ranking",
+      "noResults": "No results available yet",
+      "you": "(You)"
+    },
+    "Profile": {
+      "title": "Profile",
+      "header": {
+        "title": "Basic Information",
+        "changePassword": "Change Password"
+      },
+      "fields": {
+        "name": "First Name",
+        "surname": "Last Name",
+        "email": "Email",
+        "codeforcesHandle": "Codeforces Handle",
+        "codeforcesPlaceholder": "Your Codeforces username",
+        "notSpecified": "Not specified"
+      },
+      "avatar": {
+        "selectImage": "Select image",
+        "removeImage": "Remove image",
+        "formats": "Formats: JPEG, PNG, WEBP. Maximum 1MB",
+        "invalidFile": "Please select a valid image file.",
+        "fileTooLarge": "File is too large. Maximum 1MB."
+      },
+      "buttons": {
+        "save": "Save changes"
+      },
+      "stats": {
+        "participations": "Participations",
+        "wins": "Contests Won",
+        "level": "Level"
+      },
+      "contests": {
+        "title": "Contest History",
+        "loading": "Loading contests...",
+        "noContests": "You don't have any registered contests yet",
+        "noContestsDesc": "When you participate in a contest, it will appear here",
+        "status": {
+          "upcoming": "Upcoming",
+          "inProgress": "In Progress",
+          "finished": "Finished"
+        },
+        "actions": {
+          "checkIn": "Check in",
+          "viewProgress": "View Progress",
+          "position": "Position"
+        }
       }
     }
   }

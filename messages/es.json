@@ -130,170 +130,213 @@
     },
     "courses": {
       "category": "Cursos y Talleres",
-      "title": "Aprende nuevas habilidades con nuestros cursos y talleres"
-    }
-  },
-  "Members": {
-    "title": "Nuestro Equipo",
-    "description": "Conoce a los talentosos individuos que hacen que nuestro capítulo sea excepcional",
-    "inactiveMembers": "Miembros Anteriores",
-    "viewInactive": "Ver Miembros Anteriores",
-    "roles": {
-      "president": "Presidente",
-      "vicepresident": "Vicepresidente",
-      "treasurer": "Tesorero"
-    }
-  },
-  "Footer": {
-    "chapter": "Capítulo Javeriano",
-    "contributor": "Colaborador ACM",
-    "universitaryChapter": "Capítulo Universitario"
-  },
-  "League": {
-    "hero": {
-      "title1": "La Liga",
-      "title2": "Javeriana de Programación",
-      "text": "Donde los algoritmos cobran vida y la pasión por el código nos une",
-      "ctaJoin": "Únete a la Liga",
-      "ctaSee": "Ver Competencias",
-      "yearsLabel": "Años Compitiendo"
-    },
-    "rules": {
-      "title": "Reglas de la Liga Javeriana de Programación",
-      "objectives": {
-        "title": "Objetivos del Concurso",
-        "item1": "Promover la resolución de problemas y el pensamiento lógico a través de la programación."
+      "title": "Aprende nuevas habilidades con nuestros cursos y talleres",
+      "labels": {
+        "duration": "Duración",
+        "topics": "Temas",
+        "materials": "Material del Curso"
       },
-      "participation": {
-        "title": "Criterios de Participación",
-        "item1": "El concurso está abierto a estudiantes de todas las facultades de la Universidad Javeriana.",
-        "item2": "Los participantes deben inscribirse previamente en la plataforma del evento."
+      "topics": {
+        "dataStructures": "Estructuras de datos",
+        "programmingLogic": "Lógica de programación",
+        "webDevelopment": "Desarrollo web",
+        "algorithmicThinking": "Pensamiento algorítmico",
+        "basicProgramming": "Programación básica"
       },
-      "format": {
-        "title": "Formato del Concurso",
-        "item1": "Los concursos se dividen en eliminatorias y finales.",
-        "item2": "El participante tendrá un tiempo limitado para resolver una serie de problemas de programación.",
-        "item3": "Se permitirá el uso de cualquier lenguaje de programación."
+      "items": {
+        "python": {
+          "title": "Curso De Python",
+          "description": "Curso dirigido a estudiantes interesados en aprender Python desde cero y aplicar programación, análisis de datos y fundamentos de machine learning en un proyecto práctico.",
+          "materials": {
+            "slides": "Slides del Curso",
+            "dataStructuresPython": "Estructuras de datos en Python",
+            "oop": "Programación orientada a objetos",
+            "introMl": "Introducción al machine learning",
+            "classificationModels": "Modelos de clasificación",
+            "geneticAlgorithms": "Algoritmos genéticos"
+          }
+        },
+        "frontendAngular": {
+          "title": "Curso Front-End (Angular)",
+          "description": "Curso dirigido a estudiantes interesados en el desarrollo frontend, desde los fundamentos de HTML y CSS hasta aplicaciones web modernas usando Angular 17.",
+          "materials": {
+            "cssAnimations": "Animaciones CSS"
+          }
+        },
+        "schoolsIntroProgramming": {
+          "title": "Curso de colegios - Introducción a la programación",
+          "description": "Curso introductorio dirigido a estudiantes de colegio sin experiencia previa, enfocado en el desarrollo del pensamiento lógico y algorítmico mediante la resolución de problemas y conceptos básicos de desarrollo web.",
+          "materials": {
+            "courseIntro": "Introducción al curso",
+            "basicConstructions": "Construcciones básicas de programación",
+            "conditionals": "Condicionales y operadores lógicos",
+            "iterativeSessions": "Sesiones iterativas"
+          }
+        }
       },
-      "evaluation": {
-        "title": "Evaluación",
-        "item1": "La evaluación se basará en el resultado dado por el sistema de evaluación de"
+      "Members": {
+        "title": "Nuestro Equipo",
+        "description": "Conoce a los talentosos individuos que hacen que nuestro capítulo sea excepcional",
+        "inactiveMembers": "Miembros Anteriores",
+        "viewInactive": "Ver Miembros Anteriores",
+        "roles": {
+          "president": "Presidente",
+          "vicepresident": "Vicepresidente",
+          "treasurer": "Tesorero"
+        }
       },
-      "specific": {
-        "title": "Reglas Específicas",
-        "item1": "No se puede hacer uso de ninguna Inteligencia Artificial (IA).",
-        "item2": "Solo se puede utilizar la documentación oficial de C++:",
-        "item2b": "y",
-        "item3": "Si después de 15 minutos ninguno ha mandado el ejercicio, se desempatará con una prueba de velocidad.",
-        "item4": "La dinámica de las competencias es un 1vs1: el que primero mande el ejercicio resuelto gana.",
-        "item5": "El ranking se determina por la cantidad de victorias. En caso de empate en victorias, el ganador será el que menos partidas haya jugado."
+      "Footer": {
+        "chapter": "Capítulo Javeriano",
+        "contributor": "Colaborador ACM",
+        "universitaryChapter": "Capítulo Universitario"
       },
-      "conduct": {
-        "title": "Conducta Durante el Concurso",
-        "item1": "Se prohíbe el uso de recursos externos no autorizados, como foros de discusión o códigos previamente resueltos.",
-        "item2": "Se espera que todos los participantes mantengan una actitud de respeto y honestidad.",
-        "item3": "El incumplimiento de las normas puede resultar en descalificación."
-      }
-    },
-    "upcomingEvents": {
-      "title": "Próximos Eventos",
-      "subtitle": "¡No te pierdas de ningún contest!",
-      "noEvents": "No hay eventos con tus parámetros de búsqueda",
-      "followSocial": "¡Mantente alerta a nuestras redes sociales! Así sabrás cuando tengamos un evento de tu interés.",
-      "socialNetworks": "Redes Sociales",
-      "register": "Registrarse",
-      "goToContest": "Ir al contest",
-      "initial": "Inicial",
-      "advanced": "Avanzado",
-      "classroom": "Salón"
-    },
-    "podium": {
-      "title": "Mejores 3 de la liga",
-      "victories": "Victorias"
-    },
-    "roadmapButton": "¡Mira cómo comenzar!"
-  },
-  "Roadmap": {
-    "steps": {
-      "step1": {
-        "title": "Introducción",
-        "subtitle": "¿Qué es la liga? ¿Qué necesito para participar?"
+      "League": {
+        "hero": {
+          "title1": "La Liga",
+          "title2": "Javeriana de Programación",
+          "text": "Donde los algoritmos cobran vida y la pasión por el código nos une",
+          "ctaJoin": "Únete a la Liga",
+          "ctaSee": "Ver Competencias",
+          "yearsLabel": "Años Compitiendo"
+        },
+        "rules": {
+          "title": "Reglas de la Liga Javeriana de Programación",
+          "objectives": {
+            "title": "Objetivos del Concurso",
+            "item1": "Promover la resolución de problemas y el pensamiento lógico a través de la programación."
+          },
+          "participation": {
+            "title": "Criterios de Participación",
+            "item1": "El concurso está abierto a estudiantes de todas las facultades de la Universidad Javeriana.",
+            "item2": "Los participantes deben inscribirse previamente en la plataforma del evento."
+          },
+          "format": {
+            "title": "Formato del Concurso",
+            "item1": "Los concursos se dividen en eliminatorias y finales.",
+            "item2": "El participante tendrá un tiempo limitado para resolver una serie de problemas de programación.",
+            "item3": "Se permitirá el uso de cualquier lenguaje de programación."
+          },
+          "evaluation": {
+            "title": "Evaluación",
+            "item1": "La evaluación se basará en el resultado dado por el sistema de evaluación de"
+          },
+          "specific": {
+            "title": "Reglas Específicas",
+            "item1": "No se puede hacer uso de ninguna Inteligencia Artificial (IA).",
+            "item2": "Solo se puede utilizar la documentación oficial de C++:",
+            "item2b": "y",
+            "item3": "Si después de 15 minutos ninguno ha mandado el ejercicio, se desempatará con una prueba de velocidad.",
+            "item4": "La dinámica de las competencias es un 1vs1: el que primero mande el ejercicio resuelto gana.",
+            "item5": "El ranking se determina por la cantidad de victorias. En caso de empate en victorias, el ganador será el que menos partidas haya jugado."
+          },
+          "conduct": {
+            "title": "Conducta Durante el Concurso",
+            "item1": "Se prohíbe el uso de recursos externos no autorizados, como foros de discusión o códigos previamente resueltos.",
+            "item2": "Se espera que todos los participantes mantengan una actitud de respeto y honestidad.",
+            "item3": "El incumplimiento de las normas puede resultar en descalificación."
+          }
+        },
+        "upcomingEvents": {
+          "title": "Próximos Eventos",
+          "subtitle": "¡No te pierdas de ningún contest!",
+          "noEvents": "No hay eventos con tus parámetros de búsqueda",
+          "followSocial": "¡Mantente alerta a nuestras redes sociales! Así sabrás cuando tengamos un evento de tu interés.",
+          "socialNetworks": "Redes Sociales",
+          "register": "Registrarse",
+          "goToContest": "Ir al contest",
+          "initial": "Inicial",
+          "advanced": "Avanzado",
+          "classroom": "Salón"
+        },
+        "podium": {
+          "title": "Mejores 3 de la liga",
+          "victories": "Victorias"
+        },
+        "roadmapButton": "¡Mira cómo comenzar!"
       },
-      "step2": {
-        "title": "Subiendo tu primer problema a la plataforma de Codeforces",
-        "subtitle": "¿Cómo envío un problema?"
-      }
-    }
-  },
-  "Match": {
-    "instructions": [
-      "Cuando estés listo, presiona el botón de 'Listo'.",
-      "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
-      "Cuando los dos contrincantes estén listos, se asignará un problema de Codeforces.",
-      "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
-      "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
-      "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto."
-    ],
-    "title": "Instrucciones",
-    "wins": "porcentaje de victorias.",
-    "ready": "¡Listo!",
-    "not_ready": "No estoy listo",
-    "waiting_oponent": "Esperando oponente...",
-    "check": "Verificar"
-  },
-  "Results": {
-    "loading": "Cargando...",
-    "title": "Resultados del Contest",
-    "userPosition": "Tu Posición",
-    "matchmakingTree": "Árbol de Matchmaking",
-    "noMatchmakingTree": "No hay árbol de matchmaking disponible",
-    "finalRanking": "Clasificación Final",
-    "noResults": "No hay resultados disponibles aún",
-    "you": "(Tú)"
-  },
-  "Profile": {
-    "title": "Perfil",
-    "header": {
-      "title": "Información Básica",
-      "changePassword": "Cambiar Contraseña"
-    },
-    "fields": {
-      "name": "Nombres",
-      "surname": "Apellidos",
-      "email": "Correo",
-      "codeforcesHandle": "Handle de Codeforces",
-      "codeforcesPlaceholder": "Tu usuario de Codeforces",
-      "notSpecified": "No especificado"
-    },
-    "avatar": {
-      "selectImage": "Seleccionar imagen",
-      "removeImage": "Eliminar imagen",
-      "formats": "Formatos: JPEG, PNG, WEBP. Máximo 1MB",
-      "invalidFile": "Por favor, selecciona un archivo de imagen válido.",
-      "fileTooLarge": "El archivo es demasiado grande. Máximo 1MB."
-    },
-    "buttons": {
-      "save": "Guardar cambios"
-    },
-    "stats": {
-      "participations": "Participaciones",
-      "wins": "Competencias Ganadas",
-      "level": "Nivel"
-    },
-    "contests": {
-      "title": "Historial de Competencias",
-      "loading": "Cargando competencias...",
-      "noContests": "No tienes competencias registradas aún",
-      "noContestsDesc": "Cuando participes en una competencia, aparecerá aquí",
-      "status": {
-        "upcoming": "Próxima",
-        "inProgress": "En Curso",
-        "finished": "Finalizada"
+      "Roadmap": {
+        "steps": {
+          "step1": {
+            "title": "Introducción",
+            "subtitle": "¿Qué es la liga? ¿Qué necesito para participar?"
+          },
+          "step2": {
+            "title": "Subiendo tu primer problema a la plataforma de Codeforces",
+            "subtitle": "¿Cómo envío un problema?"
+          }
+        }
       },
-      "actions": {
-        "checkIn": "Check in",
-        "viewProgress": "Ver Progreso",
-        "position": "Puesto"
+      "Match": {
+        "instructions": [
+          "Cuando estés listo, presiona el botón de 'Listo'.",
+          "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
+          "Cuando los dos contrincantes estén listos, se asignará un problema de Codeforces.",
+          "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
+          "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
+          "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto."
+        ],
+        "title": "Instrucciones",
+        "wins": "porcentaje de victorias.",
+        "ready": "¡Listo!",
+        "not_ready": "No estoy listo",
+        "waiting_oponent": "Esperando oponente...",
+        "check": "Verificar"
+      },
+      "Results": {
+        "loading": "Cargando...",
+        "title": "Resultados del Contest",
+        "userPosition": "Tu Posición",
+        "matchmakingTree": "Árbol de Matchmaking",
+        "noMatchmakingTree": "No hay árbol de matchmaking disponible",
+        "finalRanking": "Clasificación Final",
+        "noResults": "No hay resultados disponibles aún",
+        "you": "(Tú)"
+      },
+      "Profile": {
+        "title": "Perfil",
+        "header": {
+          "title": "Información Básica",
+          "changePassword": "Cambiar Contraseña"
+        },
+        "fields": {
+          "name": "Nombres",
+          "surname": "Apellidos",
+          "email": "Correo",
+          "codeforcesHandle": "Handle de Codeforces",
+          "codeforcesPlaceholder": "Tu usuario de Codeforces",
+          "notSpecified": "No especificado"
+        },
+        "avatar": {
+          "selectImage": "Seleccionar imagen",
+          "removeImage": "Eliminar imagen",
+          "formats": "Formatos: JPEG, PNG, WEBP. Máximo 1MB",
+          "invalidFile": "Por favor, selecciona un archivo de imagen válido.",
+          "fileTooLarge": "El archivo es demasiado grande. Máximo 1MB."
+        },
+        "buttons": {
+          "save": "Guardar cambios"
+        },
+        "stats": {
+          "participations": "Participaciones",
+          "wins": "Competencias Ganadas",
+          "level": "Nivel"
+        },
+        "contests": {
+          "title": "Historial de Competencias",
+          "loading": "Cargando competencias...",
+          "noContests": "No tienes competencias registradas aún",
+          "noContestsDesc": "Cuando participes en una competencia, aparecerá aquí",
+          "status": {
+            "upcoming": "Próxima",
+            "inProgress": "En Curso",
+            "finished": "Finalizada"
+          },
+          "actions": {
+            "checkIn": "Check in",
+            "viewProgress": "Ver Progreso",
+            "position": "Puesto"
+          }
+        }
       }
     }
   }
