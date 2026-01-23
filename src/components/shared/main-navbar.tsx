@@ -25,7 +25,6 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   let pathname = usePathname().slice(1);
   const t = useTranslations("Navigation");
   const activeLink = pathname == "" ? "home" : pathname;
-  console.log(activeLink);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { data: student, isLoading } = useQuery({
