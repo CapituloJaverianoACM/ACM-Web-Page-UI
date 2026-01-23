@@ -27,7 +27,7 @@ export function SignInForm() {
       return;
     }
 
-    queryClient.invalidateQueries({ queryKey: ["navbar-user"] });
+    queryClient.clear();
 
     redirect("/");
   };

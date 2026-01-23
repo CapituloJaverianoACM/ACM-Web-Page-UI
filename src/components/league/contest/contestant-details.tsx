@@ -20,7 +20,10 @@ export const ContestantDetails: React.FC<ContestantDetailsProps> = ({
 }) => {
   const t = useTranslations();
   const readyText = ready ? t("Match.ready") : t("Match.not_ready");
-  const win_ratio: string = ((wins / (matches === 0 ? 1 : matches)) * 100).toFixed(2);
+  const win_ratio: string = (
+    (wins / (matches === 0 ? 1 : matches)) *
+    100
+  ).toFixed(2);
 
   const AvatarImage: ReactNode = (
     <div className="w-14 h-14 rounded-full bg-linear-to-br from-white/30 to-transparent border border-white/40 shadow-inner">
@@ -36,8 +39,9 @@ export const ContestantDetails: React.FC<ContestantDetailsProps> = ({
     <div
       className={`flex items-center ${!local_side ? "justify-end" : ""} gap-4 p-5  border border-white/20 rounded-2xl shadow-lg`}
       style={{
-        background: `radial-gradient(circle at ${local_side ? "170% 35%" : "-10% 35%"
-          }, ${local_side ? "var(--color-green-500)" : "var(--color-red-400)"}, transparent)`,
+        background: `radial-gradient(circle at ${
+          local_side ? "170% 35%" : "-10% 35%"
+        }, ${local_side ? "var(--color-green-500)" : "var(--color-red-400)"}, transparent)`,
       }}
     >
       {local_side && AvatarImage}

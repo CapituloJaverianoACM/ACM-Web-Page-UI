@@ -50,7 +50,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
         console.error("Error al cerrar sesión:", error);
       }
 
-      await queryClient.invalidateQueries({ queryKey: ["navbar-user"] });
+      queryClient.clear();
 
       router.push("/log-in");
       router.refresh();

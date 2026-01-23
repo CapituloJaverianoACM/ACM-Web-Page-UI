@@ -20,6 +20,7 @@ export default function TreeNode({
 }: TreeNodeProps) {
   const fillColor = "#ffffff";
   const isRoot = nodeDatum.__rd3t.depth === 0;
+  const isLeaf = !nodeDatum.children || nodeDatum.children.length === 0;
   return (
     <g onClick={toggleNode}>
       <circle
@@ -38,7 +39,8 @@ export default function TreeNode({
           className="flex justify-center items-center rounded-full h-25 w-25"
           onClick={() =>
             nodeDatum.student != null &&
-            nodeDatum.student.codeforces_handle != null
+            nodeDatum.student.codeforces_handle != null &&
+            isLeaf
               ? window.open(
                   "https://codeforces.com/profile/" +
                     nodeDatum.student.codeforces_handle,
