@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { cookies } from "next/headers";
 import { Providers } from "@/components/shared/providers";
 import { NextIntlClientProvider } from "next-intl";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default async function RootLayout({
   children,
@@ -25,6 +26,7 @@ export default async function RootLayout({
           </NextIntlClientProvider>
         </main>
       </body>
+      <GoogleAnalytics gaId={"G-VJ74FDQFST"} />
     </html>
   );
 }
