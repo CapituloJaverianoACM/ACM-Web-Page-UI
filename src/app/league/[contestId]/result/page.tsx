@@ -40,12 +40,12 @@ const StudentPositionRow = ({
   return (
     <div
       className={`flex gap-2 p-2 px-4 rounded-md bg-white shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg ${
-        isCurrentUser ? "ring-2 ring-(--azul-electrico) dark:ring-(--azul-niebla)" : ""
+        isCurrentUser
+          ? "ring-2 ring-(--azul-electrico) dark:ring-(--azul-niebla)"
+          : ""
       }`}
     >
-      <p className={`w-10 m-0 ${positionClass} font-semibold`}>
-        {position}.
-      </p>
+      <p className={`w-10 m-0 ${positionClass} font-semibold`}>{position}.</p>
       <div className="flex justify-between w-full">
         <p className="flex gap-1 m-0 w-[90%] truncate text-ellipsis">
           {student.name}
@@ -100,7 +100,9 @@ export default function ContestResultPage() {
           <h1 className="text-white text-3xl md:text-4xl lg:text-5xl text-center">
             {isLoading
               ? "Cargando..."
-              : resultsData?.contest?.name || matchData?.contest?.name || "Resultados del Contest"}
+              : resultsData?.contest?.name ||
+                matchData?.contest?.name ||
+                "Resultados del Contest"}
           </h1>
 
           {/* Posición del usuario */}
@@ -183,11 +185,12 @@ export default function ContestResultPage() {
             </div>
           )}
 
-          {!isLoadingResults && (!resultsData?.students || resultsData.students.length === 0) && (
-            <div className="flex items-center justify-center p-8 text-white/50">
-              No hay resultados disponibles aún
-            </div>
-          )}
+          {!isLoadingResults &&
+            (!resultsData?.students || resultsData.students.length === 0) && (
+              <div className="flex items-center justify-center p-8 text-white/50">
+                No hay resultados disponibles aún
+              </div>
+            )}
         </div>
       </MeshGradient>
       <Footer />

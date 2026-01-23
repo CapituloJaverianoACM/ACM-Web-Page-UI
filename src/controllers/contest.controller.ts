@@ -258,7 +258,9 @@ export const getContestResults = async (
       participationsWithPosition.map((participation) => {
         const student = students.find((s) => s.id === participation.student_id);
         if (!student) {
-          throw new Error(`Estudiante con id ${participation.student_id} no encontrado`);
+          throw new Error(
+            `Estudiante con id ${participation.student_id} no encontrado`,
+          );
         }
         return {
           ...student,
