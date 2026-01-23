@@ -118,6 +118,13 @@ export function Providers({ children }: { children: ReactNode }) {
       href: "/roadmap",
       isDropdown: false,
     },
+    {
+      key: "discord",
+      label: "Discord",
+      isDropdown: false,
+      href: "https://discord.gg/pj7nZsmx",
+      isExternal: true,
+    },
   ];
   return (
     <HeroUIProvider>

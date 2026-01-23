@@ -16,6 +16,7 @@ export type DropdownNavItem = {
   logo: ReactNode;
   description: string;
   href: string;
+  isExternal?: boolean;
 };
 
 export type NavLink = {
@@ -23,6 +24,7 @@ export type NavLink = {
   label: string;
   isDropdown: boolean;
   href?: string;
+  isExternal?: boolean;
   dropdownItems?: DropdownNavItem[];
 };
 
