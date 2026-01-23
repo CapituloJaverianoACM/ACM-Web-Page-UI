@@ -10,12 +10,7 @@ import AvatarMenu from "./ui/avatar-menu";
 import LanguageToggle from "./ui/language-toggle";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-
-export type NavLink = {
-  key: string;
-  label: string;
-  href: string;
-};
+import { NavbarItem, NavLink } from "../navbar/navbar-item";
 
 interface MainNavbarProps {
   navLinks: NavLink[];
@@ -27,9 +22,9 @@ const IGNORE_KEYS = {
 };
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
-  const pathname = usePathname().split("/")[1]; // Solo es necesario usar la base
+  let pathname = usePathname().slice(1);
   const t = useTranslations("Navigation");
-  const [activeLink, setActiveLink] = useState(pathname);
+  const activeLink = pathname == "" ? "home" : pathname;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { data: student, isLoading } = useQuery({
@@ -99,34 +94,13 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center space-x-6 flex-2">
+            <div className="flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
-                <Link
+                <NavbarItem
                   key={item.key}
-                  href={item.href}
-                  className={`text-base text-semibold px-md py-md relative ${
-                    activeLink === item.key
-                      ? "text-(--azul-electrico) dark:text-(--azul-niebla)"
-                      : "text-(--azul-noche) dark:text-white"
-                  }`}
-                  style={{
-                    textDecoration: "none",
-                    // color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
-                    transition: "color var(--transition-normal)",
-                  }}
-                  onClick={() => {
-                    setActiveLink(item.key);
-                  }}
-                >
-                  {item.label}
-                  <span
-                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
-                    style={{
-                      width: activeLink === item.key ? "30px" : "0",
-                      transition: "width var(--transition-normal)",
-                    }}
-                  ></span>
-                </Link>
+                  item={item}
+                  activeLink={activeLink}
+                />
               ))}
             </div>
 
@@ -210,31 +184,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               {navLinks.map((item) => (
-                <a
+                <NavbarItem
                   key={item.key}
-                  href={item.href}
-                  className="text-base text-semibold px-md py-md relative"
-                  style={{
-                    textDecoration: "none",
-                    color:
-                      activeLink === item.key
-                        ? "var(--azul-electrico)"
-                        : "var(--azul-noche)",
-                    transition: "color var(--transition-normal)",
-                  }}
-                  onClick={() => {
-                    setActiveLink(item.key);
-                  }}
-                >
-                  {item.label}
-                  <span
-                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
-                    style={{
-                      width: activeLink === item.key ? "30px" : "0",
-                      transition: "width var(--transition-normal)",
-                    }}
-                  ></span>
-                </a>
+                  item={item}
+                  activeLink={activeLink}
+                />
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
