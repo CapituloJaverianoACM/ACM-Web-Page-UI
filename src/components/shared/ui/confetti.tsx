@@ -2,8 +2,12 @@
 import React from "react";
 import CanvasConfetti from "react-canvas-confetti/dist/presets/fireworks";
 
-const Confetti: React.FC = () => {
-  return <CanvasConfetti autorun={{ speed: 1, duration: 1000 }} />;
+export interface ConfettiProps {
+  duration?: number;
+}
+
+const Confetti: React.FC<ConfettiProps> = ({ duration = 1000 }) => {
+  return <CanvasConfetti autorun={{ speed: 1, duration }} />;
 };
 
 export default Confetti;

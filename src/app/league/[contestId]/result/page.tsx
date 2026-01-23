@@ -10,6 +10,7 @@ import {
 import { MeshGradient } from "@/layouts/mesh-gradient";
 import MatchmakingTree from "@/components/league/matchmaking-tree";
 import { ContestResultStudent } from "@/controllers/contest.controller";
+import Confetti from "@/components/shared/ui/confetti";
 
 const StudentPositionRow = ({
   student,
@@ -76,6 +77,7 @@ export default function ContestResultPage() {
 
   return (
     <MeshGradient>
+      <Confetti duration={5000} />
       <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[5%] md:mx-[10%] lg:mx-[20%] pb-20">
         {/* Título del contest */}
         <h1 className="dark:text-white text-3xl md:text-4xl lg:text-5xl text-center">
