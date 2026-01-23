@@ -1,6 +1,6 @@
 import { Contest } from "@/models/contest.model";
 import Link from "next/link";
-import React from "react";
+import { useTranslations } from "next-intl";
 
 interface ContestCardProps {
   contest: Contest;
@@ -11,6 +11,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
   const now = new Date();
   const startDate = new Date(contest.start_hour);
   const endDate = new Date(contest.final_hour);
+  const t = useTranslations("Profile.contests");
 
   const isUpcoming = now < startDate;
   const isInProgress = now >= startDate && now <= endDate;
@@ -18,18 +19,18 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
   const getStatusInfo = () => {
     if (isUpcoming)
       return {
-        text: "Próxima",
+        text: t("status.upcoming"),
         classes:
           "bg-(--azul-niebla) text-(--azul-electrico) dark:bg-blue-900 dark:text-blue-200",
       };
     if (isInProgress)
       return {
-        text: "En curso",
+        text: t("status.inProgress"),
         classes:
           "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
       };
     return {
-      text: "Finalizada",
+      text: t("status.finished"),
       classes: "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
     };
   };
@@ -63,20 +64,20 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
               href="/auth/login"
               className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-(--azul-electrico) hover:bg-(--azul-crayon) text-white hover:text-white"
             >
-              Check in
+              {t("actions.checkIn")}
             </Link>
           ) : isInProgress ? (
             <Link
               href="/rank"
               className="no-underline px-2 py-1 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white hover:text-white"
             >
-              Ver progreso
+              {t("actions.viewProgress")}
             </Link>
           ) : 1 ? ( // TODO : Traer el puesto de participation
             <span
               className={`px-2 py-1 rounded-md text-xs font-semibold ${1 === 1 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"}`}
             >
-              Puesto {1}
+              {t("actions.position")} {1}
             </span>
           ) : null}
         </div>

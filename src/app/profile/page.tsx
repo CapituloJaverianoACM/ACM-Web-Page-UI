@@ -7,8 +7,10 @@ import { ProfileHeader } from "@/components/profile/profile-header";
 import { ProfileStats } from "@/components/profile/profile-stats";
 import { ContestsHistory } from "@/components/profile/contests-history";
 import { Toaster } from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
+  const t = useTranslations("Profile");
   const {
     student,
     loadingStudent,
@@ -28,7 +30,7 @@ export default function ProfilePage() {
       <Toaster position="top-right" />
       <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-40">
         <h1 className="text-3xl md:text-4xl font-bold text-(--azul-noche) dark:text-white mb-6">
-          Perfil
+          {t("title")}
         </h1>
         <div className="space-y-6">
           {/* Información básica */}

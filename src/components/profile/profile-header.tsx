@@ -2,6 +2,7 @@ import { Student } from "@/models/student.model";
 import Link from "next/link";
 import React, { useRef } from "react";
 import { Upload, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProfileHeaderProps {
   student: Student | null;
@@ -44,6 +45,7 @@ export const ProfileHeader = ({
   onAvatarFileChange,
   setFormData,
 }: ProfileHeaderProps) => {
+  const t = useTranslations("Profile");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,12 +53,12 @@ export const ProfileHeader = ({
     if (file) {
       // Validar tipo de archivo
       if (!file.type.startsWith("image/")) {
-        alert("Por favor, selecciona un archivo de imagen válido.");
+        alert(t("avatar.invalidFile"));
         return;
       }
       // Validar tamaño (1MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert("El archivo es demasiado grande. Máximo 1MB.");
+        alert(t("avatar.fileTooLarge"));
         return;
       }
       // Crear preview
@@ -84,7 +86,7 @@ export const ProfileHeader = ({
     <section className="bg-(--white) dark:bg-gray-800 rounded-xl shadow-sm border border-(--azul-niebla) dark:border-gray-700">
       <div className="p-6 border-b border-(--azul-niebla) dark:border-gray-700 flex items-center justify-start">
         <p className="text-xl font-semibold text-(--azul-noche) dark:text-white">
-          Información básica
+          {t("header.title")}
         </p>
         <div className="flex items-center gap-2 ml-auto">
           <button
@@ -104,7 +106,9 @@ export const ProfileHeader = ({
             className="no-underline inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors bg-(--azul-niebla) hover:bg-(--azul-crayon) dark:bg-gray-700 dark:hover:bg-gray-600 text-(--azul-noche) dark:text-gray-100 hover:text-white px-4 py-2 text-sm"
           >
             <i className="fi fi-rr-lock w-4 h-4 m-0.5"></i>
-            <span className="hidden sm:inline">Cambiar contraseña</span>
+            <span className="hidden sm:inline">
+              {t("header.changePassword")}
+            </span>
           </Link>
         </div>
       </div>
@@ -154,7 +158,7 @@ export const ProfileHeader = ({
                 <span>
                   {formData.avatarFile
                     ? formData.avatarFile.name
-                    : "Seleccionar imagen"}
+                    : t("avatar.selectImage")}
                 </span>
               </label>
               {formData.avatarFile && (
@@ -164,11 +168,11 @@ export const ProfileHeader = ({
                   className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors text-sm font-medium"
                 >
                   <X className="h-4 w-4" />
-                  <span>Eliminar imagen</span>
+                  <span>{t("avatar.removeImage")}</span>
                 </button>
               )}
               <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                Formatos: JPEG, PNG, WEBP. Máximo 1MB
+                {t("avatar.formats")}
               </p>
             </div>
           )}
@@ -178,7 +182,7 @@ export const ProfileHeader = ({
         <div className="md:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-(--azul-ultramar) dark:text-gray-400 mb-1">
-              Nombres
+              {t("fields.name")}
             </label>
             {isEditing ? (
               <input
@@ -194,7 +198,7 @@ export const ProfileHeader = ({
           </div>
           <div>
             <label className="block text-sm text-(--azul-ultramar) dark:text-gray-400 mb-1">
-              Apellidos
+              {t("fields.surname")}
             </label>
             {isEditing ? (
               <input
@@ -210,7 +214,7 @@ export const ProfileHeader = ({
           </div>
           <div>
             <label className="block text-sm text-(--azul-ultramar) dark:text-gray-400 mb-1">
-              Correo
+              {t("fields.email")}
             </label>
             <p className="text-(--azul-noche) dark:text-white font-medium">
               {email}
@@ -218,7 +222,7 @@ export const ProfileHeader = ({
           </div>
           <div>
             <label className="block text-sm text-(--azul-ultramar) dark:text-gray-400 mb-1">
-              Handle de Codeforces
+              {t("fields.codeforcesHandle")}
             </label>
             {isEditing ? (
               <input
@@ -226,12 +230,12 @@ export const ProfileHeader = ({
                 onChange={(e) =>
                   onInputChange("codeforcesHandle", e.target.value)
                 }
-                placeholder="Tu usuario de Codeforces"
+                placeholder={t("fields.codeforcesPlaceholder")}
                 className="w-full px-3 py-2 rounded-lg bg-(--azul-niebla) dark:bg-gray-700 text-(--azul-noche) dark:text-white border border-(--azul-niebla) dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-(--azul-electrico)"
               />
             ) : (
               <p className="text-(--azul-noche) dark:text-white font-medium">
-                {student?.codeforces_handle || "No especificado"}
+                {student?.codeforces_handle || t("fields.notSpecified")}
               </p>
             )}
           </div>
@@ -242,7 +246,7 @@ export const ProfileHeader = ({
                 onClick={onSave}
                 className="w-full md:w-auto px-5 py-2.5 rounded-lg bg-(--azul-electrico) hover:bg-(--azul-crayon) text-white font-semibold"
               >
-                Guardar cambios
+                {t("buttons.save")}
               </button>
             </div>
           )}
