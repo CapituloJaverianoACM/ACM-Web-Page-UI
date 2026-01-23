@@ -17,6 +17,28 @@ export const useUpcomingEvents = (
   const queryClient = useQueryClient();
 
   const handleRegisterContest = async (contest: Contest) => {
+    const now = new Date();
+    const start = new Date(contest.start_hour);
+    const contestStarted = now > start;
+
+    // Deadline de registro: 5 minutos antes del inicio
+    const registrationDeadline = new Date(start);
+    registrationDeadline.setMinutes(registrationDeadline.getMinutes() - 5);
+
+    // Después de que empieza el contest
+    if (contestStarted) {
+      // Si está registrado y tiene check-in -> competir
+      if (contest.registered && contest.checkin) {
+        router.push(`/league/${contest.id}`);
+        return;
+      }
+
+      // Si no está registrado o no hizo check-in -> ver resultados
+      router.push(`/league/${contest.id}/result`);
+      return;
+    }
+
+    // Antes de que empiece el contest
     if (contest.registered) {
       if (!contest.checkin) {
         toast.error("¡Realiza el check-in primero!");
@@ -24,6 +46,12 @@ export const useUpcomingEvents = (
       }
 
       router.push(`/league/${contest.id}`);
+      return;
+    }
+
+    // No registrado: solo se puede registrar hasta 5 minutos antes del inicio
+    if (now > registrationDeadline) {
+      toast.error("El registro para este contest ya cerró");
       return;
     }
 
@@ -43,7 +71,15 @@ export const useUpcomingEvents = (
   };
 
   const filteredEvents = useMemo(() => {
-    return events.filter((event) => {
+    // Ordenar eventos del más próximo al más lejano/pasado
+    const sortedEvents = [...events].sort((a, b) => {
+      const aStart = new Date(a.start_hour ?? a.date).getTime();
+      const bStart = new Date(b.start_hour ?? b.date).getTime();
+
+      return bStart - aStart;
+    });
+
+    return sortedEvents.filter((event) => {
       if (filter === "all") return true;
       if (filter === "Advanced" && event.level == LevelEnum.Advanced)
         return true;

@@ -31,7 +31,7 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
     <div>
       <Toaster position="bottom-center" />
       <div className="text-center font-semibold">
-        <p className="text-xl">Tiempo antes del check-in</p>
+        <p className="text-xl">Haz check-in antes de que empiece el contest</p>
       </div>
       <div className="text-center font-(family-name:--font-primary) text-4xl">
         <Countdown date={deadline}>

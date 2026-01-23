@@ -39,6 +39,11 @@ export default function ContestDetailPage() {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
       router.replace("/log-in");
     }
+
+    // Si el usuario no hace parte del contest, redirigir a la página de resultados
+    if (!isLoading && data?.msg === ContestMatchResult.NO_PARTICIPANT) {
+      router.replace(`/league/${contestId}/result`);
+    }
   }, [data, isLoading, router]);
 
   if (isLoading || isLoadingTree) {
