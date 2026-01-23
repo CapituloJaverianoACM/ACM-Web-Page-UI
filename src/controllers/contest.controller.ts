@@ -12,6 +12,7 @@ import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
 import { BACKEND_URL } from "@/config/env";
+import { getUserTableFromSupabaseId } from "./supabase.controller";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(new URL(`/contests`, BACKEND_URL));
@@ -199,4 +200,79 @@ export const getContestMatchInfo = async (
   }
 
   return result;
+};
+
+export type ContestResultStudent = Student & {
+  position: number;
+};
+
+export type ContestResults = {
+  ok: boolean;
+  contest?: Contest;
+  students?: ContestResultStudent[];
+  userPosition?: number;
+  userStudentId?: number;
+};
+
+export const getContestResults = async (
+  contestId: number,
+  userId?: string,
+): Promise<ContestResults> => {
+  try {
+    const contest: Contest = await getContestById(contestId);
+    const participations = await getParticipationByContestId(contestId);
+
+    // Filtrar participaciones que tengan posición asignada
+    const participationsWithPosition = participations.filter(
+      (p) => p.position !== null && p.position !== undefined,
+    );
+
+    if (participationsWithPosition.length === 0) {
+      return { ok: false };
+    }
+
+    // Ordenar por posición
+    participationsWithPosition.sort((a, b) => a.position - b.position);
+
+    const studentIds = participationsWithPosition.map((p) => p.student_id);
+    const students = await queryStudentsByBulkIds(studentIds);
+
+    // Combinar estudiantes con sus posiciones
+    const studentsWithPosition: ContestResultStudent[] =
+      participationsWithPosition.map((participation) => {
+        const student = students.find((s) => s.id === participation.student_id);
+        if (!student) {
+          throw new Error(`Estudiante con id ${participation.student_id} no encontrado`);
+        }
+        return {
+          ...student,
+          position: participation.position,
+        };
+      });
+
+    // Obtener posición del usuario si está logueado
+    let userPosition: number | undefined;
+    let userStudentId: number | undefined;
+    if (userId) {
+      const user = await getUserTableFromSupabaseId(userId);
+      if (user) {
+        userStudentId = user.id;
+        const userParticipation = participations.find(
+          (p) => p.student_id === user.id,
+        );
+        userPosition = userParticipation?.position ?? undefined;
+      }
+    }
+
+    return {
+      ok: true,
+      contest,
+      students: studentsWithPosition,
+      userPosition,
+      userStudentId,
+    };
+  } catch (e) {
+    console.error("Error al obtener resultados del contest:", e);
+    return { ok: false };
+  }
 };
