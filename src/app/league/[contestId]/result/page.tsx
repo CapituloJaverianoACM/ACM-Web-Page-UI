@@ -30,11 +30,10 @@ const StudentPositionRow = ({
 
   return (
     <div
-      className={`flex gap-2 p-2 px-4 rounded-md bg-white shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg ${
-        isCurrentUser
-          ? "ring-2 ring-(--azul-electrico) dark:ring-(--azul-niebla)"
-          : ""
-      }`}
+      className={`flex gap-2 p-2 px-4 rounded-md bg-white shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg ${isCurrentUser
+        ? "ring-2 ring-(--azul-electrico) dark:ring-(--azul-niebla)"
+        : ""
+        }`}
     >
       <p className={`w-10 m-0 ${positionClass} font-semibold`}>{position}.</p>
       <div className="flex justify-between w-full">
@@ -57,8 +56,8 @@ export default function ContestResultPage() {
   const contestId = params.contestId as string;
 
   const { data: matchData, isLoading: isLoadingMatch } = useQuery({
-    queryKey: ["matchmaking", contestId],
-    queryFn: async () => getContestMatchInfo(Number(contestId)),
+    queryKey: ["matchmaking", contestId, "results"],
+    queryFn: async () => getContestMatchInfo(Number(contestId), false),
   });
 
   const { data: tree, isLoading: isLoadingTree } = useQuery({
@@ -83,8 +82,8 @@ export default function ContestResultPage() {
           {isLoading
             ? "Cargando..."
             : resultsData?.contest?.name ||
-              matchData?.contest?.name ||
-              "Resultados del Contest"}
+            matchData?.contest?.name ||
+            "Resultados del Contest"}
         </h1>
 
         {/* Posición del usuario */}
@@ -96,15 +95,14 @@ export default function ContestResultPage() {
               </h2>
               <div className="flex items-center justify-center">
                 <span
-                  className={`text-6xl md:text-8xl font-bold ${
-                    resultsData.userPosition === 1
-                      ? "text-yellow-500"
-                      : resultsData.userPosition === 2
-                        ? "text-neutral-500"
-                        : resultsData.userPosition === 3
-                          ? "text-orange-500"
-                          : "text-white"
-                  }`}
+                  className={`text-6xl md:text-8xl font-bold ${resultsData.userPosition === 1
+                    ? "text-yellow-500"
+                    : resultsData.userPosition === 2
+                      ? "text-neutral-500"
+                      : resultsData.userPosition === 3
+                        ? "text-orange-500"
+                        : "text-white"
+                    }`}
                 >
                   {resultsData.userPosition}
                 </span>
