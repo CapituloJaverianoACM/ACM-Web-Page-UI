@@ -9,7 +9,7 @@ import { useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
 import LanguageToggle from "./ui/language-toggle";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { NavbarItem, NavLink } from "../navbar/navbar-item";
 
 interface MainNavbarProps {
@@ -23,9 +23,20 @@ const IGNORE_KEYS = {
 
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
   let pathname = usePathname().slice(1);
+  const searchParams = useSearchParams();
   const t = useTranslations("Navigation");
   const activeLink = pathname == "" ? "home" : pathname;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Construir la URL completa con query params para el redirect
+  const getLoginUrl = () => {
+    const currentPath = pathname === "" ? "/" : `/${pathname}`;
+    const queryString = searchParams.toString();
+    const fullPath = queryString
+      ? `${currentPath}?${queryString}`
+      : currentPath;
+    return `/log-in?redirect=${encodeURIComponent(fullPath)}`;
+  };
 
   const { data: student, isLoading } = useQuery({
     queryKey: ["navbar-user"],
@@ -124,7 +135,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
               ) : (
                 <div className="hidden lg:flex items-center gap-2">
                   <Link
-                    href="/log-in"
+                    href={getLoginUrl()}
                     className="btn btn--outline btn--small dark:text-white"
                   >
                     {t("login")}
@@ -192,7 +203,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
-                  href="/log-in"
+                  href={getLoginUrl()}
                   className="btn btn--outline btn--small w-full dark:text-white"
                   onClick={closeMobileMenu}
                 >

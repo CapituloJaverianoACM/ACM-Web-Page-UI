@@ -37,7 +37,8 @@ export default function ContestDetailPage() {
 
   useEffect(() => {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
-      router.replace("/log-in");
+      const currentPath = `/league/${contestId}`;
+      router.replace(`/log-in?redirect=${encodeURIComponent(currentPath)}`);
     }
 
     // Si el usuario no hace parte del contest, redirigir a la página de resultados
