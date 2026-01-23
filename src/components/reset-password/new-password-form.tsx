@@ -8,12 +8,12 @@ import { getUser, updatePasswordUser } from "@/controllers/supabase.controller";
 import { useRouter } from "next/navigation";
 import LogoLoader from "../shared/ui/logo-loader/loader";
 import { User } from "@supabase/supabase-js";
+import { useLoadingAction } from "@/hooks/use-loading-action";
 
 const NewPasswordForm: React.FC = () => {
   const router = useRouter();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
   const passwordVisibility = [useState<boolean>(false), useState(false)];
@@ -34,7 +34,7 @@ const NewPasswordForm: React.FC = () => {
     passwordVisibility[id][1]((prev) => !prev);
   };
 
-  const submitPassword = async () => {
+  const updatePasswordAction = async () => {
     if (password !== confirmPassword) {
       toast.custom((t) => (
         <ACMToast toastInstance={t}>
@@ -45,14 +45,10 @@ const NewPasswordForm: React.FC = () => {
           </div>
         </ACMToast>
       ));
-      return;
+      return; // Detener sin lanzar error
     }
 
-    setLoading(true);
-
     const confirm = await updatePasswordUser(password);
-
-    setLoading(false);
 
     if (!confirm) {
       toast.custom((t) => (
@@ -64,12 +60,14 @@ const NewPasswordForm: React.FC = () => {
           </div>
         </ACMToast>
       ));
-
-      return;
+      return; // Detener sin lanzar error
     }
 
     router.push("/reset-password/new/success");
   };
+
+  const { run: submitPassword, isLoading: loading } =
+    useLoadingAction(updatePasswordAction);
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -151,9 +149,15 @@ const NewPasswordForm: React.FC = () => {
         onClick={submitPassword}
         disabled={loading}
       >
-        {loading ? "Reestableciendo..." : "Reestablecer"}
+        {loading ? (
+          <>
+            <LogoLoader size={20} />
+            Reestableciendo...
+          </>
+        ) : (
+          "Reestablecer"
+        )}
       </Button>
-      {loading && <LogoLoader size={200} />}
       <Toaster />
     </div>
   );
