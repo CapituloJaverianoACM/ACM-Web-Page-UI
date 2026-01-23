@@ -241,6 +241,16 @@
     "waiting_oponent": "Waiting oponent...",
     "check": "Check"
   },
+  "Results": {
+    "loading": "Loading...",
+    "title": "Contest Results",
+    "userPosition": "Your Position",
+    "matchmakingTree": "Matchmaking Tree",
+    "noMatchmakingTree": "No matchmaking tree available",
+    "finalRanking": "Final Ranking",
+    "noResults": "No results available yet",
+    "you": "(You)"
+  },
   "Profile": {
     "title": "Profile",
     "header": {

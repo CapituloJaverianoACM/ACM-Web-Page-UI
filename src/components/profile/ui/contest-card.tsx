@@ -77,7 +77,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
             <span
               className={`px-2 py-1 rounded-md text-xs font-semibold ${1 === 1 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"}`}
             >
-              {t("actions.position")} {1}
+              {t("actions.position")}{" "}
             </span>
           ) : null}
         </div>
