@@ -34,7 +34,8 @@ export function SignInForm() {
     router.push(redirectPath);
   };
 
-  const { run: handleSubmit, isLoading: loading } = useLoadingAction(handleLogin);
+  const { run: handleSubmit, isLoading: loading } =
+    useLoadingAction(handleLogin);
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");

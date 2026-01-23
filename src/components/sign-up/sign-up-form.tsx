@@ -73,7 +73,8 @@ export function SignUpForm() {
     router.push("/log-in");
   };
 
-  const { run: handleSubmit, isLoading: loading } = useLoadingAction(handleSignup);
+  const { run: handleSubmit, isLoading: loading } =
+    useLoadingAction(handleSignup);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();

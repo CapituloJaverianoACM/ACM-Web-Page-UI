@@ -29,7 +29,8 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
     queryClient.invalidateQueries({ queryKey: ["league-contests"] });
   };
 
-  const { run: handleCheckin, isLoading: isCheckingIn } = useLoadingAction(handleCheckinAction);
+  const { run: handleCheckin, isLoading: isCheckingIn } =
+    useLoadingAction(handleCheckinAction);
 
   return (
     <div>

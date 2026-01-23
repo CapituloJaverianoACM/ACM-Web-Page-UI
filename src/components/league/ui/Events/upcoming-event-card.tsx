@@ -116,18 +116,21 @@ export const UpcomingEventCard = ({
         {showMainButton && (
           <EventCard.RegisterButton
             onClick={() => onRegister(event)}
-            className={` ${contestStarted
+            className={` ${
+              contestStarted
                 ? hasCheckin
                   ? "bg-green-500 "
                   : "bg-(--azul-electrico) "
                 : event.registered
                   ? "bg-green-500 "
                   : " "
-              }`}
+            }`}
             // Antes de que inicie el contest:
             // - Participante sin check-in: botón deshabilitado (solo puede usar el contador de check-in)
             // - No registrado: botón habilitado mientras no llegue el límite de registro (validado en handleRegisterContest)
-            disabled={(!contestStarted && isParticipant && !hasCheckin) || isRegistering}
+            disabled={
+              (!contestStarted && isParticipant && !hasCheckin) || isRegistering
+            }
           >
             {isRegistering ? (
               <div className="flex items-center justify-center gap-2">

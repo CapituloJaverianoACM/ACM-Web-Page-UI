@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import { uploadAvatarAction, deleteAvatarAction } from "@/app/profile/actions";
 import { useLoadingAction } from "./use-loading-action";
 
-
 export const useProfileData = () => {
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
@@ -150,7 +149,8 @@ export const useProfileData = () => {
     });
   };
 
-  const { run: handleSave, isLoading: isSaving } = useLoadingAction(handleSaveAction);
+  const { run: handleSave, isLoading: isSaving } =
+    useLoadingAction(handleSaveAction);
 
   return {
     user,

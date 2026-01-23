@@ -27,7 +27,9 @@ const ResetEmailForm: React.FC = () => {
     }
   };
 
-  const { run: handleResetEmail, isLoading: loading } = useLoadingAction(handleResetEmailAction);
+  const { run: handleResetEmail, isLoading: loading } = useLoadingAction(
+    handleResetEmailAction,
+  );
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

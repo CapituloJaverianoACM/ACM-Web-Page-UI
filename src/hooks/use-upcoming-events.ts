@@ -13,7 +13,9 @@ export const useUpcomingEvents = (
   loadingInitialState: boolean,
 ) => {
   const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
-  const [registeringEventId, setRegisteringEventId] = useState<number | null>(null);
+  const [registeringEventId, setRegisteringEventId] = useState<number | null>(
+    null,
+  );
   const router = useRouter();
   const queryClient = useQueryClient();
 

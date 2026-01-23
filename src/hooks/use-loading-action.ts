@@ -13,7 +13,7 @@ export function useLoadingAction(action) {
         setIsLoading(false);
       }
     },
-    [action, isLoading]
+    [action, isLoading],
   );
 
   return { run, isLoading };

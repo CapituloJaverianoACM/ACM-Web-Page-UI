@@ -66,7 +66,8 @@ const NewPasswordForm: React.FC = () => {
     router.push("/reset-password/new/success");
   };
 
-  const { run: submitPassword, isLoading: loading } = useLoadingAction(updatePasswordAction);
+  const { run: submitPassword, isLoading: loading } =
+    useLoadingAction(updatePasswordAction);
 
   return (
     <div className="flex flex-col gap-4 w-full">

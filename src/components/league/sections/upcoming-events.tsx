@@ -18,8 +18,14 @@ export function UpcomingEvents({
   loadingInitialState?: boolean;
 }) {
   const t = useTranslations("League.upcomingEvents");
-  const { loading, filter, setFilter, filteredEvents, handleRegisterContest, registeringEventId } =
-    useUpcomingEvents(events, loadingInitialState);
+  const {
+    loading,
+    filter,
+    setFilter,
+    filteredEvents,
+    handleRegisterContest,
+    registeringEventId,
+  } = useUpcomingEvents(events, loadingInitialState);
 
   const cards = filteredEvents.map((event) => (
     <UpcomingEventCard
