@@ -190,5 +190,21 @@
         "subtitle": "How do I submit a problem?"
       }
     }
+  },
+  "Match": {
+    "instructions": [
+      "When you're ready, press the 'Ready' button.",
+      "If you are no longer ready, you can select 'Not ready'.",
+      "When both contestants are ready, a Codeforces problem will be assigned.",
+      "Once you successfully submit the problem, press verify so our system can check your submission.",
+      "Note that your Codeforces username must match the one used in the submission.",
+      "If the verdict is 'ACCEPTED', a 5-second window will be created in case the opponent also gets the same verdict."
+    ],
+    "title": "Instructions",
+    "wins": "of win ratio.",
+    "ready": "Ready!",
+    "not_ready": "Not ready.",
+    "waiting_oponent": "Waiting oponent...",
+    "check": "Check"
   }
 }

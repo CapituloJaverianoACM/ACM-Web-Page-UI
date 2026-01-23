@@ -7,6 +7,7 @@ import {
 } from "@/controllers/student.controller";
 import { verifyHandle } from "@/controllers/codeforces.controller";
 import { Student } from "@/models/student.model";
+import toast from "react-hot-toast";
 import { uploadAvatarAction, deleteAvatarAction } from "@/app/profile/actions";
 
 export const useProfileData = () => {
@@ -105,7 +106,7 @@ export const useProfileData = () => {
     if (handleChanged && formData.codeforcesHandle.trim()) {
       const isValid = await verifyHandle(formData.codeforcesHandle.trim());
       if (!isValid) {
-        alert(
+        toast.error(
           "El handle de Codeforces no es válido. Por favor verifica que el usuario existe en Codeforces.",
         );
         return;

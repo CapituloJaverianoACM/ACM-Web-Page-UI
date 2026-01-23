@@ -1,10 +1,6 @@
 "use client";
 
-import MainNavbar, { NavLink } from "@/components/shared/main-navbar";
-import Footer from "@/components/shared/footer";
 import { Ranking } from "@/components/league/sections/ranking";
-
-const navLinks: NavLink[] = [];
 
 export default function RankPage() {
   {
@@ -12,11 +8,9 @@ export default function RankPage() {
   }
   return (
     <div className="min-h-dvh flex flex-col justify-between">
-      <MainNavbar navLinks={navLinks} />
       <div className="mt-40 w-full max-w-360 mx-auto p-8">
         <Ranking />
       </div>
-      <Footer />
     </div>
   );
 }

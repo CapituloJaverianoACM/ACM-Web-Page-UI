@@ -10,6 +10,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AvatarMenuProps {
   avatarUrl: string;
@@ -23,6 +24,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const [position, setPosition] = useState({ top: 0, right: 0 });
   const router = useRouter();
   const supabase = createClient();
+  const queryClient = useQueryClient();
 
   avatarUrl = avatarUrl || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   userName = userName || "Usuario";
@@ -47,6 +49,8 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
       if (error) {
         console.error("Error al cerrar sesión:", error);
       }
+
+      queryClient.clear();
 
       router.push("/log-in");
       router.refresh();

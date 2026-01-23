@@ -1,26 +1,24 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import MainNavbar from "@/components/shared/main-navbar";
-import Footer from "@/components/shared/footer";
+import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ContestMatchResult,
   getContestMatchInfo,
+  getMatchmakingTree,
 } from "@/controllers/contest.controller";
 import { MeshGradient } from "@/layouts/mesh-gradient";
-import { ContestantsCards } from "@/components/league/contest/ContestantsCards";
-import { ContestInstructions } from "@/components/league/contest/ContestInstructions";
+import { ContestantsCards } from "@/components/league/contest/contestants-cards";
+import { ContestInstructions } from "@/components/league/contest/contest-instructions";
 import MatchmakingTree from "@/components/league/matchmaking-tree";
-
-const navLinks = [
-  { key: "home", label: "Inicio", href: "/" },
-  { key: "league", label: "Liga", href: "/league" },
-  { key: "rank", label: "Ranking", href: "/rank" },
-];
+import { ContestMatchResult } from "@/models/contest.model";
+import { useEffect } from "react";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
+import { ContestFailedLoad } from "@/components/league/contest/contest-failed-load";
+import { useContestMatch } from "@/hooks/use-contest-match";
 
 export default function ContestDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const contestId = params.contestId as string;
 
   const { data, isLoading } = useQuery({
@@ -28,23 +26,58 @@ export default function ContestDetailPage() {
     queryFn: async () => getContestMatchInfo(Number(contestId)),
   });
 
-  return (
-    <>
-      <MainNavbar navLinks={navLinks} />
+  const { data: tree, isLoading: isLoadingTree } = useQuery({
+    queryKey: ["matchmaking-tree", contestId],
+    queryFn: async () => getMatchmakingTree(Number(contestId)),
+  });
+
+  const [user_ready, toggleUserReady, codeforces_problem, opponent] =
+    useContestMatch(Number(contestId), data?.current_student);
+
+  useEffect(() => {
+    if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
+      router.replace("/log-in");
+    }
+  }, [data, isLoading, router]);
+
+  if (isLoading || isLoadingTree) {
+    return (
       <MeshGradient>
-        <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
-          <h1 className="text-white">
-            {isLoading ? "Cargando..." : data.contest[0].name}
-          </h1>
-          <ContestantsCards />
-          <ContestInstructions />
-          <h1 className="text-white">Matchmaking</h1>
-          {!isLoading && (
-            <MatchmakingTree tree={data.tree} students={data.students} />
-          )}
+        <div className="w-screen h-screen flex items-center justify-center">
+          <LogoLoader size={300} />
         </div>
       </MeshGradient>
-      <Footer />
+    );
+  }
+
+  return (
+    <>
+      <MeshGradient>
+        {!data.ok || !tree ? (
+          <ContestFailedLoad
+            msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
+          />
+        ) : (
+          <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
+            <h1 className="text-black dark:text-white">
+              {data.contest[0].name}
+            </h1>
+            <ContestantsCards
+              user={{ ...data.current_student, ready: user_ready }}
+              oponent={opponent}
+            />
+            <ContestInstructions
+              ready={user_ready}
+              codeforces_problem={codeforces_problem}
+              toggleReady={toggleUserReady}
+            />
+            <h1 className="text-black dark:text-white">Matchmaking</h1>
+            {!isLoadingTree && (
+              <MatchmakingTree tree={tree} students={data.students} />
+            )}
+          </div>
+        )}
+      </MeshGradient>
     </>
   );
 }

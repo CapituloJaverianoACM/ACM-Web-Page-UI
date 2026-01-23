@@ -112,6 +112,7 @@ export async function updateStudent(
   });
 
   if (!res.ok) {
+    console.log(await res.json());
     throw new Error("Error al actualizar el estudiante: " + res.statusText);
   }
 

@@ -1,5 +1,5 @@
 "use server";
-import { Contest } from "@/models/contest.model";
+import { Contest, ContestMatchResult } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
 import { MatchmakingTreeNode } from "@/models/matchmaking.model";
 import {
@@ -12,6 +12,13 @@ import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
 import { BACKEND_URL } from "@/config/env";
+import { Contestant } from "@/models/contestant.model";
+import {
+  getAccessToken,
+  getUser,
+  getUserTableFromSupabaseId,
+} from "./supabase.controller";
+import { StandardAPIResponse } from "@/models/api.model";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(new URL(`/contests`, BACKEND_URL));
@@ -41,6 +48,7 @@ export async function getContestsWithPictures(
   const res = await fetch(new URL(`/contests?picture=1`, BACKEND_URL));
 
   if (!res.ok) {
+    console.log(await res.json());
     throw new Error("Error al obtener contests");
   }
 
@@ -133,14 +141,6 @@ export async function getMatchmakingTree(
   }
 }
 
-export enum ContestMatchResult {
-  NO_CONTEST = "No hay un contest que coincida con este id.",
-  NO_TREE = "No existe un matchmaking aun.",
-  NO_USERS = "No hay participantes.",
-  EMPTY = "",
-  OK = "Data retrieved success.",
-}
-
 export type TreeStudentInfo = Pick<
   Student,
   "id" | "name" | "avatar" | "codeforces_handle"
@@ -150,8 +150,8 @@ export type ContestMatchInfo = {
   ok: boolean;
   msg: ContestMatchResult;
   contest?: Contest;
-  tree?: MatchmakingTreeNode;
   students?: Array<TreeStudentInfo>;
+  current_student?: Contestant;
 };
 
 export const getContestMatchInfo = async (
@@ -160,14 +160,29 @@ export const getContestMatchInfo = async (
   let result: ContestMatchInfo = { ok: false, msg: ContestMatchResult.EMPTY };
 
   try {
-    const contest: Contest = await getContestById(contestId);
-    const tree: MatchmakingTreeNode | null =
-      await getMatchmakingTree(contestId);
+    const supabase_user = await getUser();
 
-    if (!tree) {
-      result.msg = ContestMatchResult.NO_TREE;
-      throw ContestMatchResult.NO_TREE;
+    if (!supabase_user) {
+      result.msg = ContestMatchResult.NO_LOGGED;
+      throw ContestMatchResult.NO_LOGGED;
     }
+
+    const user: Student | null = await getUserTableFromSupabaseId(
+      supabase_user.id,
+    );
+
+    if (!user) return result;
+
+    const current_student: Contestant = {
+      id: user.id,
+      name: user.name,
+      victories: user.victory_count,
+      avatar_url: user.avatar,
+      codeforces_handle: user.codeforces_handle,
+      matches_count: user.matches_count,
+    };
+
+    const contest: Contest = await getContestById(contestId);
 
     const participants_id = (await getParticipationByContestId(contestId)).map(
       (p) => p.student_id,
@@ -178,25 +193,69 @@ export const getContestMatchInfo = async (
       throw ContestMatchResult.NO_USERS;
     }
 
-    const students: Pick<
-      Student,
-      "id" | "name" | "avatar" | "codeforces_handle"
-    >[] = (await queryStudentsByBulkIds(participants_id)).map(
-      ({ id, name, avatar, codeforces_handle }) => ({
-        id,
-        name,
-        avatar,
-        codeforces_handle,
-      }),
-    );
+    if (participants_id.find((p) => p === current_student.id) == undefined) {
+      result.msg = ContestMatchResult.NO_PARTICIPANT;
+      throw ContestMatchResult.NO_PARTICIPANT;
+    }
+
+    const students: Array<TreeStudentInfo> = (
+      await queryStudentsByBulkIds(participants_id)
+    ).map(({ id, name, avatar, codeforces_handle }) => ({
+      id,
+      name,
+      avatar,
+      codeforces_handle,
+    }));
 
     result.ok = true;
     result.msg = ContestMatchResult.OK;
 
-    result = { ...result, contest, tree, students };
+    result = { ...result, contest, students, current_student };
   } catch (e) {
     console.log(e);
   }
 
   return result;
+};
+
+export const getOpponent = async (
+  contest_id: number,
+  student_id: number,
+): Promise<Contestant | null> => {
+  if (!student_id) return null;
+  try {
+    const token = await getAccessToken();
+
+    const res = await fetch(
+      new URL(
+        `/matchmaking/opponent/${contest_id}/${student_id}`,
+        BACKEND_URL!,
+      ),
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    const api_res: StandardAPIResponse = await res.json();
+    if (api_res.error) throw api_res.error;
+
+    const student = api_res.data[0] as Student;
+
+    const contestant: Contestant = {
+      id: student.id,
+      name: student.name,
+      victories: student.victory_count,
+      avatar_url: student.avatar,
+      codeforces_handle: student.codeforces_handle,
+      matches_count: student.matches_count,
+      ready: false,
+    };
+
+    return contestant;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 };

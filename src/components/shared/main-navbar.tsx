@@ -3,12 +3,13 @@
 import { useTranslations } from "next-intl";
 import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
-import { Student } from "@/models/student.model";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
 import LanguageToggle from "./ui/language-toggle";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 
 export type NavLink = {
   key: string;
@@ -20,38 +21,25 @@ interface MainNavbarProps {
   navLinks: NavLink[];
 }
 
+const IGNORE_KEYS = {
+  "log-in": true,
+  "sign-up": true,
+};
+
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
+  const pathname = usePathname().split("/")[1]; // Solo es necesario usar la base
   const t = useTranslations("Navigation");
-  const [activeLink, setActiveLink] = useState("home");
+  const [activeLink, setActiveLink] = useState(pathname);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
 
-  useEffect(() => {
-    const checkLogged = async () => {
-      try {
-        const user = await getUser();
-        setIsLogged(user != null);
-
-        if (user?.id) {
-          try {
-            const student = await getStudentBySupabaseId(user.id);
-            setStudent(student);
-          } catch (error) {
-            console.error("Error al obtener el estudiante:", error);
-            setStudent(null);
-          }
-        } else {
-          setStudent(null);
-        }
-      } catch (error) {
-        console.error("Error al verificar el usuario:", error);
-        setIsLogged(false);
-        setStudent(null);
-      }
-    };
-    checkLogged();
-  }, []);
+  const { data: student, isLoading } = useQuery({
+    queryKey: ["navbar-user"],
+    queryFn: async () => {
+      const user = await getUser();
+      if (!user) return null;
+      return await getStudentBySupabaseId(user.id);
+    },
+  });
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -86,7 +74,9 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 ">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 ${pathname in IGNORE_KEYS ? "hidden" : ""}`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
           <div className="flex items-center justify-between">
@@ -111,7 +101,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.key}
                   href={item.href}
                   className={`text-base text-semibold px-md py-md relative ${
@@ -130,13 +120,13 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",
                     }}
                   ></span>
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -152,10 +142,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
               </div>
 
               {/* User Links */}
-              {isLogged ? (
+              {!isLoading && student ? (
                 <AvatarMenu
-                  avatarUrl={student?.avatar || ""}
-                  userName={student?.name || ""}
+                  avatarUrl={student.avatar || ""}
+                  userName={student.name || ""}
                 />
               ) : (
                 <div className="hidden lg:flex items-center gap-2">
@@ -238,7 +228,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-1/2 h-[3px] rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+                    className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-1/2 bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
                     style={{
                       width: activeLink === item.key ? "30px" : "0",
                       transition: "width var(--transition-normal)",
