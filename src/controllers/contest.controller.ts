@@ -156,7 +156,7 @@ export type ContestMatchInfo = {
 
 export const getContestMatchInfo = async (
   contestId: number,
-  user_in_tree: boolean = true
+  user_in_tree: boolean = true,
 ): Promise<ContestMatchInfo> => {
   let result: ContestMatchInfo = { ok: false, msg: ContestMatchResult.EMPTY };
 
@@ -194,7 +194,10 @@ export const getContestMatchInfo = async (
       throw ContestMatchResult.NO_USERS;
     }
 
-    if (participants_id.find((p) => p === current_student.id) == undefined && user_in_tree) {
+    if (
+      participants_id.find((p) => p === current_student.id) == undefined &&
+      user_in_tree
+    ) {
       result.msg = ContestMatchResult.NO_PARTICIPANT;
       throw ContestMatchResult.NO_PARTICIPANT;
     }
