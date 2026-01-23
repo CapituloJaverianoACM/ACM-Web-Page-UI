@@ -9,8 +9,6 @@ import {
 } from "@/controllers/contest.controller";
 import { MeshGradient } from "@/layouts/mesh-gradient";
 import MatchmakingTree from "@/components/league/matchmaking-tree";
-import { getUser } from "@/controllers/supabase.controller";
-import { useEffect, useState } from "react";
 import { ContestResultStudent } from "@/controllers/contest.controller";
 
 const StudentPositionRow = ({
@@ -56,17 +54,6 @@ const StudentPositionRow = ({
 export default function ContestResultPage() {
   const params = useParams();
   const contestId = params.contestId as string;
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getUser();
-      if (user) {
-        setUserId(user.id);
-      }
-    };
-    fetchUser();
-  }, []);
 
   const { data: matchData, isLoading: isLoadingMatch } = useQuery({
     queryKey: ["matchmaking", contestId],
@@ -79,11 +66,9 @@ export default function ContestResultPage() {
   });
 
   const { data: resultsData, isLoading: isLoadingResults } = useQuery({
-    queryKey: ["contest-results", contestId, userId],
-    queryFn: async () => {
-      const user = await getUser();
-      return getContestResults(Number(contestId), user?.id);
-    },
+    queryKey: ["contest-results", contestId, matchData?.current_student?.id],
+    enabled: !!matchData?.current_student?.id,
+    queryFn: async () => getContestResults(Number(contestId), matchData?.current_student?.id),
   });
 
   const isLoading = isLoadingMatch || isLoadingResults || isLoadingTree;

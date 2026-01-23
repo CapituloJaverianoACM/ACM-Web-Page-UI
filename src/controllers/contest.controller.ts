@@ -232,7 +232,7 @@ export type ContestResults = {
 
 export const getContestResults = async (
   contestId: number,
-  userId?: string,
+  userId?: number,
 ): Promise<ContestResults> => {
   try {
     const contest: Contest = await getContestById(contestId);
@@ -270,16 +270,11 @@ export const getContestResults = async (
 
     // Obtener posición del usuario si está logueado
     let userPosition: number | undefined;
-    let userStudentId: number | undefined;
     if (userId) {
-      const user = await getUserTableFromSupabaseId(userId);
-      if (user) {
-        userStudentId = user.id;
-        const userParticipation = participations.find(
-          (p) => p.student_id === user.id,
-        );
-        userPosition = userParticipation?.position ?? undefined;
-      }
+      const userParticipation = participations.find(
+        (p) => p.student_id === userId,
+      );
+      userPosition = userParticipation?.position ?? undefined;
     }
 
     return {
@@ -287,7 +282,7 @@ export const getContestResults = async (
       contest,
       students: studentsWithPosition,
       userPosition,
-      userStudentId,
+      userStudentId: userId,
     };
   } catch (e) {
     console.error("Error al obtener resultados del contest:", e);
