@@ -32,7 +32,9 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   const getLoginUrl = () => {
     const currentPath = pathname === "" ? "/" : `/${pathname}`;
     const queryString = searchParams.toString();
-    const fullPath = queryString ? `${currentPath}?${queryString}` : currentPath;
+    const fullPath = queryString
+      ? `${currentPath}?${queryString}`
+      : currentPath;
     return `/log-in?redirect=${encodeURIComponent(fullPath)}`;
   };
 
