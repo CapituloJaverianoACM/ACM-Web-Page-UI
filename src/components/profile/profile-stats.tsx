@@ -1,12 +1,14 @@
 import { LevelEnum } from "@/models/level.enum";
 import { Student } from "@/models/student.model";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface ProfileStatsProps {
   student: Student | null;
 }
 
 export const ProfileStats = ({ student }: ProfileStatsProps) => {
+  const t = useTranslations("Profile.stats");
   const totalParticipations = student?.matches_count || 0;
   const totalWins = student?.victory_count || 0;
   const level = student?.level?.toString() || LevelEnum.Initial.toString();
@@ -16,7 +18,7 @@ export const ProfileStats = ({ student }: ProfileStatsProps) => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="relative overflow-hidden rounded-xl border border-blue-200 dark:border-gray-700 bg-linear-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-indigo-900/20 p-4">
           <div className="text-xs font-semibold text-blue-600 dark:text-blue-300">
-            Participaciones
+            {t("participations")}
           </div>
           <div className="mt-1 text-3xl font-extrabold text-blue-800 dark:text-blue-100">
             {totalParticipations}
@@ -25,7 +27,7 @@ export const ProfileStats = ({ student }: ProfileStatsProps) => {
         </div>
         <div className="relative overflow-hidden rounded-xl border border-emerald-200 dark:border-gray-700 bg-linear-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-teal-900/20 p-4">
           <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-300">
-            Competencias ganadas
+            {t("wins")}
           </div>
           <div className="mt-1 text-3xl font-extrabold text-emerald-800 dark:text-emerald-100">
             {totalWins}
@@ -46,7 +48,7 @@ export const ProfileStats = ({ student }: ProfileStatsProps) => {
                 : "text-amber-600 dark:text-amber-300"
             }`}
           >
-            Nivel
+            {t("level")}
           </div>
           <div
             className={`mt-1 text-3xl font-extrabold ${

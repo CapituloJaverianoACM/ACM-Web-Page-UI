@@ -1,4 +1,14 @@
 {
+  "home": "Inicio",
+  "activities": "Actividades",
+  "members": "Miembros",
+  "league": "La Liga",
+  "rules": "Reglas",
+  "upcomingEvents": "Eventos",
+  "podium": "Podio",
+  "rank": "Ranking",
+  "login": "Iniciar Sesión",
+  "signup": "Registrarse",
   "Navigation": {
     "home": "Inicio",
     "activities": "Actividades",
@@ -9,7 +19,41 @@
     "podium": "Podio",
     "rank": "Ranking",
     "login": "Iniciar Sesión",
-    "signup": "Registrarse"
+    "signup": "Registrarse",
+    "dropdown": {
+      "home": {
+        "title": "Inicio",
+        "description": "Inicio de la página"
+      },
+      "activities": {
+        "title": "Nuestras Actividades",
+        "description": "Conoce nuestras actividades"
+      },
+      "members": {
+        "title": "Miembros",
+        "description": "Conoce a nuestros miembros"
+      },
+      "inactiveMembers": {
+        "title": "Miembros Pasados",
+        "description": "Conoce a los que construyeron la comunidad"
+      },
+      "league": {
+        "title": "La Liga",
+        "description": "Conoce la liga"
+      },
+      "rules": {
+        "title": "Reglas",
+        "description": "Conoce las reglas"
+      },
+      "upcomingEvents": {
+        "title": "Próximos Eventos",
+        "description": "Conoce los próximos eventos"
+      },
+      "podium": {
+        "title": "El Podio",
+        "description": "Descubre los más destacados"
+      }
+    }
   },
   "Hero": {
     "subtitle": "¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la innovación."
@@ -178,6 +222,78 @@
       "step2": {
         "title": "Subiendo tu primer problema a la plataforma de Codeforces",
         "subtitle": "¿Cómo envío un problema?"
+      }
+    }
+  },
+  "Match": {
+    "instructions": [
+      "Cuando estés listo, presiona el botón de 'Listo'.",
+      "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
+      "Cuando los dos contrincantes estén listos, se asignará un problema de Codeforces.",
+      "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
+      "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
+      "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto."
+    ],
+    "title": "Instrucciones",
+    "wins": "porcentaje de victorias.",
+    "ready": "¡Listo!",
+    "not_ready": "No estoy listo",
+    "waiting_oponent": "Esperando oponente...",
+    "check": "Verificar"
+  },
+  "Results": {
+    "loading": "Cargando...",
+    "title": "Resultados del Contest",
+    "userPosition": "Tu Posición",
+    "matchmakingTree": "Árbol de Matchmaking",
+    "noMatchmakingTree": "No hay árbol de matchmaking disponible",
+    "finalRanking": "Clasificación Final",
+    "noResults": "No hay resultados disponibles aún",
+    "you": "(Tú)"
+  },
+  "Profile": {
+    "title": "Perfil",
+    "header": {
+      "title": "Información Básica",
+      "changePassword": "Cambiar Contraseña"
+    },
+    "fields": {
+      "name": "Nombres",
+      "surname": "Apellidos",
+      "email": "Correo",
+      "codeforcesHandle": "Handle de Codeforces",
+      "codeforcesPlaceholder": "Tu usuario de Codeforces",
+      "notSpecified": "No especificado"
+    },
+    "avatar": {
+      "selectImage": "Seleccionar imagen",
+      "removeImage": "Eliminar imagen",
+      "formats": "Formatos: JPEG, PNG, WEBP. Máximo 1MB",
+      "invalidFile": "Por favor, selecciona un archivo de imagen válido.",
+      "fileTooLarge": "El archivo es demasiado grande. Máximo 1MB."
+    },
+    "buttons": {
+      "save": "Guardar cambios"
+    },
+    "stats": {
+      "participations": "Participaciones",
+      "wins": "Competencias Ganadas",
+      "level": "Nivel"
+    },
+    "contests": {
+      "title": "Historial de Competencias",
+      "loading": "Cargando competencias...",
+      "noContests": "No tienes competencias registradas aún",
+      "noContestsDesc": "Cuando participes en una competencia, aparecerá aquí",
+      "status": {
+        "upcoming": "Próxima",
+        "inProgress": "En Curso",
+        "finished": "Finalizada"
+      },
+      "actions": {
+        "checkIn": "Check in",
+        "viewProgress": "Ver Progreso",
+        "position": "Puesto"
       }
     }
   }

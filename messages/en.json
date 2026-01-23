@@ -1,4 +1,14 @@
 {
+  "home": "Home",
+  "activities": "Activities",
+  "members": "Members",
+  "league": "The League",
+  "rules": "Rules",
+  "upcomingEvents": "Upcoming Events",
+  "podium": "Podium",
+  "rank": "Ranking",
+  "login": "Log In",
+  "signup": "Sign Up",
   "Navigation": {
     "home": "Home",
     "activities": "Activities",
@@ -9,7 +19,41 @@
     "podium": "Podium",
     "rank": "Ranking",
     "login": "Log In",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "dropdown": {
+      "home": {
+        "title": "Home",
+        "description": "Homepage"
+      },
+      "activities": {
+        "title": "Our Activities",
+        "description": "Discover our activities"
+      },
+      "members": {
+        "title": "Members",
+        "description": "Meet our members"
+      },
+      "inactiveMembers": {
+        "title": "Former Members",
+        "description": "Meet those who built the community"
+      },
+      "league": {
+        "title": "The League",
+        "description": "Discover the league"
+      },
+      "rules": {
+        "title": "Rules",
+        "description": "Learn the rules"
+      },
+      "upcomingEvents": {
+        "title": "Upcoming Events",
+        "description": "Check out upcoming events"
+      },
+      "podium": {
+        "title": "The Podium",
+        "description": "Discover the top performers"
+      }
+    }
   },
   "Hero": {
     "subtitle": "Hello! We are ACM Javeriana, a group of students passionate about technology and innovation."
@@ -178,6 +222,78 @@
       "step2": {
         "title": "Submitting your first problem to the Codeforces platform",
         "subtitle": "How do I submit a problem?"
+      }
+    }
+  },
+  "Match": {
+    "instructions": [
+      "When you're ready, press the 'Ready' button.",
+      "If you are no longer ready, you can select 'Not ready'.",
+      "When both contestants are ready, a Codeforces problem will be assigned.",
+      "Once you successfully submit the problem, press verify so our system can check your submission.",
+      "Note that your Codeforces username must match the one used in the submission.",
+      "If the verdict is 'ACCEPTED', a 5-second window will be created in case the opponent also gets the same verdict."
+    ],
+    "title": "Instructions",
+    "wins": "of win ratio.",
+    "ready": "Ready!",
+    "not_ready": "Not ready.",
+    "waiting_oponent": "Waiting oponent...",
+    "check": "Check"
+  },
+  "Results": {
+    "loading": "Loading...",
+    "title": "Contest Results",
+    "userPosition": "Your Position",
+    "matchmakingTree": "Matchmaking Tree",
+    "noMatchmakingTree": "No matchmaking tree available",
+    "finalRanking": "Final Ranking",
+    "noResults": "No results available yet",
+    "you": "(You)"
+  },
+  "Profile": {
+    "title": "Profile",
+    "header": {
+      "title": "Basic Information",
+      "changePassword": "Change Password"
+    },
+    "fields": {
+      "name": "First Name",
+      "surname": "Last Name",
+      "email": "Email",
+      "codeforcesHandle": "Codeforces Handle",
+      "codeforcesPlaceholder": "Your Codeforces username",
+      "notSpecified": "Not specified"
+    },
+    "avatar": {
+      "selectImage": "Select image",
+      "removeImage": "Remove image",
+      "formats": "Formats: JPEG, PNG, WEBP. Maximum 1MB",
+      "invalidFile": "Please select a valid image file.",
+      "fileTooLarge": "File is too large. Maximum 1MB."
+    },
+    "buttons": {
+      "save": "Save changes"
+    },
+    "stats": {
+      "participations": "Participations",
+      "wins": "Contests Won",
+      "level": "Level"
+    },
+    "contests": {
+      "title": "Contest History",
+      "loading": "Loading contests...",
+      "noContests": "You don't have any registered contests yet",
+      "noContestsDesc": "When you participate in a contest, it will appear here",
+      "status": {
+        "upcoming": "Upcoming",
+        "inProgress": "In Progress",
+        "finished": "Finished"
+      },
+      "actions": {
+        "checkIn": "Check in",
+        "viewProgress": "View Progress",
+        "position": "Position"
       }
     }
   }

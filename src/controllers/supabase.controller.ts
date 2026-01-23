@@ -24,14 +24,19 @@ export const updatePasswordUser = async (
 };
 
 export const getUser = async (): Promise<User | null> => {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
-    console.log(error);
+    if (error || !data?.user) {
+      if (error) console.log(error);
+      return null;
+    }
+    return data.user;
+  } catch (e) {
+    console.log(e);
     return null;
   }
-  return data.user;
 };
 
 export const getAccessToken = async (): Promise<string | null> => {
