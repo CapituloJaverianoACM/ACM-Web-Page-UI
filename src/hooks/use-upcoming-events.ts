@@ -13,6 +13,7 @@ export const useUpcomingEvents = (
   loadingInitialState: boolean,
 ) => {
   const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
+  const [registeringEventId, setRegisteringEventId] = useState<number | null>(null);
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -64,10 +65,17 @@ export const useUpcomingEvents = (
       return;
     }
 
-    const result = await registerUserToContest(user_metadata, contest);
+    // Marcar este evento como en proceso de registro
+    setRegisteringEventId(contest.id);
 
-    toast[result.ok ? "success" : "error"](result.msg);
-    queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    try {
+      const result = await registerUserToContest(user_metadata, contest);
+      toast[result.ok ? "success" : "error"](result.msg);
+      queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    } finally {
+      // Limpiar el estado de loading
+      setRegisteringEventId(null);
+    }
   };
 
   const filteredEvents = useMemo(() => {
@@ -98,5 +106,6 @@ export const useUpcomingEvents = (
     setFilter,
     filteredEvents,
     handleRegisterContest,
+    registeringEventId,
   };
 };

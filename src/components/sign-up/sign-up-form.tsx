@@ -5,7 +5,9 @@ import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed, Upload, X } from "lucide-react";
 import { signup } from "@/app/(auth)/sign-up/actions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import LogoLoader from "../shared/ui/logo-loader/loader";
+import { useLoadingAction } from "@/hooks/use-loading-action";
 
 export function SignUpForm() {
   const [name, setName] = useState("");
@@ -14,10 +16,10 @@ export function SignUpForm() {
   const [password, setPassword] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -51,10 +53,7 @@ export function SignUpForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setLoading(true);
+  const handleSignup = async () => {
     setError("");
     const form_data = new FormData();
     form_data.set("name", name);
@@ -68,14 +67,20 @@ export function SignUpForm() {
     const { error } = await signup(form_data);
     if (error) {
       setError(error);
-      setLoading(false);
-      return;
+      return; // Detener la ejecución sin lanzar error
     }
 
-    redirect("/log-in");
+    router.push("/log-in");
+  };
+
+  const { run: handleSubmit, isLoading: loading } = useLoadingAction(handleSignup);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit();
   };
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <label
           htmlFor="nombre"
@@ -201,7 +206,14 @@ export function SignUpForm() {
       </div>
       {error && <span className="text-red-600 text-sm">{error}</span>}
       <Button type="submit" className="w-full mt-2" disabled={loading}>
-        {loading ? "Registrando..." : "Registrarse"}
+        {loading ? (
+          <>
+            <LogoLoader size={20} />
+            Registrando...
+          </>
+        ) : (
+          "Registrarse"
+        )}
       </Button>
     </form>
   );

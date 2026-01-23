@@ -5,15 +5,18 @@ import { LevelEnum } from "@/models/level.enum";
 import { CheckinTimer } from "@/components/checkin/CheckinTimer";
 import { formatDateEvent } from "@/utils/date-format";
 import Countdown from "react-countdown";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 
 interface UpcomingEventCardProps {
   event: Contest;
   onRegister: (contest: Contest) => void;
+  isRegistering?: boolean;
 }
 
 export const UpcomingEventCard = ({
   event,
   onRegister,
+  isRegistering = false,
 }: UpcomingEventCardProps) => {
   const t = useTranslations("League.upcomingEvents");
   const { date, start_hour } = event;
@@ -113,21 +116,27 @@ export const UpcomingEventCard = ({
         {showMainButton && (
           <EventCard.RegisterButton
             onClick={() => onRegister(event)}
-            className={
-              contestStarted
+            className={` ${contestStarted
                 ? hasCheckin
                   ? "bg-green-500 "
                   : "bg-(--azul-electrico) "
                 : event.registered
                   ? "bg-green-500 "
                   : " "
-            }
+              }`}
             // Antes de que inicie el contest:
             // - Participante sin check-in: botón deshabilitado (solo puede usar el contador de check-in)
             // - No registrado: botón habilitado mientras no llegue el límite de registro (validado en handleRegisterContest)
-            disabled={!contestStarted && isParticipant && !hasCheckin}
+            disabled={(!contestStarted && isParticipant && !hasCheckin) || isRegistering}
           >
-            {buttonLabel}
+            {isRegistering ? (
+              <div className="flex items-center justify-center gap-2">
+                <LogoLoader size={20} />
+                Registrando...
+              </div>
+            ) : (
+              buttonLabel
+            )}
           </EventCard.RegisterButton>
         )}
       </EventCard.Padding>

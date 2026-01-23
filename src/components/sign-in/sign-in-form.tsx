@@ -7,11 +7,12 @@ import { Eye, EyeClosed } from "lucide-react";
 import { login } from "@/app/(auth)/log-in/actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import LogoLoader from "../shared/ui/logo-loader/loader";
+import { useLoadingAction } from "@/hooks/use-loading-action";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
@@ -19,14 +20,11 @@ export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleLogin = async () => {
     const { error } = await login(email, password);
     if (error) {
       setError("Ups, algo no salió bien.");
-      setLoading(false);
-      return;
+      return; // Detener la ejecución sin lanzar error
     }
 
     queryClient.clear();
@@ -35,8 +33,16 @@ export function SignInForm() {
     const redirectPath = searchParams.get("redirect") || "/";
     router.push(redirectPath);
   };
+
+  const { run: handleSubmit, isLoading: loading } = useLoadingAction(handleLogin);
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    handleSubmit();
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <label
           htmlFor="email"
@@ -91,7 +97,14 @@ export function SignInForm() {
         className="w-full mt-2 font-bold"
         disabled={loading}
       >
-        {loading ? "Ingresando..." : "Iniciar sesión"}
+        {loading ? (
+          <>
+            <LogoLoader size={20} />
+            Ingresando...
+          </>
+        ) : (
+          "Iniciar sesión"
+        )}
       </Button>
     </form>
   );
