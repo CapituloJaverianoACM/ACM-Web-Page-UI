@@ -21,6 +21,7 @@ export default function ProfilePage() {
     handleSave,
     handleInputChange,
     setFormData,
+    isSaving,
   } = useProfileData();
 
   const { contests, loadingContests } = useStudentContests(student?.id);
@@ -47,6 +48,7 @@ export default function ProfilePage() {
               onInputChange={handleInputChange}
               onAvatarFileChange={handleAvatarFileChange}
               setFormData={setFormData}
+              isSaving={isSaving}
             />
           )}
 

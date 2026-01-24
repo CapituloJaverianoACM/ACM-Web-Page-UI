@@ -9,6 +9,7 @@ import { verifyHandle } from "@/controllers/codeforces.controller";
 import { Student } from "@/models/student.model";
 import toast from "react-hot-toast";
 import { uploadAvatarAction, deleteAvatarAction } from "@/app/profile/actions";
+import { useLoadingAction } from "./use-loading-action";
 
 export const useProfileData = () => {
   const queryClient = useQueryClient();
@@ -95,10 +96,10 @@ export const useProfileData = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = async () => {
+  const handleSaveAction = async () => {
     if (!student?.id || !user?.id) {
       alert("Error: No se puede actualizar el perfil sin un estudiante válido");
-      return;
+      return; // Detener sin lanzar error
     }
 
     const handleChanged =
@@ -109,7 +110,7 @@ export const useProfileData = () => {
         toast.error(
           "El handle de Codeforces no es válido. Por favor verifica que el usuario existe en Codeforces.",
         );
-        return;
+        return; // Detener sin lanzar error
       }
     }
 
@@ -124,7 +125,7 @@ export const useProfileData = () => {
 
         if (error) {
           alert(`Error al subir el avatar: ${error}`);
-          return;
+          return; // Detener sin lanzar error
         }
 
         if (url) {
@@ -136,17 +137,20 @@ export const useProfileData = () => {
         }
       } catch (error) {
         alert(`Error al subir el avatar: ${error}`);
-        return;
+        return; // Detener sin lanzar error
       }
     }
 
-    updateStudentMutation.mutate({
+    await updateStudentMutation.mutateAsync({
       name: formData.name,
       surname: formData.surname,
       avatar: finalAvatarUrl || "",
       codeforces_handle: formData.codeforcesHandle,
     });
   };
+
+  const { run: handleSave, isLoading: isSaving } =
+    useLoadingAction(handleSaveAction);
 
   return {
     user,
@@ -160,5 +164,6 @@ export const useProfileData = () => {
     handleInputChange,
     setIsEditing,
     setFormData,
+    isSaving,
   };
 };

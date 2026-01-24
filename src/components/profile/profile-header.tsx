@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useRef } from "react";
 import { Upload, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import LogoLoader from "../shared/ui/logo-loader/loader";
 
 interface ProfileHeaderProps {
   student: Student | null;
@@ -18,7 +19,8 @@ interface ProfileHeaderProps {
     avatarPreview: string | null;
   };
   onEditToggle: () => void;
-  onSave: () => void;
+  onSave: Function;
+  isSaving: boolean;
   onInputChange: (field: string, value: string) => void;
   onAvatarFileChange: (file: File | null, preview: string | null) => void;
   setFormData: React.Dispatch<
@@ -44,6 +46,7 @@ export const ProfileHeader = ({
   onInputChange,
   onAvatarFileChange,
   setFormData,
+  isSaving,
 }: ProfileHeaderProps) => {
   const t = useTranslations("Profile");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -243,10 +246,18 @@ export const ProfileHeader = ({
           {isEditing && (
             <div className="sm:col-span-2">
               <button
-                onClick={onSave}
-                className="w-full md:w-auto px-5 py-2.5 rounded-lg bg-(--azul-electrico) hover:bg-(--azul-crayon) text-white font-semibold"
+                onClick={async () => await onSave()}
+                disabled={isSaving}
+                className="w-full md:w-auto px-5 py-2.5 rounded-lg bg-(--azul-electrico) hover:bg-(--azul-crayon) text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {t("buttons.save")}
+                {isSaving ? (
+                  <>
+                    <LogoLoader size={20} />
+                    Guardando...
+                  </>
+                ) : (
+                  t("buttons.save")
+                )}
               </button>
             </div>
           )}
