@@ -5,7 +5,7 @@ import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 import { login } from "@/app/(auth)/log-in/actions";
-import { redirect } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 export function SignInForm() {
@@ -16,6 +16,8 @@ export function SignInForm() {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,9 @@ export function SignInForm() {
 
     queryClient.clear();
 
-    redirect("/");
+    // Obtener el parámetro redirect de la URL, o usar "/" por defecto
+    const redirectPath = searchParams.get("redirect") || "/";
+    router.push(redirectPath);
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
