@@ -12,7 +12,7 @@ import { AuthLayout } from "@/layouts/info/auth_layout";
 export default function ChangePasword() {
   return (
     <AuthLayout>
-      <Card className="w-full max-w-md shadow-lg text-center">
+      <Card className="w-full bg-white max-w-md shadow-lg text-center">
         <CardHeader>
           <CardTitle className="dark:text-white">Cambiar contraseña</CardTitle>
         </CardHeader>

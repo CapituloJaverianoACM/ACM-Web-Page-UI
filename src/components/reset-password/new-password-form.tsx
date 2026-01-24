@@ -36,30 +36,36 @@ const NewPasswordForm: React.FC = () => {
 
   const updatePasswordAction = async () => {
     if (password !== confirmPassword) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              ¡Tus contraseñas no coinciden!
-            </p>
-          </div>
-        </ACMToast>
-      ));
+      toast.custom(
+        (t) => (
+          <ACMToast toastInstance={t}>
+            <div>
+              <p className="text-center m-0 font-semibold text-red-500">
+                ¡Tus contraseñas no coinciden!
+              </p>
+            </div>
+          </ACMToast>
+        ),
+        { position: "bottom-center" },
+      );
       return; // Detener sin lanzar error
     }
 
     const confirm = await updatePasswordUser(password);
 
     if (!confirm) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde
-            </p>
-          </div>
-        </ACMToast>
-      ));
+      toast.custom(
+        (t) => (
+          <ACMToast toastInstance={t}>
+            <div>
+              <p className="text-center m-0 font-semibold text-red-500">
+                Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde
+              </p>
+            </div>
+          </ACMToast>
+        ),
+        { position: "bottom-center" },
+      );
       return; // Detener sin lanzar error
     }
 
