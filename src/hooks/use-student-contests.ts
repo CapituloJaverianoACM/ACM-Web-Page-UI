@@ -13,7 +13,8 @@ export const useStudentContests = (studentId: string | number | undefined) => {
   });
 
   const sortedContests = contests.sort(
-    (a, b) => new Date(b.start_hour).getTime() - new Date(a.start_hour).getTime(),
+    (a, b) =>
+      new Date(b.start_hour).getTime() - new Date(a.start_hour).getTime(),
   );
 
   return { contests: sortedContests, loadingContests };

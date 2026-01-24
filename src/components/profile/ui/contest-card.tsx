@@ -62,7 +62,8 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
     if (isFinished)
       return {
         text: t("status.finished"),
-        classes: "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
+        classes:
+          "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
       };
     return {
       text: t("status.inProgress"),
@@ -83,8 +84,9 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
   return (
     <li className="group">
       <div
-        className={`flex flex-col gap-3 p-4 rounded-sm border border-(--azul-niebla) dark:border-gray-700 bg-(--azul-niebla)/30 dark:bg-gray-700/50 hover:bg-(--azul-niebla)/50 dark:hover:bg-gray-700 transition-colors ${(isFinished || (contestStarted && hasCheckin)) && "cursor-pointer"
-          }`}
+        className={`flex flex-col gap-3 p-4 rounded-sm border border-(--azul-niebla) dark:border-gray-700 bg-(--azul-niebla)/30 dark:bg-gray-700/50 hover:bg-(--azul-niebla)/50 dark:hover:bg-gray-700 transition-colors ${
+          (isFinished || (contestStarted && hasCheckin)) && "cursor-pointer"
+        }`}
         onClick={handleCardClick}
       >
         <div className="flex items-start gap-4">
@@ -109,10 +111,11 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
             {/* Mostrar posición si existe y el contest terminó */}
             {isFinished && position !== null && position !== undefined && (
               <span
-                className={`px-2 py-1 rounded-md text-xs font-semibold ${position === 1
-                  ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"
-                  : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
-                  }`}
+                className={`px-2 py-1 rounded-md text-xs font-semibold ${
+                  position === 1
+                    ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"
+                    : "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
+                }`}
               >
                 {t("actions.position")} {position}
               </span>
@@ -142,14 +145,15 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
                         ? `/league/${contest.id}`
                         : `/league/${contest.id}/result`
                     }
-                    className={`no-underline px-2 py-1 rounded-md text-xs font-semibold ${contestStarted
+                    className={`no-underline px-2 py-1 rounded-md text-xs font-semibold ${
+                      contestStarted
                         ? hasCheckin
                           ? "bg-green-500 hover:bg-green-600"
                           : "bg-(--azul-electrico) hover:bg-(--azul-crayon)"
                         : isParticipant
                           ? "bg-green-500 hover:bg-green-600"
                           : "bg-(--azul-electrico) hover:bg-(--azul-crayon)"
-                      } text-white hover:text-white`}
+                    } text-white hover:text-white`}
                     onClick={(e) => e.stopPropagation()}
                   >
                     {buttonLabel}
@@ -164,7 +168,9 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
         {showPreCheckinCountdown && (
           <div className="mt-2 pt-2 border-t border-(--azul-niebla) dark:border-gray-700">
             <div className="text-center font-semibold">
-              <p className="text-sm mb-2">Tiempo antes del periodo de check-in</p>
+              <p className="text-sm mb-2">
+                Tiempo antes del periodo de check-in
+              </p>
             </div>
             <div className="text-center font-(family-name:--font-primary) text-2xl">
               <Countdown date={checkinStart}>
