@@ -20,7 +20,7 @@ const ACMToast: React.FC<React.PropsWithChildren<ACMToastProps>> = ({
           <div className="w-1/4">
             <Image width={100} height={100} src={"/Logo_Oscuro.svg"} alt="" />
           </div>
-          <div className="w-3/4">{children}</div>
+          <div className="w-3/4 flex items-center">{children}</div>
         </div>
       </div>
       <div className="flex border-l border-gray-200">
