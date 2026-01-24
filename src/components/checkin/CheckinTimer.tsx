@@ -27,6 +27,7 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
     const result = await checkInStudent(contest.id);
     toast[result.ok ? "success" : "error"](result.msg);
     queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    queryClient.invalidateQueries({ queryKey: ["contests"] });
   };
 
   const { run: handleCheckin, isLoading: isCheckingIn } =
