@@ -12,7 +12,7 @@ import {
   WebSocketAction,
 } from "@/utils/ws-types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type SelectedCodeforcesProblem = {
   name: string;
@@ -36,7 +36,7 @@ export const useContestMatch = (
   contestant: Contestant | undefined,
 ): useContestResult => {
   const [user_ready, setUserReady] = useState<boolean>(false);
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const socket = useRef(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [transport, setTransport] = useState<string>("N/A");
 
@@ -60,7 +60,7 @@ export const useContestMatch = (
         data: { handle: contestant.codeforces_handle },
       };
 
-      socket.send(JSON.stringify(out_msg));
+      socket.current.send(JSON.stringify(out_msg));
       console.log("SEND ", !prev);
       return !prev;
     });
@@ -75,8 +75,9 @@ export const useContestMatch = (
       queryClient.setQueryData(
         ["opponent", contest_id, contestant?.id],
         (oldData: Contestant) => {
-          oldData.ready = isReady;
-          return oldData;
+          const newData = Object.create(oldData);
+          newData.ready = isReady;
+          return newData;
         },
       );
     }
@@ -103,45 +104,38 @@ export const useContestMatch = (
   useEffect(() => {
     if (!opponent) return;
     const execute_connection = async () => {
+      if (socket.current) return;
       const token = await getAccessToken();
-      setSocket(
-        new WebSocket(
-          new URL(
-            `/ws/contest/${contest_id}/${contestant.id}/${opponent.id}?token=${token}`,
-            WS_URL,
-          ),
+      socket.current = new WebSocket(
+        new URL(
+          `/ws/contest/${contest_id}/${contestant.id}/${opponent.id}?token=${token}`,
+          WS_URL,
         ),
       );
+      socket.current.onopen = () => {
+        console.log("CONNECTED to WS");
+      };
+      socket.current.onclose = () => {
+        console.log("DISCONNECTED to WS");
+      };
+
+      socket.current.onmessage = (ev) => {
+        const message = JSON.parse(ev.data) as OutgoingWebSocketMessage;
+        console.log(message);
+        switch (message.action) {
+          case WebSocketAction.SESSION_RESUME:
+            handleSessionResume(
+              message as BaseWebSocketMessage<SessionResumeData>,
+            );
+        }
+      };
     };
 
     execute_connection();
-  }, [opponent]);
-
-  useEffect(() => {
-    if (!socket) return;
-
-    socket.onopen = (ev) => {
-      console.log("CONNECTED to WS");
-    };
-    socket.onclose = (ev) => {
-      console.log("DISCONNECTED to WS");
-    };
-
-    socket.onmessage = (ev) => {
-      const message = JSON.parse(ev.data) as OutgoingWebSocketMessage;
-      console.log(message);
-      switch (message.action) {
-        case WebSocketAction.SESSION_RESUME:
-          handleSessionResume(
-            message as BaseWebSocketMessage<SessionResumeData>,
-          );
-      }
-    };
-
     return () => {
-      socket.close();
+      socket.current?.close();
     };
-  }, [socket]);
+  }, [opponent]);
 
   return [user_ready, toggleUserReady, codeforces_problem, opponent];
 };
