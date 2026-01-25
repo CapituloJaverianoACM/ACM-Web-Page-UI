@@ -40,13 +40,13 @@ const carrousel_items = (t) => [
   {
     category: t("preExams.category"),
     title: t("preExams.title"),
-    src: "https://drive.google.com/uc?export=view&id=1mAWVNMh5wmlaBaciCkSMOV2nQXVYkMAu",
+    src: "https://drive.google.com/uc?export=view&id=1xWGZk5f1f1H6ctkOvRT4o-c75VwyzCT2",
     content: <PreExamsContent />,
   },
   {
     category: t("courses.category"),
     title: t("courses.title"),
-    src: "https://drive.google.com/uc?export=view&id=1HH58GMKbAqUc06YbqzhHifatfKGDRpV0",
+    src: "https://drive.google.com/uc?export=view&id=1mAWVNMh5wmlaBaciCkSMOV2nQXVYkMAu",
     content: <CoursesContent />,
   },
 ];
