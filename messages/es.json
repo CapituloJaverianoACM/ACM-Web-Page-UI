@@ -254,6 +254,10 @@
       "advanced": "Avanzado",
       "classroom": "Salón"
     },
+    "contestFailed": {
+      "beforeTitle": "Antes del contest",
+      "startsSoon": "En un momento iniciará el contest"
+    },
     "podium": {
       "title": "Mejores 3 de la liga",
       "victories": "Victorias"

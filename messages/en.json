@@ -256,6 +256,10 @@
       "advanced": "Advanced",
       "classroom": "Room"
     },
+    "contestFailed": {
+      "beforeTitle": "Before the contest",
+      "startsSoon": "The contest will start soon"
+    },
     "podium": {
       "title": "Top 3 of the League",
       "victories": "Victories"
