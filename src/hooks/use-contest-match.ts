@@ -54,13 +54,14 @@ export const useContestMatch = (
   const toggleUserReady = () => {
     setUserReady((prev) => {
       const out_msg = {
-        action: prev
+        action: !prev
           ? WebsocketMessageType.READY
           : WebsocketMessageType.NOT_READY,
         data: { handle: contestant.codeforces_handle },
       };
 
       socket.send(JSON.stringify(out_msg));
+      console.log("SEND ", !prev);
       return !prev;
     });
   };
@@ -127,7 +128,8 @@ export const useContestMatch = (
     };
 
     socket.onmessage = (ev) => {
-      const message = ev.data as OutgoingWebSocketMessage;
+      const message = JSON.parse(ev.data) as OutgoingWebSocketMessage;
+      console.log(message);
       switch (message.action) {
         case WebSocketAction.SESSION_RESUME:
           handleSessionResume(
