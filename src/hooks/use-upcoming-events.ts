@@ -7,6 +7,7 @@ import { registerUserToContest } from "@/controllers/participation.controller";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 export const useUpcomingEvents = (
   events: Contest[],
@@ -44,7 +45,10 @@ export const useUpcomingEvents = (
     // Antes de que empiece el contest
     if (contest.registered) {
       if (!contest.checkin) {
-        toast.error("¡Realiza el check-in primero!");
+        showToast(toast, {
+          type: ToastType.ERROR,
+          message: "¡Realiza el check-in primero!",
+        });
         return;
       }
 
@@ -54,7 +58,10 @@ export const useUpcomingEvents = (
 
     // No registrado: solo se puede registrar hasta 5 minutos antes del inicio
     if (now > registrationDeadline) {
-      toast.error("El registro para este contest ya cerró");
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "El registro para este contest ya cerró",
+      });
       return;
     }
 
@@ -63,7 +70,10 @@ export const useUpcomingEvents = (
     const user_metadata: User = data.user as User;
 
     if (!user_metadata) {
-      toast.error("Debes iniciar sesión para registrarte");
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "Debes iniciar sesión para registrarte",
+      });
       return;
     }
 
@@ -72,7 +82,11 @@ export const useUpcomingEvents = (
 
     try {
       const result = await registerUserToContest(user_metadata, contest);
-      toast[result.ok ? "success" : "error"](result.msg);
+
+      showToast(toast, {
+        type: result.ok ? ToastType.OK : ToastType.ERROR,
+        message: result.msg,
+      });
       queryClient.invalidateQueries({ queryKey: ["league-contests"] });
     } finally {
       // Limpiar el estado de loading

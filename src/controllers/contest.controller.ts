@@ -96,7 +96,7 @@ export async function getContestByIds(
 
 export async function getContestsByStudentId(
   studentId: number,
-): Promise<Contest[]> {
+): Promise<(Contest & { participation?: Participation })[]> {
   try {
     const participations = await getParticipationsByStudentId(studentId);
 
@@ -112,7 +112,20 @@ export async function getContestsByStudentId(
       return [];
     }
 
-    return await getContestByIds(contestsIds);
+    const contests = await getContestByIds(contestsIds);
+
+    // Combinar contests con información de participación
+    return contests.map((contest) => {
+      const participation = participations.find(
+        (p) => p.contest_id === contest.id,
+      );
+      return {
+        ...contest,
+        registered: participation !== undefined,
+        checkin: participation?.checkin || false,
+        participation,
+      };
+    });
   } catch (error) {
     throw new Error("Error al obtener contests: " + error.message);
   }

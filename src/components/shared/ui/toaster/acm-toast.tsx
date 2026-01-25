@@ -13,14 +13,14 @@ const ACMToast: React.FC<React.PropsWithChildren<ACMToastProps>> = ({
     <div
       className={`${
         t.visible ? "animate-appearance-in" : "animate-appearance-out"
-      } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      } max-w-md w-full bg-white shadow-lg rounded-sm pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
       <div className="flex-1 w-0 p-4">
         <div className="flex items-center">
           <div className="w-1/4">
             <Image width={100} height={100} src={"/Logo_Oscuro.svg"} alt="" />
           </div>
-          <div className="w-3/4">{children}</div>
+          <div className="w-3/4 flex items-center">{children}</div>
         </div>
       </div>
       <div className="flex border-l border-gray-200">

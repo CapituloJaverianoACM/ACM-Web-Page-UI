@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import LogoLoader from "../shared/ui/logo-loader/loader";
 import { User } from "@supabase/supabase-js";
 import { useLoadingAction } from "@/hooks/use-loading-action";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 const NewPasswordForm: React.FC = () => {
   const router = useRouter();
@@ -36,30 +37,21 @@ const NewPasswordForm: React.FC = () => {
 
   const updatePasswordAction = async () => {
     if (password !== confirmPassword) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              ¡Tus contraseñas no coinciden!
-            </p>
-          </div>
-        </ACMToast>
-      ));
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "¡Tus contraseñas no coinciden!",
+      });
       return; // Detener sin lanzar error
     }
 
     const confirm = await updatePasswordUser(password);
 
     if (!confirm) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde
-            </p>
-          </div>
-        </ACMToast>
-      ));
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message:
+          "Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde",
+      });
       return; // Detener sin lanzar error
     }
 
@@ -158,7 +150,7 @@ const NewPasswordForm: React.FC = () => {
           "Reestablecer"
         )}
       </Button>
-      <Toaster />
+      <Toaster position="bottom-center" />
     </div>
   );
 };
