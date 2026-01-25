@@ -52,6 +52,10 @@
       "podium": {
         "title": "El Podio",
         "description": "Descubre los más destacados"
+      },
+      "rank": {
+        "title": "Clasificación",
+        "description": "Descubre la clasificación global"
       }
     }
   },

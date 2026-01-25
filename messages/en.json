@@ -52,6 +52,10 @@
       "podium": {
         "title": "The Podium",
         "description": "Discover the top performers"
+      },
+      "rank": {
+        "title": "Raking",
+        "description": "Discover the global ranking"
       }
     }
   },
