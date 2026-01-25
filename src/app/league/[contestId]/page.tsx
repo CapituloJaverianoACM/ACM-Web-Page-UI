@@ -25,11 +25,13 @@ export default function ContestDetailPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["matchmaking", contestId],
     queryFn: async () => getContestMatchInfo(Number(contestId)),
+    staleTime: 0,
   });
 
   const { data: tree, isLoading: isLoadingTree } = useQuery({
     queryKey: ["matchmaking-tree", contestId],
     queryFn: async () => getMatchmakingTree(Number(contestId)),
+    staleTime: 0,
   });
 
   const [user_ready, toggleUserReady, codeforces_problem, opponent] =
