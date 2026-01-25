@@ -7,23 +7,61 @@ import { registerUserToContest } from "@/controllers/participation.controller";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 export const useUpcomingEvents = (
   events: Contest[],
   loadingInitialState: boolean,
 ) => {
   const [filter, setFilter] = useState<"all" | "Initial" | "Advanced">("all");
+  const [registeringEventId, setRegisteringEventId] = useState<number | null>(
+    null,
+  );
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const handleRegisterContest = async (contest: Contest) => {
+    const now = new Date();
+    const start = new Date(contest.start_hour);
+    const contestStarted = now > start;
+
+    // Deadline de registro: 5 minutos antes del inicio
+    const registrationDeadline = new Date(start);
+    registrationDeadline.setMinutes(registrationDeadline.getMinutes() - 5);
+
+    // Después de que empieza el contest
+    if (contestStarted) {
+      // Si está registrado y tiene check-in -> competir
+      if (contest.registered && contest.checkin) {
+        router.push(`/league/${contest.id}`);
+        return;
+      }
+
+      // Si no está registrado o no hizo check-in -> ver resultados
+      router.push(`/league/${contest.id}/result`);
+      return;
+    }
+
+    // Antes de que empiece el contest
     if (contest.registered) {
       if (!contest.checkin) {
-        toast.error("¡Realiza el check-in primero!");
+        showToast(toast, {
+          type: ToastType.ERROR,
+          message: "¡Realiza el check-in primero!",
+        });
         return;
       }
 
       router.push(`/league/${contest.id}`);
+      return;
+    }
+
+    // No registrado: solo se puede registrar hasta 5 minutos antes del inicio
+    if (now > registrationDeadline) {
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "El registro para este contest ya cerró",
+      });
       return;
     }
 
@@ -32,18 +70,40 @@ export const useUpcomingEvents = (
     const user_metadata: User = data.user as User;
 
     if (!user_metadata) {
-      toast.error("Debes iniciar sesión para registrarte");
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "Debes iniciar sesión para registrarte",
+      });
       return;
     }
 
-    const result = await registerUserToContest(user_metadata, contest);
+    // Marcar este evento como en proceso de registro
+    setRegisteringEventId(contest.id);
 
-    toast[result.ok ? "success" : "error"](result.msg);
-    queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    try {
+      const result = await registerUserToContest(user_metadata, contest);
+
+      showToast(toast, {
+        type: result.ok ? ToastType.OK : ToastType.ERROR,
+        message: result.msg,
+      });
+      queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    } finally {
+      // Limpiar el estado de loading
+      setRegisteringEventId(null);
+    }
   };
 
   const filteredEvents = useMemo(() => {
-    return events.filter((event) => {
+    // Ordenar eventos del más próximo al más lejano/pasado
+    const sortedEvents = [...events].sort((a, b) => {
+      const aStart = new Date(a.start_hour ?? a.date).getTime();
+      const bStart = new Date(b.start_hour ?? b.date).getTime();
+
+      return bStart - aStart;
+    });
+
+    return sortedEvents.filter((event) => {
       if (filter === "all") return true;
       if (filter === "Advanced" && event.level == LevelEnum.Advanced)
         return true;
@@ -62,5 +122,6 @@ export const useUpcomingEvents = (
     setFilter,
     filteredEvents,
     handleRegisterContest,
+    registeringEventId,
   };
 };

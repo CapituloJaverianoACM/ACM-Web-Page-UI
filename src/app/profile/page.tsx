@@ -1,40 +1,37 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import MainNavbar from "@/components/shared/main-navbar";
-import Footer from "@/components/shared/footer";
 import { useProfileData } from "@/hooks/use-profile-data";
 import { useStudentContests } from "@/hooks/use-student-contests";
 import { ProfileSkeleton } from "@/components/profile/profile-skeleton";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { ProfileStats } from "@/components/profile/profile-stats";
 import { ContestsHistory } from "@/components/profile/contests-history";
-import { getNavLinks } from "@/lib/nav-links";
+import { Toaster } from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
-  const t = useTranslations();
-  const navLinks = getNavLinks(t);
-
+  const t = useTranslations("Profile");
   const {
     student,
     loadingStudent,
     isEditing,
     formData,
     handleEditing,
-    handleAvatarUrlChange,
+    handleAvatarFileChange,
     handleSave,
     handleInputChange,
     setFormData,
+    isSaving,
   } = useProfileData();
 
   const { contests, loadingContests } = useStudentContests(student?.id);
 
   return (
     <div className="min-h-dvh flex flex-col dark:from-[#121212] dark:to-[#121212] bg-linear-to-b from-(--azul-niebla) to-(--white)">
-      <MainNavbar navLinks={navLinks} />
+      <Toaster position="top-right" />
       <div className="flex-1 max-w-6xl mx-auto p-6 md:p-8 w-full mt-40">
         <h1 className="text-3xl md:text-4xl font-bold text-(--azul-noche) dark:text-white mb-6">
-          Perfil
+          {t("title")}
         </h1>
         <div className="space-y-6">
           {/* Información básica */}
@@ -49,8 +46,9 @@ export default function ProfilePage() {
               onEditToggle={handleEditing}
               onSave={handleSave}
               onInputChange={handleInputChange}
-              onAvatarUrlChange={handleAvatarUrlChange}
+              onAvatarFileChange={handleAvatarFileChange}
               setFormData={setFormData}
+              isSaving={isSaving}
             />
           )}
 
@@ -61,7 +59,6 @@ export default function ProfilePage() {
           <ContestsHistory contests={contests} loading={loadingContests} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

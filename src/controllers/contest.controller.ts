@@ -1,5 +1,5 @@
 "use server";
-import { Contest } from "@/models/contest.model";
+import { Contest, ContestMatchResult } from "@/models/contest.model";
 import { Participation } from "@/models/partipation.model";
 import { MatchmakingTreeNode } from "@/models/matchmaking.model";
 import {
@@ -12,6 +12,13 @@ import { User } from "@supabase/supabase-js";
 import { Student } from "@/models/student.model";
 import { queryStudentsByBulkIds } from "./student.controller";
 import { BACKEND_URL } from "@/config/env";
+import { Contestant } from "@/models/contestant.model";
+import {
+  getAccessToken,
+  getUser,
+  getUserTableFromSupabaseId,
+} from "./supabase.controller";
+import { StandardAPIResponse } from "@/models/api.model";
 
 export async function getContests(): Promise<Contest[]> {
   const res = await fetch(new URL(`/contests`, BACKEND_URL));
@@ -41,6 +48,7 @@ export async function getContestsWithPictures(
   const res = await fetch(new URL(`/contests?picture=1`, BACKEND_URL));
 
   if (!res.ok) {
+    console.log(await res.json());
     throw new Error("Error al obtener contests");
   }
 
@@ -88,7 +96,7 @@ export async function getContestByIds(
 
 export async function getContestsByStudentId(
   studentId: number,
-): Promise<Contest[]> {
+): Promise<(Contest & { participation?: Participation })[]> {
   try {
     const participations = await getParticipationsByStudentId(studentId);
 
@@ -104,7 +112,20 @@ export async function getContestsByStudentId(
       return [];
     }
 
-    return await getContestByIds(contestsIds);
+    const contests = await getContestByIds(contestsIds);
+
+    // Combinar contests con información de participación
+    return contests.map((contest) => {
+      const participation = participations.find(
+        (p) => p.contest_id === contest.id,
+      );
+      return {
+        ...contest,
+        registered: participation !== undefined,
+        checkin: participation?.checkin || false,
+        participation,
+      };
+    });
   } catch (error) {
     throw new Error("Error al obtener contests: " + error.message);
   }
@@ -133,14 +154,6 @@ export async function getMatchmakingTree(
   }
 }
 
-export enum ContestMatchResult {
-  NO_CONTEST = "No hay un contest que coincida con este id.",
-  NO_TREE = "No existe un matchmaking aun.",
-  NO_USERS = "No hay participantes.",
-  EMPTY = "",
-  OK = "Data retrieved success.",
-}
-
 export type TreeStudentInfo = Pick<
   Student,
   "id" | "name" | "avatar" | "codeforces_handle"
@@ -150,24 +163,40 @@ export type ContestMatchInfo = {
   ok: boolean;
   msg: ContestMatchResult;
   contest?: Contest;
-  tree?: MatchmakingTreeNode;
   students?: Array<TreeStudentInfo>;
+  current_student?: Contestant;
 };
 
 export const getContestMatchInfo = async (
   contestId: number,
+  user_in_tree: boolean = true,
 ): Promise<ContestMatchInfo> => {
   let result: ContestMatchInfo = { ok: false, msg: ContestMatchResult.EMPTY };
 
   try {
-    const contest: Contest = await getContestById(contestId);
-    const tree: MatchmakingTreeNode | null =
-      await getMatchmakingTree(contestId);
+    const supabase_user = await getUser();
 
-    if (!tree) {
-      result.msg = ContestMatchResult.NO_TREE;
-      throw ContestMatchResult.NO_TREE;
+    if (!supabase_user) {
+      result.msg = ContestMatchResult.NO_LOGGED;
+      throw ContestMatchResult.NO_LOGGED;
     }
+
+    const user: Student | null = await getUserTableFromSupabaseId(
+      supabase_user.id,
+    );
+
+    if (!user) return result;
+
+    const current_student: Contestant = {
+      id: user.id,
+      name: user.name,
+      victories: user.victory_count,
+      avatar_url: user.avatar,
+      codeforces_handle: user.codeforces_handle,
+      matches_count: user.matches_count,
+    };
+
+    const contest: Contest = await getContestById(contestId);
 
     const participants_id = (await getParticipationByContestId(contestId)).map(
       (p) => p.student_id,
@@ -178,25 +207,144 @@ export const getContestMatchInfo = async (
       throw ContestMatchResult.NO_USERS;
     }
 
-    const students: Pick<
-      Student,
-      "id" | "name" | "avatar" | "codeforces_handle"
-    >[] = (await queryStudentsByBulkIds(participants_id)).map(
-      ({ id, name, avatar, codeforces_handle }) => ({
-        id,
-        name,
-        avatar,
-        codeforces_handle,
-      }),
-    );
+    if (
+      participants_id.find((p) => p === current_student.id) == undefined &&
+      user_in_tree
+    ) {
+      result.msg = ContestMatchResult.NO_PARTICIPANT;
+      throw ContestMatchResult.NO_PARTICIPANT;
+    }
+
+    const students: Array<TreeStudentInfo> = (
+      await queryStudentsByBulkIds(participants_id)
+    ).map(({ id, name, avatar, codeforces_handle }) => ({
+      id,
+      name,
+      avatar,
+      codeforces_handle,
+    }));
 
     result.ok = true;
     result.msg = ContestMatchResult.OK;
 
-    result = { ...result, contest, tree, students };
+    result = { ...result, contest, students, current_student };
   } catch (e) {
     console.log(e);
   }
 
   return result;
+};
+
+export type ContestResultStudent = Student & {
+  position: number;
+};
+
+export type ContestResults = {
+  ok: boolean;
+  contest?: Contest;
+  students?: ContestResultStudent[];
+  userPosition?: number;
+  userStudentId?: number;
+};
+
+export const getContestResults = async (
+  contestId: number,
+  userId?: number,
+): Promise<ContestResults> => {
+  try {
+    const contest: Contest = await getContestById(contestId);
+    const participations = await getParticipationByContestId(contestId);
+
+    // Filtrar participaciones que tengan posición asignada
+    const participationsWithPosition = participations.filter(
+      (p) => p.position !== null && p.position !== undefined,
+    );
+
+    if (participationsWithPosition.length === 0) {
+      return { ok: false };
+    }
+
+    // Ordenar por posición
+    participationsWithPosition.sort((a, b) => a.position - b.position);
+
+    const studentIds = participationsWithPosition.map((p) => p.student_id);
+    const students = await queryStudentsByBulkIds(studentIds);
+
+    // Combinar estudiantes con sus posiciones
+    const studentsWithPosition: ContestResultStudent[] =
+      participationsWithPosition.map((participation) => {
+        const student = students.find((s) => s.id === participation.student_id);
+        if (!student) {
+          throw new Error(
+            `Estudiante con id ${participation.student_id} no encontrado`,
+          );
+        }
+        return {
+          ...student,
+          position: participation.position,
+        };
+      });
+
+    // Obtener posición del usuario si está logueado
+    let userPosition: number | undefined;
+    if (userId) {
+      const userParticipation = participations.find(
+        (p) => p.student_id === userId,
+      );
+      userPosition = userParticipation?.position ?? undefined;
+    }
+
+    return {
+      ok: true,
+      contest,
+      students: studentsWithPosition,
+      userPosition,
+      userStudentId: userId,
+    };
+  } catch (e) {
+    console.error("Error al obtener resultados del contest:", e);
+    return { ok: false };
+  }
+};
+
+export const getOpponent = async (
+  contest_id: number,
+  student_id: number,
+): Promise<Contestant | null> => {
+  if (!student_id) return null;
+  try {
+    const token = await getAccessToken();
+
+    const res = await fetch(
+      new URL(
+        `/matchmaking/opponent/${contest_id}/${student_id}`,
+        BACKEND_URL!,
+      ),
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    const api_res: StandardAPIResponse = await res.json();
+    if (api_res.error) throw api_res.error;
+
+    const student = api_res.data[0] as Student;
+
+    const contestant: Contestant = {
+      id: student.id,
+      name: student.name,
+      victories: student.victory_count,
+      avatar_url: student.avatar,
+      codeforces_handle: student.codeforces_handle,
+      matches_count: student.matches_count,
+      ready: false,
+    };
+
+    return contestant;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 };

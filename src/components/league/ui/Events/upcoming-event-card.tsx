@@ -4,18 +4,52 @@ import { Contest } from "@/models/contest.model";
 import { LevelEnum } from "@/models/level.enum";
 import { CheckinTimer } from "@/components/checkin/CheckinTimer";
 import { formatDateEvent } from "@/utils/date-format";
+import Countdown from "react-countdown";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 
 interface UpcomingEventCardProps {
   event: Contest;
   onRegister: (contest: Contest) => void;
+  isRegistering?: boolean;
 }
 
 export const UpcomingEventCard = ({
   event,
   onRegister,
+  isRegistering = false,
 }: UpcomingEventCardProps) => {
   const t = useTranslations("League.upcomingEvents");
-  const { date, start_hour, final_hour } = event;
+  const { date, start_hour } = event;
+
+  const now = new Date();
+  const start = new Date(start_hour);
+  const contestStarted = now >= start;
+
+  // Ventanas de tiempo
+  const checkinStart = new Date(start.getTime() - 2 * 60 * 60 * 1000); // 2 horas antes
+  const checkinEnd = new Date(start.getTime() - 5 * 60 * 1000); // 5 minutos antes
+
+  const isParticipant = event.registered;
+  const hasCheckin = event.checkin;
+
+  const beforeCheckinWindow = now < checkinStart;
+  const inCheckinWindow = now >= checkinStart && now < checkinEnd;
+
+  const showPreCheckinCountdown =
+    isParticipant && !hasCheckin && beforeCheckinWindow;
+  const showCheckinTimer = isParticipant && !hasCheckin && inCheckinWindow;
+
+  // Mostrar botón principal solo cuando no estamos mostrando contadores de pre-competencia/check-in
+  const showMainButton = !showPreCheckinCountdown && !showCheckinTimer;
+
+  // Texto del botón según estado
+  const buttonLabel = contestStarted
+    ? hasCheckin
+      ? t("goToContest")
+      : "Ver resultados"
+    : isParticipant
+      ? t("goToContest")
+      : t("register");
 
   return (
     <EventCard.Container
@@ -54,27 +88,60 @@ export const UpcomingEventCard = ({
             {formatDateEvent({
               date,
               start_hour,
-              final_hour,
             })}
           </EventCard.Description>
         </EventCard.Padding>
 
-        {event.registered && !event.checkin && (
+        {/* Contador antes del periodo de check-in (solo para registrados) */}
+        {showPreCheckinCountdown && (
+          <EventCard.Padding>
+            <div className="text-center font-semibold">
+              <p className="text-xl">Tiempo antes del periodo de check-in</p>
+            </div>
+            <div className="text-center font-(family-name:--font-primary) text-4xl">
+              <Countdown date={checkinStart}>
+                <h1 className="text-4xl mb-0">00:00:00:00</h1>
+              </Countdown>
+            </div>
+          </EventCard.Padding>
+        )}
+
+        {/* Contador de tiempo para hacer check-in (solo en ventana de check-in) */}
+        {showCheckinTimer && (
           <EventCard.Padding>
             <CheckinTimer contest={event} />
           </EventCard.Padding>
         )}
 
-        <EventCard.RegisterButton
-          onClick={() => onRegister(event)}
-          className={event.registered ? "bg-green-500 " : " "}
-          disabled={
-            (!event.registered && new Date() > new Date(start_hour)) ||
-            (event.registered && !event.checkin)
-          }
-        >
-          {event.registered ? t("goToContest") : t("register")}
-        </EventCard.RegisterButton>
+        {showMainButton && (
+          <EventCard.RegisterButton
+            onClick={() => onRegister(event)}
+            className={` ${
+              contestStarted
+                ? hasCheckin
+                  ? "bg-green-500 "
+                  : "bg-(--azul-electrico) "
+                : event.registered
+                  ? "bg-green-500 "
+                  : " "
+            }`}
+            // Antes de que inicie el contest:
+            // - Participante sin check-in: botón deshabilitado (solo puede usar el contador de check-in)
+            // - No registrado: botón habilitado mientras no llegue el límite de registro (validado en handleRegisterContest)
+            disabled={
+              (!contestStarted && isParticipant && !hasCheckin) || isRegistering
+            }
+          >
+            {isRegistering ? (
+              <div className="flex items-center justify-center gap-2">
+                <LogoLoader size={20} />
+                Registrando...
+              </div>
+            ) : (
+              buttonLabel
+            )}
+          </EventCard.RegisterButton>
+        )}
       </EventCard.Padding>
     </EventCard.Container>
   );

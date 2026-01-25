@@ -5,6 +5,7 @@ import { Carousel, Card } from "@/components/home/apple-cards-carousel";
 import { PreExamsContent } from "../pre-exams-content";
 import { CPMembersContent } from "../cp-members-content";
 import { LeagueContent } from "../league-content";
+import { CoursesContent } from "../ui/courses-content";
 
 export function Activities() {
   const t = useTranslations("Activities");
@@ -39,13 +40,13 @@ const carrousel_items = (t) => [
   {
     category: t("preExams.category"),
     title: t("preExams.title"),
-    src: "https://drive.google.com/uc?export=view&id=1mAWVNMh5wmlaBaciCkSMOV2nQXVYkMAu",
+    src: "https://drive.google.com/uc?export=view&id=1xWGZk5f1f1H6ctkOvRT4o-c75VwyzCT2",
     content: <PreExamsContent />,
   },
   {
     category: t("courses.category"),
     title: t("courses.title"),
-    src: "https://drive.google.com/uc?export=view&id=1HH58GMKbAqUc06YbqzhHifatfKGDRpV0",
-    content: <></>,
+    src: "https://drive.google.com/uc?export=view&id=1mAWVNMh5wmlaBaciCkSMOV2nQXVYkMAu",
+    content: <CoursesContent />,
   },
 ];

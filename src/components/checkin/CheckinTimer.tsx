@@ -5,6 +5,8 @@ import EventCard from "@/components/league/ui/Events/event-card";
 import toast, { Toaster } from "react-hot-toast";
 import { checkInStudent } from "@/controllers/participation.controller";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLoadingAction } from "@/hooks/use-loading-action";
+import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 
 interface CheckinTimerProps {
   contest: Contest;
@@ -17,7 +19,7 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
   deadline.setMinutes(deadline.getMinutes() - MINUTES_BEFORE_CHECKIN);
   const queryClient = useQueryClient();
 
-  const handleCheckin = async () => {
+  const handleCheckinAction = async () => {
     if (new Date() > deadline) {
       toast.error("Ya pasó la hora de check-in");
       return;
@@ -25,13 +27,17 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
     const result = await checkInStudent(contest.id);
     toast[result.ok ? "success" : "error"](result.msg);
     queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    queryClient.invalidateQueries({ queryKey: ["contests"] });
   };
+
+  const { run: handleCheckin, isLoading: isCheckingIn } =
+    useLoadingAction(handleCheckinAction);
 
   return (
     <div>
       <Toaster position="bottom-center" />
       <div className="text-center font-semibold">
-        <p className="text-xl">Tiempo antes del check-in</p>
+        <p className="text-xl">Haz check-in antes de que empiece el contest</p>
       </div>
       <div className="text-center font-(family-name:--font-primary) text-4xl">
         <Countdown date={deadline}>
@@ -41,10 +47,17 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
       <div className="p-5 flex items-center justify-center">
         <EventCard.RegisterButton
           className="w-[50%]"
-          disabled={new Date() > deadline}
+          disabled={new Date() > deadline || isCheckingIn}
           onClick={handleCheckin}
         >
-          Check-in
+          {isCheckingIn ? (
+            <div className="flex items-center justify-center gap-2">
+              <LogoLoader size={20} />
+              Haciendo check-in...
+            </div>
+          ) : (
+            "Check-in"
+          )}
         </EventCard.RegisterButton>
       </div>
     </div>

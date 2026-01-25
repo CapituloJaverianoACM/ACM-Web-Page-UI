@@ -10,7 +10,7 @@ const Image = (props: { src: string; className?: string }) => {
       alt="event-image"
       src={src}
       className={`pointer-events-none w-full object-cover aspect-video select-none ${className}`}
-    ></img>
+    />
   );
 };
 
@@ -81,7 +81,7 @@ const RegisterButton = (props: {
 
   return (
     <button
-      className={`w-full text-white font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)/0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)/0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full disabled:opacity-20 ${className}`}
+      className={`w-full text-white cursor-pointer font-semibold p-2 bg-[rgb(var(--azul-electrico-rgb)/0.8)] dark:bg-[rgb(var(--azul-electrico-rgb)/0.6)] hover:brightness-105 hover:transition hover:duration-100 rounded-full disabled:opacity-20 ${className}`}
       onClick={onClick}
       disabled={disabled}
     >

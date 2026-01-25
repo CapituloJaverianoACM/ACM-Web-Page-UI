@@ -19,7 +19,41 @@
     "podium": "Podio",
     "rank": "Ranking",
     "login": "Iniciar Sesión",
-    "signup": "Registrarse"
+    "signup": "Registrarse",
+    "dropdown": {
+      "home": {
+        "title": "Inicio",
+        "description": "Inicio de la página"
+      },
+      "activities": {
+        "title": "Nuestras Actividades",
+        "description": "Conoce nuestras actividades"
+      },
+      "members": {
+        "title": "Miembros",
+        "description": "Conoce a nuestros miembros"
+      },
+      "inactiveMembers": {
+        "title": "Miembros Pasados",
+        "description": "Conoce a los que construyeron la comunidad"
+      },
+      "league": {
+        "title": "La Liga",
+        "description": "Conoce la liga"
+      },
+      "rules": {
+        "title": "Reglas",
+        "description": "Conoce las reglas"
+      },
+      "upcomingEvents": {
+        "title": "Próximos Eventos",
+        "description": "Conoce los próximos eventos"
+      },
+      "podium": {
+        "title": "El Podio",
+        "description": "Descubre los más destacados"
+      }
+    }
   },
   "Hero": {
     "subtitle": "¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por la tecnología y la innovación."
@@ -96,7 +130,50 @@
     },
     "courses": {
       "category": "Cursos y Talleres",
-      "title": "Aprende nuevas habilidades con nuestros cursos y talleres"
+      "title": "Aprende nuevas habilidades con nuestros cursos y talleres",
+      "labels": {
+        "duration": "Duración",
+        "topics": "Temas",
+        "materials": "Material del Curso"
+      },
+      "topics": {
+        "dataStructures": "Estructuras de datos",
+        "programmingLogic": "Lógica de programación",
+        "webDevelopment": "Desarrollo web",
+        "algorithmicThinking": "Pensamiento algorítmico",
+        "basicProgramming": "Programación básica"
+      },
+      "items": {
+        "python": {
+          "title": "Curso De Python",
+          "description": "Curso dirigido a estudiantes interesados en aprender Python desde cero y aplicar programación, análisis de datos y fundamentos de machine learning en un proyecto práctico.",
+          "materials": {
+            "slides": "Slides del Curso",
+            "dataStructuresPython": "Estructuras de datos en Python",
+            "oop": "Programación orientada a objetos",
+            "introMl": "Introducción al machine learning",
+            "classificationModels": "Modelos de clasificación",
+            "geneticAlgorithms": "Algoritmos genéticos"
+          }
+        },
+        "frontendAngular": {
+          "title": "Curso Front-End (Angular)",
+          "description": "Curso dirigido a estudiantes interesados en el desarrollo frontend, desde los fundamentos de HTML y CSS hasta aplicaciones web modernas usando Angular 17.",
+          "materials": {
+            "cssAnimations": "Animaciones CSS"
+          }
+        },
+        "schoolsIntroProgramming": {
+          "title": "Curso de colegios - Introducción a la programación",
+          "description": "Curso introductorio dirigido a estudiantes de colegio sin experiencia previa, enfocado en el desarrollo del pensamiento lógico y algorítmico mediante la resolución de problemas y conceptos básicos de desarrollo web.",
+          "materials": {
+            "courseIntro": "Introducción al curso",
+            "basicConstructions": "Construcciones básicas de programación",
+            "conditionals": "Condicionales y operadores lógicos",
+            "iterativeSessions": "Sesiones iterativas"
+          }
+        }
+      }
     }
   },
   "Members": {
@@ -188,6 +265,78 @@
       "step2": {
         "title": "Subiendo tu primer problema a la plataforma de Codeforces",
         "subtitle": "¿Cómo envío un problema?"
+      }
+    }
+  },
+  "Match": {
+    "instructions": [
+      "Cuando estés listo, presiona el botón de 'Listo'.",
+      "Si dejas de estar listo, puedes seleccionar 'No estoy listo'.",
+      "Cuando los dos contrincantes estén listos, se asignará un problema de Codeforces.",
+      "Cuando envíes el problema satisfactoriamente, presiona verificar para que nuestro sistema pueda verificar tu envío.",
+      "Ten en cuenta que tu usuario de Codeforces debe coincidir con la cuenta del envío.",
+      "Si el veredicto es 'ACCEPTED', se creará una ventana de 5 segundos en caso de que el oponente tenga el mismo veredicto."
+    ],
+    "title": "Instrucciones",
+    "wins": "porcentaje de victorias.",
+    "ready": "¡Listo!",
+    "not_ready": "No estoy listo",
+    "waiting_oponent": "Esperando oponente...",
+    "check": "Verificar"
+  },
+  "Results": {
+    "loading": "Cargando...",
+    "title": "Resultados del Contest",
+    "userPosition": "Tu Posición",
+    "matchmakingTree": "Árbol de Matchmaking",
+    "noMatchmakingTree": "No hay árbol de matchmaking disponible",
+    "finalRanking": "Clasificación Final",
+    "noResults": "No hay resultados disponibles aún",
+    "you": "(Tú)"
+  },
+  "Profile": {
+    "title": "Perfil",
+    "header": {
+      "title": "Información Básica",
+      "changePassword": "Cambiar Contraseña"
+    },
+    "fields": {
+      "name": "Nombres",
+      "surname": "Apellidos",
+      "email": "Correo",
+      "codeforcesHandle": "Handle de Codeforces",
+      "codeforcesPlaceholder": "Tu usuario de Codeforces",
+      "notSpecified": "No especificado"
+    },
+    "avatar": {
+      "selectImage": "Seleccionar imagen",
+      "removeImage": "Eliminar imagen",
+      "formats": "Formatos: JPEG, PNG, WEBP. Máximo 1MB",
+      "invalidFile": "Por favor, selecciona un archivo de imagen válido.",
+      "fileTooLarge": "El archivo es demasiado grande. Máximo 1MB."
+    },
+    "buttons": {
+      "save": "Guardar cambios"
+    },
+    "stats": {
+      "participations": "Participaciones",
+      "wins": "Competencias Ganadas",
+      "level": "Nivel"
+    },
+    "contests": {
+      "title": "Historial de Competencias",
+      "loading": "Cargando competencias...",
+      "noContests": "No tienes competencias registradas aún",
+      "noContestsDesc": "Cuando participes en una competencia, aparecerá aquí",
+      "status": {
+        "upcoming": "Próxima",
+        "inProgress": "En Curso",
+        "finished": "Finalizada"
+      },
+      "actions": {
+        "checkIn": "Check in",
+        "viewProgress": "Ver Progreso",
+        "position": "Puesto"
       }
     }
   }
