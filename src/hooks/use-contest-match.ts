@@ -1,10 +1,18 @@
-import { createWebSocket, WS_URL } from "@/app/socket";
+import { WS_URL } from "@/app/socket";
 import { getOpponent } from "@/controllers/contest.controller";
 import { getAccessToken } from "@/controllers/supabase.controller";
 import { Contestant } from "@/models/contestant.model";
-import { useQuery } from "@tanstack/react-query";
+import { WebsocketMessageType } from "@/models/matchmaking.model";
+import {
+  BaseWebSocketMessage,
+  IncomingWebSocketMessage,
+  OutgoingWebSocketMessage,
+  ReadyData,
+  SessionResumeData,
+  WebSocketAction,
+} from "@/utils/ws-types";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Socket } from "socket.io-client";
 
 export type SelectedCodeforcesProblem = {
   name: string;
@@ -32,6 +40,8 @@ export const useContestMatch = (
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [transport, setTransport] = useState<string>("N/A");
 
+  const queryClient = useQueryClient();
+
   const [codeforces_problem, setCodeforcesProblem] =
     useState<SelectedCodeforcesProblem | null>(null);
 
@@ -42,8 +52,53 @@ export const useContestMatch = (
   });
 
   const toggleUserReady = () => {
-    setUserReady((prev) => !prev);
+    setUserReady((prev) => {
+      const out_msg = {
+        action: prev
+          ? WebsocketMessageType.READY
+          : WebsocketMessageType.NOT_READY,
+        data: { handle: contestant.codeforces_handle },
+      };
+
+      socket.send(JSON.stringify(out_msg));
+      return !prev;
+    });
   };
+
+  const buildCodeforcesURL = (contest: number, letter: string) =>
+    `https://codeforces.com/problemset/problem/${contest}/${letter}`;
+
+  const updateUser = (own: boolean, isReady: boolean) => {
+    if (own) setUserReady(isReady);
+    else {
+      queryClient.setQueryData(
+        ["opponent", contest_id, contestant?.id],
+        (oldData: Contestant) => {
+          oldData.ready = isReady;
+          return oldData;
+        },
+      );
+    }
+  };
+
+  const handleSessionResume = (
+    msg: BaseWebSocketMessage<SessionResumeData>,
+  ) => {
+    const incomming_problem = msg.data.currentProblem;
+    if (incomming_problem)
+      setCodeforcesProblem({
+        name: incomming_problem.name,
+        link: buildCodeforcesURL(
+          incomming_problem.contestId,
+          incomming_problem.index,
+        ),
+      });
+
+    for (const user of msg.data.users) {
+      updateUser(user.userId === contest_id, user.isReady);
+    }
+  };
+
   useEffect(() => {
     if (!opponent) return;
     const execute_connection = async () => {
@@ -72,7 +127,13 @@ export const useContestMatch = (
     };
 
     socket.onmessage = (ev) => {
-      console.log(ev.data);
+      const message = ev.data as OutgoingWebSocketMessage;
+      switch (message.action) {
+        case WebSocketAction.SESSION_RESUME:
+          handleSessionResume(
+            message as BaseWebSocketMessage<SessionResumeData>,
+          );
+      }
     };
 
     return () => {
