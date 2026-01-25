@@ -130,7 +130,50 @@
     },
     "courses": {
       "category": "Cursos y Talleres",
-      "title": "Aprende nuevas habilidades con nuestros cursos y talleres"
+      "title": "Aprende nuevas habilidades con nuestros cursos y talleres",
+      "labels": {
+        "duration": "Duración",
+        "topics": "Temas",
+        "materials": "Material del Curso"
+      },
+      "topics": {
+        "dataStructures": "Estructuras de datos",
+        "programmingLogic": "Lógica de programación",
+        "webDevelopment": "Desarrollo web",
+        "algorithmicThinking": "Pensamiento algorítmico",
+        "basicProgramming": "Programación básica"
+      },
+      "items": {
+        "python": {
+          "title": "Curso De Python",
+          "description": "Curso dirigido a estudiantes interesados en aprender Python desde cero y aplicar programación, análisis de datos y fundamentos de machine learning en un proyecto práctico.",
+          "materials": {
+            "slides": "Slides del Curso",
+            "dataStructuresPython": "Estructuras de datos en Python",
+            "oop": "Programación orientada a objetos",
+            "introMl": "Introducción al machine learning",
+            "classificationModels": "Modelos de clasificación",
+            "geneticAlgorithms": "Algoritmos genéticos"
+          }
+        },
+        "frontendAngular": {
+          "title": "Curso Front-End (Angular)",
+          "description": "Curso dirigido a estudiantes interesados en el desarrollo frontend, desde los fundamentos de HTML y CSS hasta aplicaciones web modernas usando Angular 17.",
+          "materials": {
+            "cssAnimations": "Animaciones CSS"
+          }
+        },
+        "schoolsIntroProgramming": {
+          "title": "Curso de colegios - Introducción a la programación",
+          "description": "Curso introductorio dirigido a estudiantes de colegio sin experiencia previa, enfocado en el desarrollo del pensamiento lógico y algorítmico mediante la resolución de problemas y conceptos básicos de desarrollo web.",
+          "materials": {
+            "courseIntro": "Introducción al curso",
+            "basicConstructions": "Construcciones básicas de programación",
+            "conditionals": "Condicionales y operadores lógicos",
+            "iterativeSessions": "Sesiones iterativas"
+          }
+        }
+      }
     }
   },
   "Members": {

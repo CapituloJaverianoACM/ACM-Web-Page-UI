@@ -130,7 +130,52 @@
     },
     "courses": {
       "category": "Courses and Workshops",
-      "title": "Learn new skills with our courses and workshops"
+      "title": "Learn new skills with our courses and workshops",
+      "labels": {
+        "duration": "Duration",
+        "topics": "Topics",
+        "materials": "Course materials"
+      },
+
+      "topics": {
+        "dataStructures": "Data structures",
+        "programmingLogic": "Programming logic",
+        "webDevelopment": "Web development",
+        "algorithmicThinking": "Algorithmic thinking",
+        "basicProgramming": "Basic programming"
+      },
+
+      "items": {
+        "python": {
+          "title": "Python Course",
+          "description": "Course for students who want to learn Python from scratch and apply programming, data analysis and machine learning fundamentals in a practical project.",
+          "materials": {
+            "slides": "Course slides",
+            "dataStructuresPython": "Data structures in Python",
+            "oop": "Object-oriented programming",
+            "introMl": "Introduction to machine learning",
+            "classificationModels": "Classification models",
+            "geneticAlgorithms": "Genetic algorithms"
+          }
+        },
+        "frontendAngular": {
+          "title": "Front-End Course (Angular)",
+          "description": "Course for students interested in frontend development, from HTML and CSS fundamentals to modern web applications using Angular 17.",
+          "materials": {
+            "cssAnimations": "CSS animations"
+          }
+        },
+        "schoolsIntroProgramming": {
+          "title": "High School Course – Introduction to Programming",
+          "description": "Introductory course for high school students with no prior experience, focused on developing logical and algorithmic thinking through problem solving and basic web development.",
+          "materials": {
+            "courseIntro": "Course introduction",
+            "basicConstructions": "Basic programming constructions",
+            "conditionals": "Conditionals and logical operators",
+            "iterativeSessions": "Iterative sessions"
+          }
+        }
+      }
     }
   },
   "Members": {
