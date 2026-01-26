@@ -7,7 +7,6 @@ import { Eye, EyeClosed } from "lucide-react";
 import { login } from "@/app/(auth)/log-in/actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import LogoLoader from "../shared/ui/logo-loader/loader";
 import { useLoadingAction } from "@/hooks/use-loading-action";
 
 export function SignInForm() {
@@ -98,14 +97,7 @@ export function SignInForm() {
         className="w-full mt-2 font-bold"
         disabled={loading}
       >
-        {loading ? (
-          <>
-            <LogoLoader size={20} />
-            Ingresando...
-          </>
-        ) : (
-          "Iniciar sesión"
-        )}
+        {loading ? "Ingresando..." : "Iniciar sesión"}
       </Button>
     </form>
   );

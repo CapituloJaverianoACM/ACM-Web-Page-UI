@@ -3,10 +3,8 @@ import { Eye, EyeClosed } from "lucide-react";
 import { MouseEvent, useEffect, useState } from "react";
 import { Button } from "../shared/ui/button";
 import toast, { Toaster } from "react-hot-toast";
-import { ACMToast } from "../shared/ui/toaster/acm-toast";
 import { getUser, updatePasswordUser } from "@/controllers/supabase.controller";
 import { useRouter } from "next/navigation";
-import LogoLoader from "../shared/ui/logo-loader/loader";
 import { User } from "@supabase/supabase-js";
 import { useLoadingAction } from "@/hooks/use-loading-action";
 import { showToast, ToastType } from "@/utils/show-toast";
@@ -141,14 +139,7 @@ const NewPasswordForm: React.FC = () => {
         onClick={submitPassword}
         disabled={loading}
       >
-        {loading ? (
-          <>
-            <LogoLoader size={20} />
-            Reestableciendo...
-          </>
-        ) : (
-          "Reestablecer"
-        )}
+        {loading ? "Reestableciendo..." : "Reestablecer"}
       </Button>
       <Toaster position="bottom-center" />
     </div>

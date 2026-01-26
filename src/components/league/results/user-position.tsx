@@ -25,7 +25,7 @@ export const UserPosition = ({ position }: UserPositionProps) => {
                   ? "text-neutral-500"
                   : position === 3
                     ? "text-orange-500"
-                    : "text-white"
+                    : "text-black dark:text-white"
             }`}
           >
             {position}

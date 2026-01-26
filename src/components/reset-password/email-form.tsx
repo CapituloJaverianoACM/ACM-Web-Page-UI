@@ -4,7 +4,6 @@ import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { sendResetEmail } from "@/controllers/supabase.controller";
 import { useRouter } from "next/navigation";
-import LogoLoader from "../shared/ui/logo-loader/loader";
 import { useLoadingAction } from "@/hooks/use-loading-action";
 
 const ResetEmailForm: React.FC = () => {
@@ -69,14 +68,7 @@ const ResetEmailForm: React.FC = () => {
         <span className="text-red-600 text-sm text-center">{error}</span>
       )}
       <Button type="submit" className="w-full mt-2" disabled={loading}>
-        {loading ? (
-          <>
-            <LogoLoader size={20} />
-            Enviando...
-          </>
-        ) : (
-          "Enviar email"
-        )}
+        {loading ? "Enviando..." : "Enviar email"}
       </Button>
     </form>
   );

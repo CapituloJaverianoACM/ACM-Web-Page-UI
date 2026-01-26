@@ -2,11 +2,10 @@ import { Contest } from "@/models/contest.model";
 import React from "react";
 import Countdown from "react-countdown";
 import EventCard from "@/components/league/ui/Events/event-card";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { checkInStudent } from "@/controllers/participation.controller";
 import { useQueryClient } from "@tanstack/react-query";
 import { useLoadingAction } from "@/hooks/use-loading-action";
-import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 import { showToast, ToastType } from "@/utils/show-toast";
 
 interface CheckinTimerProps {
@@ -56,14 +55,7 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
           disabled={new Date() > deadline || isCheckingIn}
           onClick={handleCheckin}
         >
-          {isCheckingIn ? (
-            <div className="flex items-center justify-center gap-2">
-              <LogoLoader size={20} />
-              Haciendo check-in...
-            </div>
-          ) : (
-            "Check-in"
-          )}
+          {isCheckingIn ? "Haciendo check-in..." : "Check-in"}
         </EventCard.RegisterButton>
       </div>
     </div>

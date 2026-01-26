@@ -27,7 +27,7 @@ export const FinalRanking = ({
       <h2 className="dark:text-white text-2xl md:text-3xl font-semibold text-center mb-6">
         {t("finalRanking")}
       </h2>
-      <div className="p-2 rounded-md bg-white shadow-md">
+      <div className="p-2 rounded-md bg-white dark:bg-white/10 shadow-md dark:border dark:border-white/20">
         <div className="p-2">
           <div className="flex flex-col gap-2">
             {students.map((student) => {
