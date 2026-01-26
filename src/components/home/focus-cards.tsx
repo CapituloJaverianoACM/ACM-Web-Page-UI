@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn";
 type Card = {
   title: string;
   src: string;
+  icon?: string;
 };
 export const Card = React.memo(
   ({
@@ -40,6 +41,9 @@ export const Card = React.memo(
         )}
       >
         <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-linear-to-b from-neutral-50 to-neutral-200">
+          {card.icon && (
+            <Image src={card.icon} width={70} height={70} alt={card.icon} />
+          )}
           {card.title}
         </div>
       </div>
@@ -53,10 +57,10 @@ export function FocusCards({ cards }: { cards: Card[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto md:px-8 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto md:px-8 w-full">
       {cards.map((card, index) => (
         <Card
-          key={card.title}
+          key={index}
           card={card}
           index={index}
           hovered={hovered}
