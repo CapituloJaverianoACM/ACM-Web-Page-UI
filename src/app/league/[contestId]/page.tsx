@@ -37,6 +37,7 @@ export default function ContestDetailPage() {
 
   const [
     user_ready,
+    opponent_ready,
     toggleUserReady,
     codeforces_problem,
     opponent,
@@ -109,7 +110,7 @@ export default function ContestDetailPage() {
               <>
                 <ContestantsCards
                   user={{ ...data.current_student, ready: user_ready }}
-                  oponent={opponent}
+                  oponent={{ ...opponent, ready: opponent_ready }}
                 />
                 <ContestInstructions
                   ready={user_ready}

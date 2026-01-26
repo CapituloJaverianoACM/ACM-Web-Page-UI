@@ -6,6 +6,7 @@ import { WebsocketMessageType } from "@/models/matchmaking.model";
 import toast from "react-hot-toast";
 import {
   BaseWebSocketMessage,
+  MatchStartData,
   OutgoingWebSocketMessage,
   SessionResumeData,
   UserReadyData,
@@ -21,6 +22,7 @@ export type SelectedCodeforcesProblem = {
 };
 export type useContestResult = [
   boolean,
+  boolean,
   Function,
   SelectedCodeforcesProblem | null,
   Contestant | null,
@@ -32,6 +34,7 @@ export const useContestMatch = (
   contestant: Contestant | undefined,
 ): useContestResult => {
   const [user_ready, setUserReady] = useState<boolean>(false);
+  const [opponent_ready, setOpponentReady] = useState<boolean>(false);
   const socket = useRef<WebSocket | null>(null);
 
   const queryClient = useQueryClient();
@@ -67,14 +70,7 @@ export const useContestMatch = (
   const updateUserReady = (own: boolean, isReady: boolean) => {
     if (own) setUserReady(isReady);
     else {
-      queryClient.setQueryData(
-        ["opponent", contest_id, contestant?.id],
-        (oldData: Contestant) => {
-          const newData = oldData;
-          newData.ready = isReady;
-          return newData;
-        },
-      );
+      setOpponentReady(isReady);
     }
   };
 
@@ -94,6 +90,13 @@ export const useContestMatch = (
     for (const user of msg.data.users) {
       updateUserReady(user.userId === contestant.id, user.isReady);
     }
+  };
+
+  const handleMatchStart = (msg: BaseWebSocketMessage<MatchStartData>) => {
+    setCodeforcesProblem({
+      name: msg.data.problem.name,
+      link: msg.data.problem.url,
+    });
   };
 
   const onCheckProblem = (e) => {
@@ -156,8 +159,13 @@ export const useContestMatch = (
               false,
             );
             break;
+          case WebSocketAction.MATCH_START:
+            break;
           case WebSocketAction.CONTINUE:
-            alert("Sigue compitiendo, codeforces no ha juzgado tu problema.");
+            showToast(toast, {
+              type: ToastType.NEUTRAL,
+              message: "Sigue compitiendo! Codeforces no reporta AC",
+            });
             break;
           case WebSocketAction.WINNER:
             showToast(toast, {
@@ -190,6 +198,7 @@ export const useContestMatch = (
 
   return [
     user_ready,
+    opponent_ready,
     toggleUserReady,
     codeforces_problem,
     opponent,
