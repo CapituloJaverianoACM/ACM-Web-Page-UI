@@ -144,14 +144,14 @@ export const useContestMatch = (
             break;
           case WebSocketAction.USER_READY:
             updateUserReady(
-              contest_id ===
+              contestant.id ===
                 (message as BaseWebSocketMessage<UserReadyData>).data.userId,
               true,
             );
             break;
           case WebSocketAction.USER_NOT_READY:
             updateUserReady(
-              contest_id ===
+              contestant.id ===
                 (message as BaseWebSocketMessage<UserReadyData>).data.userId,
               false,
             );
