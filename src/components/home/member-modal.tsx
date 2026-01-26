@@ -85,7 +85,7 @@ const ActiveMemberModal = ({ member, isOpen, onClose }: MemberModalProps) => {
             <h3 className="text-lg font-semibold text-(--azul-noche) dark:text-gray-50">
               Acerca de
             </h3>
-            <p className="text-(--azul-noche)/80 leading-relaxed">
+            <p className="text-(--azul-noche)/80 dark:text-gray-50 leading-relaxed">
               {member.bio}
             </p>
           </div>
