@@ -111,7 +111,9 @@ export default function ContestDetailPage() {
               <>
                 <ContestantsCards
                   user={{ ...data.current_student, ready: user_ready }}
-                  oponent={{ ...opponent, ready: opponent_ready }}
+                  oponent={
+                    opponent ? { ...opponent, ready: opponent_ready } : null
+                  }
                 />
                 <ContestInstructions
                   ready={user_ready}

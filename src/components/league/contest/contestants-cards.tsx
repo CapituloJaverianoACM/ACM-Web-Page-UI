@@ -13,6 +13,7 @@ export const ContestantsCards: React.FC<ContestantCardsProps> = ({
 }) => {
   const t = useTranslations();
 
+  console.log(oponent);
   const WAITING_OPONENT: Contestant = {
     id: 0,
     name: t("Match.waiting_oponent"),
