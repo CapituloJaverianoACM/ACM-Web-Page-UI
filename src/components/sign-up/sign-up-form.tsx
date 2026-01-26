@@ -6,7 +6,6 @@ import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed, Upload, X } from "lucide-react";
 import { signup } from "@/app/(auth)/sign-up/actions";
 import { useRouter } from "next/navigation";
-import LogoLoader from "../shared/ui/logo-loader/loader";
 import { useLoadingAction } from "@/hooks/use-loading-action";
 
 export function SignUpForm() {
@@ -207,14 +206,7 @@ export function SignUpForm() {
       </div>
       {error && <span className="text-red-600 text-sm">{error}</span>}
       <Button type="submit" className="w-full mt-2" disabled={loading}>
-        {loading ? (
-          <>
-            <LogoLoader size={20} />
-            Registrando...
-          </>
-        ) : (
-          "Registrarse"
-        )}
+        {loading ? "Registrando..." : "Registrarse"}
       </Button>
     </form>
   );

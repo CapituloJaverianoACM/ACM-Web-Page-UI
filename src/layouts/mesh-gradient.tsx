@@ -3,7 +3,7 @@ import Image from "next/image";
 type MeshGradientProps = React.PropsWithChildren<object>;
 export const MeshGradient: React.FC<MeshGradientProps> = ({ children }) => {
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-[var(--azul-noche)] relative overflow-hidden">
+    <div className="w-full min-h-screen bg-[#eeeeee] dark:bg-[var(--azul-noche)] relative overflow-hidden">
       {/*<Image
         className="object-cover z-0"
         src="/mesh.png"

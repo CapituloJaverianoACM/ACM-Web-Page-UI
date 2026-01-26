@@ -25,7 +25,7 @@ export const StudentPositionRow = ({
 
   return (
     <div
-      className={`flex gap-2 p-2 px-4 rounded-md bg-white shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg ${
+      className={`flex gap-2 p-2 px-4 rounded-md bg-white dark:bg-white/10 shadow-md lg:px-6 text-xs lg:text-base hover:scale-[1.01] transition hover:shadow-lg dark:border dark:border-white/20 ${
         isCurrentUser
           ? "ring-2 ring-(--azul-electrico) dark:ring-(--azul-niebla)"
           : ""
@@ -33,7 +33,7 @@ export const StudentPositionRow = ({
     >
       <p className={`w-10 m-0 ${positionClass} font-semibold`}>{position}.</p>
       <div className="flex justify-between w-full">
-        <p className="flex gap-1 m-0 w-[90%] truncate text-ellipsis text-black">
+        <p className="flex gap-1 m-0 w-[90%] truncate text-ellipsis text-black dark:text-white">
           {student.name}
           <span className="md:flex hidden">{student.surname}</span>
           {isCurrentUser && (
