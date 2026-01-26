@@ -18,6 +18,7 @@ import {
   UserRoundMinusIcon,
   UsersIcon,
 } from "lucide-react";
+import { CursorWrapper } from "../home/ui/cursor-wrapper";
 
 declare global {
   interface Window {
@@ -137,9 +138,11 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <HeroUIProvider>
       <QueryClientProvider client={queryClient}>
-        <MainNavbar navLinks={navLinks} />
-        {children}
-        <Footer />
+        <CursorWrapper>
+          <MainNavbar navLinks={navLinks} />
+          {children}
+          <Footer />
+        </CursorWrapper>
       </QueryClientProvider>
     </HeroUIProvider>
   );
