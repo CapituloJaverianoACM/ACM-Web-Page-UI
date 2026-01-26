@@ -26,7 +26,7 @@ export function VerticalSeparator({
 
       {/* Top gradient line */}
       <div
-        className={`w-px h-12 bg-linear-to-b from-transparent ${via_color} ${to_color}`}
+        className={`w-px h-12  bg-linear-to-b from-transparent via-(--azul-electrico) to-(--azul-electrico)`}
       />
 
       {/* Center decorative circle */}
