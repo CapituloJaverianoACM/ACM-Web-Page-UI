@@ -17,7 +17,7 @@ export default function Footer() {
   const { data: contributors = [], isLoading } = useQuery({
     queryKey: ["github-contributors"],
     queryFn: async () => {
-      return await getGitHubContributorsFromRepos(undefined, 6, 10);
+      return await getGitHubContributorsFromRepos(undefined, 50, 50);
     },
     enabled: isMounted,
     staleTime: 1000 * 60 * 10, // 10 minutes
