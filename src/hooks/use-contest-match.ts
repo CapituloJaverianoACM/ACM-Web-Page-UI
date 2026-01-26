@@ -53,15 +53,15 @@ export const useContestMatch = (
   };
 
   const toggleUserReady = () => {
-    setUserReady((prev) => !prev);
     const out_msg = {
-      action: user_ready
+      action: !user_ready
         ? WebsocketMessageType.READY
         : WebsocketMessageType.NOT_READY,
       data: { handle: contestant.codeforces_handle },
     };
 
     socket.current.send(JSON.stringify(out_msg));
+    setUserReady((prev) => !prev);
   };
 
   const buildCodeforcesURL = (contest: number, letter: string) =>
