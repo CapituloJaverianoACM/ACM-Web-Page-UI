@@ -7,7 +7,7 @@ import { Eye, EyeClosed, Upload, X } from "lucide-react";
 import { signup } from "@/app/(auth)/sign-up/actions";
 import { useRouter } from "next/navigation";
 import { useLoadingAction } from "@/hooks/use-loading-action";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { showToast, ToastType } from "@/utils/show-toast";
 
 export function SignUpForm() {
@@ -88,7 +88,6 @@ export function SignUpForm() {
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <Toaster position="bottom-center" />
       <div className="flex flex-col gap-1">
         <label
           htmlFor="nombre"
@@ -173,7 +172,7 @@ export function SignUpForm() {
           Avatar (Opcional)
         </label>
         <div className="flex items-center gap-4">
-          <div className="flex-1">
+          <div className="flex-1 max-w-[80%]">
             <input
               ref={fileInputRef}
               id="avatar"

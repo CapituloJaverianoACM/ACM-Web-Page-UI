@@ -11,6 +11,7 @@ import { SignUpForm } from "@/components/sign-up/sign-up-form";
 import { AuthLayout } from "@/layouts/info/auth_layout";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 export default function SignUpPage() {
   const searchParams = useSearchParams();
@@ -22,6 +23,7 @@ export default function SignUpPage() {
     : "/log-in";
   return (
     <AuthLayout>
+      <Toaster position="bottom-center" />
       <Card className="w-full max-w-md bg-white dark:bg-[#1a1a1a] border-0 shadow-2xl rounded-2xl overflow-hidden">
         {/* Barra superior con gradiente */}
         <div
