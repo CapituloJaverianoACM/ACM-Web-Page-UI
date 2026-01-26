@@ -103,8 +103,11 @@ export const useContestMatch = (
 
   useEffect(() => {
     if (!opponent) return;
+    let isMounted = true;
     const execute_connection = async () => {
-      if (socket.current) return;
+      // Si el componente se desmontó mientras esperábamos el token, abortamos
+      if (!isMounted || socket.current) return;
+
       const token = await getAccessToken();
       socket.current = new WebSocket(
         new URL(
@@ -132,10 +135,15 @@ export const useContestMatch = (
     };
 
     execute_connection();
+
     return () => {
-      socket.current?.close();
+      isMounted = false;
+      if (socket.current) {
+        socket.current.close();
+        socket.current = null;
+      }
     };
-  }, [opponent]);
+  }, [opponent?.id]);
 
   return [user_ready, toggleUserReady, codeforces_problem, opponent];
 };
