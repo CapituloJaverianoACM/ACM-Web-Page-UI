@@ -6,16 +6,7 @@ export interface CodeforcesUser {
   titlePhoto: string;
 }
 
-export interface CPData {
-  members: { title: string; src: string }[];
-  coaches: { title: string; src: string }[];
-  loading: boolean;
-}
-
-export const useCodeforcesData = (
-  memberHandles: string[],
-  coachHandle: string = "sandoval95",
-) => {
+export const useCodeforcesData = (memberHandles: string[]) => {
   const { data, isLoading } = useQuery({
     queryKey: ["codeforces", memberHandles],
     queryFn: async () => {
@@ -28,9 +19,7 @@ export const useCodeforcesData = (
       const responseData = await response.json();
 
       if (responseData.status === "OK" && Array.isArray(responseData.result)) {
-        // Separar los coaches de los miembros
         const membersData = responseData.result
-          .filter((user: CodeforcesUser) => user.handle !== coachHandle)
           .sort(
             (a: CodeforcesUser, b: CodeforcesUser) =>
               (b.rating || 0) - (a.rating || 0),
@@ -38,29 +27,21 @@ export const useCodeforcesData = (
           .map((user: CodeforcesUser) => ({
             title: `${user.handle} - (Rating: ${user.rating})`,
             src: user.titlePhoto,
-          }));
-
-        const coachData = responseData.result
-          .filter((user: CodeforcesUser) => user.handle === coachHandle)
-          .map((user: CodeforcesUser) => ({
-            title: `${user.handle} - Coach`,
-            src: user.titlePhoto,
+            handle: user.handle,
           }));
 
         return {
           members: membersData,
-          coaches: coachData,
           loading: false,
         };
       }
-      return { members: [], coaches: [], loading: false };
+      return { members: [], loading: false };
     },
   });
 
   return (
     data || {
       members: [],
-      coaches: [],
       loading: isLoading,
     }
   );
