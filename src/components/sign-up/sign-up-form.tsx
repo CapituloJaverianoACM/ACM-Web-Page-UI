@@ -7,6 +7,8 @@ import { Eye, EyeClosed, Upload, X } from "lucide-react";
 import { signup } from "@/app/(auth)/sign-up/actions";
 import { useRouter } from "next/navigation";
 import { useLoadingAction } from "@/hooks/use-loading-action";
+import { Toaster, toast } from "react-hot-toast";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 export function SignUpForm() {
   const [name, setName] = useState("");
@@ -69,7 +71,12 @@ export function SignUpForm() {
       return; // Detener la ejecución sin lanzar error
     }
 
-    router.push("/log-in");
+    showToast(toast, {
+      type: ToastType.OK,
+      message: "Te envíaremos un correo de confirmación. Redirigiendo...",
+    });
+
+    setTimeout(() => router.push("/log-in"), 2000);
   };
 
   const { run: handleSubmit, isLoading: loading } =
@@ -81,6 +88,7 @@ export function SignUpForm() {
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <Toaster position="bottom-center" />
       <div className="flex flex-col gap-1">
         <label
           htmlFor="nombre"
