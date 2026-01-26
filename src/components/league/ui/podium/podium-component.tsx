@@ -75,9 +75,9 @@ const Step = (props: {
 
         <div className="absolute h-full flex flex-col gap-2 items-center justify-end z-10">
           {showNumber && (
-            <b className="relative z-10 text-6xl text-white text-bold font-(--font-primary)">
+            <p className="relative z-10 mb-0 text-6xl text-white font-bold">
               #{student.order + 1}
-            </b>
+            </p>
           )}
           {showUserInfo && (
             <div className=" text-white flex flex-col items-center justify-center p-2 text-center text-xs lg:text-base shadow font-(--font-secondary)">

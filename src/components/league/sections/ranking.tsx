@@ -22,12 +22,12 @@ export const Ranking = () => {
 
   return (
     <div>
-      <div className="mt-[-9vh]">
-        <h1 className="text-center text-6xl">Ranking global</h1>
+      <div className="mt-[-5vh]">
+        <h1 className="text-center dark:text-white text-6xl">Ranking global</h1>
       </div>
       <Podium />
-      <RankingComponent.RankingContainer>
-        <RankingComponent.Padding className="max-w-260 mx-auto">
+      <RankingComponent.RankingContainer className="dark:bg-[#121212]">
+        <RankingComponent.Padding className="max-w-260 mx-auto dark:text-white dark:bg-white/10 rounded-md">
           <p className="text-lg font-semibold text-center">Ranking</p>
           <RankingComponent.RankingList student_number={5} offset={3} />
         </RankingComponent.Padding>

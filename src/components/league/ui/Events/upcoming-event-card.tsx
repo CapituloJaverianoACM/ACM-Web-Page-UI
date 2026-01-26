@@ -119,10 +119,10 @@ export const UpcomingEventCard = ({
             className={` ${
               contestStarted
                 ? hasCheckin
-                  ? "bg-green-500 "
-                  : "bg-(--azul-electrico) "
+                  ? "bg-green-500 dark:bg-green-500"
+                  : "bg-(--azul-electrico)"
                 : event.registered
-                  ? "bg-green-500 "
+                  ? "bg-green-500 dark:bg-green-500"
                   : " "
             }`}
             // Antes de que inicie el contest:
