@@ -186,11 +186,11 @@ export function SignUpForm() {
             </p>
           </div>
           {avatarPreview && (
-            <div className="relative">
+            <div className="flex-2 relative">
               <img
                 src={avatarPreview}
                 alt="Avatar Preview"
-                className="h-20 w-20 rounded-full object-cover ring-2 ring-(--azul-electrico)"
+                className="h-20 w-20 min-w-20 min-h-20 rounded-full object-cover ring-2 ring-(--azul-electrico)"
               />
               <button
                 type="button"
