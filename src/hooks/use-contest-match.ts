@@ -13,7 +13,7 @@ import {
   WebSocketAction,
 } from "@/utils/ws-types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 export type SelectedCodeforcesProblem = {
   name: string;
@@ -30,6 +30,7 @@ export type useContestResult = [
   Function,
   SelectedCodeforcesProblem | null,
   Contestant | null,
+  MouseEventHandler,
 ];
 
 export const useContestMatch = (
@@ -37,7 +38,7 @@ export const useContestMatch = (
   contestant: Contestant | undefined,
 ): useContestResult => {
   const [user_ready, setUserReady] = useState<boolean>(false);
-  const socket = useRef(null);
+  const socket = useRef<WebSocket | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -51,7 +52,7 @@ export const useContestMatch = (
   });
 
   const sleepAndReload = (sec: number) => {
-    setTimeout(() => window.location.reload(), sec);
+    setTimeout(() => window.location.reload(), sec * 1000);
   };
 
   const toggleUserReady = () => {
@@ -73,14 +74,11 @@ export const useContestMatch = (
   const updateUserReady = (own: boolean, isReady: boolean) => {
     if (own) setUserReady(isReady);
     else {
-      console.log("UPODATE the other user");
       queryClient.setQueryData(
         ["opponent", contest_id, contestant?.id],
         (oldData: Contestant) => {
           const newData = oldData;
           newData.ready = isReady;
-          console.log("Datos viejos:", oldData);
-          console.log("Datos nuevos:", newData);
           return newData;
         },
       );
@@ -102,6 +100,22 @@ export const useContestMatch = (
 
     for (const user of msg.data.users) {
       updateUserReady(user.userId === contestant.id, user.isReady);
+    }
+  };
+
+  const onCheckProblem = (e) => {
+    const button = e.target as HTMLButtonElement;
+    if (button.disabled) return;
+
+    button.disabled = true;
+    setTimeout(() => (button.disabled = false), 5000);
+
+    const out_msg = {
+      action: WebSocketAction.CHECK,
+    };
+
+    if (socket.current) {
+      socket.current.send(JSON.stringify(out_msg));
     }
   };
 
@@ -175,5 +189,11 @@ export const useContestMatch = (
     };
   }, [opponent?.id]);
 
-  return [user_ready, toggleUserReady, codeforces_problem, opponent];
+  return [
+    user_ready,
+    toggleUserReady,
+    codeforces_problem,
+    opponent,
+    onCheckProblem,
+  ];
 };
