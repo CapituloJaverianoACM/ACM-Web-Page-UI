@@ -46,7 +46,7 @@ const CONTESTS: { title: string; src: string; icon: string }[] = [
     icon: "/eciciencia.svg",
   },
   {
-    title: "ICPC (2023)",
+    title: "ICPC (2022)",
     src: "https://drive.google.com/uc?export=view&id=1_wmQo9AJYp60SpNc-XwZiz7uhSrtGBdd",
     icon: "/icpc.svg",
   },
