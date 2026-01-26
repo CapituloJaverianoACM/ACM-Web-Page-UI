@@ -6,9 +6,7 @@ export interface CodeforcesUser {
   titlePhoto: string;
 }
 
-export const useCodeforcesData = (
-  memberHandles: string[]
-) => {
+export const useCodeforcesData = (memberHandles: string[]) => {
   const { data, isLoading } = useQuery({
     queryKey: ["codeforces", memberHandles],
     queryFn: async () => {

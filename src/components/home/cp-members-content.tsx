@@ -16,7 +16,7 @@ const CP_MEMBERS: string[] = [
   "Pyotr_",
   "johan-smc",
   "a_santamaria",
-  "Julianasolanx"
+  "Julianasolanx",
 ];
 
 const CONTESTS: { title: string; src: string; icon: string }[] = [
@@ -28,7 +28,7 @@ const CONTESTS: { title: string; src: string; icon: string }[] = [
   {
     title: "BUHOS INTERNA (2025)",
     src: "https://drive.google.com/uc?export=view&id=1MptlEaenvDrRRdAKYHWfxxT4ImQNkv8v",
-    icon: "/buhos.svg",
+    icon: "/Buhos.svg",
   },
   {
     title: "ECICIENCIA (2025)",
@@ -79,9 +79,7 @@ export const CPMembersContent = () => {
 
   return (
     <>
-      <p className="dark:text-(--azul-niebla)">
-        {t("description")}
-      </p>
+      <p className="dark:text-(--azul-niebla)">{t("description")}</p>
       <br />
       <FocusCards cards={CONTESTS} />
       <p className="text-3xl text-center my-10 font-semibold dark:text-(--azul-niebla)">

@@ -41,7 +41,9 @@ export const Card = React.memo(
         )}
       >
         <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-linear-to-b from-neutral-50 to-neutral-200">
-          {card.icon && <Image src={card.icon} width={70} height={70} alt={card.icon} />}
+          {card.icon && (
+            <Image src={card.icon} width={70} height={70} alt={card.icon} />
+          )}
           {card.title}
         </div>
       </div>
