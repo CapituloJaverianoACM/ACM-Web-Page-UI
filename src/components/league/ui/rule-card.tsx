@@ -12,7 +12,7 @@ export function RuleCard({
     //style of the card as the one said.
     <div className="rounded-[32px] overflow-hidden bg-[rgba(var(--azul-niebla-rgb)/0.8)] dark:bg-[rgba(var(--azul-noche-rgb)/0.4)] border border-[rgba(var(--azul-niebla-rgb)/1)] dark:border-[rgba(var(--azul-noche-rgb)/0.4)] shadow-sm dark:shadow-md px-6 py-6 md:px-8 md:py-7">
       <div className="flex items-start gap-4">
-        <div className="shrink-0 rounded-xl bg-[var(--azul-electrico)] p-3 shadow-sm">
+        <div className="shrink-0 rounded-xl bg-(--azul-electrico) p-3 shadow-sm">
           <div className="text-white">{icon}</div>
         </div>
         {/* Style of the content on the card */}

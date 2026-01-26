@@ -2,9 +2,11 @@ import { Contest } from "@/models/contest.model";
 import React from "react";
 import Countdown from "react-countdown";
 import EventCard from "@/components/league/ui/Events/event-card";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { checkInStudent } from "@/controllers/participation.controller";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLoadingAction } from "@/hooks/use-loading-action";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 interface CheckinTimerProps {
   contest: Contest;
@@ -17,23 +19,32 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
   deadline.setMinutes(deadline.getMinutes() - MINUTES_BEFORE_CHECKIN);
   const queryClient = useQueryClient();
 
-  const handleCheckin = async () => {
+  const handleCheckinAction = async () => {
     if (new Date() > deadline) {
-      toast.error("Ya pasó la hora de check-in");
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "Ya pasó la hora de check-in",
+      });
       return;
     }
     const result = await checkInStudent(contest.id);
-    toast[result.ok ? "success" : "error"](result.msg);
+    showToast(toast, {
+      type: result.ok ? ToastType.OK : ToastType.ERROR,
+      message: result.msg,
+    });
     queryClient.invalidateQueries({ queryKey: ["league-contests"] });
+    queryClient.invalidateQueries({ queryKey: ["contests"] });
   };
+
+  const { run: handleCheckin, isLoading: isCheckingIn } =
+    useLoadingAction(handleCheckinAction);
 
   return (
     <div>
-      <Toaster position="bottom-center" />
       <div className="text-center font-semibold">
-        <p className="text-xl">Tiempo antes del check-in</p>
+        <p className="text-xl">Haz check-in antes de que empiece el contest</p>
       </div>
-      <div className="text-center font-[family-name:--font-primary] text-4xl">
+      <div className="text-center font-(family-name:--font-primary) text-4xl">
         <Countdown date={deadline}>
           <h1 className="text-4xl mb-0">00:00:00:00</h1>
         </Countdown>
@@ -41,10 +52,10 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
       <div className="p-5 flex items-center justify-center">
         <EventCard.RegisterButton
           className="w-[50%]"
-          disabled={new Date() > deadline}
+          disabled={new Date() > deadline || isCheckingIn}
           onClick={handleCheckin}
         >
-          Check-in
+          {isCheckingIn ? "Haciendo check-in..." : "Check-in"}
         </EventCard.RegisterButton>
       </div>
     </div>

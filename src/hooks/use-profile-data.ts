@@ -5,7 +5,12 @@ import {
   getStudentBySupabaseId,
   updateStudent,
 } from "@/controllers/student.controller";
+import { verifyHandle } from "@/controllers/codeforces.controller";
 import { Student } from "@/models/student.model";
+import toast from "react-hot-toast";
+import { uploadAvatarAction, deleteAvatarAction } from "@/app/profile/actions";
+import { useLoadingAction } from "./use-loading-action";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 export const useProfileData = () => {
   const queryClient = useQueryClient();
@@ -16,6 +21,8 @@ export const useProfileData = () => {
     email: "",
     codeforcesHandle: "",
     avatarUrl: null as string | null,
+    avatarFile: null as File | null,
+    avatarPreview: null as string | null,
   });
 
   // Query for User
@@ -67,33 +74,90 @@ export const useProfileData = () => {
       ...prev,
       name: student?.name || "",
       surname: student?.surname || "",
-      avatarUrl: student?.avatar || null,
+      avatarUrl: student?.avatar || "",
+      avatarFile: null,
+      avatarPreview: null,
       codeforcesHandle: student?.codeforces_handle || "",
     }));
     setIsEditing(!isEditing);
   };
 
-  const handleAvatarUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value.trim();
-    setFormData((prev) => ({ ...prev, avatarUrl: url || null }));
+  const handleAvatarFileChange = (
+    file: File | null,
+    preview: string | null,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      avatarFile: file,
+      avatarPreview: preview,
+    }));
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
+  const handleSaveAction = async () => {
     if (!student?.id || !user?.id) {
-      alert("Error: No se puede actualizar el perfil sin un estudiante válido");
-      return;
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message:
+          "Error: No se puede actualizar el perfil sin un estudiante válido",
+      });
+      return; // Detener sin lanzar error
     }
-    updateStudentMutation.mutate({
+
+    const handleChanged =
+      formData.codeforcesHandle !== (student?.codeforces_handle || "");
+    if (handleChanged && formData.codeforcesHandle.trim()) {
+      const isValid = await verifyHandle(formData.codeforcesHandle.trim());
+      if (!isValid) {
+        showToast(toast, {
+          type: ToastType.ERROR,
+          message:
+            "El handle de Codeforces no es válido. Por favor verifica que el usuario existe en Codeforces.",
+        });
+        return; // Detener sin lanzar error
+      }
+    }
+
+    let finalAvatarUrl = formData.avatarUrl;
+
+    // Si hay un nuevo archivo, subirlo primero
+    if (formData.avatarFile) {
+      try {
+        const formDataToUpload = new FormData();
+        formDataToUpload.append("avatar", formData.avatarFile);
+        const { error, url } = await uploadAvatarAction(formDataToUpload);
+
+        if (error) {
+          alert(`Error al subir el avatar: ${error}`);
+          return; // Detener sin lanzar error
+        }
+
+        if (url) {
+          finalAvatarUrl = url;
+          // Eliminar el avatar anterior si existe y es diferente
+          if (student?.avatar && student.avatar !== url) {
+            await deleteAvatarAction(student.avatar);
+          }
+        }
+      } catch (error) {
+        alert(`Error al subir el avatar: ${error}`);
+        return; // Detener sin lanzar error
+      }
+    }
+
+    await updateStudentMutation.mutateAsync({
       name: formData.name,
       surname: formData.surname,
-      avatar: formData.avatarUrl,
+      avatar: finalAvatarUrl || "",
       codeforces_handle: formData.codeforcesHandle,
     });
   };
+
+  const { run: handleSave, isLoading: isSaving } =
+    useLoadingAction(handleSaveAction);
 
   return {
     user,
@@ -102,10 +166,11 @@ export const useProfileData = () => {
     isEditing,
     formData,
     handleEditing,
-    handleAvatarUrlChange,
+    handleAvatarFileChange,
     handleSave,
     handleInputChange,
     setIsEditing,
     setFormData,
+    isSaving,
   };
 };

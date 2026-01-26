@@ -1,10 +1,12 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 import { Map } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function RoadmapButton() {
+  const t = useTranslations("League");
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
@@ -24,13 +26,13 @@ export function RoadmapButton() {
       onMouseEnter={() => setIsCollapsed(false)}
       onMouseLeave={() => setIsCollapsed(true)}
     >
-      <Map className="w-5 h-5 flex-shrink-0 ml-2" />
+      <Map className="w-5 h-5 shrink-0 ml-2" />
       <span
         className={`whitespace-nowrap text-bold transition-all duration-700 overflow-hidden ${
           isCollapsed ? "max-w-0 opacity-0" : "max-w-xs opacity-100"
         }`}
       >
-        Mira como comenzar!
+        {t("roadmapButton")}
       </span>
     </Link>
   );

@@ -1,4 +1,5 @@
 // Code de Acha 😎
+import { useTranslations } from "next-intl";
 
 import { Carousel } from "@/components/home/apple-cards-carousel";
 import { Contest } from "@/models/contest.model";
@@ -16,27 +17,35 @@ export function UpcomingEvents({
   events: Contest[];
   loadingInitialState?: boolean;
 }) {
-  const { loading, filter, setFilter, filteredEvents, handleRegisterContest } =
-    useUpcomingEvents(events, loadingInitialState);
+  const t = useTranslations("League.upcomingEvents");
+  const {
+    loading,
+    filter,
+    setFilter,
+    filteredEvents,
+    handleRegisterContest,
+    registeringEventId,
+  } = useUpcomingEvents(events, loadingInitialState);
 
   const cards = filteredEvents.map((event) => (
     <UpcomingEventCard
       key={event.id}
       event={event}
       onRegister={handleRegisterContest}
+      isRegistering={registeringEventId === event.id}
     />
   ));
 
   return (
     <div
       id="upcoming-events"
-      className="flex flex-col w-[90%] max-w-[100rem] mx-auto gap-2 items-center"
+      className="flex flex-col w-[90%] max-w-400 mx-auto gap-2 items-center"
     >
       <Toaster position="bottom-center" />
       <div className="flex flex-col gap-4 xl:flex-row items-center justify-between xl:w-[80%]">
         <div className="flex flex-col gap-2 w-full">
-          <h2 className="dark:text-white">Próximos Eventos</h2>
-          <p className="dark:text-white">¡No te pierdas de ningún contest!</p>
+          <h2 className="dark:text-white">{t("title")}</h2>
+          <p className="dark:text-white">{t("subtitle")}</p>
         </div>
         <div className="flex flex-col">
           <LevelFilter filter={filter} setFilter={setFilter} />

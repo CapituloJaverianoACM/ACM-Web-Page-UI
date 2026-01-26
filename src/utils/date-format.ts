@@ -1,11 +1,9 @@
 export const formatDateEvent = ({
   date,
   start_hour,
-  final_hour,
 }: {
   date: Date;
   start_hour: Date;
-  final_hour: Date;
 }) => {
   const optionsDate: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -28,10 +26,7 @@ export const formatDateEvent = ({
     LOCALE,
     optionsHour,
   );
-  const formattedFinalHour = new Date(final_hour).toLocaleTimeString(
-    LOCALE,
-    optionsHour,
-  );
 
-  return `${formattedDate}, de ${formattedInitialHour} a ${formattedFinalHour}`;
+  // Solo mostramos la fecha y la hora de inicio (sin hora de fin)
+  return `${formattedDate}, ${formattedInitialHour}`;
 };

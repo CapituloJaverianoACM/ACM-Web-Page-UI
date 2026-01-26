@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import AnimatedTooltip from "./ui/tooltip";
 import { IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
 import { getGitHubContributorsFromRepos } from "@/controllers/github.controller";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,6 @@ export default function Footer() {
   const { data: contributors = [], isLoading } = useQuery({
     queryKey: ["github-contributors"],
     queryFn: async () => {
-      console.log("Cargando contribuidores del proyecto...");
       return await getGitHubContributorsFromRepos(undefined, 6, 10);
     },
     enabled: isMounted,
@@ -26,7 +27,7 @@ export default function Footer() {
   const contributorItems = contributors.map((contributor) => ({
     id: contributor.id,
     name: contributor.login,
-    designation: "Colaborador ACM",
+    designation: t("contributor"),
     image: contributor.avatar_url,
     html_url: contributor.html_url,
     className: "border-gray-200 hover:border-blue-400",
@@ -37,7 +38,7 @@ export default function Footer() {
     {
       id: 1,
       name: "ACM Javeriana",
-      designation: "Capítulo Universitario",
+      designation: t("universitaryChapter"),
       image: "/Logo_Oscuro.svg",
       imageDark: "/Logo_Claro.svg",
       className: "border-transparent",
@@ -58,10 +59,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4 md:gap-0 text-center md:text-left">
           {/* Información izquierda */}
           <div className="flex items-center justify-center md:justify-start whitespace-nowrap">
-            <span className="font-montserrat text-lg md:text-lg text-[--azul-noche] dark:text-white">
-              Capítulo Javeriano
+            <span className="font-montserrat text-lg md:text-lg text-(--azul-noche) dark:text-white">
+              {t("chapter")}
             </span>
-            <h1 className="ml-2 mb-0 md:text-xl font-bold text-[--azul-noche] dark:text-white">
+            <h1 className="ml-2 mb-0 md:text-xl font-bold text-(--azul-noche) dark:text-white">
               ACM
             </h1>
           </div>
@@ -84,7 +85,7 @@ export default function Footer() {
               aria-label="LinkedIn"
               className="inline-flex"
             >
-              <IconBrandLinkedin className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandLinkedin className="w-7 h-7 md:w-8 md:h-8 text-(--azul-noche) dark:text-white hover:opacity-70 transition-opacity" />
             </a>
 
             <a
@@ -94,7 +95,7 @@ export default function Footer() {
               aria-label="Instagram"
               className="inline-flex"
             >
-              <IconBrandInstagram className="w-7 h-7 md:w-8 md:h-8 text-[--azul-noche] dark:text-white hover:opacity-70 transition-opacity" />
+              <IconBrandInstagram className="w-7 h-7 md:w-8 md:h-8 text-(--azul-noche) dark:text-white hover:opacity-70 transition-opacity" />
             </a>
           </div>
         </div>

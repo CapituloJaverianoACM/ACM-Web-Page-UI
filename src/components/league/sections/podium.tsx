@@ -1,3 +1,4 @@
+// import { useTranslations } from "next-intl";
 import PodiumContainer from "@/components/league/ui/podium/podium-component";
 import { getPodiumStudents } from "@/controllers/student.controller";
 import { LevelEnum } from "@/models/level.enum";
@@ -9,6 +10,7 @@ import { useMemo } from "react";
  * @param refresh_toggle es un booleano que se recibe desde el componente padre para saber cuando tiene que pedir los estudiantes
  */
 export function Podium() {
+  // const t = useTranslations("League.podium");
   const { data: students = [], isLoading } = useQuery({
     queryKey: ["podium-students"],
     queryFn: async () => {
@@ -39,11 +41,11 @@ export function Podium() {
   return (
     <div
       id="podium"
-      className="flex flex-col gap-2 py-8 w-[90%] max-w-[100rem] mx-auto"
+      className="flex flex-col gap-2 py-8 w-[90%] max-w-400 mx-auto"
     >
       <div className="flex flex-col gap-2 lg:w-[80%] mx-auto">
         <h2 className="dark:text-white">Mejores 3 de la liga</h2>
-        <div className="w-full h-[20rem] lg:h-[30rem] max-w-full lg:max-w-[45rem] mx-auto mt-[4rem]">
+        <div className="w-full h-80 lg:h-120 max-w-full lg:max-w-180 mx-auto mt-16">
           {isLoading ? (
             <PodiumContainer.Container
               steps={[{ order: 1 }, { order: 0 }, { order: 2 }].map((s) => ({
@@ -52,8 +54,8 @@ export function Podium() {
                   <PodiumContainer.Step
                     showUserInfo
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
-                    className="border-[rgb(var(--azul-electrico-rgb)_/_0.2)] border-1"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)/1)] dark:bg-[rgb(var(--azul-electrico-rgb)/1)]"
+                    className="border-[rgb(var(--azul-electrico-rgb)/0.2)] border"
                     student={{
                       order: s.order,
                       student: {
@@ -83,7 +85,7 @@ export function Podium() {
                     showCrown
                     showAvatar
                     showNumber
-                    bg_color="bg-[rgb(var(--azul-electrico-rgb)_/_1)] dark:bg-[rgb(var(--azul-electrico-rgb)_/_1)]"
+                    bg_color="bg-[rgb(var(--azul-electrico-rgb)/1)] dark:bg-[rgb(var(--azul-electrico-rgb)/1)]"
                     student={s}
                   ></PodiumContainer.Step>
                 ),

@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
+import { useTranslations } from "next-intl";
 import ThreeBlobs from "../three-blobs";
 import { HeroBackground } from "../ui/hero-background";
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <section
       className="relative min-h-screen w-full overflow-hidden cursor-none bg-[#dde5f8] dark:bg-transparent"
@@ -32,8 +35,7 @@ export function Hero() {
 
           {/* Subtitle */}
           <p className="font-montserrat font-400 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow dark:text-white">
-            ¡Hola! somos ACM Javeriana, un grupo de estudiantes apasionados por
-            la tecnología y la innovación.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -46,7 +48,7 @@ export function Hero() {
       </div>
 
       {/* Enhanced gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-white/25 dark:to-white/15 pointer-events-none z-10"></div>
     </section>
   );
 }

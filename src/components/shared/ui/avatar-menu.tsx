@@ -10,6 +10,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AvatarMenuProps {
   avatarUrl: string;
@@ -23,6 +24,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
   const [position, setPosition] = useState({ top: 0, right: 0 });
   const router = useRouter();
   const supabase = createClient();
+  const queryClient = useQueryClient();
 
   avatarUrl = avatarUrl || process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL;
   userName = userName || "Usuario";
@@ -47,6 +49,8 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
       if (error) {
         console.error("Error al cerrar sesión:", error);
       }
+
+      queryClient.clear();
 
       router.push("/log-in");
       router.refresh();
@@ -75,7 +79,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
         {/* Menú Desplegable */}
         <DialogPortal>
           <DialogContent
-            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-300 dark:border-gray-700 z-[100] p-0 overflow-hidden"
+            className="fixed w-48 bg-white dark:bg-gray-800 shadow-lg rounded-sm border border-gray-300 dark:border-gray-700 z-100 p-0 overflow-hidden"
             style={{
               top: `${position.top}px`,
               right: `${position.right}px`,
@@ -120,7 +124,7 @@ export default function AvatarMenu({ avatarUrl, userName }: AvatarMenuProps) {
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[--azul-crayon] disabled:opacity-50 disabled:cursor-not-allowed rounded-b-lg"
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-(--azul-crayon) disabled:opacity-50 disabled:cursor-not-allowed rounded-b-lg"
               >
                 {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
               </button>

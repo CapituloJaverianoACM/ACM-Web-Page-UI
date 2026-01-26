@@ -2,11 +2,10 @@
 
 import { Student } from "@/models/student.model";
 import { getAccessToken } from "./supabase.controller";
+import { BACKEND_URL } from "@/config/env";
 
 export async function getStudents() {
-  const res = await fetch(
-    new URL(`/students`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
+  const res = await fetch(new URL(`/students`, BACKEND_URL));
 
   if (!res.ok) {
     throw new Error("Error al obtener estudiantes");
@@ -17,9 +16,7 @@ export async function getStudents() {
 }
 
 export async function getStudentById(id: number): Promise<Student> {
-  const res = await fetch(
-    new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
-  );
+  const res = await fetch(new URL(`/students/${id}`, BACKEND_URL));
 
   if (!res.ok) {
     throw new Error("Error al obtener el estudiante");
@@ -38,9 +35,7 @@ export async function getStudentBySupabaseId(
   }
 
   try {
-    const res = await fetch(
-      new URL(`/students/supabase/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
-    );
+    const res = await fetch(new URL(`/students/supabase/${id}`, BACKEND_URL));
 
     if (!res.ok) {
       // Si el estudiante no existe o hay un error, retornar null en lugar de lanzar error
@@ -61,7 +56,7 @@ export async function getPodiumStudents(): Promise<Student[]> {
   const res = await fetch(
     new URL(
       `/students?limit=3&ordercol=victory_count&subordercol=matches_count&subasc=1`,
-      process.env.NEXT_PUBLIC_BACKEND_URL,
+      BACKEND_URL,
     ),
   );
 
@@ -83,7 +78,7 @@ export async function getRankingStudents({
   const res = await fetch(
     new URL(
       `/students?limit=${student_number}&ordercol=victory_count&subordercol=matches_count&subasc=1&offset=${offset}`,
-      process.env.NEXT_PUBLIC_BACKEND_URL,
+      BACKEND_URL,
     ),
   );
 
@@ -104,24 +99,45 @@ export async function updateStudent(
   if (!token) {
     throw new Error("No se pudo obtener el token de autenticación");
   }
+  console.log(student);
 
-  const res = await fetch(
-    new URL(`/students/${id}`, process.env.NEXT_PUBLIC_BACKEND_URL),
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        "acm-auth-signed-supabase": "true",
-      },
-      body: JSON.stringify(student),
+  const res = await fetch(new URL(`/students/${id}`, BACKEND_URL), {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      "acm-auth-signed-supabase": "true",
     },
-  );
+    body: JSON.stringify(student),
+  });
 
   if (!res.ok) {
+    console.log(await res.json());
     throw new Error("Error al actualizar el estudiante: " + res.statusText);
   }
 
   const json = await res.json();
   return json.data;
+}
+
+export async function queryStudentsByBulkIds(
+  students_ids: number[],
+): Promise<Student[]> {
+  try {
+    const res = await fetch(new URL(`/students/bulk-query/id`, BACKEND_URL), {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ ids: students_ids }),
+    });
+
+    if (!res.ok) return [];
+
+    const result = await res.json();
+    return result.data || [];
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 }

@@ -5,29 +5,44 @@ import { Input } from "../shared/ui/input";
 import { Button } from "../shared/ui/button";
 import { Eye, EyeClosed } from "lucide-react";
 import { login } from "@/app/(auth)/log-in/actions";
-import { redirect } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLoadingAction } from "@/hooks/use-loading-action";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleLogin = async () => {
     const { error } = await login(email, password);
     if (error) {
       setError("Ups, algo no salió bien.");
-      setLoading(false);
-      return;
+      return; // Detener la ejecución sin lanzar error
     }
 
-    redirect("/");
+    queryClient.clear();
+
+    // Obtener el parámetro redirect de la URL, o usar "/" por defecto
+    const redirectPath = searchParams.get("redirect") || "/";
+    router.push(redirectPath);
   };
+
+  const { run: handleSubmit, isLoading: loading } =
+    useLoadingAction(handleLogin);
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    handleSubmit();
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <label
           htmlFor="email"
@@ -63,7 +78,7 @@ export function SignInForm() {
           />
           <button
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={() => setPasswordVisibility((prev) => !prev)}
           >
             {passwordVisibility ? (

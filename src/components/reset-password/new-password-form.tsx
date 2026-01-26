@@ -3,17 +3,16 @@ import { Eye, EyeClosed } from "lucide-react";
 import { MouseEvent, useEffect, useState } from "react";
 import { Button } from "../shared/ui/button";
 import toast, { Toaster } from "react-hot-toast";
-import { ACMToast } from "../shared/ui/toaster/acm-toast";
 import { getUser, updatePasswordUser } from "@/controllers/supabase.controller";
 import { useRouter } from "next/navigation";
-import LogoLoader from "../shared/ui/logo-loader/loader";
 import { User } from "@supabase/supabase-js";
+import { useLoadingAction } from "@/hooks/use-loading-action";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 const NewPasswordForm: React.FC = () => {
   const router = useRouter();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
   const passwordVisibility = [useState<boolean>(false), useState(false)];
@@ -34,48 +33,37 @@ const NewPasswordForm: React.FC = () => {
     passwordVisibility[id][1]((prev) => !prev);
   };
 
-  const submitPassword = async () => {
+  const updatePasswordAction = async () => {
     if (password !== confirmPassword) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              ¡Tus contraseñas no coinciden!
-            </p>
-          </div>
-        </ACMToast>
-      ));
-      return;
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "¡Tus contraseñas no coinciden!",
+      });
+      return; // Detener sin lanzar error
     }
-
-    setLoading(true);
 
     const confirm = await updatePasswordUser(password);
 
-    setLoading(false);
-
     if (!confirm) {
-      toast.custom((t) => (
-        <ACMToast toastInstance={t}>
-          <div>
-            <p className="text-center m-0 font-semibold text-red-500">
-              Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde
-            </p>
-          </div>
-        </ACMToast>
-      ));
-
-      return;
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message:
+          "Ups! algo sucedió de nuestro lado, vuelvelo a intentar mas tarde",
+      });
+      return; // Detener sin lanzar error
     }
 
     router.push("/reset-password/new/success");
   };
 
+  const { run: submitPassword, isLoading: loading } =
+    useLoadingAction(updatePasswordAction);
+
   return (
     <div className="flex flex-col gap-4 w-full">
-      <p className="text-center text-sm text-[var(--azul-ultramar)] dark:text-gray-400 mb-2">
+      <p className="text-center text-sm text-(--azul-ultramar) dark:text-gray-400 mb-2">
         Editando contraseña de{" "}
-        <span className="text-[var(--azul-electrico)] font-semibold">
+        <span className="text-(--azul-electrico) font-semibold">
           {user?.email}
         </span>
       </p>
@@ -101,7 +89,7 @@ const NewPasswordForm: React.FC = () => {
           <button
             type="button"
             id="first"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={togglePasswordVisibility}
           >
             {passwordVisibility[0][0] ? (
@@ -134,7 +122,7 @@ const NewPasswordForm: React.FC = () => {
           <button
             type="button"
             id="second"
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--azul-ultramar)] dark:text-gray-400 hover:text-[var(--azul-electrico)] dark:hover:text-white transition-colors z-10"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-(--azul-ultramar) dark:text-gray-400 hover:text-(--azul-electrico) dark:hover:text-white transition-colors z-10"
             onClick={togglePasswordVisibility}
           >
             {passwordVisibility[1][0] ? (
@@ -153,8 +141,7 @@ const NewPasswordForm: React.FC = () => {
       >
         {loading ? "Reestableciendo..." : "Reestablecer"}
       </Button>
-      {loading && <LogoLoader size={200} />}
-      <Toaster />
+      <Toaster position="bottom-center" />
     </div>
   );
 };
