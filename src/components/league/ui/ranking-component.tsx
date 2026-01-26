@@ -47,7 +47,7 @@ const StudentComponent = ({
       ) : (
         <>
           <p
-            className={`w-10 m-0 ${pos == 0 ? "text-yellow-500" : pos == 1 ? "text-neutral-500" : pos == 2 ? "text-orange-500" : "text-white"} font-semibold`}
+            className={`w-10 m-0 ${pos == 0 ? "text-yellow-500" : pos == 1 ? "text-neutral-500" : pos == 2 ? "text-orange-500" : "text-(--azul-electrico) dark:text-white"} font-semibold`}
           >
             {pos + 1}.
           </p>
