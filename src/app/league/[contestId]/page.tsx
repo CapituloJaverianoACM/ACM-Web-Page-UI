@@ -77,6 +77,7 @@ export default function ContestDetailPage() {
         {!data.ok || !tree ? (
           <ContestFailedLoad
             msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
+            contest={data.contest?.[0]}
           />
         ) : (
           <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
