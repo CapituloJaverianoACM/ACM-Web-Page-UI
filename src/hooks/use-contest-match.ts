@@ -3,28 +3,22 @@ import { getOpponent } from "@/controllers/contest.controller";
 import { getAccessToken } from "@/controllers/supabase.controller";
 import { Contestant } from "@/models/contestant.model";
 import { WebsocketMessageType } from "@/models/matchmaking.model";
+import toast from "react-hot-toast";
 import {
   BaseWebSocketMessage,
-  IncomingWebSocketMessage,
   OutgoingWebSocketMessage,
-  ReadyData,
   SessionResumeData,
   UserReadyData,
   WebSocketAction,
 } from "@/utils/ws-types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 export type SelectedCodeforcesProblem = {
   name: string;
   link: string;
 };
-
-const TEST_CODEFORCES_PROBLEM = {
-  name: "Perfect Root",
-  link: "https://codeforces.com/contest/2185/problem/A",
-};
-
 export type useContestResult = [
   boolean,
   Function,
@@ -65,7 +59,6 @@ export const useContestMatch = (
     };
 
     socket.current.send(JSON.stringify(out_msg));
-    console.log("SEND ", !user_ready);
   };
 
   const buildCodeforcesURL = (contest: number, letter: string) =>
@@ -167,12 +160,18 @@ export const useContestMatch = (
             alert("Sigue compitiendo, codeforces no ha juzgado tu problema.");
             break;
           case WebSocketAction.WINNER:
-            alert("GANASTE!!!, Recargando...");
-            sleepAndReload(3);
+            showToast(toast, {
+              type: ToastType.OK,
+              message: "GANASTE! Vamos a recargar la pagina.",
+            });
+            sleepAndReload(2);
             break;
           case WebSocketAction.LOSER:
-            alert("Perdiste fai;(, Recargando...");
-            sleepAndReload(3);
+            showToast(toast, {
+              type: ToastType.ERROR,
+              message: "Perdiste ;( Vamos a recargar la pagina.",
+            });
+            sleepAndReload(2);
             break;
         }
       };

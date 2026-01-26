@@ -16,6 +16,7 @@ import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 import { ContestFailedLoad } from "@/components/league/contest/contest-failed-load";
 import { useContestMatch } from "@/hooks/use-contest-match";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast";
 
 export default function ContestDetailPage() {
   const params = useParams();
@@ -71,6 +72,7 @@ export default function ContestDetailPage() {
   return (
     <>
       <MeshGradient>
+        <Toaster position="bottom-center" />
         {!data.ok || !tree ? (
           <ContestFailedLoad
             msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
