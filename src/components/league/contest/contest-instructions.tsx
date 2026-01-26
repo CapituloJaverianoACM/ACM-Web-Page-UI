@@ -1,20 +1,22 @@
 import { SelectedCodeforcesProblem } from "@/hooks/use-contest-match";
 import { useTranslations } from "next-intl";
-import { CodeforcesProblemCard } from "./codeforces-problem-card";
 import { VerticalSeparator } from "@/components/shared/ui/vertical-separator";
 import Image from "next/image";
 import { IconExternalLink } from "@tabler/icons-react";
+import { MouseEventHandler } from "react";
 
 export interface ContestInstructionsProps {
   ready: boolean;
   codeforces_problem: SelectedCodeforcesProblem | null;
   toggleReady: Function;
+  onCheckProblem: MouseEventHandler;
 }
 
 export const ContestInstructions: React.FC<ContestInstructionsProps> = ({
   ready,
   codeforces_problem,
   toggleReady,
+  onCheckProblem,
 }) => {
   const t = useTranslations();
   const INSTRUCTIONS: string[] = t.raw("Match.instructions") as string[];
@@ -55,15 +57,7 @@ export const ContestInstructions: React.FC<ContestInstructionsProps> = ({
           <button
             className={`w-fit px-12 py-3 border bg-yellow-500 hover:bg-yellow-500/90 border-yellow-400/40 text-white rounded-xl transition-all duration-300 font-bold tracking-widest hover:scale-105 active:scale-95 uppercase text-sm disabled:opacity-50`}
             disabled={codeforces_problem === null}
-            onClick={(e) => {
-              const btn = e.target as HTMLButtonElement;
-              if (btn.disabled) return;
-              btn.disabled = true;
-
-              setTimeout(() => {
-                if (btn.disabled) btn.disabled = false;
-              }, 5000);
-            }}
+            onClick={onCheckProblem}
           >
             {t("Match.check")}
           </button>

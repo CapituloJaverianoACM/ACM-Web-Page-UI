@@ -16,6 +16,7 @@ import LogoLoader from "@/components/shared/ui/logo-loader/loader";
 import { ContestFailedLoad } from "@/components/league/contest/contest-failed-load";
 import { useContestMatch } from "@/hooks/use-contest-match";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast";
 
 export default function ContestDetailPage() {
   const params = useParams();
@@ -25,15 +26,23 @@ export default function ContestDetailPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["matchmaking", contestId],
     queryFn: async () => getContestMatchInfo(Number(contestId)),
+    staleTime: 0,
   });
 
   const { data: tree, isLoading: isLoadingTree } = useQuery({
     queryKey: ["matchmaking-tree", contestId],
     queryFn: async () => getMatchmakingTree(Number(contestId)),
+    staleTime: 0,
   });
 
-  const [user_ready, toggleUserReady, codeforces_problem, opponent] =
-    useContestMatch(Number(contestId), data?.current_student);
+  const [
+    user_ready,
+    opponent_ready,
+    toggleUserReady,
+    codeforces_problem,
+    opponent,
+    onCheckProblem,
+  ] = useContestMatch(Number(contestId), data?.current_student);
 
   useEffect(() => {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
@@ -64,6 +73,7 @@ export default function ContestDetailPage() {
   return (
     <>
       <MeshGradient>
+        <Toaster position="bottom-center" />
         {!data.ok || !tree ? (
           <ContestFailedLoad
             msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
@@ -101,12 +111,13 @@ export default function ContestDetailPage() {
               <>
                 <ContestantsCards
                   user={{ ...data.current_student, ready: user_ready }}
-                  oponent={opponent}
+                  oponent={{ ...opponent, ready: opponent_ready }}
                 />
                 <ContestInstructions
                   ready={user_ready}
                   codeforces_problem={codeforces_problem}
                   toggleReady={toggleUserReady}
+                  onCheckProblem={onCheckProblem}
                 />
                 <h1 className="text-black dark:text-white">Matchmaking</h1>
                 {!isLoadingTree && (
