@@ -34,8 +34,13 @@ export default function ContestDetailPage() {
     staleTime: 0,
   });
 
-  const [user_ready, toggleUserReady, codeforces_problem, opponent] =
-    useContestMatch(Number(contestId), data?.current_student);
+  const [
+    user_ready,
+    toggleUserReady,
+    codeforces_problem,
+    opponent,
+    onCheckProblem,
+  ] = useContestMatch(Number(contestId), data?.current_student);
 
   useEffect(() => {
     if (!isLoading && data?.msg === ContestMatchResult.NO_LOGGED) {
@@ -108,6 +113,7 @@ export default function ContestDetailPage() {
                   ready={user_ready}
                   codeforces_problem={codeforces_problem}
                   toggleReady={toggleUserReady}
+                  onCheckProblem={onCheckProblem}
                 />
                 <h1 className="text-black dark:text-white">Matchmaking</h1>
                 {!isLoadingTree && (
