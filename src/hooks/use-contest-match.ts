@@ -9,6 +9,7 @@ import {
   OutgoingWebSocketMessage,
   ReadyData,
   SessionResumeData,
+  UserReadyData,
   WebSocketAction,
 } from "@/utils/ws-types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -37,8 +38,6 @@ export const useContestMatch = (
 ): useContestResult => {
   const [user_ready, setUserReady] = useState<boolean>(false);
   const socket = useRef(null);
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [transport, setTransport] = useState<string>("N/A");
 
   const queryClient = useQueryClient();
 
@@ -51,32 +50,37 @@ export const useContestMatch = (
     enabled: !!contestant?.id,
   });
 
-  const toggleUserReady = () => {
-    setUserReady((prev) => {
-      const out_msg = {
-        action: !prev
-          ? WebsocketMessageType.READY
-          : WebsocketMessageType.NOT_READY,
-        data: { handle: contestant.codeforces_handle },
-      };
+  const sleepAndReload = (sec: number) => {
+    setTimeout(() => window.location.reload(), sec);
+  };
 
-      socket.current.send(JSON.stringify(out_msg));
-      console.log("SEND ", !prev);
-      return !prev;
-    });
+  const toggleUserReady = () => {
+    setUserReady((prev) => !prev);
+    const out_msg = {
+      action: user_ready
+        ? WebsocketMessageType.READY
+        : WebsocketMessageType.NOT_READY,
+      data: { handle: contestant.codeforces_handle },
+    };
+
+    socket.current.send(JSON.stringify(out_msg));
+    console.log("SEND ", !user_ready);
   };
 
   const buildCodeforcesURL = (contest: number, letter: string) =>
     `https://codeforces.com/problemset/problem/${contest}/${letter}`;
 
-  const updateUser = (own: boolean, isReady: boolean) => {
+  const updateUserReady = (own: boolean, isReady: boolean) => {
     if (own) setUserReady(isReady);
     else {
+      console.log("UPODATE the other user");
       queryClient.setQueryData(
         ["opponent", contest_id, contestant?.id],
         (oldData: Contestant) => {
-          const newData = Object.create(oldData);
+          const newData = oldData;
           newData.ready = isReady;
+          console.log("Datos viejos:", oldData);
+          console.log("Datos nuevos:", newData);
           return newData;
         },
       );
@@ -97,7 +101,7 @@ export const useContestMatch = (
       });
 
     for (const user of msg.data.users) {
-      updateUser(user.userId === contest_id, user.isReady);
+      updateUserReady(user.userId === contestant.id, user.isReady);
     }
   };
 
@@ -130,6 +134,32 @@ export const useContestMatch = (
             handleSessionResume(
               message as BaseWebSocketMessage<SessionResumeData>,
             );
+            break;
+          case WebSocketAction.USER_READY:
+            updateUserReady(
+              contest_id ===
+                (message as BaseWebSocketMessage<UserReadyData>).data.userId,
+              true,
+            );
+            break;
+          case WebSocketAction.USER_NOT_READY:
+            updateUserReady(
+              contest_id ===
+                (message as BaseWebSocketMessage<UserReadyData>).data.userId,
+              false,
+            );
+            break;
+          case WebSocketAction.CONTINUE:
+            alert("Sigue compitiendo, codeforces no ha juzgado tu problema.");
+            break;
+          case WebSocketAction.WINNER:
+            alert("GANASTE!!!, Recargando...");
+            sleepAndReload(3);
+            break;
+          case WebSocketAction.LOSER:
+            alert("Perdiste fai;(, Recargando...");
+            sleepAndReload(3);
+            break;
         }
       };
     };
