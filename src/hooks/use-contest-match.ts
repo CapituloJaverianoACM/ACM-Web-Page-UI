@@ -12,7 +12,7 @@ import {
   UserReadyData,
   WebSocketAction,
 } from "@/utils/ws-types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { showToast, ToastType } from "@/utils/show-toast";
 
@@ -36,8 +36,6 @@ export const useContestMatch = (
   const [user_ready, setUserReady] = useState<boolean>(false);
   const [opponent_ready, setOpponentReady] = useState<boolean>(false);
   const socket = useRef<WebSocket | null>(null);
-
-  const queryClient = useQueryClient();
 
   const [codeforces_problem, setCodeforcesProblem] =
     useState<SelectedCodeforcesProblem | null>(null);

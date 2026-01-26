@@ -7,6 +7,7 @@ import { checkInStudent } from "@/controllers/participation.controller";
 import { useQueryClient } from "@tanstack/react-query";
 import { useLoadingAction } from "@/hooks/use-loading-action";
 import LogoLoader from "@/components/shared/ui/logo-loader/loader";
+import { showToast, ToastType } from "@/utils/show-toast";
 
 interface CheckinTimerProps {
   contest: Contest;
@@ -21,11 +22,17 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
 
   const handleCheckinAction = async () => {
     if (new Date() > deadline) {
-      toast.error("Ya pasó la hora de check-in");
+      showToast(toast, {
+        type: ToastType.ERROR,
+        message: "Ya pasó la hora de check-in",
+      });
       return;
     }
     const result = await checkInStudent(contest.id);
-    toast[result.ok ? "success" : "error"](result.msg);
+    showToast(toast, {
+      type: result.ok ? ToastType.OK : ToastType.ERROR,
+      message: result.msg,
+    });
     queryClient.invalidateQueries({ queryKey: ["league-contests"] });
     queryClient.invalidateQueries({ queryKey: ["contests"] });
   };
@@ -35,7 +42,6 @@ export const CheckinTimer: React.FC<CheckinTimerProps> = ({ contest }) => {
 
   return (
     <div>
-      <Toaster position="bottom-center" />
       <div className="text-center font-semibold">
         <p className="text-xl">Haz check-in antes de que empiece el contest</p>
       </div>
