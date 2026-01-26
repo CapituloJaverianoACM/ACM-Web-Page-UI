@@ -37,7 +37,7 @@ export const LeagueContent = () => {
 
   return (
     <div className="space-y-6">
-      <p className="dark:text-[--azul-niebla] text-base leading-relaxed">
+      <p className="dark:text-white text-base leading-relaxed">
         {tLeague("summary")}
       </p>
 
