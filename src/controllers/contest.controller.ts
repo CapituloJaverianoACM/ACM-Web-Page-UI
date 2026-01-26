@@ -42,21 +42,26 @@ export async function getContestById(id: number): Promise<Contest> {
 
   const contests: Contest[] = json.data;
 
-  if (!user) return contests;
+  const user = await getUser();
+
+  if (!user) return contests[0];
 
   const user_participations = await getParticipationsBySupabaseStudentId(user);
 
-  return await Promise.all(
-    contests.map(async (contest) => {
-      const participation: Participation | undefined = user_participations.find(
-        (participation) => participation.contest_id == contest.id,
-      );
-      contest.registered = participation != undefined;
-      contest.checkin = contest.registered && participation.checkin;
+  return (
+    await Promise.all(
+      contests.map(async (contest) => {
+        const participation: Participation | undefined =
+          user_participations.find(
+            (participation) => participation.contest_id == contest.id,
+          );
+        contest.registered = participation != undefined;
+        contest.checkin = contest.registered && participation.checkin;
 
-      return contest;
-    }),
-  );
+        return contest;
+      }),
+    )
+  )[0];
 }
 
 export async function getContestsWithPictures(

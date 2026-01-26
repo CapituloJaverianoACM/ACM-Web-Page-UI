@@ -77,13 +77,11 @@ export default function ContestDetailPage() {
         {!data.ok || !tree ? (
           <ContestFailedLoad
             msg={!tree ? ContestMatchResult.NO_TREE : data.msg}
-            contest={data.contest?.[0]}
+            contest={data.contest}
           />
         ) : (
           <div className="flex flex-col gap-10 items-center justify-center mt-[8%] mx-[20%]">
-            <h1 className="text-black dark:text-white">
-              {data.contest[0].name}
-            </h1>
+            <h1 className="text-black dark:text-white">{data.contest?.name}</h1>
 
             {/* Anuncio de contest terminado */}
             {isContestFinished && (
