@@ -160,6 +160,11 @@ export const useContestMatch = (
             );
             break;
           case WebSocketAction.MATCH_START:
+            handleMatchStart(message as BaseWebSocketMessage<MatchStartData>);
+            showToast(toast, {
+              type: ToastType.WARN,
+              message: "Ya se asigno el problema, a resolver!",
+            });
             break;
           case WebSocketAction.CONTINUE:
             showToast(toast, {
