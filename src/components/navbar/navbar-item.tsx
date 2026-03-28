@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { NavbarItemTitle } from "./navbar-item-title";
 import {
   Dropdown,
@@ -56,7 +56,10 @@ export const NavbarItem: React.FC<NavbarItemProps> = ({ item, activeLink }) => {
             startContent={dropdown_item.logo}
             className="no-underline text-(--azul-electrico)"
           >
-            <Link href={dropdown_item.href} className="no-underline">
+            <Link
+              href={dropdown_item.href}
+              className="block w-full no-underline"
+            >
               {dropdown_item.title}
             </Link>
           </DropdownItem>

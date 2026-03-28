@@ -11,7 +11,7 @@ import LanguageToggle from "./ui/language-toggle";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
 import { NavbarItem, NavLink } from "../navbar/navbar-item";
-
+import React from "react";
 interface MainNavbarProps {
   navLinks: NavLink[];
 }

@@ -1,6 +1,7 @@
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { NavbarItemProps } from "./navbar-item";
 import Link from "next/link";
+import React from "react";
 
 export const NavbarItemTitle: React.FC<NavbarItemProps> = ({
   item,
@@ -11,28 +12,32 @@ export const NavbarItemTitle: React.FC<NavbarItemProps> = ({
     <Item
       {...(!item.isDropdown && { href: item.href })}
       {...(item.isExternal && { target: "_blank", rel: "noopener noreferrer" })}
-      className={`text-base text-semibold relative mb-0 hover:cursor-pointer ${
-        activeLink === item.key
-          ? "text-(--azul-electrico) dark:text-(--azul-niebla)"
-          : "text-(--azul-noche) dark:text-white"
-      }`}
-      style={{
-        textDecoration: "none",
-        transition: "color var(--transition-normal)",
-      }}
+      className="no-underline"
     >
-      <div className="flex justify-center">
-        {item.label}
-        {item.isDropdown && <ChevronDown />}
-        {item.isExternal && <ExternalLinkIcon className="mx-1.5" />}
-      </div>
-      <span
-        className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-[70%] bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+      <div
+        className={`px-4 py-3 cursor-pointer hover:bg-default-100 transition-colors  ${
+          activeLink === item.key
+            ? "text-(--azul-electrico) dark:text-(--azul-niebla)"
+            : "text-(--azul-noche) dark:text-white"
+        }`}
         style={{
-          width: activeLink === item.key ? "30px" : "0",
-          transition: "width var(--transition-normal)",
+          textDecoration: "none",
+          transition: "color var(--transition-normal)",
         }}
-      ></span>
+      >
+        <div className="flex justify-center">
+          {item.label}
+          {item.isDropdown && <ChevronDown />}
+          {item.isExternal && <ExternalLinkIcon className="mx-1.5" />}
+        </div>
+        <span
+          className={`absolute bottom-0 left-1/2 h-0.75 rounded-sm transform -translate-x-[70%] bg-(--azul-electrico) dark:bg-(--azul-niebla)`}
+          style={{
+            width: activeLink === item.key ? "30px" : "0",
+            transition: "width var(--transition-normal)",
+          }}
+        ></span>
+      </div>
     </Item>
   );
 };
