@@ -1,7 +1,8 @@
 import "../styles/globals.css";
 import { cookies } from "next/headers";
-
-// https://nextjs.org/docs/app/api-reference/functions/cookies
+import { Providers } from "@/components/shared/providers";
+import { NextIntlClientProvider } from "next-intl";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default async function RootLayout({
   children,
@@ -18,8 +19,14 @@ export default async function RootLayout({
         <title>Capitulo Javeriano ACM</title>
       </head>
       <body>
-        <main className="dark:bg-[#121212]">{children}</main>
+        <main className="dark:bg-[#121212]">
+          {/* El provider de internacionalización es especial, ya que necesariamente tiene que ser use server. */}
+          <NextIntlClientProvider>
+            <Providers>{children}</Providers>
+          </NextIntlClientProvider>
+        </main>
       </body>
+      <GoogleAnalytics gaId={"G-VJ74FDQFST"} />
     </html>
   );
 }

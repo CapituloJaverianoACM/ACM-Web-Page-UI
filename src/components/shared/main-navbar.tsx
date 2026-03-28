@@ -1,54 +1,51 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { getStudentBySupabaseId } from "@/controllers/student.controller";
 import { getUser } from "@/controllers/supabase.controller";
-import { Student } from "@/models/student.model";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import AvatarMenu from "./ui/avatar-menu";
-
-export type NavLink = {
-  key: string;
-  label: string;
-  href: string;
-};
+import LanguageToggle from "./ui/language-toggle";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname, useSearchParams } from "next/navigation";
+import { NavbarItem, NavLink } from "../navbar/navbar-item";
 
 interface MainNavbarProps {
   navLinks: NavLink[];
 }
 
+const IGNORE_KEYS = {
+  "log-in": true,
+  "sign-up": true,
+};
+
 export default function MainNavbar({ navLinks }: MainNavbarProps) {
-  const [activeLink, setActiveLink] = useState("home");
+  let pathname = usePathname().slice(1);
+  const searchParams = useSearchParams();
+  const t = useTranslations("Navigation");
+  const activeLink = pathname == "" ? "home" : pathname;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
 
-  useEffect(() => {
-    const checkLogged = async () => {
-      try {
-        const user = await getUser();
-        setIsLogged(user != null);
+  // Construir la URL completa con query params para el redirect
+  const getLoginUrl = () => {
+    const currentPath = pathname === "" ? "/" : `/${pathname}`;
+    const queryString = searchParams.toString();
+    const fullPath = queryString
+      ? `${currentPath}?${queryString}`
+      : currentPath;
+    return `/log-in?redirect=${encodeURIComponent(fullPath)}`;
+  };
 
-        if (user?.id) {
-          try {
-            const student = await getStudentBySupabaseId(user.id);
-            setStudent(student);
-          } catch (error) {
-            console.error("Error al obtener el estudiante:", error);
-            setStudent(null);
-          }
-        } else {
-          setStudent(null);
-        }
-      } catch (error) {
-        console.error("Error al verificar el usuario:", error);
-        setIsLogged(false);
-        setStudent(null);
-      }
-    };
-    checkLogged();
-  }, []);
+  const { data: student, isLoading } = useQuery({
+    queryKey: ["navbar-user"],
+    queryFn: async () => {
+      const user = await getUser();
+      if (!user) return null;
+      return await getStudentBySupabaseId(user.id);
+    },
+  });
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -83,7 +80,9 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 ">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 ${pathname in IGNORE_KEYS ? "hidden" : ""}`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="glassmorphic dark:glassmorphic-dark px-6 py-3 shadow-lg">
           <div className="flex items-center justify-between">
@@ -106,8 +105,9 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
+            <div className="flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
+<<<<<<< HEAD
                 <Link
                   key={item.key}
                   href={item.href}
@@ -136,34 +136,46 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                     }}
                   ></span>
                 </Link>
+=======
+                <NavbarItem
+                  key={item.key}
+                  item={item}
+                  activeLink={activeLink}
+                />
+>>>>>>> 24da5f901275dd203fe43a6ff2a3182a4b2e80e3
               ))}
             </div>
 
             <div className="flex gap-4 justify-end items-center ml-auto flex-1">
+              <LanguageToggle />
+
               <div
                 onClick={changeTheme}
-                className="glassmorphic dark:glassmorphic-dark p-2"
+                className="glassmorphic dark:glassmorphic-dark p-2 cursor-pointer"
               >
                 <IconMoon className="dark:hidden flex"></IconMoon>
                 <IconSun className="hidden dark:flex"></IconSun>
               </div>
 
               {/* User Links */}
-              {isLogged ? (
+              {!isLoading && student ? (
                 <AvatarMenu
-                  avatarUrl={student?.avatar || ""}
-                  userName={student?.name || ""}
+                  avatarUrl={student.avatar || ""}
+                  userName={student.name || ""}
                 />
               ) : (
-                <div className="hidden lg:flex items-center gap-4">
-                  <Link href="/log-in" className="btn btn--outline btn--small ">
-                    Iniciar sesión
+                <div className="hidden lg:flex items-center gap-2">
+                  <Link
+                    href={getLoginUrl()}
+                    className="btn btn--outline btn--small dark:text-white"
+                  >
+                    {t("login")}
                   </Link>
                   <Link
                     href="/sign-up"
                     className="btn btn--primary btn--small dark:text-white"
                   >
-                    Registrarse
+                    {t("signup")}
                   </Link>
                 </div>
               )}
@@ -215,6 +227,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               {navLinks.map((item) => (
+<<<<<<< HEAD
                 <Link
                   key={item.key}
                   href={item.href}
@@ -233,21 +246,28 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                 >
                   {item.label}
                 </Link>
+=======
+                <NavbarItem
+                  key={item.key}
+                  item={item}
+                  activeLink={activeLink}
+                />
+>>>>>>> 24da5f901275dd203fe43a6ff2a3182a4b2e80e3
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
-                  href="/log-in"
-                  className="btn btn--outline btn--small w-full"
+                  href={getLoginUrl()}
+                  className="btn btn--outline btn--small w-full dark:text-white"
                   onClick={closeMobileMenu}
                 >
-                  Iniciar sesión
+                  {t("login")}
                 </Link>
                 <Link
                   href="/sign-up"
                   className="btn btn--primary btn--small w-full"
                   onClick={closeMobileMenu}
                 >
-                  Registrarse
+                  {t("signup")}
                 </Link>
               </div>
             </div>

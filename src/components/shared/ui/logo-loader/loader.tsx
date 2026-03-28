@@ -1,4 +1,6 @@
 "use client";
+
+import { useId } from "react";
 import { ACMPATH } from "./acm-logo-raw-path";
 
 const SvgShineLoader = ({
@@ -13,8 +15,9 @@ const SvgShineLoader = ({
   shineWidth = 25,
   shineAngle = 45, // Ángulo del shine para efecto más realista
 }) => {
-  const gradientId = `gradient-${Math.random().toString(36).substr(2, 9)}`;
-  const clipPathId = `clip-${Math.random().toString(36).substr(2, 9)}`;
+  const uid = useId();
+  const gradientId = `gradient-${uid}`;
+  const clipPathId = `clip-${uid}`;
 
   return (
     <div className="flex items-center justify-center">

@@ -8,13 +8,13 @@ export const InactiveMemberBody: React.FC<
 > = ({ member }) => {
   return (
     <div className="flex text-center md:text-start flex-col justify-center">
-      <h3 className="card__title mb-0 text-base dark:text-[var(--azul-niebla)]">
+      <h3 className="card__title mb-0 text-base dark:text-(--azul-niebla)">
         {member.name}
       </h3>
-      <div className="card__subtitle text-xs dark:text-[var(--azul-niebla)]">
+      <div className="card__subtitle text-xs dark:text-(--azul-niebla)">
         {member.title}
       </div>
-      <div className="text-xs text-blue-700 font-semibold mt-1 dark:text-[var(--azul-niebla)]">
+      <div className="text-xs text-blue-700 font-semibold mt-1 dark:text-(--azul-niebla)">
         {member.role}
       </div>
       {/* Botones de contacto debajo del rol */}

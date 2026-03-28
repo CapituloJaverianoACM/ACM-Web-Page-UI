@@ -1,7 +1,7 @@
 import { LevelEnum } from "./level.enum";
 
 export interface Student {
-  id: string;
+  id: number;
   name: string;
   surname: string;
   level: LevelEnum;
@@ -9,4 +9,5 @@ export interface Student {
   matches_count: number;
   avatar: string;
   supabase_user_id: string;
+  codeforces_handle?: string;
 }

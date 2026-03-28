@@ -17,7 +17,7 @@ export const LevelFilter = ({
     return (
       <div
         onClick={() => setFilter(f)}
-        className={`glassmorphic transition-all duration-300 ease-in-out select-none ${filter == f ? "shadow-md" : ""} px-2 p-1`}
+        className={`cursor-pointer glassmorphic transition-all duration-300 ease-in-out select-none ${filter == f ? "shadow-md" : ""} px-2 p-1`}
       >
         <p className="m-0">{texts[f]}</p>
       </div>
