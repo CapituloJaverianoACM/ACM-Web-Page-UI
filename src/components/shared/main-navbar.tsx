@@ -11,7 +11,7 @@ import LanguageToggle from "./ui/language-toggle";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
 import { NavbarItem, NavLink } from "../navbar/navbar-item";
-
+import React from "react";
 interface MainNavbarProps {
   navLinks: NavLink[];
 }
@@ -155,6 +155,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   onClick={toggleMobileMenu}
                   className="p-2 glassmorphic transition-all duration-300"
                   aria-label="Toggle mobile menu"
+                  type="button"
                 >
                   <svg
                     className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? "rotate-90" : ""}`}
