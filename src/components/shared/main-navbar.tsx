@@ -108,7 +108,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center justify-center space-x-8 flex-2">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.key}
                   href={item.href}
                   className={`text-base text-semibold px-md py-md relative ${activeLink === item.key ? "text-[--azul-electrico]" : "text-[--azul-noche] dark:text-white"}`}
@@ -135,7 +135,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                       transform: "translateX(-50%)",
                     }}
                   ></span>
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -174,6 +174,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   onClick={toggleMobileMenu}
                   className="p-2 glassmorphic transition-all duration-300"
                   aria-label="Toggle mobile menu"
+                  type="button"
                 >
                   <svg
                     className={`w-6 h-6 transition-transform duration-300 ${isMobileMenuOpen ? "rotate-90" : ""}`}
@@ -214,10 +215,10 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.key}
                   href={item.href}
-                  className="text-base text-semibold px-md py-md relative"
+                  className="block w-full text-base text-semibold px-md py-md relative"
                   style={{
                     textDecoration: "none",
                     color:
@@ -231,7 +232,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
                   }}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
