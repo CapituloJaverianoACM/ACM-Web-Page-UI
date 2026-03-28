@@ -107,42 +107,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             {/* Desktop Navigation Links */}
             <div className="flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
-<<<<<<< HEAD
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={`text-base text-semibold px-md py-md relative ${activeLink === item.key ? "text-[--azul-electrico]" : "text-[--azul-noche] dark:text-white"}`}
-                  style={{
-                    textDecoration: "none",
-                    // color: activeLink === item.key ? "var(--azul-electrico)" : "var(--azul-noche)",
-                    transition: "color var(--transition-normal)",
-                  }}
-                  onClick={() => {
-                    setActiveLink(item.key);
-                  }}
-                >
-                  {item.label}
-                  <span
-                    style={{
-                      position: "absolute",
-                      bottom: "0",
-                      left: "50%",
-                      width: activeLink === item.key ? "30px" : "0",
-                      height: "3px",
-                      backgroundColor: "var(--azul-electrico)",
-                      borderRadius: "var(--radius-sm)",
-                      transition: "width var(--transition-normal)",
-                      transform: "translateX(-50%)",
-                    }}
-                  ></span>
-                </Link>
-=======
                 <NavbarItem
                   key={item.key}
                   item={item}
                   activeLink={activeLink}
                 />
->>>>>>> 24da5f901275dd203fe43a6ff2a3182a4b2e80e3
               ))}
             </div>
 
@@ -227,32 +196,11 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
           <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               {navLinks.map((item) => (
-<<<<<<< HEAD
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className="block w-full text-base text-semibold px-md py-md relative"
-                  style={{
-                    textDecoration: "none",
-                    color:
-                      activeLink === item.key
-                        ? "var(--azul-electrico)"
-                        : "var(--azul-noche)",
-                    transition: "color var(--transition-normal)",
-                  }}
-                  onClick={() => {
-                    setActiveLink(item.key);
-                  }}
-                >
-                  {item.label}
-                </Link>
-=======
                 <NavbarItem
                   key={item.key}
                   item={item}
                   activeLink={activeLink}
                 />
->>>>>>> 24da5f901275dd203fe43a6ff2a3182a4b2e80e3
               ))}
               <div className="flex flex-col items-center gap-2 mt-2">
                 <Link
