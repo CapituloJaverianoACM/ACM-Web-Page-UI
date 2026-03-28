@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Student } from "@/models/student.model";
 import { IconCrown } from "@tabler/icons-react";
 import { ReactNode } from "react";
@@ -20,7 +23,7 @@ const Container = (props: {
             style={{
               height: `${((0.8 / steps_count) * (steps_count - step.order) + 0.2) * 100}%`,
             }}
-            className="flex-grow"
+            className="grow flex-1"
             key={step.order}
           >
             {step.children}
@@ -43,6 +46,7 @@ const Step = (props: {
   showUserInfo?: boolean;
   showCrown?: boolean;
 }) => {
+  const t = useTranslations("League.podium");
   const {
     bg_color = "#000",
     className = "",
@@ -53,21 +57,45 @@ const Step = (props: {
     showCrown = false,
   } = props;
 
-  const val = 1 - student.order * 0.045;
+  const val = 1 - student.order * 0.25;
+
+  const roundedDirection =
+    student.order == 0 ? "rounded-tl-[8rem]" : "rounded-tr-[8rem]";
 
   return (
     <div className="flex flex-col gap-2 w-full h-full relative transition hover:scale-105 cursor-pointer">
-      <div
-        style={{
-          backdropFilter: `brightness(${val})`,
-        }}
-        className={`flex flex-col items-center justify-center rounded-3xl flex-grow ${bg_color} ${className} shadow-md`}
-      >
-        <div className="h-[1.5rem] w-full"></div>
+      <div className="relative flex flex-col items-center justify-center grow overflow-hidden">
+        {/* Fondo */}
+        <div
+          className={`absolute inset-0 shadow-md flex flex-col items-center justify-end ${bg_color} ${roundedDirection} ${className}`}
+          style={{
+            filter: `brightness(${val})`,
+          }}
+        ></div>
 
-        {showNumber && (
-          <b className="text-6xl text-white">{student.order + 1}°</b>
-        )}
+        <div className="absolute h-full flex flex-col gap-2 items-center justify-end z-10">
+          {showNumber && (
+            <p className="relative z-10 mb-0 text-6xl text-white font-bold">
+              #{student.order + 1}
+            </p>
+          )}
+          {showUserInfo && (
+            <div className=" text-white flex flex-col items-center justify-center p-2 text-center text-xs lg:text-base shadow font-(--font-secondary)">
+              <p
+                className="m-0"
+                title={`${student.student.name} ${student.student.surname}`}
+              >
+                {student.student.name}
+              </p>
+              <p className="m-0 flex gap-1 items-center">
+                {" "}
+                <IconCrown className="text-yellow-500" size={15} />
+                {student.student.victory_count}{" "}
+                <span className="hidden lg:flex">{t("victories")}</span>
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {showAvatar &&
@@ -76,7 +104,7 @@ const Step = (props: {
             student.student.avatar?.length == 0 || !student.student.avatar
           );
           return (
-            <div className="flex absolute -top-[2rem] lg:-top-[3.5rem] left-1/2 transform -translate-x-1/2 mx-auto rounded-full border-2 border-[--azul-niebla] bg-[--azul-niebla] h-[4rem] lg:h-[7rem] aspect-square overflow-hidden">
+            <div className="flex absolute -top-8 lg:-top-14 left-1/2 transform -translate-x-1/2 mx-auto rounded-full border-2 border-(--azul-niebla) bg-(--azul-niebla) h-16 lg:h-28 aspect-square overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={
@@ -93,27 +121,10 @@ const Step = (props: {
 
       {showCrown && (
         <div
-          className={`absolute z-10 -top-[3.5rem] lg:-top-[5.5rem] left-[40%] transform -translate-x-1/2 -rotate-12 lg:-rotate-[24deg] ${student.order == 0 ? "text-yellow-500" : student.order == 1 ? "text-neutral-300" : "text-amber-600"}`}
+          className={`absolute z-10 -top-14 lg:-top-22 left-[40%] transform -translate-x-1/2 -rotate-12 lg:-rotate-24 ${student.order == 0 ? "text-yellow-500" : student.order == 1 ? "text-neutral-300" : "text-amber-600"}`}
         >
           <IconCrown className="hidden lg:flex" size={65} />
           <IconCrown className="flex lg:hidden" size={45} />
-        </div>
-      )}
-
-      {showUserInfo && (
-        <div className="glassmorphic dark:glassmorphic-dark dark:text-white flex flex-col items-center justify-center p-2 text-center text-xs lg:text-base h-16 shadow">
-          <p
-            className="m-0"
-            title={`${student.student.name} ${student.student.surname}`}
-          >
-            <b>{student.student.name}</b>
-          </p>
-          <p className="m-0 flex gap-1 items-center">
-            {" "}
-            <IconCrown className="text-yellow-500" size={15} />
-            {student.student.victory_count}{" "}
-            <span className="hidden lg:flex">Victorias</span>
-          </p>
         </div>
       )}
     </div>

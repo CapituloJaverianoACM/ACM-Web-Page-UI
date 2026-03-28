@@ -1,144 +1,179 @@
+import { useTranslations } from "next-intl";
+import {
+  Users,
+  Target,
+  Trophy,
+  ClipboardCheck,
+  ShieldCheck,
+  Gavel,
+} from "lucide-react";
 import { LinkPreview } from "../ui/link-preview";
+import { RuleCard } from "../ui/rule-card";
 
 export function Rules() {
+  const t = useTranslations("League.rules");
+  const Icon_Class = "text-white w-6 h-6";
   return (
-    <div
-      id="rules"
-      className="max-w-7xl mx-auto my-12 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg"
-    >
-      <h2 className="text-3xl font-semibold text-center text-gray-900 dark:text-white mb-6">
-        📏 Reglas de la Liga Javeriana de Programación
+    <section id="rules" className="max-w-5xl mx-auto my-12 px-4">
+      {" "}
+      {/* Here is the header of title */}
+      <h2 className="text-3xl md:text-4xl font-semibold text-center dark:text-white mb-6">
+        {t("title")}
       </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Objetivos del Concurso */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Objetivos del Concurso
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>
-              Promover la resolución de problemas y el pensamiento lógico a
-              través de la programación.
+      {/* Cards with the rules */}
+      {/* Objetivos del concurso */}
+      <div className="space-y-6">
+        <RuleCard
+          title={t("objectives.title")}
+          icon={<Target className={Icon_Class} />}
+        >
+          {/* list of bullet points */}
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">
+                {" "}
+                {t("objectives.item1")}{" "}
+              </span>
             </li>
           </ul>
-        </div>
+        </RuleCard>
 
         {/* Criterios de Participación */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Criterios de Participación
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>
-              El concurso está abierto a estudiantes de todas las facultades de
-              la Universidad Javeriana.
+        <RuleCard
+          title={t("participation.title")}
+          icon={<Users className={Icon_Class} />}
+        >
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">
+                {" "}
+                {t("participation.item1")}{" "}
+              </span>
             </li>
-            <li>
-              Los participantes deben inscribirse previamente en la plataforma
-              del evento.
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">
+                {" "}
+                {t("participation.item2")}{" "}
+              </span>
             </li>
           </ul>
-        </div>
+        </RuleCard>
 
         {/* Formato del Concurso */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Formato del Concurso
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>Los concursos se dividen en eliminatorias y finales.</li>
-            <li>
-              El participante tendrá un tiempo limitado para resolver una serie
-              de problemas de programación.
+        <RuleCard
+          title={t("format.title")}
+          icon={<Trophy className={Icon_Class} />}
+        >
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className=" mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[7px]">{t("format.item1")}</span>
             </li>
-            <li>Se permitirá el uso de cualquier lenguaje de programación.</li>
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[7px]">{t("format.item2")}</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[5px]">{t("format.item3")}</span>
+            </li>
           </ul>
-        </div>
+        </RuleCard>
 
         {/* Evaluación */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Evaluación
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>
-              {
-                "La evaluación se basará en el resultado dado por el sistema de evaluación de "
-              }
-              <LinkPreview
-                url="https://codeforces.com"
-                className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
-              >
-                Codeforces
-              </LinkPreview>
-              .
+        <RuleCard
+          title={t("evaluation.title")}
+          icon={<ClipboardCheck className={Icon_Class} />}
+        >
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">
+                {" "}
+                {t("evaluation.item1")}{" "}
+                <LinkPreview
+                  url="https://codeforces.com"
+                  className="text-(--azul-electrico) dark:text-(--azul-crayon) dark:hover:text-(--azul-niebla) hover:underline"
+                >
+                  Codeforces
+                </LinkPreview>
+                .
+              </span>
             </li>
           </ul>
-        </div>
+        </RuleCard>
 
         {/* Reglas Específicas */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Reglas Específicas
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>
-              No se puede hacer uso de ninguna Inteligencia Artificial (IA).
+        <RuleCard
+          title={t("specific.title")}
+          icon={<Gavel className={Icon_Class} />}
+        >
+          <ul className="mt-3 space-y-2 list-none p-0">
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[7px]">
+                {" "}
+                {t("specific.item1")}{" "}
+              </span>
             </li>
-            <li>
-              {"Solo se puede utilizar la documentación oficial de C++: "}
-              <LinkPreview
-                url="https://cplusplus.com"
-                className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
-              >
-                cplusplus.com
-              </LinkPreview>
-              {" y "}
-              <LinkPreview
-                url="https://en.cppreference.com"
-                className="text-[--azul-electrico] dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
-              >
-                cppreference.com
-              </LinkPreview>
-              .
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[6px]">
+                {t("specific.item2")}{" "}
+                <LinkPreview
+                  url="https://cplusplus.com"
+                  className="text-(--azul-electrico) dark:text-(--azul-ultramar) dark:hover:text-(--azul-crayon) hover:underline"
+                >
+                  cplusplus.com
+                </LinkPreview>{" "}
+                {t("specific.item2b")}{" "}
+                <LinkPreview
+                  url="https://en.cppreference.com"
+                  className="text-(--azul-electrico) dark:text-(--azul-ultramar) dark:hover:text-(--azul-crayon) hover:underline"
+                >
+                  cppreference.com
+                </LinkPreview>
+                .
+              </span>
             </li>
-            <li>
-              Si después de 15 minutos ninguno ha mandado el ejercicio, se
-              desempatara con una prueba de velocidad.
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">
+                {" "}
+                {t("specific.item3")}{" "}
+              </span>
             </li>
-            <li>
-              La dinámica de las competencias es un 1vs1: el que primero mande
-              el ejercicio resuelto gana.
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[7px]">{t("specific.item4")}</span>
             </li>
-            <li>
-              El ranking se determina por la cantidad de victorias. En caso de
-              empate en victorias, el ganador será el que menos partidas haya
-              jugado.
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-px"> {t("specific.item5")} </span>
             </li>
           </ul>
-        </div>
+        </RuleCard>
 
         {/* Conducta Durante el Concurso */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">
-            🎯 Conducta Durante el Concurso
-          </h3>
-          <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-            <li>
-              Se prohíbe el uso de recursos externos no autorizados, como foros
-              de discusión o códigos previamente resueltos.
+        <RuleCard
+          title={t("conduct.title")}
+          icon={<ShieldCheck className={Icon_Class} />}
+        >
+          <ul className="mt-1 space-y-2">
+            <li className="flex items-start gap-3">
+              <span className="mt-3 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">{t("conduct.item2")}</span>
             </li>
-            <li>
-              Se espera que todos los participantes mantengan una actitud de
-              respeto y honestidad.
-            </li>
-            <li>
-              El incumplimiento de las normas puede resultar en descalificación.
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 h-2 w-2 rounded-full bg-(--azul-electrico) shrink-0" />
+              <span className="leading-6 mt-[2px]">{t("conduct.item3")}</span>
             </li>
           </ul>
-        </div>
+        </RuleCard>
       </div>
-    </div>
+    </section>
   );
 }

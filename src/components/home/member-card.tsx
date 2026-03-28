@@ -15,7 +15,7 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
 
   return (
     <Card
-      className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-0 shadow-lg aspect-[3/4] relative mx-auto max-w-sm w-full glass-noise dark:glass-noise-dark"
+      className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-4 rounded-2xl overflow-hidden border-0 shadow-lg aspect-3/4 relative mx-auto max-w-sm w-full glass-noise dark:glass-noise-dark"
       onClick={() => onClick(member)}
     >
       <CardContent className="p-0 h-full relative">
@@ -42,7 +42,7 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
               </div>
             </div>
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br">
               <User className="w-16 h-16 text-white/80" />
             </div>
           )}
@@ -51,10 +51,10 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
         {/* Content Overlay */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-7 text-white">
           <div className="transform transition-transform duration-300 group-hover:translate-y-[-8px]">
-            <h3 className="text-2xl font-bold mb-1 text-[var(--azul-niebla)] transition-colors duration-200 line-clamp-2 italic">
+            <h3 className="text-2xl font-bold mb-1 text-(--azul-niebla) transition-colors duration-200 line-clamp-2 italic">
               {member.name}
             </h3>
-            <p className="text-[var(--azul-niebla)] font-medium text-sm mb-1 font-['Montserrat'] line-clamp-1">
+            <p className="text-(--azul-niebla) font-medium text-sm mb-1 font-['Montserrat'] line-clamp-1">
               {member.title}
             </p>
             <p className="text-gray-200 text-sm mb-4 font-['Montserrat'] line-clamp-1">
@@ -67,7 +67,7 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="text-xs text-white bg-[var(--azul-niebla)]/30 transition-colors duration-200 glassmorphic py-1 px-2.5 select-none"
+                  className="text-xs text-white bg-(--azul-niebla)/30 transition-colors duration-200 glassmorphic py-1 px-2.5 select-none"
                 >
                   {skill}
                 </Badge>
@@ -85,7 +85,7 @@ const ActiveMemberCard = ({ member, onClick }: MemberCardProps) => {
         </div>
 
         {/* Hover Effect Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--azul-ultramar)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-linear-to-t from-(--azul-ultramar)/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </CardContent>
     </Card>
   );

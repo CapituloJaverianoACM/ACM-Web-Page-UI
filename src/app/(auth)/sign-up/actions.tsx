@@ -1,25 +1,14 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-
-const checkImage = async (url: string) => {
-  let blob_image = null;
-  try {
-    const im = await fetch(url);
-    blob_image = await im.blob();
-  } catch {
-    throw new Error("Image isn't valid");
-  }
-
-  return blob_image.type.startsWith("image/");
-};
+import { uploadAvatar } from "@/lib/supabase/storage";
 
 export async function signup(form_data: FormData) {
-  const name = form_data.get("name").toString();
-  const surname = form_data.get("surname").toString();
-  const email = form_data.get("email").toString();
-  const password = form_data.get("password").toString();
-  const avatar_url = form_data.get("avatar_url")?.toString();
+  const name = form_data.get("name")?.toString();
+  const surname = form_data.get("surname")?.toString();
+  const email = form_data.get("email")?.toString();
+  const password = form_data.get("password")?.toString();
+  const avatarFile = form_data.get("avatar") as File | null;
 
   try {
     if (!name || !surname || !email || !password) {
@@ -29,12 +18,6 @@ export async function signup(form_data: FormData) {
       throw new Error(
         "El correo electrónico debe ser de la Pontificia Universidad Javeriana.",
       );
-    }
-    if (avatar_url) {
-      const validImage = await checkImage(avatar_url);
-      if (!validImage) {
-        throw new Error("El URL del avatar no apunta a una imagen válida.");
-      }
     }
 
     const supabase = await createClient();
@@ -48,12 +31,28 @@ export async function signup(form_data: FormData) {
       throw new Error(error.message);
     }
 
+    if (!data.user?.id) {
+      throw new Error("Error al crear el usuario.");
+    }
+
+    // Subir avatar si se proporcionó
+    let avatarUrl: string | null = null;
+    if (avatarFile && avatarFile.size > 0) {
+      try {
+        avatarUrl = await uploadAvatar(avatarFile, data.user.id);
+      } catch (uploadError) {
+        // Si falla la subida del avatar, continuar sin él
+        console.error("Error al subir avatar:", uploadError);
+        // No lanzamos error aquí para no bloquear el registro
+      }
+    }
+
     const dbResponse = await supabase.from("student").insert([
       {
         name,
         surname,
-        avatar: avatar_url || null,
-        supabase_user_id: data.user?.id,
+        avatar: avatarUrl,
+        supabase_user_id: data.user.id,
       },
     ]);
 
