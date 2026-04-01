@@ -26,6 +26,7 @@ export function Roadmap() {
       title: t("step2.title"),
       subtitle: t("step2.subtitle"),
     },
+
     {
       number: 3,
       title: "Getting started on USACO IDE",
