@@ -26,6 +26,12 @@ export function Roadmap() {
       title: t("step2.title"),
       subtitle: t("step2.subtitle"),
     },
+    {
+      number: 3,
+      title: "Getting started on USACO IDE",
+      subtitle: "Where do I code my submition?",
+      videoSrc: "https://www.youtube.com/watch?v=UMnRnu7DpRg",
+    },
   ];
 
   const cardHeight = 400; // Altura estimada de cada tarjeta
