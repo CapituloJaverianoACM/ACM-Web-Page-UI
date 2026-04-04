@@ -37,13 +37,15 @@ export const NavbarItem: React.FC<NavbarItemProps> = ({ item, activeLink }) => {
   const router = useRouter();
 
   if (!item.isDropdown) {
-    return <Button
-      variant="light"
-      disableRipple
-      className="p-0 min-w-0 justify-start shadow-none border-none hover:bg-transparent data-[hover=true]:bg-transparent data-[pressed=true]:bg-transparent data-[focus=true]:bg-transparent"
-    >
-      <NavbarItemTitle item={item} activeLink={activeLink} />
-    </Button>
+    return (
+      <Button
+        variant="light"
+        disableRipple
+        className="p-0 min-w-0 justify-start shadow-none border-none hover:bg-transparent data-[hover=true]:bg-transparent data-[pressed=true]:bg-transparent data-[focus=true]:bg-transparent"
+      >
+        <NavbarItemTitle item={item} activeLink={activeLink} />
+      </Button>
+    );
   }
 
   const handleDropdownitem = (href: string, isExternal?: boolean) => {

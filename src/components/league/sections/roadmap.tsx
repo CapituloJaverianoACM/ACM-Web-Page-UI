@@ -162,7 +162,8 @@ export function Roadmap() {
             >
               {/* Video Card - más grande con número en esquina */}
               <div
-                className={`w-lg relative ${index % 2 === 0 ? "-ml-120" : "ml-120"}`}>
+                className={`w-lg relative ${index % 2 === 0 ? "-ml-120" : "ml-120"}`}
+              >
                 {/* Number Badge - esquina superior izquierda */}
                 <div className="absolute -top-4 -left-4 z-20">
                   <div className="flex items-center justify-center w-16 h-16 rounded-full bg-(--azul-crayon) dark:bg-(--azul-electrico) text-(--white) font-bold text-2xl shadow-lg">

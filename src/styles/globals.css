@@ -121,9 +121,9 @@
 @theme {
   /* Poner las fuentes como un exten del theme de tailwind */
   /* Esto para poder usar font-primary */
-  --font-primary: "var(--font-primary)",
-  --font-secondary: "var(--font-secondary)",
-  --font-fallback: "var(--font-fallback)",
+  --font-primary:
+    "var(--font-primary)", --font-secondary: "var(--font-secondary)",
+    --font-fallback: "var(--font-fallback)";
 }
 
 /* ===================================
