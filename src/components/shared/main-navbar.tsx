@@ -105,7 +105,7 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <div className="flex items-center justify-center space-x-6 flex-2">
+            <div className="hidden lg:flex items-center justify-center space-x-6 flex-2">
               {navLinks.map((item) => (
                 <NavbarItem
                   key={item.key}
@@ -116,14 +116,16 @@ export default function MainNavbar({ navLinks }: MainNavbarProps) {
             </div>
 
             <div className="flex gap-4 justify-end items-center ml-auto flex-1">
-              <LanguageToggle />
+              <div className="gap-4 hidden lg:flex ">
+                <LanguageToggle />
 
-              <div
-                onClick={changeTheme}
-                className="glassmorphic dark:glassmorphic-dark p-2 cursor-pointer"
-              >
-                <IconMoon className="dark:hidden flex"></IconMoon>
-                <IconSun className="hidden dark:flex"></IconSun>
+                <div
+                  onClick={changeTheme}
+                  className="glassmorphic dark:glassmorphic-dark p-2 cursor-pointer"
+                >
+                  <IconMoon className="dark:hidden flex"></IconMoon>
+                  <IconSun className="hidden dark:flex"></IconSun>
+                </div>
               </div>
 
               {/* User Links */}
