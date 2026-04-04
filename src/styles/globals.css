@@ -118,6 +118,14 @@
   --transition-slow: 500ms ease-in-out;
 }
 
+@theme {
+  /* Poner las fuentes como un exten del theme de tailwind */
+  /* Esto para poder usar font-primary */
+  --font-primary: "var(--font-primary)",
+  --font-secondary: "var(--font-secondary)",
+  --font-fallback: "var(--font-fallback)",
+}
+
 /* ===================================
    RESET & BASE STYLES
    =================================== */
@@ -145,6 +153,7 @@
     color: var(--azul-noche);
     background-color: var(--white);
     line-height: var(--line-height-normal);
+    overflow-x: hidden !important;
   }
 
   /* ===================================
