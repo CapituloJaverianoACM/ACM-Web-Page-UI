@@ -68,7 +68,7 @@ export default function Footer() {
           </div>
 
           {/* Contribuidores del proyecto en el centro*/}
-          <div className="flex justify-center relative z-0">
+          <div className="flex flex-wrap justify-center relative z-0">
             <AnimatedTooltip
               items={displayItems}
               className="relative z-0"
