@@ -374,7 +374,7 @@ export function PreExamsContent() {
         <a
           href="https://www.instagram.com/acmjaveriana"
           target="_blank"
-          className="no-underline bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+          className="no-underline bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-xs lg:text-base"
         >
           📝 {t("ctaButton")}
         </a>
