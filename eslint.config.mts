@@ -8,7 +8,7 @@ export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: { js },
-    extends: ["js/recommended","plugin:react/jsx-runtime"],
+    extends: ["js/recommended", "plugin:react/jsx-runtime"],
     languageOptions: { globals: globals.browser },
   },
   tseslint.configs.recommended,
