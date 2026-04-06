@@ -1,3 +1,4 @@
+// @fast-refresh disable
 "use client";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -62,13 +63,13 @@ export default function Footer() {
             <span className="font-montserrat text-lg md:text-lg text-(--azul-noche) dark:text-white">
               {t("chapter")}
             </span>
-            <h1 className="ml-2 mb-0 md:text-xl font-bold text-(--azul-noche) dark:text-white">
-              ACM
+            <h1 className="ml-2 -translate-y-1 md:translate-y-0 mb-0 md:text-xl font-bold text-(--azul-noche) dark:text-white">
+              acm
             </h1>
           </div>
 
           {/* Contribuidores del proyecto en el centro*/}
-          <div className="flex justify-center relative z-0">
+          <div className="flex flex-wrap justify-center relative z-0">
             <AnimatedTooltip
               items={displayItems}
               className="relative z-0"

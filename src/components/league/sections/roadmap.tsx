@@ -131,7 +131,7 @@ export function Roadmap() {
           {/* Curved path connecting cards */}
           <path
             d={generateCurvePath()}
-            className="stroke-(--azul-crayon) dark:stroke-(--azul-electrico)"
+            className="hidden lg:flex stroke-(--azul-crayon) dark:stroke-(--azul-electrico)"
             strokeWidth="3"
             fill="none"
             strokeDasharray="8,4"
@@ -154,7 +154,7 @@ export function Roadmap() {
         </svg>
 
         {/* Roadmap steps */}
-        <div className="space-y-24 w-full relative z-10">
+        <div className="space-y-24 w-full relative z-10 p-4 lg:p-0">
           {steps.map((step, index) => (
             <div
               key={step.number}
@@ -162,10 +162,7 @@ export function Roadmap() {
             >
               {/* Video Card - más grande con número en esquina */}
               <div
-                className="w-lg relative"
-                style={{
-                  marginLeft: index % 2 === 0 ? "-30rem" : "30rem",
-                }}
+                className={`w-lg relative ${index % 2 === 0 ? "-ml-120" : "ml-120"}`}
               >
                 {/* Number Badge - esquina superior izquierda */}
                 <div className="absolute -top-4 -left-4 z-20">

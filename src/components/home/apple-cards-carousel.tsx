@@ -223,6 +223,7 @@ export const Card = ({
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
+      document.body.style.overflowX = "hidden";
     }
 
     window.addEventListener("keydown", onKeyDown);

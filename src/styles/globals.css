@@ -9,7 +9,7 @@
 /* Import Flaticon Icons */
 @import url("https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
-
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
 @import "tailwindcss";
 
 @config "../../tailwind.config.ts";
@@ -118,6 +118,14 @@
   --transition-slow: 500ms ease-in-out;
 }
 
+@theme {
+  /* Poner las fuentes como un exten del theme de tailwind */
+  /* Esto para poder usar font-primary */
+  --font-primary:
+    "var(--font-primary)", --font-secondary: "var(--font-secondary)",
+    --font-fallback: "var(--font-fallback)";
+}
+
 /* ===================================
    RESET & BASE STYLES
    =================================== */
@@ -145,6 +153,7 @@
     color: var(--azul-noche);
     background-color: var(--white);
     line-height: var(--line-height-normal);
+    overflow-x: hidden !important;
   }
 
   /* ===================================
