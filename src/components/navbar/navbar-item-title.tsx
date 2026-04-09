@@ -30,9 +30,16 @@ export const NavbarItemTitle: React.FC<NavbarItemProps> = ({
         <div className="text-lg font-semibold relative mb-0 hover:cursor-pointer flex items-center gap-0">
           <span>{item.label}</span>
 
-          {item.isDropdown && <ChevronDown className="w-6 h-6" />}
+          {item.isDropdown && (
+            <ChevronDown className="w-5 h-5" style={{ marginTop: "-2px" }} />
+          )}
 
-          {item.isExternal && <ExternalLinkIcon className="mx-1.5 " />}
+          {item.isExternal && (
+            <ExternalLinkIcon
+              className="w-4 h-4 mx-0.5"
+              style={{ marginTop: "-3px" }}
+            />
+          )}
         </div>
 
         <span
